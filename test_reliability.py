@@ -92,6 +92,14 @@ class SynchronizationTests(unittest.TestCase):
         self.assertEqual(result["current"], self.old["current"])
         self.assertEqual(result["mirror"], MIRROR)
 
+    def test_completed_upload_is_recovered_after_interrupted_run(self):
+        asset = {"name": NAME, "url": MIRROR["asset_url"], "size": len(PACKAGE), "digest": "sha256:" + "a" * 64}
+        config = {**self.config, "download": lambda release: (_ for _ in ()).throw(AssertionError("unnecessary download"))}
+        with patch.object(sync, "PUBLISH", True), patch.object(sync, "remote_asset", return_value=asset):
+            mirror = sync.store_package("bpa", {"name": NAME, "url": URL}, config, "bpa-latest")
+        self.assertEqual(mirror["sha256"], "a" * 64)
+        self.assertEqual(mirror["asset_url"], MIRROR["asset_url"])
+
     def test_local_download_does_not_invent_published_link(self):
         with tempfile.TemporaryDirectory() as directory, patch.object(sync, "DIST_DIR", Path(directory)), patch.object(sync, "PUBLISH", False):
             mirror = sync.store_package("bpa", {"name": NAME, "url": URL}, self.config, "bpa-latest")

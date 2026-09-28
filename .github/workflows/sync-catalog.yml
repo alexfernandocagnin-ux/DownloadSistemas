@@ -34,8 +34,10 @@ jobs:
       - name: Baixar, publicar e confirmar cada espelho
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python scripts/sync_catalog.py --publish
+        timeout-minutes: 35
+        run: python -u scripts/sync_catalog.py --publish
       - name: Salvar catálogo confirmado
+        if: ${{ always() }}
         run: |
           if git diff --quiet -- data/catalog.json; then
             exit 0

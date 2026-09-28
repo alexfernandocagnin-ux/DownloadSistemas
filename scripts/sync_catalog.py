@@ -117,6 +117,16 @@ def store_package(key, release, config, tag):
     name = str(release["name"])
     if Path(name).name != name or "/" in name or "\\" in name:
         raise ValueError("Nome de arquivo inválido.")
+    if PUBLISH:
+        existing = remote_asset(tag, name)
+        if existing and (not release.get("size") or existing["size"] == release["size"]):
+            # Recupera uploads concluídos antes de uma interrupção do workflow.
+            mirror = {"tag": tag, "asset_name": name, "asset_url": existing["url"],
+                      "size": existing["size"], "verified_at": now()}
+            digest = existing.get("digest") or ""
+            if digest.startswith("sha256:"):
+                mirror["sha256"] = digest.removeprefix("sha256:")
+            return mirror
     package = config["download"](release)
     target = DIST_DIR / key / name
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -206,6 +216,15 @@ def sync_competence_system(key, config, previous):
             "official_reachable": True, "pending_competences": errors}
 
 
+def save_catalog(systems):
+    ordered = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS) if key in systems}
+    catalog = {"updated_at": now(), "systems": ordered}
+    CATALOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    temporary = CATALOG_PATH.with_suffix(".tmp")
+    temporary.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(CATALOG_PATH)
+
+
 def main():
     global PUBLISH
     parser = argparse.ArgumentParser(description=__doc__)
@@ -216,7 +235,7 @@ def main():
             parser.error("--publish requer GITHUB_REPOSITORY")
         gh("auth", "status")
     previous = _load_previous()
-    systems = {}
+    systems = dict(previous.get("systems", {}))
     # Uma fonte lenta não impede os demais sistemas de publicar seus arquivos.
     with ThreadPoolExecutor(max_workers=4) as executor:
         tasks = {executor.submit(sync_single_version_system, key, config, previous): key
@@ -225,12 +244,9 @@ def main():
                       for key, config in COMPETENCE_SYSTEMS.items()})
         for task in as_completed(tasks):
             systems[tasks[task]] = task.result()
+            save_catalog(systems)
     systems = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS)}
-    catalog = {"updated_at": now(), "systems": systems}
-    CATALOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    temporary = CATALOG_PATH.with_suffix(".tmp")
-    temporary.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    temporary.replace(CATALOG_PATH)
+    save_catalog(systems)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
             summary.write("## Espelhos DATASUS\n\n")
