@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-28T13:31:24+00:00",
+  "updated_at": "2026-09-28T14:14:55+00:00",
   "systems": {
     "bpa": {
       "label": "BPA Magnético",
@@ -12,9 +12,12 @@
       "mirror": {
         "tag": "bpa-latest",
         "asset_name": "BPAMAG0500.exe",
-        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe"
+        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
+        "size": 7785806,
+        "verified_at": "2026-09-28T14:09:05+00:00"
       },
-      "checked_at": "2026-09-28T13:19:51+00:00",
+      "checked_at": "2026-09-28T14:09:01+00:00",
+      "last_success_at": "2026-09-28T14:09:01+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -28,9 +31,12 @@
       "mirror": {
         "tag": "sia-latest",
         "asset_name": "SIA0604.exe",
-        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0604.exe"
+        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0604.exe",
+        "size": 7590903,
+        "verified_at": "2026-09-28T14:09:05+00:00"
       },
-      "checked_at": "2026-09-28T13:19:55+00:00",
+      "checked_at": "2026-09-28T14:09:01+00:00",
+      "last_success_at": "2026-09-28T14:09:01+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -39,7 +45,29 @@
       "current": null,
       "mirror": null,
       "official_reachable": false,
-      "checked_at": "2026-09-28T13:19:57+00:00"
+      "checked_at": "2026-09-28T14:09:01+00:00",
+      "last_success_at": null,
+      "error": "OSError"
+    },
+    "cnes_app": {
+      "label": "CNES · SCNES (atualização)",
+      "official_page": "https://cnes.datasus.gov.br/pages/downloads/aplicativos.jsp",
+      "current": {
+        "name": "SCNES4850-ATUALIZACAO.ZIP",
+        "size": null,
+        "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP"
+      },
+      "mirror": {
+        "tag": "cnes-app-latest",
+        "asset_name": "SCNES4850-ATUALIZACAO.ZIP",
+        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-app-latest/SCNES4850-ATUALIZACAO.ZIP",
+        "size": 261903438,
+        "sha256": "56898c285edf2c3e434c8039369342eeb2e5d040a340dc642527b5325c478647",
+        "verified_at": "2026-09-28T14:14:55+00:00"
+      },
+      "checked_at": "2026-09-28T14:09:01+00:00",
+      "last_success_at": "2026-09-28T14:09:01+00:00",
+      "official_reachable": true
     },
     "bdsia": {
       "label": "Tabela mensal do SIA (BDSIA)",
@@ -52,7 +80,9 @@
           "mirror": {
             "tag": "bdsia-202604",
             "asset_name": "BDSIA202604d.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202604/BDSIA202604d.exe"
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202604/BDSIA202604d.exe",
+            "size": 9240683,
+            "verified_at": "2026-09-28T14:09:09+00:00"
           }
         },
         "202605": {
@@ -62,7 +92,9 @@
           "mirror": {
             "tag": "bdsia-202605",
             "asset_name": "BDSIA202605d.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202605/BDSIA202605d.exe"
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202605/BDSIA202605d.exe",
+            "size": 9425905,
+            "verified_at": "2026-09-28T14:09:09+00:00"
           }
         },
         "202606": {
@@ -72,7 +104,9 @@
           "mirror": {
             "tag": "bdsia-202606",
             "asset_name": "BDSIA202606b.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202606/BDSIA202606b.exe"
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202606/BDSIA202606b.exe",
+            "size": 9548777,
+            "verified_at": "2026-09-28T14:09:08+00:00"
           }
         },
         "202607": {
@@ -82,7 +116,9 @@
           "mirror": {
             "tag": "bdsia-202607",
             "asset_name": "BDSIA202607b.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202607/BDSIA202607b.exe"
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202607/BDSIA202607b.exe",
+            "size": 9755342,
+            "verified_at": "2026-09-28T14:09:08+00:00"
           }
         },
         "202608": {
@@ -92,7 +128,9 @@
           "mirror": {
             "tag": "bdsia-202608",
             "asset_name": "BDSIA202608b.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202608/BDSIA202608b.exe"
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202608/BDSIA202608b.exe",
+            "size": 9683025,
+            "verified_at": "2026-09-28T14:09:08+00:00"
           }
         },
         "202609": {
@@ -102,12 +140,32 @@
           "mirror": {
             "tag": "bdsia-202609",
             "asset_name": "BDSIA202609a.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609a.exe"
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609a.exe",
+            "size": 9818678,
+            "verified_at": "2026-09-28T14:09:07+00:00"
           }
         }
       },
-      "checked_at": "2026-09-28T13:20:44+00:00",
-      "official_reachable": true
+      "checked_at": "2026-09-28T14:09:05+00:00",
+      "last_success_at": "2026-09-28T14:09:05+00:00",
+      "official_reachable": true,
+      "pending_competences": []
+    },
+    "sigtap": {
+      "label": "SIGTAP · Tabela Unificada",
+      "official_page": "http://sigtap.datasus.gov.br/tabela-unificada/app/download.jsp",
+      "competences": {},
+      "checked_at": "2026-09-28T14:09:05+00:00",
+      "last_success_at": "2026-09-28T14:09:05+00:00",
+      "official_reachable": true,
+      "pending_competences": [
+        "202609",
+        "202608",
+        "202607",
+        "202606",
+        "202605",
+        "202604"
+      ]
     }
   }
 }
