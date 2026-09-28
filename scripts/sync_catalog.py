@@ -79,7 +79,7 @@ def sync_single_version_system(key: str, config: dict[str, object], previous: di
     try:
         latest = config["fetch"]()[0]
         name = str(latest["name"])
-        previous_name = (previous_system or {}).get("current", {}).get("name") if previous_system else None
+        previous_name = ((previous_system or {}).get("current") or {}).get("name")
         if name != previous_name:
             print(f"[{key}] versão nova: {name} (antes: {previous_name or 'nenhuma'})")
             package = config["download"](latest)
