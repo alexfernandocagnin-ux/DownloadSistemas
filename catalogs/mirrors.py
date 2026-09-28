@@ -8,7 +8,7 @@ from catalogs._common import USER_AGENT
 from catalogs._common import download_via_http
 
 REPOSITORY = "alexfernandocagnin-ux/DownloadSistemas"
-MAX_PACKAGE_SIZE = 300_000_000
+MAX_PACKAGE_SIZE = 1_000_000_000
 
 
 def matching_mirror(name, mirror):

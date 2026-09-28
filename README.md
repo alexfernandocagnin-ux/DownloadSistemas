@@ -85,3 +85,5 @@ Para publicar manualmente, autentique o GitHub CLI (`gh auth login`), defina `GI
 Links legados são novamente conferidos na sincronização. Assets ausentes são baixados e publicados de novo. `last_success_at` informa a última consulta bem-sucedida; `checked_at` registra a tentativa mais recente. Cada espelho novo registra tamanho, SHA-256 e data de verificação.
 
 Os downloads CNES usam os diretórios oficiais `/cnes/Versoes-Fces-Nacional` e `/cnes` nos servidores `arpoador.datasus.gov.br` e `ftp.datasus.gov.br`, contornando o servlet de estatísticas quando indisponível. O catálogo também consulta esses diretórios se a API cair.
+
+Bases CNES atuais ultrapassam 700 MB. O espelho aceita pacotes CNES até 1 GB e entrega arquivos grandes diretamente pelo GitHub. Bases ainda sem espelho não são carregadas na memória do Streamlit; aguardam sincronização ou podem ser obtidas pelo portal oficial.

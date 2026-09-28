@@ -43,7 +43,7 @@ class MirrorTests(unittest.TestCase):
                 mirrors.download_mirror(NAME, {**MIRROR, "sha256": "0" * 64})
 
     def test_probe_reads_only_signature_for_large_file(self):
-        size = 261_903_438
+        size = 739_134_749
         with patch.object(mirrors, "urlopen") as opening:
             response = opening.return_value.__enter__.return_value
             response.read.return_value = b"PK"

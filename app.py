@@ -127,6 +127,8 @@ def prepare_download(system_key, name, url, mirror):
             return {"url": cached_mirror_probe(name, mirror)}, "Espelho independente", False
         except (OSError, ValueError):
             mirror_error = True
+    if system_key == "cnes_base":
+        raise OSError("A base CNES grande precisa de um espelho disponível para evitar sobrecarga do portal.")
     data = SYSTEM_META[system_key]["download"]({"name": name, "url": url})
     return {"data": data}, "Fonte oficial", mirror_error
 
@@ -153,6 +155,9 @@ def render_download_button(system_key, name, url, mirror):
         badge("warn", "Espelho antigo · será verificado ao preparar")
     else:
         badge("warn", "Ainda depende da fonte oficial")
+    if not mirror and system_key.removesuffix("_backup") == "cnes_base":
+        st.info("Esta base grande ainda está aguardando publicação no espelho. A sincronização automática fará novas tentativas; o portal oficial está disponível abaixo.")
+        return
     if mirror and mirror.get("size"):
         st.caption(f'{mirror["size"] / 1_000_000:.1f} MB · arquivo conferido')
 
