@@ -16,6 +16,7 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -216,10 +217,15 @@ def main():
         gh("auth", "status")
     previous = _load_previous()
     systems = {}
-    for key, config in SINGLE_VERSION_SYSTEMS.items():
-        systems[key] = sync_single_version_system(key, config, previous)
-    for key, config in COMPETENCE_SYSTEMS.items():
-        systems[key] = sync_competence_system(key, config, previous)
+    # Uma fonte lenta não impede os demais sistemas de publicar seus arquivos.
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        tasks = {executor.submit(sync_single_version_system, key, config, previous): key
+                 for key, config in SINGLE_VERSION_SYSTEMS.items()}
+        tasks.update({executor.submit(sync_competence_system, key, config, previous): key
+                      for key, config in COMPETENCE_SYSTEMS.items()})
+        for task in as_completed(tasks):
+            systems[tasks[task]] = task.result()
+    systems = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS)}
     catalog = {"updated_at": now(), "systems": systems}
     CATALOG_PATH.parent.mkdir(parents=True, exist_ok=True)
     temporary = CATALOG_PATH.with_suffix(".tmp")
