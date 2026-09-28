@@ -197,10 +197,11 @@ class PortalTests(unittest.TestCase):
         self.assertTrue(app.warning)
 
     def test_both_sources_offline_show_error_without_crashing(self):
-        with patch("catalogs.mirrors.probe_mirror", side_effect=OSError("404")), patch("catalogs.sia_portal.download_release", side_effect=OSError("offline")):
+        with patch("catalogs.mirrors.probe_mirror", side_effect=OSError("404")), patch("catalogs.sia_portal.download_release", side_effect=OSError("offline")) as official:
             app = self.app().run()
-            app.button[2].click().run()
+            next(button for button in app.button if str(button.key).startswith("prep_sia_")).click().run()
         self.assertFalse(app.exception)
+        official.assert_called_once()
         self.assertTrue(app.error)
 
 
