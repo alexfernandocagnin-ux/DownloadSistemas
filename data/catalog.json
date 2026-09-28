@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-28T12:39:14+00:00",
+  "updated_at": "2026-09-28T13:04:45+00:00",
   "systems": {
     "bpa": {
       "label": "BPA Magnético",
@@ -12,9 +12,9 @@
       "mirror": {
         "tag": "bpa-latest",
         "asset_name": "BPAMAG0500.exe",
-        "asset_url": null
+        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe"
       },
-      "checked_at": "2026-09-28T12:38:29+00:00",
+      "checked_at": "2026-09-28T13:03:50+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -28,9 +28,9 @@
       "mirror": {
         "tag": "sia-latest",
         "asset_name": "SIA0604.exe",
-        "asset_url": null
+        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0604.exe"
       },
-      "checked_at": "2026-09-28T12:38:35+00:00",
+      "checked_at": "2026-09-28T13:03:53+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -39,7 +39,7 @@
       "current": null,
       "mirror": null,
       "official_reachable": false,
-      "checked_at": "2026-09-28T12:38:39+00:00"
+      "checked_at": "2026-09-28T13:03:56+00:00"
     },
     "bdsia": {
       "label": "Tabela mensal do SIA (BDSIA)",
@@ -106,7 +106,7 @@
           }
         }
       },
-      "checked_at": "2026-09-28T12:39:00+00:00",
+      "checked_at": "2026-09-28T13:04:42+00:00",
       "official_reachable": true
     }
   }
