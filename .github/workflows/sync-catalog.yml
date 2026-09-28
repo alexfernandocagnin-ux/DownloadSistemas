@@ -1,0 +1,45 @@
+name: Sincronizar catálogo de downloads
+
+on:
+  schedule:
+    - cron: '11 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Consultar BPA, SIA, BDSIA e SIHD2 no DATASUS
+        run: python scripts/sync_catalog.py
+      - name: Publicar espelho (GitHub Releases) e o catálogo, só quando mudarem
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- data/catalog.json && [ -z "$(find dist -type f 2>/dev/null)" ]; then
+            echo 'Nenhuma versão nova.'
+            exit 0
+          fi
+          for path in $(find dist -type f 2>/dev/null); do
+            system=$(basename "$(dirname "$path")")
+            filename=$(basename "$path")
+            if [ "$system" = "bdsia" ]; then
+              competence=$(echo "$filename" | grep -oE '20[0-9]{2}(0[1-9]|1[0-2])')
+              tag="bdsia-$competence"
+            else
+              tag="$system-latest"
+            fi
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "Espelho automático do DATASUS. Não substitui o portal oficial."
+            gh release upload "$tag" "$path" --clobber
+          done
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/catalog.json
+          git commit -m 'Atualizar catálogo de downloads' || echo 'Nada para commitar.'
+          git push
