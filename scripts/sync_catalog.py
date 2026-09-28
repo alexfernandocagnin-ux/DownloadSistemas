@@ -80,8 +80,9 @@ def sync_single_version_system(key: str, config: dict[str, object], previous: di
         latest = config["fetch"]()[0]
         name = str(latest["name"])
         previous_name = ((previous_system or {}).get("current") or {}).get("name")
-        if name != previous_name:
-            print(f"[{key}] versão nova: {name} (antes: {previous_name or 'nenhuma'})")
+        previous_asset_url = ((previous_system or {}).get("mirror") or {}).get("asset_url")
+        if name != previous_name or not previous_asset_url:
+            print(f"[{key}] versão nova ou ainda não espelhada: {name} (antes: {previous_name or 'nenhuma'})")
             package = config["download"](latest)
             target_dir = DIST_DIR / key
             target_dir.mkdir(parents=True, exist_ok=True)
@@ -126,10 +127,12 @@ def sync_bdsia(previous: dict[str, object]) -> dict[str, object]:
     for competence, release in latest_by_competence.items():
         name = str(release["name"])
         tag = f"bdsia-{competence}"
-        if previous_competences.get(competence, {}).get("name") == name:
+        previous_entry = previous_competences.get(competence, {})
+        already_mirrored = previous_entry.get("name") == name and (previous_entry.get("mirror") or {}).get("asset_url")
+        if already_mirrored:
             print(f"[bdsia] {competence}: sem mudança ({name})")
             continue
-        print(f"[bdsia] {competence}: versão nova {name}")
+        print(f"[bdsia] {competence}: versão nova ou ainda não espelhada: {name}")
         try:
             package = sia_portal.download_release(release)
         except (OSError, ValueError) as exc:
