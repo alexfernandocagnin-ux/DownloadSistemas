@@ -254,9 +254,10 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
                 st.caption("Instalação nova do SCNES")
             elif system_key == "cnes_app":
                 st.caption("Atualização para o SCNES já instalado")
-            elif system_key == "sihd2" and not matching_mirror(name, info.get("mirror")):
-                st.caption("O portal oficial lista esta versão; o arquivo ainda aguarda uma cópia de espelho.")
-            render_download_button(system_key, str(name), str(url), info.get("mirror"))
+            if system_key == "sihd2" and not matching_mirror(name, info.get("mirror")):
+                st.info("O arquivo não foi confirmado no espelho. Confira a disponibilidade no portal oficial abaixo.")
+            else:
+                render_download_button(system_key, str(name), str(url), info.get("mirror"))
             if current and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
                 with st.expander("Versão anterior preservada no espelho"):
                     render_download_button(system_key + "_backup", current["name"], current["url"], info["mirror"])
