@@ -17,6 +17,7 @@ import os
 import sys
 from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -186,7 +187,7 @@ def sync_single_version_system(key, config, previous):
             "mirror": mirror, "checked_at": checked_at, "last_success_at": checked_at, "official_reachable": True}
 
 
-def sync_competence_system(key, config, previous):
+def sync_competence_system(key, config, previous, on_progress=None):
     checked_at = now()
     old = previous.get("systems", {}).get(key, {})
     try:
@@ -198,7 +199,16 @@ def sync_competence_system(key, config, previous):
     updated = dict(old.get("competences") or {})
     # Todas as cópias antigas ficam disponíveis; apenas os seis meses recentes são baixados.
     months = sorted({str(item["competence"]) for item in releases}, reverse=True)[:COMPETENCE_LIMIT]
+    if not updated:
+        # Primeiro garante a competência atual; o histórico entra nas próximas execuções.
+        months = months[:1]
     errors = []
+
+    def result():
+        return {"label": config["label"], "official_page": config["official_page"],
+                "competences": dict(updated), "checked_at": checked_at, "last_success_at": checked_at,
+                "official_reachable": True, "pending_competences": list(errors)}
+
     for month in months:
         release = next(item for item in releases if item["competence"] == month)
         entry = updated.get(month, {})
@@ -208,12 +218,12 @@ def sync_competence_system(key, config, previous):
                 mirror = store_package(key, release, config, f"{key.replace('_', '-')}-{month}")
             updated[month] = {"name": release["name"], "size": release.get("size"),
                               "url": release["url"], "mirror": mirror}
+            if on_progress:
+                on_progress(key, result())
         except (OSError, ValueError, subprocess.CalledProcessError) as exc:
             errors.append(month)
             print(f'::warning::{key} {month}: {type(exc).__name__}; cópia anterior preservada.')
-    return {"label": config["label"], "official_page": config["official_page"],
-            "competences": updated, "checked_at": checked_at, "last_success_at": checked_at,
-            "official_reachable": True, "pending_competences": errors}
+    return result()
 
 
 def save_catalog(systems):
@@ -236,15 +246,21 @@ def main():
         gh("auth", "status")
     previous = _load_previous()
     systems = dict(previous.get("systems", {}))
+    catalog_lock = Lock()
+
+    def record(key, info):
+        with catalog_lock:
+            systems[key] = info
+            save_catalog(systems)
+
     # Uma fonte lenta não impede os demais sistemas de publicar seus arquivos.
     with ThreadPoolExecutor(max_workers=4) as executor:
         tasks = {executor.submit(sync_single_version_system, key, config, previous): key
                  for key, config in SINGLE_VERSION_SYSTEMS.items()}
-        tasks.update({executor.submit(sync_competence_system, key, config, previous): key
+        tasks.update({executor.submit(sync_competence_system, key, config, previous, record): key
                       for key, config in COMPETENCE_SYSTEMS.items()})
         for task in as_completed(tasks):
-            systems[tasks[task]] = task.result()
-            save_catalog(systems)
+            record(tasks[task], task.result())
     systems = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS)}
     save_catalog(systems)
     if os.environ.get("GITHUB_STEP_SUMMARY"):

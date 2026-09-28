@@ -145,6 +145,17 @@ class SynchronizationTests(unittest.TestCase):
             self.assertTrue((Path(directory) / "bpa" / NAME).is_file())
         self.assertIsNone(mirror)
 
+    def test_first_sync_prioritizes_latest_month_and_reports_progress(self):
+        releases = [{"name": f"base_{month}.ZIP", "url": "official", "competence": month} for month in ["202608", "202607"]]
+        config = {**sync.COMPETENCE_SYSTEMS["cnes_base"], "fetch": lambda: releases}
+        progress = []
+        with patch.object(sync, "store_package", return_value=MIRROR) as store:
+            result = sync.sync_competence_system("cnes_base", config, {}, lambda key, info: progress.append((key, info)))
+        store.assert_called_once()
+        self.assertEqual(set(result["competences"]), {"202608"})
+        self.assertEqual(progress[0][0], "cnes_base")
+        self.assertEqual(set(progress[0][1]["competences"]), {"202608"})
+
     def test_month_tag_comes_from_competence_not_filename_guess(self):
         release = {"name": "BASE_DE_DADOS_CNES_202608.ZIP", "url": "official", "competence": "202608"}
         config = {**sync.COMPETENCE_SYSTEMS["cnes_base"], "fetch": lambda: [release]}

@@ -10,7 +10,7 @@ sites estão fora do ar, o que acontece com frequência.
 
 - O portal abre pelo catálogo salvo, sem esperar o DATASUS. A consulta oficial é opcional e tem cache de 15 minutos.
 - A cada 6 horas, o GitHub Actions tenta obter as versões oficiais, publicar os arquivos e confirmar que cada asset existe e tem o tamanho esperado. Só depois atualiza o catálogo. Downloads ou uploads que falharem preservam a cópia anterior.
-- Os instaladores e os seis meses recentes de cada tabela são espelhados. Competências já salvas permanecem disponíveis.
+- Os instaladores e os seis meses recentes de cada tabela são espelhados. Na primeira sincronização de uma tabela, a competência atual tem prioridade; o histórico entra nas próximas execuções. Competências já salvas permanecem disponíveis.
 - O usuário prepara o arquivo e baixa dentro do portal. O servidor verifica se o espelho entrega o arquivo esperado e confere assinatura e tamanho, lendo apenas dois bytes. O arquivo é entregue diretamente pelo espelho, sem ocupar a memória do Streamlit. O SHA-256 é registrado na publicação. Se o espelho falhar, tenta a fonte oficial. Uma página de erro nunca é oferecida como instalador.
 - As versões e revisões anteriores continuam acessíveis quando uma versão oficial nova ainda não foi espelhada.
 - Nenhum instalador é executado. Arquivos ainda sem espelho dependem da fonte oficial. O GitHub e o Streamlit também podem sofrer indisponibilidades; o serviço não promete disponibilidade absoluta.
