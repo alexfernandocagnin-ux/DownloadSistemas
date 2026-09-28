@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from catalogs import mirrors, _common, bpa_portal
+from catalogs import mirrors, _common, bpa_portal, cnes_portal
 from scripts import sync_catalog as sync
 
 
@@ -46,6 +46,27 @@ class MirrorTests(unittest.TestCase):
         with patch.object(mirrors, "download_via_http", return_value=PACKAGE):
             result = mirrors.download_mirror(NAME, {**MIRROR, "size": len(PACKAGE), "sha256": hashlib.sha256(PACKAGE).hexdigest()})
         self.assertEqual(result, PACKAGE)
+
+
+class CnesRecoveryTests(unittest.TestCase):
+    def test_catalog_works_when_https_api_is_offline(self):
+        with patch.object(cnes_portal, "_fetch_json", side_effect=OSError("offline")), patch.object(cnes_portal, "fetch_ftp_names", return_value=["SCNES4850-ATUALIZACAO.ZIP", "SCNES4850-COMPLETA.ZIP"]):
+            releases = cnes_portal.fetch_cnes_app_catalog()
+        self.assertEqual([r["name"] for r in releases], ["SCNES4850-ATUALIZACAO.ZIP"])
+
+    def test_download_avoids_unavailable_servlet(self):
+        name = "SCNES4850-ATUALIZACAO.ZIP"
+        package = b"PK" + b"0" * 100_000
+        with patch.object(cnes_portal, "download_via_ftp", return_value=package) as ftp, patch.object(cnes_portal, "download_via_http", side_effect=AssertionError("servlet should not be needed")):
+            result = cnes_portal.download_app_release({"name": name, "url": cnes_portal._download_url(name)})
+        self.assertEqual(result, package)
+        self.assertEqual(ftp.call_args.args[1], "/cnes/Versoes-Fces-Nacional")
+
+    def test_base_download_uses_correct_directory(self):
+        name = "BASE_DE_DADOS_CNES_202608.ZIP"
+        with patch.object(cnes_portal, "download_via_ftp", return_value=b"PK" + b"0" * 100_000) as ftp:
+            cnes_portal.download_base_release({"name": name, "url": cnes_portal._download_url(name)})
+        self.assertEqual(ftp.call_args.args[1], "/cnes")
 
 
 class FtpRecoveryTests(unittest.TestCase):

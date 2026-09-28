@@ -83,3 +83,5 @@ O workflow de sincronização executa automaticamente após mudanças nos script
 Para publicar manualmente, autentique o GitHub CLI (`gh auth login`), defina `GITHUB_REPOSITORY=alexfernandocagnin-ux/DownloadSistemas` e execute `python scripts/sync_catalog.py --publish`. Sem `--publish`, os arquivos são apenas preparados localmente e novos links de espelho não são inventados.
 
 Links legados são novamente conferidos na sincronização. Assets ausentes são baixados e publicados de novo. `last_success_at` informa a última consulta bem-sucedida; `checked_at` registra a tentativa mais recente. Cada espelho novo registra tamanho, SHA-256 e data de verificação.
+
+Os downloads CNES usam os diretórios oficiais `/cnes/Versoes-Fces-Nacional` e `/cnes` nos servidores `arpoador.datasus.gov.br` e `ftp.datasus.gov.br`, contornando o servlet de estatísticas quando indisponível. O catálogo também consulta esses diretórios se a API cair.

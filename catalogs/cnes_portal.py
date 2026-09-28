@@ -13,7 +13,7 @@ import re
 from urllib.parse import urlsplit, parse_qs, unquote
 from urllib.request import Request, urlopen
 
-from catalogs._common import USER_AGENT, download_via_http, looks_like_zip
+from catalogs._common import USER_AGENT, download_via_http, download_via_ftp, fetch_ftp_names, looks_like_zip
 
 HOST = "cnes.datasus.gov.br"
 APLICATIVOS_PAGE = f"https://{HOST}/pages/downloads/aplicativos.jsp"
@@ -26,6 +26,9 @@ APP_FILE_PATTERN = re.compile(r"SCNES(\d{3,4})-ATUALIZACAO\.ZIP", re.IGNORECASE)
 BASE_FILE_PATTERN = re.compile(r"BASE_DE_DADOS_CNES_(20\d{2})(0[1-9]|1[0-2])\.ZIP", re.IGNORECASE)
 MAX_API_BYTES = 500_000
 MAX_PACKAGE_SIZE = 300_000_000
+FTP_HOSTS = ("arpoador.datasus.gov.br", "ftp.datasus.gov.br")
+APP_FTP_DIRECTORY = "/cnes/Versoes-Fces-Nacional"
+BASE_FTP_DIRECTORY = "/cnes"
 
 
 def _download_url(name: str) -> str:
@@ -49,9 +52,24 @@ def _fetch_json(url: str, referer: str) -> object:
     return json.loads(payload.decode("utf-8", "replace"))
 
 
+def _catalog_payload(api, referer, directory):
+    try:
+        payload = _fetch_json(api, referer)
+        if not isinstance(payload, list):
+            raise ValueError("O catálogo CNES não é uma lista.")
+        return payload
+    except (OSError, ValueError):
+        for host in FTP_HOSTS:
+            try:
+                return [{"nomeArquivo": name} for name in fetch_ftp_names(host, directory)]
+            except OSError:
+                continue
+        raise OSError("Nenhuma fonte oficial do catálogo CNES respondeu.")
+
+
 def fetch_cnes_app_catalog() -> list[dict[str, object]]:
     """Instalador de atualização do SCNES (versão única), mais recente primeiro."""
-    payload = _fetch_json(VERSOES_API, APLICATIVOS_PAGE)
+    payload = _catalog_payload(VERSOES_API, APLICATIVOS_PAGE, APP_FTP_DIRECTORY)
     if not isinstance(payload, list):
         raise ValueError("O catálogo de aplicativos do CNES não é uma lista.")
     releases = []
@@ -72,7 +90,7 @@ def fetch_cnes_app_catalog() -> list[dict[str, object]]:
 
 def fetch_cnes_base_catalog() -> list[dict[str, object]]:
     """Base de dados mensal do CNES, mais recente primeiro."""
-    payload = _fetch_json(BASE_DADOS_API, BASE_DADOS_PAGE)
+    payload = _catalog_payload(BASE_DADOS_API, BASE_DADOS_PAGE, BASE_FTP_DIRECTORY)
     if not isinstance(payload, list):
         raise ValueError("O catálogo de base de dados do CNES não é uma lista.")
     releases = []
@@ -96,7 +114,22 @@ def _download(release: dict[str, object]) -> bytes:
     url, name = str(release["url"]), str(release["name"])
     if not safe_url(url, name):
         raise ValueError(f"Link de download do CNES não permitido para {name}.")
-    package = download_via_http(url, name, max_size=MAX_PACKAGE_SIZE, timeout=90)
+    if APP_FILE_PATTERN.fullmatch(name):
+        directory = APP_FTP_DIRECTORY
+    elif BASE_FILE_PATTERN.fullmatch(name):
+        directory = BASE_FTP_DIRECTORY
+    else:
+        raise ValueError("O arquivo não corresponde a um pacote CNES conhecido.")
+    # Os diretórios oficiais foram conferidos; evitamos o servlet de estatísticas indisponível.
+    for host in FTP_HOSTS:
+        try:
+            package = download_via_ftp(host, directory, name, max_size=MAX_PACKAGE_SIZE)
+            if not looks_like_zip(package, min_size=100_000):
+                raise ValueError("O FTP CNES não entregou um ZIP válido.")
+            return package
+        except (OSError, ValueError):
+            continue
+    package = download_via_http(url, name, max_size=MAX_PACKAGE_SIZE, timeout=45)
     if not looks_like_zip(package, min_size=100_000):
         raise ValueError(f"O download de {name} não parece ser um pacote válido.")
     return package

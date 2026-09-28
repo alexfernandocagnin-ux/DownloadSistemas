@@ -71,10 +71,13 @@ def safe_official_url(
 
 def fetch_ftp_names(host: str, directory: str, *, timeout: int = 15) -> list[str]:
     """Lista os nomes de arquivo de um diretório FTP público, sem baixar nada."""
-    with FTP(host, timeout=timeout) as server:
-        server.login()
-        server.cwd(directory)
-        return [Path(raw_name).name for raw_name in server.nlst()]
+    try:
+        with FTP(host, timeout=timeout) as server:
+            server.login()
+            server.cwd(directory)
+            return [Path(raw_name).name for raw_name in server.nlst()]
+    except FTPError as exc:
+        raise OSError("Não foi possível listar o diretório FTP oficial.") from exc
 
 
 def download_via_http(url: str, name: str, *, max_size: int, timeout: int = 45) -> bytes:
