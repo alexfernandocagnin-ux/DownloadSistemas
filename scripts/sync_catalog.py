@@ -59,6 +59,13 @@ SINGLE_VERSION_SYSTEMS = {
         "download": cnes_portal.download_app_release,
         "tag": "cnes-app-latest",
     },
+    "cnes_complete": {
+        "label": "CNES · SCNES completo",
+        "official_page": cnes_portal.APLICATIVOS_PAGE,
+        "fetch": cnes_portal.fetch_cnes_complete_catalog,
+        "download": cnes_portal.download_app_release,
+        "tag": "cnes-complete-latest",
+    },
 }
 
 COMPETENCE_SYSTEMS = {

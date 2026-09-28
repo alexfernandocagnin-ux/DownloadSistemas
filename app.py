@@ -20,7 +20,7 @@ from catalogs import bpa_portal, cnes_portal, sia_portal, sigtap_portal, sihd_po
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 LIVE_CHECK_TTL = 15 * 60
 
-SINGLE_VERSION_SYSTEMS = ("bpa", "sia", "sihd2", "cnes_app")
+SINGLE_VERSION_SYSTEMS = ("bpa", "sia", "sihd2", "cnes_complete", "cnes_app")
 COMPETENCE_SYSTEMS = ("bdsia", "sigtap", "cnes_base")
 
 SYSTEM_META: dict[str, dict[str, object]] = {
@@ -44,6 +44,11 @@ SYSTEM_META: dict[str, dict[str, object]] = {
         "fetch": cnes_portal.fetch_cnes_app_catalog, "download": cnes_portal.download_app_release,
         "official_page": cnes_portal.APLICATIVOS_PAGE,
     },
+    "cnes_complete": {
+        "label": "SCNES · completo", "icon": "⬇",
+        "fetch": cnes_portal.fetch_cnes_complete_catalog, "download": cnes_portal.download_app_release,
+        "official_page": cnes_portal.APLICATIVOS_PAGE,
+    },
     "bdsia": {
         "label": "Tabela mensal do SIA (BDSIA)", "icon": "📊",
         "fetch": sia_portal.fetch_bdsia_catalog, "download": sia_portal.download_release,
@@ -52,6 +57,7 @@ SYSTEM_META: dict[str, dict[str, object]] = {
     "sigtap": {
         "label": "SIGTAP · Tabela Unificada", "icon": "💊",
         "fetch": sigtap_portal.fetch_sigtap_catalog, "download": sigtap_portal.download_release,
+        "download_with_source": sigtap_portal.download_release_with_source,
         "official_page": sigtap_portal.DOWNLOAD_PAGE,
     },
     "cnes_base": {
@@ -65,32 +71,49 @@ st.set_page_config(page_title="DownloadSistemas", page_icon="⬇️", layout="wi
 
 CUSTOM_CSS = """
 <style>
-.ds-hero {
-    background: linear-gradient(120deg, #08776A 0%, #0BA893 100%);
-    color: #F4F7F5;
-    padding: 2rem 2.2rem;
-    border-radius: 18px;
-    margin-bottom: 1.6rem;
-    box-shadow: 0 10px 30px rgba(8, 119, 106, 0.25);
-}
-.ds-hero h1 { margin: 0 0 0.3rem 0; font-size: 2.1rem; }
-.ds-hero p { margin: 0; opacity: 0.92; font-size: 1.02rem; }
-.ds-badge {
-    display: inline-block; padding: 0.15rem 0.65rem; border-radius: 999px;
-    font-size: 0.82rem; font-weight: 600; margin-bottom: 0.6rem;
-}
-.ds-badge-ok { background: #DCF3EC; color: #08776A; }
-.ds-badge-warn { background: #FCEFD6; color: #8A5A00; }
-.ds-badge-error { background: #FBE2E1; color: #A3261D; }
-.ds-card-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
-div[data-testid="stVerticalBlockBorderWrapper"] {
-    border-radius: 14px !important;
-    box-shadow: 0 2px 10px rgba(22, 50, 45, 0.06);
-    transition: box-shadow 0.15s ease;
-}
-div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-    box-shadow: 0 6px 18px rgba(22, 50, 45, 0.12);
-}
+.stApp { background: #f5f4ef; color: #172c32; }
+.block-container { max-width: 1480px; padding-top: 2.2rem; padding-bottom: 4rem; }
+.ds-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto;
+    align-items: end; gap: 2rem; background: #16343a; color: #f8f7f0; padding: 2.7rem 3rem;
+    border-radius: 22px; margin: 0 0 1.4rem; box-shadow: 0 18px 42px rgba(22,52,58,.12); }
+.ds-hero:after { content: ''; position: absolute; width: 280px; height: 280px; right: 16%; top: -185px;
+    border: 1px solid rgba(170,222,204,.24); border-radius: 50%;
+    box-shadow: 0 0 0 34px rgba(170,222,204,.04), 0 0 0 68px rgba(170,222,204,.04); }
+.ds-hero-copy, .ds-hero-meta { position: relative; z-index: 1; }
+.ds-eyebrow { color: #a8d8c3; font-size: .73rem; font-weight: 750; letter-spacing: .16em;
+    text-transform: uppercase; margin: 0 0 .7rem; }
+.ds-hero h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.35rem,4vw,3.55rem);
+    letter-spacing: -.045em; line-height: 1; margin: 0 0 .85rem; }
+.ds-hero p { color: #d2dfd9; font-size: 1rem; line-height: 1.6; max-width: 680px; margin: 0; }
+.ds-hero-meta { min-width: 205px; border-left: 1px solid rgba(255,255,255,.2); padding-left: 1.35rem; }
+.ds-hero-meta strong { display: block; color: #b8e2ce; font-size: .77rem; letter-spacing: .06em;
+    text-transform: uppercase; margin-bottom: .4rem; }
+.ds-hero-meta span { color: #edf2ee; font-size: .9rem; }
+.ds-toolbar { background: #fff; border: 1px solid #e1e3dc; border-radius: 15px; padding: .25rem .85rem; margin-bottom: 2.3rem; }
+.ds-section { margin: 2.2rem 0 1rem; }
+.ds-section h2 { font-family: Georgia, 'Times New Roman', serif; color: #17343a; font-size: 1.7rem;
+    letter-spacing: -.025em; margin: 0; }
+.ds-section p { color: #637277; font-size: .92rem; margin: .25rem 0 0; }
+.ds-card-title { display: flex; gap: .55rem; align-items: center; color: #18353a; font-size: 1.04rem;
+    font-weight: 750; letter-spacing: -.015em; margin: .15rem 0 .75rem; }
+.ds-badge { display: inline-block; padding: .28rem .68rem; border-radius: 999px; font-size: .74rem;
+    font-weight: 700; line-height: 1.25; margin: .05rem 0 .6rem; }
+.ds-badge-ok { background: #e1f2e9; color: #176347; }
+.ds-badge-warn { background: #fbefd9; color: #805514; }
+.ds-badge-error { background: #f8e4df; color: #8d3428; }
+div[data-testid="stVerticalBlockBorderWrapper"] { background: #fff; border-color: #e1e3dc !important;
+    border-radius: 17px !important; box-shadow: 0 5px 17px rgba(30,49,47,.045);
+    transition: transform .18s ease, box-shadow .18s ease; }
+div[data-testid="stVerticalBlockBorderWrapper"]:hover { transform: translateY(-2px);
+    box-shadow: 0 12px 27px rgba(30,49,47,.09); }
+div[data-testid="stButton"] button[kind="primary"], div[data-testid="stLinkButton"] a[kind="primary"] {
+    background: #126b59; border-color: #126b59; color: #fff; border-radius: 10px; font-weight: 700; }
+div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLinkButton"] a[kind="primary"]:hover {
+    background: #0d594a; border-color: #0d594a; }
+div[data-testid="stLinkButton"] a { border-radius: 10px; }
+div[data-testid="stCaptionContainer"] { color: #69797b; }
+@media (max-width: 760px) { .ds-hero { grid-template-columns: 1fr; gap: 1.3rem; padding: 2rem 1.5rem; }
+    .ds-hero-meta { border-left: 0; border-top: 1px solid rgba(255,255,255,.2); padding: .8rem 0 0; } }
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
@@ -127,10 +150,15 @@ def prepare_download(system_key, name, url, mirror):
             return {"url": cached_mirror_probe(name, mirror)}, "Espelho independente", False
         except (OSError, ValueError):
             mirror_error = True
-    if system_key == "cnes_base":
-        raise OSError("A base CNES grande precisa de um espelho disponível para evitar sobrecarga do portal.")
-    data = SYSTEM_META[system_key]["download"]({"name": name, "url": url})
-    return {"data": data}, "Fonte oficial", mirror_error
+    if system_key in {"cnes_base", "cnes_complete"}:
+        raise OSError("Este pacote CNES grande precisa de um espelho publicado para evitar sobrecarga do portal.")
+    release = {"name": name, "url": url}
+    download_with_source = SYSTEM_META[system_key].get("download_with_source")
+    if download_with_source:
+        data, source = download_with_source(release)
+        return {"data": data}, source, mirror_error
+    data = SYSTEM_META[system_key]["download"](release)
+    return {"data": data}, "Fonte oficial DATASUS", mirror_error
 
 
 def badge(kind, text):
@@ -155,8 +183,8 @@ def render_download_button(system_key, name, url, mirror):
         badge("warn", "Espelho antigo · será verificado ao preparar")
     else:
         badge("warn", "Ainda depende da fonte oficial")
-    if not mirror and system_key.removesuffix("_backup") == "cnes_base":
-        st.info("Esta base grande ainda está aguardando publicação no espelho. A sincronização automática fará novas tentativas; o portal oficial está disponível abaixo.")
+    if not mirror and system_key.removesuffix("_backup") in {"cnes_base", "cnes_complete"}:
+        st.info("Este pacote grande aguarda publicação no espelho. A sincronização automática fará novas tentativas; o portal oficial está disponível abaixo.")
         return
     if mirror and mirror.get("size"):
         st.caption(f'{mirror["size"] / 1_000_000:.1f} MB · arquivo conferido')
@@ -222,6 +250,12 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
             name = url = None
         if name:
             st.caption(name)
+            if system_key == "cnes_complete":
+                st.caption("Instalação nova do SCNES")
+            elif system_key == "cnes_app":
+                st.caption("Atualização para o SCNES já instalado")
+            elif system_key == "sihd2" and not matching_mirror(name, info.get("mirror")):
+                st.caption("O portal oficial lista esta versão; o arquivo ainda aguarda uma cópia de espelho.")
             render_download_button(system_key, str(name), str(url), info.get("mirror"))
             if current and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
                 with st.expander("Versão anterior preservada no espelho"):
@@ -236,11 +270,16 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
     with st.container(border=True):
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key)
-        render_status(releases, error, info.get("last_success_at", info.get("checked_at")) if not releases else None)
+        if system_key == "sigtap" and releases and releases[0].get("catalog_source") == "community":
+            badge("warn", "Catálogo comunitário de apoio · cópias identificadas")
+        else:
+            render_status(releases, error, info.get("last_success_at", info.get("checked_at")) if not releases else None)
+        if system_key == "sigtap":
+            st.caption("Se o DATASUS falhar, consultamos o catálogo e as cópias comunitárias do SIGTAP.")
         available = sorted(set(saved_competences) | {str(item["competence"]) for item in (releases or [])}, reverse=True)
 
         if not available:
-            st.error("Nenhuma competência disponível ainda.")
+            st.info("Nenhuma competência disponível ainda. Consulte o catálogo oficial ou tente novamente mais tarde.")
             st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
             return
 
@@ -258,6 +297,8 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
         )
         release = release_for(competence)
         saved_entry = saved_competences.get(competence, {})
+        if system_key == "sigtap" and saved_entry.get("catalog_source") == "community":
+            badge("warn", "Competência encontrada em catálogo comunitário")
         if release:
             name, url, mirror = release["name"], release["url"], saved_entry.get("mirror")
         else:
@@ -272,30 +313,59 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
         st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
 
 
+def render_grid(keys, snapshot_systems, renderer):
+    for start in range(0, len(keys), 3):
+        columns = st.columns(3, gap="medium")
+        for column, key in zip(columns, keys[start:start + 3]):
+            with column:
+                renderer(key, snapshot_systems)
+
+
 snapshot = load_snapshot()
 systems = snapshot.get("systems", {}) if isinstance(snapshot.get("systems"), dict) else {}
 updated_at = snapshot.get("updated_at", "ainda não sincronizado")
+readable_updated_at = readable_date(updated_at)
 
 st.markdown(
     f"""
     <div class="ds-hero">
-        <h1>⬇️ DownloadSistemas</h1>
-        <p>BPA · SIA · BDSIA · SIHD2 · CNES · SIGTAP — espelho próprio dos instaladores e
-        tabelas oficiais do DATASUS. Arquivos com espelho publicado podem ser baixados mesmo
-        quando o Ministério está fora do ar. Catálogo atualizado: {escape(readable_date(updated_at))}.</p>
+        <div class="ds-hero-copy">
+            <div class="ds-eyebrow">DATASUS &nbsp;·&nbsp; CENTRAL DE ARQUIVOS</div>
+            <h1>Downloads sem rodeios.</h1>
+            <p>Instaladores e tabelas oficiais do SUS em um só lugar. Quando o portal do Ministério
+            oscila, os arquivos já espelhados continuam disponíveis para baixar.</p>
+        </div>
+        <div class="ds-hero-meta">
+            <strong>Catálogo conferido</strong>
+            <span>{escape(readable_updated_at)}</span>
+        </div>
     </div>
     """,
     unsafe_allow_html=True,
 )
 
-check_official = st.checkbox("Consultar versões nas fontes oficiais agora", value=False,
-                             help="Os downloads do espelho não precisam desta consulta. As fontes oficiais podem demorar ou estar fora do ar.")
-st.caption("Escolha o sistema, prepare o arquivo e baixe aqui mesmo, sem abrir uma página do GitHub.")
-single_cols = st.columns(2)
-for index, key in enumerate(SINGLE_VERSION_SYSTEMS):
-    with single_cols[index % 2]:
-        render_single_version_card(key, systems)
+with st.container(border=True):
+    note, control = st.columns([1.6, 1])
+    with note:
+        st.markdown("**Baixe pelo arquivo confirmado**")
+        st.caption("A consulta ao portal oficial é opcional e pode demorar durante instabilidades.")
+    with control:
+        check_official = st.checkbox(
+            "Consultar versões oficiais agora", value=False,
+            help="Os downloads já espelhados não precisam desta consulta.",
+        )
 
-st.write("")
-for key in COMPETENCE_SYSTEMS:
-    render_competence_card(key, systems)
+st.markdown(
+    '<div class="ds-section"><div class="ds-eyebrow">01 &nbsp;·&nbsp; APLICATIVOS</div>'
+    '<h2>Instaladores</h2><p>Programas e atualizações para processamento das informações do SUS.</p></div>',
+    unsafe_allow_html=True,
+)
+st.info("No SCNES, use **completo** para uma nova instalação e **atualização** se já tiver o sistema. O Firebird é necessário.", icon="ℹ️")
+render_grid(SINGLE_VERSION_SYSTEMS, systems, render_single_version_card)
+
+st.markdown(
+    '<div class="ds-section"><div class="ds-eyebrow">02 &nbsp;·&nbsp; COMPETÊNCIAS</div>'
+    '<h2>Tabelas e bases</h2><p>Selecione o mês que você precisa e baixe o pacote correspondente.</p></div>',
+    unsafe_allow_html=True,
+)
+render_grid(COMPETENCE_SYSTEMS, systems, render_competence_card)

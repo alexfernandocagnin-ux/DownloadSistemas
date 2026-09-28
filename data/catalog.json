@@ -42,12 +42,16 @@
     "sihd2": {
       "label": "SIHD2 (instalador)",
       "official_page": "http://sihd.datasus.gov.br/versao/versao_sihd2.php",
-      "current": null,
+      "current": {
+        "name": "SIHD2_2340.exe",
+        "size": null,
+        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/Programas/SIHD2_2340.exe"
+      },
       "mirror": null,
-      "official_reachable": false,
-      "checked_at": "2026-09-28T14:47:51+00:00",
-      "last_success_at": null,
-      "error": "OSError"
+      "official_reachable": true,
+      "checked_at": "2026-09-28T15:12:33+00:00",
+      "last_success_at": "2026-09-28T15:12:33+00:00",
+      "pending_download": true
     },
     "cnes_app": {
       "label": "CNES · SCNES (atualização)",
@@ -154,7 +158,15 @@
     "sigtap": {
       "label": "SIGTAP · Tabela Unificada",
       "official_page": "http://sigtap.datasus.gov.br/tabela-unificada/app/download.jsp",
-      "competences": {},
+      "competences": {
+        "202609": {
+          "name": "TabelaUnificada_202609_v2609171117.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202609_v2609171117.zip",
+          "catalog_source": "community",
+          "mirror": null
+        }
+      },
       "checked_at": "2026-09-28T14:47:53+00:00",
       "last_success_at": "2026-09-28T14:47:53+00:00",
       "official_reachable": true,

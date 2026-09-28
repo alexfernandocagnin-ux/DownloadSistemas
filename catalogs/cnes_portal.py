@@ -22,7 +22,8 @@ VERSOES_API = f"https://{HOST}/services/arquivos-download/versoes/"
 BASE_DADOS_API = f"https://{HOST}/services/arquivos-download/base-dados/"
 DOWNLOAD_PATH = "/EstatisticasServlet"
 
-APP_FILE_PATTERN = re.compile(r"SCNES(\d{3,4})-ATUALIZACAO\.ZIP", re.IGNORECASE)
+APP_COMPLETE_PATTERN = re.compile(r"SCNES(\d{3,4})-COMPLETA\.ZIP", re.IGNORECASE)
+APP_UPDATE_PATTERN = re.compile(r"SCNES(\d{3,4})-ATUALIZACAO\.ZIP", re.IGNORECASE)
 BASE_FILE_PATTERN = re.compile(r"BASE_DE_DADOS_CNES_(20\d{2})(0[1-9]|1[0-2])\.ZIP", re.IGNORECASE)
 MAX_API_BYTES = 500_000
 MAX_PACKAGE_SIZE = 1_000_000_000
@@ -67,8 +68,7 @@ def _catalog_payload(api, referer, directory):
         raise OSError("Nenhuma fonte oficial do catálogo CNES respondeu.")
 
 
-def fetch_cnes_app_catalog() -> list[dict[str, object]]:
-    """Instalador de atualização do SCNES (versão única), mais recente primeiro."""
+def _fetch_cnes_app_catalog(pattern: re.Pattern[str], kind: str) -> list[dict[str, object]]:
     payload = _catalog_payload(VERSOES_API, APLICATIVOS_PAGE, APP_FTP_DIRECTORY)
     if not isinstance(payload, list):
         raise ValueError("O catálogo de aplicativos do CNES não é uma lista.")
@@ -77,15 +77,25 @@ def fetch_cnes_app_catalog() -> list[dict[str, object]]:
         if not isinstance(item, dict):
             continue
         name = item.get("nomeArquivo")
-        match = APP_FILE_PATTERN.fullmatch(str(name)) if isinstance(name, str) else None
+        match = pattern.fullmatch(str(name)) if isinstance(name, str) else None
         if not match:
             continue
         releases.append({
             "name": name, "url": _download_url(str(name)), "size": None, "version": match.group(1),
         })
     if not releases:
-        raise ValueError("Nenhum instalador de atualização do SCNES foi encontrado.")
+        raise ValueError(f"Nenhum instalador SCNES {kind} foi encontrado.")
     return sorted(releases, key=lambda item: item["version"], reverse=True)
+
+
+def fetch_cnes_app_catalog() -> list[dict[str, object]]:
+    """Instaladores SCNES de atualização, mais recentes primeiro."""
+    return _fetch_cnes_app_catalog(APP_UPDATE_PATTERN, "de atualização")
+
+
+def fetch_cnes_complete_catalog() -> list[dict[str, object]]:
+    """Instaladores SCNES completos, mais recentes primeiro."""
+    return _fetch_cnes_app_catalog(APP_COMPLETE_PATTERN, "completo")
 
 
 def fetch_cnes_base_catalog() -> list[dict[str, object]]:
@@ -114,7 +124,7 @@ def _download(release: dict[str, object]) -> bytes:
     url, name = str(release["url"]), str(release["name"])
     if not safe_url(url, name):
         raise ValueError(f"Link de download do CNES não permitido para {name}.")
-    if APP_FILE_PATTERN.fullmatch(name):
+    if APP_COMPLETE_PATTERN.fullmatch(name) or APP_UPDATE_PATTERN.fullmatch(name):
         directory = APP_FTP_DIRECTORY
     elif BASE_FILE_PATTERN.fullmatch(name):
         directory = BASE_FTP_DIRECTORY
