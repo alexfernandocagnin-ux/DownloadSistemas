@@ -132,6 +132,14 @@ class PortalTests(unittest.TestCase):
         self.assertFalse(app.checkbox[0].value)
         self.assertTrue(app.button)
 
+    def test_mirror_download_works_while_official_source_is_offline(self):
+        with patch("catalogs.mirrors.download_via_http", return_value=PACKAGE), patch("catalogs.bpa_portal.download_release", side_effect=AssertionError("DATASUS should not be needed")) as official:
+            app = self.app().run()
+            app.button[0].click().run()
+        self.assertFalse(app.exception)
+        official.assert_not_called()
+        self.assertTrue(app.get("download_button"))
+
     def test_broken_mirror_falls_back_without_redirect(self):
         with patch("catalogs.mirrors.download_via_http", side_effect=OSError("404")), patch("catalogs.bpa_portal.download_release", return_value=PACKAGE) as official:
             app = self.app().run()
