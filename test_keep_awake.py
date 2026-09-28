@@ -1,4 +1,6 @@
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
 from unittest.mock import MagicMock, patch
 
 from scripts import keep_awake
@@ -50,7 +52,7 @@ class KeepAwakeTests(unittest.TestCase):
             keep_awake.inspect_frames(MagicMock(frames=[self.frame(error=True)]))
 
     def test_invalid_url_is_failure(self):
-        with patch.dict("os.environ", {"DOWNLOAD_APP_URL": "not-a-url"}):
+        with patch.dict("os.environ", {"DOWNLOAD_APP_URL": "not-a-url"}), redirect_stdout(StringIO()):
             self.assertEqual(keep_awake.main(), 1)
 
 
