@@ -14,7 +14,7 @@ from datetime import datetime
 
 import streamlit as st
 
-from catalogs.mirrors import matching_mirror, download_mirror
+from catalogs.mirrors import matching_mirror, probe_mirror
 from catalogs import bpa_portal, cnes_portal, sia_portal, sigtap_portal, sihd_portal
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
@@ -115,16 +115,20 @@ def live_catalog(system_key: str) -> tuple[list[dict[str, object]] | None, str |
         return None, type(exc).__name__
 
 
-@st.cache_data(ttl=10 * 60, max_entries=3, show_spinner=False)
-def cached_download(system_key, name, url, mirror):
+@st.cache_data(ttl=5 * 60, max_entries=64, show_spinner=False)
+def cached_mirror_probe(name, mirror):
+    return probe_mirror(name, mirror)
+
+
+def prepare_download(system_key, name, url, mirror):
     mirror_error = False
     if matching_mirror(name, mirror):
         try:
-            return download_mirror(name, mirror), "Espelho independente", False
+            return {"url": cached_mirror_probe(name, mirror)}, "Espelho independente", False
         except (OSError, ValueError):
             mirror_error = True
     data = SYSTEM_META[system_key]["download"]({"name": name, "url": url})
-    return data, "Fonte oficial", mirror_error
+    return {"data": data}, "Fonte oficial", mirror_error
 
 
 def badge(kind, text):
@@ -161,8 +165,12 @@ def render_download_button(system_key, name, url, mirror):
     if not cached and st.button("Preparar arquivo para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary"):
         try:
             with st.spinner("Preparando o arquivo; arquivos grandes podem levar alguns minutos..."):
-                data, source, fallback = cached_download(system_key.removesuffix("_backup"), name, url, mirror)
-            cached = {"identity": identity, "data": data, "source": source}
+                data, source, fallback = prepare_download(system_key.removesuffix("_backup"), name, url, mirror)
+            # Mantém apenas um fallback oficial por sessão; espelhos usam URL, não bytes.
+            for other_key in list(st.session_state):
+                if other_key.startswith("official_download_") and other_key != state_key:
+                    st.session_state.pop(other_key, None)
+            cached = {"identity": identity, **data, "source": source}
             st.session_state[state_key] = cached
             if fallback:
                 st.warning("O espelho não respondeu. Recuperamos este arquivo da fonte oficial.")
@@ -170,9 +178,12 @@ def render_download_button(system_key, name, url, mirror):
             st.error("O arquivo não está disponível agora. Tente novamente mais tarde. Os demais downloads continuam disponíveis.")
     if cached:
         st.caption(f'Arquivo pronto · {cached["source"]}')
-        st.download_button(f"⬇️ Baixar {name}", data=cached["data"], file_name=name,
-                           mime="application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
-                           width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore")
+        if cached.get("url"):
+            st.link_button(f"⬇️ Baixar {name}", cached["url"], width="stretch", type="primary")
+        else:
+            st.download_button(f"⬇️ Baixar {name}", data=cached["data"], file_name=name,
+                               mime="application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
+                               width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore")
 
 
 def render_status(releases, error, checked_at):

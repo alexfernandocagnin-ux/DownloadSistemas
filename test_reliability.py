@@ -42,6 +42,24 @@ class MirrorTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 mirrors.download_mirror(NAME, {**MIRROR, "sha256": "0" * 64})
 
+    def test_probe_reads_only_signature_for_large_file(self):
+        size = 261_903_438
+        with patch.object(mirrors, "urlopen") as opening:
+            response = opening.return_value.__enter__.return_value
+            response.read.return_value = b"PK"
+            response.headers = {"Content-Range": f"bytes 0-1/{size}"}
+            result = mirrors.probe_mirror(NAME, {**MIRROR, "size": size})
+        response.read.assert_called_once_with(2)
+        self.assertEqual(result, MIRROR["asset_url"])
+
+    def test_probe_rejects_missing_or_wrong_file(self):
+        with patch.object(mirrors, "urlopen") as opening:
+            response = opening.return_value.__enter__.return_value
+            response.read.return_value = b"<h"
+            response.headers = {"Content-Length": "100"}
+            with self.assertRaises(ValueError):
+                mirrors.probe_mirror(NAME, MIRROR)
+
     def test_valid_download_is_returned(self):
         with patch.object(mirrors, "download_via_http", return_value=PACKAGE):
             result = mirrors.download_mirror(NAME, {**MIRROR, "size": len(PACKAGE), "sha256": hashlib.sha256(PACKAGE).hexdigest()})
@@ -162,15 +180,15 @@ class PortalTests(unittest.TestCase):
         self.assertTrue(app.button)
 
     def test_mirror_download_works_while_official_source_is_offline(self):
-        with patch("catalogs.mirrors.download_via_http", return_value=PACKAGE), patch("catalogs.bpa_portal.download_release", side_effect=AssertionError("DATASUS should not be needed")) as official:
+        with patch("catalogs.mirrors.probe_mirror", return_value=MIRROR["asset_url"]), patch("catalogs.bpa_portal.download_release", side_effect=AssertionError("DATASUS should not be needed")) as official:
             app = self.app().run()
             app.button[0].click().run()
         self.assertFalse(app.exception)
         official.assert_not_called()
-        self.assertTrue(app.get("download_button"))
+        self.assertTrue(app.get("link_button"))
 
     def test_broken_mirror_falls_back_without_redirect(self):
-        with patch("catalogs.mirrors.download_via_http", side_effect=OSError("404")), patch("catalogs.bpa_portal.download_release", return_value=PACKAGE) as official:
+        with patch("catalogs.mirrors.probe_mirror", side_effect=OSError("404")), patch("catalogs.bpa_portal.download_release", return_value=PACKAGE) as official:
             app = self.app().run()
             app.button[0].click().run()
         self.assertFalse(app.exception)
@@ -179,7 +197,7 @@ class PortalTests(unittest.TestCase):
         self.assertTrue(app.warning)
 
     def test_both_sources_offline_show_error_without_crashing(self):
-        with patch("catalogs.mirrors.download_via_http", side_effect=OSError("404")), patch("catalogs.sia_portal.download_release", side_effect=OSError("offline")):
+        with patch("catalogs.mirrors.probe_mirror", side_effect=OSError("404")), patch("catalogs.sia_portal.download_release", side_effect=OSError("offline")):
             app = self.app().run()
             app.button[2].click().run()
         self.assertFalse(app.exception)
