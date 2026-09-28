@@ -86,6 +86,7 @@ COMPETENCE_SYSTEMS = {
         "official_page": cnes_portal.BASE_DADOS_PAGE,
         "fetch": cnes_portal.fetch_cnes_base_catalog,
         "download": cnes_portal.download_base_release,
+        "competence_limit": 1,
     },
 }
 
@@ -206,8 +207,9 @@ def sync_competence_system(key, config, previous, on_progress=None):
     except (OSError, ValueError) as exc:
         return failed(old, config, checked_at, exc)
     updated = dict(old.get("competences") or {})
-    # Todas as cópias antigas ficam disponíveis; apenas os seis meses recentes são baixados.
-    months = sorted({str(item["competence"]) for item in releases}, reverse=True)[:COMPETENCE_LIMIT]
+    # Todas as cópias antigas ficam disponíveis; cada catálogo define seu limite de sincronização.
+    limit = int(config.get("competence_limit", COMPETENCE_LIMIT))
+    months = sorted({str(item["competence"]) for item in releases}, reverse=True)[:limit]
     if not updated:
         # Primeiro garante a competência atual; o histórico entra nas próximas execuções.
         months = months[:1]
