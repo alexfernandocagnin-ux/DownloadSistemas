@@ -94,8 +94,10 @@ def gh(*args):
 def remote_asset(tag, name):
     """Nunca presume que uma URL no catálogo representa um upload concluído."""
     try:
-        release = json.loads(gh("release", "view", tag, "--repo", os.environ["GITHUB_REPOSITORY"], "--json", "assets"))
+        release = json.loads(gh("release", "view", tag, "--repo", os.environ["GITHUB_REPOSITORY"], "--json", "assets,isDraft"))
     except subprocess.CalledProcessError:
+        return None
+    if release.get("isDraft"):
         return None
     return next((a for a in release["assets"] if a["name"] == name and a["size"] > 0), None)
 

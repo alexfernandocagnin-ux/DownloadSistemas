@@ -1,6 +1,8 @@
 """Regressões: espelhos quebrados, publicação incompleta e DATASUS indisponível."""
 
 import hashlib
+import json
+import os
 import importlib.util
 from ftplib import error_perm
 import tempfile
@@ -130,6 +132,11 @@ class SynchronizationTests(unittest.TestCase):
             result = sync.sync_single_version_system("bpa", self.config, self.previous)
         self.assertEqual(result["current"], self.old["current"])
         self.assertEqual(result["mirror"], MIRROR)
+
+    def test_draft_asset_is_not_announced_as_public_download(self):
+        draft = {"isDraft": True, "assets": [{"name": NAME, "size": len(PACKAGE), "url": MIRROR["asset_url"]}]}
+        with patch.dict(os.environ, {"GITHUB_REPOSITORY": mirrors.REPOSITORY}), patch.object(sync, "gh", return_value=json.dumps(draft)):
+            self.assertIsNone(sync.remote_asset("bpa-latest", NAME))
 
     def test_completed_upload_is_recovered_after_interrupted_run(self):
         asset = {"name": NAME, "url": MIRROR["asset_url"], "size": len(PACKAGE), "digest": "sha256:" + "a" * 64}
