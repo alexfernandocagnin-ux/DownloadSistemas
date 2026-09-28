@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-28T13:04:45+00:00",
+  "updated_at": "2026-09-28T13:31:24+00:00",
   "systems": {
     "bpa": {
       "label": "BPA Magnético",
@@ -14,7 +14,7 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe"
       },
-      "checked_at": "2026-09-28T13:03:50+00:00",
+      "checked_at": "2026-09-28T13:19:51+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -30,7 +30,7 @@
         "asset_name": "SIA0604.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0604.exe"
       },
-      "checked_at": "2026-09-28T13:03:53+00:00",
+      "checked_at": "2026-09-28T13:19:55+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -39,7 +39,7 @@
       "current": null,
       "mirror": null,
       "official_reachable": false,
-      "checked_at": "2026-09-28T13:03:56+00:00"
+      "checked_at": "2026-09-28T13:19:57+00:00"
     },
     "bdsia": {
       "label": "Tabela mensal do SIA (BDSIA)",
@@ -52,7 +52,7 @@
           "mirror": {
             "tag": "bdsia-202604",
             "asset_name": "BDSIA202604d.exe",
-            "asset_url": null
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202604/BDSIA202604d.exe"
           }
         },
         "202605": {
@@ -62,7 +62,7 @@
           "mirror": {
             "tag": "bdsia-202605",
             "asset_name": "BDSIA202605d.exe",
-            "asset_url": null
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202605/BDSIA202605d.exe"
           }
         },
         "202606": {
@@ -72,7 +72,7 @@
           "mirror": {
             "tag": "bdsia-202606",
             "asset_name": "BDSIA202606b.exe",
-            "asset_url": null
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202606/BDSIA202606b.exe"
           }
         },
         "202607": {
@@ -82,7 +82,7 @@
           "mirror": {
             "tag": "bdsia-202607",
             "asset_name": "BDSIA202607b.exe",
-            "asset_url": null
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202607/BDSIA202607b.exe"
           }
         },
         "202608": {
@@ -92,7 +92,7 @@
           "mirror": {
             "tag": "bdsia-202608",
             "asset_name": "BDSIA202608b.exe",
-            "asset_url": null
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202608/BDSIA202608b.exe"
           }
         },
         "202609": {
@@ -102,11 +102,11 @@
           "mirror": {
             "tag": "bdsia-202609",
             "asset_name": "BDSIA202609a.exe",
-            "asset_url": null
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609a.exe"
           }
         }
       },
-      "checked_at": "2026-09-28T13:04:42+00:00",
+      "checked_at": "2026-09-28T13:20:44+00:00",
       "official_reachable": true
     }
   }
