@@ -112,6 +112,23 @@ div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLin
     background: #0d594a; border-color: #0d594a; }
 div[data-testid="stLinkButton"] a { border-radius: 10px; }
 div[data-testid="stCaptionContainer"] { color: #69797b; }
+.ds-loading-card { background: #f7fbf8; border: 1px solid #dce9e1; border-radius: 12px;
+    padding: .85rem 1rem; margin: .65rem 0 .9rem; }
+.ds-loading-copy { display: flex; align-items: center; gap: .7rem; color: #17343a; }
+.ds-loading-dot { width: 11px; height: 11px; flex: 0 0 auto; border: 2px solid #c6ded2;
+    border-top-color: #126b59; border-radius: 50%; animation: ds-spin .85s linear infinite; }
+.ds-loading-copy strong { display: block; font-size: .91rem; }
+.ds-loading-copy span { display: block; color: #647477; font-size: .82rem; margin-top: .15rem; }
+.ds-progress-track { position: relative; height: 5px; margin-top: .85rem; overflow: hidden;
+    background: #e1ece5; border-radius: 999px; }
+.ds-progress-track span { display: block; width: 34%; height: 100%; border-radius: inherit;
+    background: #126b59; animation: ds-progress-slide 1.3s ease-in-out infinite; }
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+@keyframes ds-progress-slide { from { transform: translateX(-120%); } to { transform: translateX(330%); } }
+@media (prefers-reduced-motion: reduce) {
+    .ds-loading-dot, .ds-progress-track span { animation: none; }
+    .ds-progress-track span { transform: translateX(80%); }
+}
 @media (max-width: 760px) { .ds-hero { grid-template-columns: 1fr; gap: 1.3rem; padding: 2rem 1.5rem; }
     .ds-hero-meta { border-left: 0; border-top: 1px solid rgba(255,255,255,.2); padding: .8rem 0 0; } }
 </style>
@@ -143,15 +160,21 @@ def cached_mirror_probe(name, mirror):
     return probe_mirror(name, mirror)
 
 
-def prepare_download(system_key, name, url, mirror):
+def prepare_download(system_key, name, url, mirror, on_progress=None):
     mirror_error = False
     if matching_mirror(name, mirror):
+        if on_progress:
+            on_progress("Conferindo disponibilidade e integridade no espelho.")
         try:
             return {"url": cached_mirror_probe(name, mirror)}, "Espelho independente", False
         except (OSError, ValueError):
             mirror_error = True
+            if on_progress:
+                on_progress("O espelho falhou; tentando recuperar o arquivo na fonte oficial.")
     if system_key in {"cnes_base", "cnes_complete"}:
         raise OSError("Este pacote CNES grande precisa de um espelho publicado para evitar sobrecarga do portal.")
+    if on_progress and not mirror_error:
+        on_progress("Preparando o arquivo pela fonte oficial; aguarde a conferência.")
     release = {"name": name, "url": url}
     download_with_source = SYSTEM_META[system_key].get("download_with_source")
     if download_with_source:
@@ -164,6 +187,17 @@ def prepare_download(system_key, name, url, mirror):
 def badge(kind, text):
     css_class = {"ok": "ds-badge-ok", "warn": "ds-badge-warn", "error": "ds-badge-error"}[kind]
     st.markdown(f'<span class="ds-badge {css_class}">{escape(text)}</span>', unsafe_allow_html=True)
+
+
+def render_loading_card(placeholder, message):
+    placeholder.markdown(
+        f'<div class="ds-loading-card" role="status" aria-live="polite">'
+        f'<div class="ds-loading-copy"><span class="ds-loading-dot" aria-hidden="true"></span>'
+        f'<div><strong>Preparando arquivo</strong><span>{escape(message)}</span></div></div>'
+        f'<div class="ds-progress-track" role="progressbar" aria-label="Preparação do arquivo" '
+        f'aria-valuetext="Em andamento"><span></span></div></div>',
+        unsafe_allow_html=True,
+    )
 
 
 def readable_date(value):
@@ -196,9 +230,14 @@ def render_download_button(system_key, name, url, mirror):
         st.session_state.pop(state_key, None)
         cached = None
     if not cached and st.button("Preparar arquivo para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary"):
+        loading = st.empty()
+        render_loading_card(loading, "Iniciando a verificação do arquivo.")
         try:
-            with st.spinner("Preparando o arquivo; arquivos grandes podem levar alguns minutos..."):
-                data, source, fallback = prepare_download(system_key.removesuffix("_backup"), name, url, mirror)
+            data, source, fallback = prepare_download(
+                system_key.removesuffix("_backup"), name, url, mirror,
+                on_progress=lambda message: render_loading_card(loading, message),
+            )
+            loading.empty()
             # Mantém apenas um fallback oficial por sessão; espelhos usam URL, não bytes.
             for other_key in list(st.session_state):
                 if other_key.startswith("official_download_") and other_key != state_key:
@@ -208,6 +247,7 @@ def render_download_button(system_key, name, url, mirror):
             if fallback:
                 st.warning("O espelho não respondeu. Recuperamos este arquivo da fonte oficial.")
         except (OSError, ValueError):
+            loading.empty()
             st.error("O arquivo não está disponível agora. Tente novamente mais tarde. Os demais downloads continuam disponíveis.")
     if cached:
         st.caption(f'Arquivo pronto · {cached["source"]}')
