@@ -228,7 +228,8 @@ def sync_competence_system(key, config, previous, on_progress=None):
             if not mirror:
                 mirror = store_package(key, release, config, f"{key.replace('_', '-')}-{month}")
             updated[month] = {"name": release["name"], "size": release.get("size"),
-                              "url": release["url"], "mirror": mirror}
+                              "url": release["url"], "mirror": mirror,
+                              "catalog_source": release.get("catalog_source")}
             if on_progress:
                 on_progress(key, result())
         except (OSError, ValueError, subprocess.CalledProcessError) as exc:
