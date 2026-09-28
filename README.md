@@ -61,12 +61,25 @@ os parsers):
 .\.venv\Scripts\python.exe scripts\sync_catalog.py
 ```
 
-## Site acordado
+## Despertar periódico do portal
 
-O workflow `.github/workflows/keep-awake.yml` abre o app a cada 6 horas e
-clica em *Yes, get this app back up!* quando o Streamlit Cloud o colocou para
-dormir, igual ao BPA Novo. Configure a URL publicada em `DOWNLOAD_APP_URL`
-(secret ou variável do repositório) depois do primeiro deploy.
+O workflow existente `.github/workflows/keep-awake.yml` visita o app com Chromium
+sem tela às 00:23, 06:23, 12:23 e 18:23 UTC. Também pode ser executado por
+**Actions → Acordar portal periodicamente → Run workflow**.
+Configure `DOWNLOAD_APP_URL` em **Settings → Secrets and variables → Actions → Variables**.
+Sem essa variável, usa `https://downloadsistemas.streamlit.app/`.
+
+O navegador procura o botão *Yes, get this app back up!* na página e nos iframes
+e clica quando necessário. Confirma o título real do portal, `Downloads sem rodeios.`,
+antes de registrar sucesso. Exceções do Streamlit, falhas de navegação e tempo
+esgotado produzem erro e execução vermelha no Actions. A navegação tem limite de
+90 segundos; após ela, o portal tem até 240 segundos para carregar. A execução
+completa tem limite de 10 minutos e não se sobrepõe a outra do mesmo workflow.
+
+Isso não desativa a suspensão do Community Cloud: é uma tentativa periódica de
+acordar o app. O agendamento do GitHub pode atrasar; indisponibilidade, mudança
+na tela de suspensão ou no título do portal podem exigir manutenção. Em repositórios
+públicos, o GitHub pode desativar agendamentos após 60 dias sem atividade.
 
 ## Testes
 

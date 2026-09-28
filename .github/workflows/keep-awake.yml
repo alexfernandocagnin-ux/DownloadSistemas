@@ -1,4 +1,4 @@
-name: Manter o site acordado
+name: Acordar portal periodicamente
 
 on:
   schedule:
@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: wake-download-portal
+  cancel-in-progress: false
+
 jobs:
   wake:
     runs-on: ubuntu-24.04
@@ -18,11 +22,15 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+      - name: Validar automação de despertar
+        run: python -m unittest test_keep_awake -v
       - name: Instalar navegador sem tela
+        timeout-minutes: 4
         run: |
           python -m pip install "playwright>=1.45,<2"
           python -m playwright install --with-deps chromium
       - name: Abrir o app e acordar se estiver dormindo
+        timeout-minutes: 6
         env:
-          DOWNLOAD_APP_URL: ${{ vars.DOWNLOAD_APP_URL || secrets.DOWNLOAD_APP_URL || 'https://downloadsistemas.streamlit.app/' }}
-        run: python scripts/keep_awake.py
+          DOWNLOAD_APP_URL: ${{ vars.DOWNLOAD_APP_URL || 'https://downloadsistemas.streamlit.app/' }}
+        run: python -u scripts/keep_awake.py
