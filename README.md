@@ -1,9 +1,10 @@
 # DownloadSistemas
 
 Portal Streamlit que confere as versões oficiais do BPA Magnético, do SIA, da
-tabela mensal BDSIA e do SIHD2 no site do Ministério (`sia.datasus.gov.br`,
-`sihd.datasus.gov.br`) e oferece o download direto — mesmo quando esse site
-está fora do ar, o que acontece com frequência.
+tabela mensal BDSIA, do SIHD2, do CNES e do SIGTAP no site do Ministério
+(`sia.datasus.gov.br`, `sihd.datasus.gov.br`, `cnes.datasus.gov.br`,
+`sigtap.datasus.gov.br`) e oferece o download direto — mesmo quando esses
+sites estão fora do ar, o que acontece com frequência.
 
 ## Como funciona
 
@@ -26,24 +27,29 @@ está fora do ar, o que acontece com frequência.
 |---|---|---|
 | BPA Magnético | `sia.datasus.gov.br/versao/listar_ftp_bpa.php` | instalador, versão única |
 | SIA | `sia.datasus.gov.br/versao/listar_ftp_sia.php` | instalador, versão única |
-| BDSIA (tabela mensal) | mesma página do SIA | por competência (seletor de mês) |
 | SIHD2 | `sihd.datasus.gov.br/versao/versao_sihd2.php` | instalador, versão única |
+| CNES · SCNES (atualização) | API JSON por trás de `cnes.datasus.gov.br/pages/downloads/aplicativos.jsp` | instalador, versão única |
+| BDSIA (tabela mensal do SIA) | mesma página do SIA | por competência (seletor de mês) |
+| SIGTAP · Tabela Unificada | RSS de `sigtap.datasus.gov.br/tabela-unificada/competencias.rss` | por competência (seletor de mês) |
+| CNES · Base de dados mensal | API JSON por trás de `cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp` | por competência (seletor de mês) |
 
 **Fora do escopo por enquanto:** os arquivos `DSIHD017_<UF>_<competência>.ZIP`
-do SIHD2 (dados mensais por estado, usados durante a importação de AIH) —
-modalidade diferente, com 27 arquivos por mês. Pode entrar depois como um
-seletor de UF dentro do cartão do SIHD2.
+do SIHD2 (dados mensais por estado, usados durante a importação de AIH) e as
+variantes "SCNES Simplificado" do CNES — modalidades com mais arquivos por
+competência/versão. Podem entrar depois como um seletor extra dentro do
+cartão de cada sistema.
 
 ## Estrutura
 
-- `catalogs/` — leitura e validação das páginas/FTP oficiais (sem executar
-  nada); `_common.py` tem o parser HTML e as checagens de host/tamanho/
-  assinatura `MZ` compartilhadas pelos três módulos por sistema.
+- `catalogs/` — leitura e validação das páginas/FTP/API oficiais (sem
+  executar nada); `_common.py` tem o parser HTML e as checagens de host/
+  tamanho/assinatura (`MZ` ou `PK`) compartilhadas pelos módulos por sistema.
 - `scripts/sync_catalog.py` — roda no cron do GitHub Actions: confere as
-  quatro fontes, baixa o que mudou para `dist/` e atualiza
+  sete fontes, baixa o que mudou para `dist/` e atualiza
   `data/catalog.json`. O workflow sobe cada arquivo de `dist/` como asset de
   uma GitHub Release (`bpa-latest`, `sia-latest`, `sihd2-latest`,
-  `bdsia-<competência>`) e só comita o catálogo quando algo muda.
+  `cnes-app-latest`, `bdsia-<competência>`, `sigtap-<competência>`,
+  `cnes-base-<competência>`) e só comita o catálogo quando algo muda.
 - `app.py` — a tela do portal.
 
 ## Executar localmente

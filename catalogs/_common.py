@@ -116,6 +116,10 @@ def looks_like_windows_executable(package: bytes, *, min_size: int = 1_000_000) 
     return len(package) >= min_size and package[:2] == b"MZ"
 
 
+def looks_like_zip(package: bytes, *, min_size: int = 1_000_000) -> bool:
+    return len(package) >= min_size and package[:2] == b"PK"
+
+
 def download_release(
     url: str,
     name: str,
@@ -123,8 +127,9 @@ def download_release(
     safe_url_fn,
     max_size: int,
     min_size: int = 1_000_000,
+    looks_valid_fn=looks_like_windows_executable,
 ) -> bytes:
-    """Baixa um pacote .exe já catalogado, sem executá-lo, revalidando o link antes."""
+    """Baixa um pacote já catalogado, sem executá-lo, revalidando o link antes."""
     if not safe_url_fn(url, name):
         raise ValueError(f"Link de download não permitido para {name}.")
     parsed = urlsplit(url)
@@ -133,6 +138,6 @@ def download_release(
         package = download_via_ftp(parsed.hostname or "", directory, filename, max_size=max_size)
     else:
         package = download_via_http(url, name, max_size=max_size)
-    if not looks_like_windows_executable(package, min_size=min_size):
-        raise ValueError(f"O download de {name} não parece ser um executável válido.")
+    if not looks_valid_fn(package, min_size=min_size):
+        raise ValueError(f"O download de {name} não parece ser um pacote válido.")
     return package

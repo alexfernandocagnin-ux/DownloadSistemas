@@ -4,7 +4,7 @@ import io
 import unittest
 from unittest.mock import patch
 
-from catalogs import bpa_portal, sia_portal, sihd_portal
+from catalogs import bpa_portal, cnes_portal, sia_portal, sigtap_portal, sihd_portal
 
 
 class SiaPortalTests(unittest.TestCase):
@@ -81,6 +81,60 @@ class Sihd2PortalTests(unittest.TestCase):
             urlopen.return_value.__enter__.return_value = io.BytesIO(page.encode("iso-8859-15"))
             with self.assertRaises(ValueError):
                 sihd_portal.fetch_sihd2_catalog()
+
+
+class SigtapPortalTests(unittest.TestCase):
+    FEED = """<?xml version="1.0" encoding="UTF-8"?>
+    <rss><channel>
+      <item><link>ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202609_v2609171117.zip</link></item>
+      <item><link>ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202608_v2608141139.zip</link></item>
+      <item><link>ftp://attacker.example/pub/sistemas/tup/downloads/TabelaUnificada_202607_v1.zip</link></item>
+    </channel></rss>
+    """
+
+    def test_parses_feed_and_rejects_unofficial_hosts(self):
+        with patch("catalogs.sigtap_portal.urlopen") as urlopen:
+            urlopen.return_value.__enter__.return_value.read.return_value = self.FEED.encode("utf-8")
+            releases = sigtap_portal.fetch_sigtap_catalog()
+        self.assertEqual([item["name"] for item in releases], [
+            "TabelaUnificada_202609_v2609171117.zip", "TabelaUnificada_202608_v2608141139.zip",
+        ])
+        self.assertEqual(releases[0]["competence"], "202609")
+
+
+class CnesPortalTests(unittest.TestCase):
+    def test_app_catalog_keeps_only_the_update_installer(self):
+        payload = [
+            {"nomeArquivo": "SCNES4850-COMPLETA.ZIP"},
+            {"nomeArquivo": "SCNES4850-ATUALIZACAO.ZIP"},
+            {"nomeArquivo": "SCNESSIMPLIFICADO4850-ATUALIZACAO.ZIP"},
+        ]
+        with patch("catalogs.cnes_portal._fetch_json", return_value=payload):
+            releases = cnes_portal.fetch_cnes_app_catalog()
+        self.assertEqual([item["name"] for item in releases], ["SCNES4850-ATUALIZACAO.ZIP"])
+        self.assertEqual(
+            releases[0]["url"], "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
+        )
+
+    def test_base_dados_catalog_parses_competence(self):
+        payload = [{"nomeArquivo": "BASE_DE_DADOS_CNES_202608.ZIP"}, {"nomeArquivo": "LEIAME.TXT"}]
+        with patch("catalogs.cnes_portal._fetch_json", return_value=payload):
+            releases = cnes_portal.fetch_cnes_base_catalog()
+        self.assertEqual([item["competence"] for item in releases], ["202608"])
+
+    def test_download_link_must_match_host_path_and_query(self):
+        self.assertTrue(cnes_portal.safe_url(
+            "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
+            "SCNES4850-ATUALIZACAO.ZIP",
+        ))
+        self.assertFalse(cnes_portal.safe_url(
+            "https://attacker.example/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
+            "SCNES4850-ATUALIZACAO.ZIP",
+        ))
+        self.assertFalse(cnes_portal.safe_url(
+            "https://cnes.datasus.gov.br/EstatisticasServlet?path=OUTRO.ZIP",
+            "SCNES4850-ATUALIZACAO.ZIP",
+        ))
 
 
 if __name__ == "__main__":
