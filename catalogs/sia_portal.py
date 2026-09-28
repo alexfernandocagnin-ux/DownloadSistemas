@@ -106,5 +106,5 @@ def fetch_sia_catalog() -> list[dict[str, object]]:
 def download_release(release: dict[str, object]) -> bytes:
     """Baixa um pacote BDSIA ou SIA já catalogado, sem executá-lo."""
     return _download_release(
-        str(release["url"]), str(release["name"]), safe_url_fn=safe_url, max_size=MAX_PACKAGE_SIZE,
+        str(release["url"]), str(release["name"]), safe_url_fn=safe_url, max_size=MAX_PACKAGE_SIZE, ftp_hosts=FTP_HOSTS,
     )

@@ -131,6 +131,7 @@ def download_release(
     max_size: int,
     min_size: int = 1_000_000,
     looks_valid_fn=looks_like_windows_executable,
+    ftp_hosts: frozenset[str] = frozenset(),
 ) -> bytes:
     """Baixa um pacote já catalogado, sem executá-lo, revalidando o link antes."""
     if not safe_url_fn(url, name):
@@ -138,7 +139,19 @@ def download_release(
     parsed = urlsplit(url)
     if parsed.scheme == "ftp":
         directory, _, filename = unquote(parsed.path).rpartition("/")
-        package = download_via_ftp(parsed.hostname or "", directory, filename, max_size=max_size)
+        hosts = list(dict.fromkeys([parsed.hostname or "", *sorted(ftp_hosts)]))
+        last_error = None
+        for host in hosts:
+            candidate = parsed._replace(netloc=host).geturl()
+            if not safe_url_fn(candidate, name):
+                continue
+            try:
+                package = download_via_ftp(host, directory, filename, max_size=max_size)
+                break
+            except OSError as exc:
+                last_error = exc
+        else:
+            raise OSError(f"Nenhum servidor FTP conseguiu entregar {name}.") from last_error
     else:
         package = download_via_http(url, name, max_size=max_size)
     if not looks_valid_fn(package, min_size=min_size):

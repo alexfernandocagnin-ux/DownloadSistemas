@@ -197,7 +197,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key)
         current = info.get("current")
-        render_status(releases, error, info.get("last_success_at", info.get("checked_at")) if not releases else None)
+        render_status(releases, error, info.get("last_success_at", info.get("checked_at")) if current and not releases else None)
         if releases:
             name, url = releases[0]["name"], releases[0]["url"]
         elif current:

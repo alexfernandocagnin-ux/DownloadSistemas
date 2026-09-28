@@ -2,12 +2,13 @@
 
 import hashlib
 import importlib.util
+from ftplib import error_perm
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from catalogs import mirrors
+from catalogs import mirrors, _common, bpa_portal
 from scripts import sync_catalog as sync
 
 
@@ -45,6 +46,21 @@ class MirrorTests(unittest.TestCase):
         with patch.object(mirrors, "download_via_http", return_value=PACKAGE):
             result = mirrors.download_mirror(NAME, {**MIRROR, "size": len(PACKAGE), "sha256": hashlib.sha256(PACKAGE).hexdigest()})
         self.assertEqual(result, PACKAGE)
+
+
+class FtpRecoveryTests(unittest.TestCase):
+    def test_download_uses_another_official_host_after_outage(self):
+        package = b"MZ" + b"0" * 1_000_000
+        with patch.object(_common, "download_via_ftp", side_effect=[OSError("offline"), package]) as download:
+            self.assertEqual(bpa_portal.download_release({"name": NAME, "url": URL}), package)
+        self.assertEqual(download.call_count, 2)
+        self.assertNotEqual(download.call_args_list[0].args[0], download.call_args_list[1].args[0])
+
+    def test_ftp_protocol_errors_become_recoverable_errors(self):
+        with patch.object(_common, "FTP") as ftp:
+            ftp.return_value.__enter__.return_value.retrbinary.side_effect = error_perm("550 not available")
+            with self.assertRaises(OSError):
+                _common.download_via_ftp("official", "/folder", NAME, max_size=2_000_000)
 
 
 class SynchronizationTests(unittest.TestCase):
@@ -101,6 +117,10 @@ class SynchronizationTests(unittest.TestCase):
 
 @unittest.skipUnless(importlib.util.find_spec("streamlit"), "Requer Streamlit")
 class PortalTests(unittest.TestCase):
+    def setUp(self):
+        import streamlit as st
+        st.cache_data.clear()
+
     def app(self):
         from streamlit.testing.v1 import AppTest
         return AppTest.from_file(str(Path(__file__).parent / "app.py"), default_timeout=20)
