@@ -9,6 +9,9 @@ catalog.json atualizado.
 
 from __future__ import annotations
 
+import argparse
+import hashlib
+import subprocess
 import json
 import os
 import sys
@@ -23,6 +26,7 @@ from catalogs import bpa_portal, cnes_portal, sia_portal, sigtap_portal, sihd_po
 CATALOG_PATH = ROOT / "data" / "catalog.json"
 DIST_DIR = ROOT / "dist"
 COMPETENCE_LIMIT = 6
+PUBLISH = False
 
 SINGLE_VERSION_SYSTEMS = {
     "bpa": {
@@ -77,132 +81,157 @@ COMPETENCE_SYSTEMS = {
 }
 
 
-def _asset_url(tag: str, asset_name: str) -> str | None:
-    repo = os.environ.get("GITHUB_REPOSITORY")
-    if not repo:
+def now():
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def gh(*args):
+    return subprocess.run(["gh", *args], check=True, capture_output=True, text=True).stdout
+
+
+def remote_asset(tag, name):
+    """Nunca presume que uma URL no catálogo representa um upload concluído."""
+    try:
+        release = json.loads(gh("release", "view", tag, "--repo", os.environ["GITHUB_REPOSITORY"], "--json", "assets"))
+    except subprocess.CalledProcessError:
         return None
-    return f"https://github.com/{repo}/releases/download/{tag}/{asset_name}"
+    return next((a for a in release["assets"] if a["name"] == name and a["size"] > 0), None)
 
 
-def _load_previous() -> dict[str, object]:
+def confirmed_previous(entry):
+    mirror = (entry or {}).get("mirror") or {}
+    if not mirror.get("asset_url") or mirror.get("asset_name") != (entry or {}).get("name"):
+        return None
+    if not PUBLISH:
+        return mirror
+    asset = remote_asset(mirror["tag"], mirror["asset_name"])
+    if not asset:
+        return None
+    if mirror.get("size") and mirror["size"] != asset["size"]:
+        return None
+    return {**mirror, "size": asset["size"], "verified_at": now()}
+
+
+def store_package(key, release, config, tag):
+    name = str(release["name"])
+    if Path(name).name != name or "/" in name or "\\" in name:
+        raise ValueError("Nome de arquivo inválido.")
+    package = config["download"](release)
+    target = DIST_DIR / key / name
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(package)
+    if not PUBLISH:
+        return None
+    repo = os.environ["GITHUB_REPOSITORY"]
+    try:
+        gh("release", "view", tag, "--repo", repo)
+    except subprocess.CalledProcessError:
+        gh("release", "create", tag, "--repo", repo, "--title", tag,
+           "--notes", "Espelho de arquivos oficiais do DATASUS. Arquivos preservados para uso durante indisponibilidades.")
+    # Reenvio recupera uploads incompletos; outros nomes de versão são preservados.
+    gh("release", "upload", tag, str(target), "--repo", repo, "--clobber")
+    asset = remote_asset(tag, name)
+    if not asset or asset["size"] != len(package):
+        raise ValueError(f"A publicação de {name} não foi confirmada.")
+    return {"tag": tag, "asset_name": name, "asset_url": asset["url"],
+            "size": len(package), "sha256": hashlib.sha256(package).hexdigest(), "verified_at": now()}
+
+
+def _load_previous():
     if not CATALOG_PATH.is_file():
         return {"systems": {}}
     data = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
     return data if isinstance(data, dict) else {"systems": {}}
 
 
-def _unreachable_fallback(previous_system: dict[str, object] | None, config: dict[str, object], checked_at: str) -> dict[str, object]:
-    if previous_system:
-        result = dict(previous_system)
-    else:
-        result = {"label": config["label"], "official_page": config["official_page"], "current": None, "mirror": None}
-    result["official_reachable"] = False
-    result["checked_at"] = checked_at
+def failed(previous, config, checked_at, exc):
+    result = dict(previous or {"label": config["label"], "official_page": config["official_page"]})
+    # checked_at é a tentativa; last_success_at conserva a idade real da cópia.
+    if previous and "last_success_at" not in result:
+        result["last_success_at"] = previous.get("checked_at") if previous.get("official_reachable") else None
+    result.update(official_reachable=False, checked_at=checked_at, error=type(exc).__name__)
+    print(f'::warning::{config["label"]}: falha na consulta, download ou publicação ({type(exc).__name__}); cópia anterior preservada.')
     return result
 
 
-def sync_single_version_system(key: str, config: dict[str, object], previous: dict[str, object]) -> dict[str, object]:
-    checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    previous_system = previous.get("systems", {}).get(key)
-    try:
-        latest = config["fetch"]()[0]
-        name = str(latest["name"])
-        previous_name = ((previous_system or {}).get("current") or {}).get("name")
-        previous_asset_url = ((previous_system or {}).get("mirror") or {}).get("asset_url")
-        if name != previous_name or not previous_asset_url:
-            print(f"[{key}] versão nova ou ainda não espelhada: {name} (antes: {previous_name or 'nenhuma'})")
-            package = config["download"](latest)
-            target_dir = DIST_DIR / key
-            target_dir.mkdir(parents=True, exist_ok=True)
-            (target_dir / name).write_bytes(package)
-        else:
-            print(f"[{key}] sem mudança: {name}")
-    except (OSError, ValueError) as exc:
-        print(f"[{key}] consulta ou download oficial falhou: {type(exc).__name__}: {exc}")
-        return _unreachable_fallback(previous_system, config, checked_at)
-
-    return {
-        "label": config["label"],
-        "official_page": config["official_page"],
-        "current": {"name": name, "size": latest.get("size"), "url": latest["url"]},
-        "mirror": {"tag": config["tag"], "asset_name": name, "asset_url": _asset_url(str(config["tag"]), name)},
-        "checked_at": checked_at,
-        "official_reachable": True,
-    }
-
-
-def sync_competence_system(key: str, config: dict[str, object], previous: dict[str, object]) -> dict[str, object]:
-    checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    previous_system = previous.get("systems", {}).get(key, {})
-    previous_competences = previous_system.get("competences", {}) if isinstance(previous_system, dict) else {}
+def sync_single_version_system(key, config, previous):
+    checked_at = now()
+    old = previous.get("systems", {}).get(key, {})
     try:
         releases = config["fetch"]()
+        if not releases:
+            raise ValueError("Nenhuma versão encontrada.")
+        latest = releases[0]
+        name = latest["name"]
+        previous_entry = {**(old.get("current") or {}), "mirror": old.get("mirror")}
+        mirror = confirmed_previous(previous_entry) if previous_entry.get("name") == name else None
+        if not mirror:
+            mirror = store_package(key, latest, config, config["tag"])
+        print(f'[{key}] {name}: {"espelho confirmado" if mirror else "somente arquivo local"}')
+    except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+        return failed(old, config, checked_at, exc)
+    return {"label": config["label"], "official_page": config["official_page"],
+            "current": {"name": name, "size": latest.get("size"), "url": latest["url"]},
+            "mirror": mirror, "checked_at": checked_at, "last_success_at": checked_at, "official_reachable": True}
+
+
+def sync_competence_system(key, config, previous):
+    checked_at = now()
+    old = previous.get("systems", {}).get(key, {})
+    try:
+        releases = config["fetch"]()
+        if not releases:
+            raise ValueError("Nenhuma competência encontrada.")
     except (OSError, ValueError) as exc:
-        print(f"[{key}] consulta oficial falhou: {type(exc).__name__}: {exc}")
-        result = dict(previous_system) if previous_system else {
-            "label": config["label"], "official_page": config["official_page"], "competences": {},
-        }
-        result["official_reachable"] = False
-        result["checked_at"] = checked_at
-        return result
-
-    competences = sorted({str(item["competence"]) for item in releases})[-COMPETENCE_LIMIT:]
-    latest_by_competence = {
-        competence: next(item for item in releases if item["competence"] == competence)
-        for competence in competences
-    }
-
-    updated_competences = dict(previous_competences)
-    for competence, release in latest_by_competence.items():
-        name = str(release["name"])
-        tag = f"{key.replace('_', '-')}-{competence}"
-        previous_entry = previous_competences.get(competence, {})
-        already_mirrored = previous_entry.get("name") == name and (previous_entry.get("mirror") or {}).get("asset_url")
-        if already_mirrored:
-            print(f"[{key}] {competence}: sem mudança ({name})")
-            continue
-        print(f"[{key}] {competence}: versão nova ou ainda não espelhada: {name}")
+        return failed(old, config, checked_at, exc)
+    updated = dict(old.get("competences") or {})
+    # Todas as cópias antigas ficam disponíveis; apenas os seis meses recentes são baixados.
+    months = sorted({str(item["competence"]) for item in releases}, reverse=True)[:COMPETENCE_LIMIT]
+    errors = []
+    for month in months:
+        release = next(item for item in releases if item["competence"] == month)
+        entry = updated.get(month, {})
         try:
-            package = config["download"](release)
-        except (OSError, ValueError) as exc:
-            print(f"[{key}] {competence}: download falhou, mantendo o pacote anterior: {type(exc).__name__}: {exc}")
-            continue
-        target_dir = DIST_DIR / key
-        target_dir.mkdir(parents=True, exist_ok=True)
-        (target_dir / name).write_bytes(package)
-        updated_competences[competence] = {
-            "name": name, "size": release.get("size"), "url": release["url"],
-            "mirror": {"tag": tag, "asset_name": name, "asset_url": _asset_url(tag, name)},
-        }
-
-    return {
-        "label": config["label"],
-        "official_page": config["official_page"],
-        "competences": updated_competences,
-        "checked_at": checked_at,
-        "official_reachable": True,
-    }
+            mirror = confirmed_previous(entry) if entry.get("name") == release["name"] else None
+            if not mirror:
+                mirror = store_package(key, release, config, f"{key.replace('_', '-')}-{month}")
+            updated[month] = {"name": release["name"], "size": release.get("size"),
+                              "url": release["url"], "mirror": mirror}
+        except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+            errors.append(month)
+            print(f'::warning::{key} {month}: {type(exc).__name__}; cópia anterior preservada.')
+    return {"label": config["label"], "official_page": config["official_page"],
+            "competences": updated, "checked_at": checked_at, "last_success_at": checked_at,
+            "official_reachable": True, "pending_competences": errors}
 
 
-def main() -> None:
+def main():
+    global PUBLISH
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--publish", action="store_true", help="Publicar e verificar cada arquivo antes de atualizar o catálogo")
+    PUBLISH = parser.parse_args().publish
+    if PUBLISH:
+        if not os.environ.get("GITHUB_REPOSITORY"):
+            parser.error("--publish requer GITHUB_REPOSITORY")
+        gh("auth", "status")
     previous = _load_previous()
-    systems: dict[str, object] = {}
+    systems = {}
     for key, config in SINGLE_VERSION_SYSTEMS.items():
         systems[key] = sync_single_version_system(key, config, previous)
     for key, config in COMPETENCE_SYSTEMS.items():
         systems[key] = sync_competence_system(key, config, previous)
-
-    catalog = {"updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "systems": systems}
+    catalog = {"updated_at": now(), "systems": systems}
     CATALOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    CATALOG_PATH.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-    if DIST_DIR.is_dir() and any(DIST_DIR.rglob("*")):
-        print("Arquivos novos para publicar em dist/:")
-        for path in sorted(DIST_DIR.rglob("*")):
-            if path.is_file():
-                print(" -", path.relative_to(ROOT))
-    else:
-        print("Nenhum arquivo novo para espelhar.")
+    temporary = CATALOG_PATH.with_suffix(".tmp")
+    temporary.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(CATALOG_PATH)
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+            summary.write("## Espelhos DATASUS\n\n")
+            for key, info in systems.items():
+                entries = list(info.get("competences", {}).values()) if key in COMPETENCE_SYSTEMS else [{"mirror": info.get("mirror")}]
+                count = sum(bool((e.get("mirror") or {}).get("verified_at")) for e in entries)
+                summary.write(f"- {info['label']}: {count} arquivo(s) com publicação confirmada nesta versão do catálogo.\n")
 
 
 if __name__ == "__main__":

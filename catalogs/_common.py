@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from ftplib import FTP
+from ftplib import FTP, Error as FTPError
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
@@ -101,10 +101,13 @@ def download_via_ftp(host: str, directory: str, name: str, *, max_size: int, tim
             raise ValueError(f"O download de {name} excedeu o limite de tamanho.")
         chunks.append(block)
 
-    with FTP(host, timeout=timeout) as server:
-        server.login()
-        server.cwd(directory)
-        server.retrbinary(f"RETR {name}", collect, blocksize=1024 * 1024)
+    try:
+        with FTP(host, timeout=timeout) as server:
+            server.login()
+            server.cwd(directory)
+            server.retrbinary(f"RETR {name}", collect, blocksize=1024 * 1024)
+    except FTPError as exc:
+        raise OSError(f"O servidor FTP não conseguiu entregar {name}.") from exc
     return b"".join(chunks)
 
 

@@ -8,18 +8,12 @@ sites estão fora do ar, o que acontece com frequência.
 
 ## Como funciona
 
-- **A cada visita**, o app tenta confirmar ao vivo a versão mais recente de
-  cada sistema (consulta com cache de 15 minutos). Se a consulta falhar,
-  mostra o último snapshot salvo em `data/catalog.json` e avisa que não deu
-  para confirmar naquele momento.
-- **O botão de download nunca depende do Ministério estar respondendo na
-  hora do clique.** Sempre que o espelho já foi publicado (GitHub Releases,
-  atualizado pelo workflow diário), o botão baixa de lá. Enquanto um arquivo
-  ainda não tem espelho publicado, o app baixa ao vivo do DATASUS sob
-  demanda (clique em "Preparar download") e guarda na sessão.
-- Nada é executado: os `.exe` só são lidos como bytes, com validação de
-  domínio/host e do cabeçalho `MZ` antes de aceitar qualquer arquivo (mesmo
-  padrão de segurança usado no BPA Novo, em `catalogs/_common.py`).
+- O portal abre pelo catálogo salvo, sem esperar o DATASUS. A consulta oficial é opcional e tem cache de 15 minutos.
+- A cada 6 horas, o GitHub Actions tenta obter as versões oficiais, publicar os arquivos e confirmar que cada asset existe e tem o tamanho esperado. Só depois atualiza o catálogo. Downloads ou uploads que falharem preservam a cópia anterior.
+- Os instaladores e os seis meses recentes de cada tabela são espelhados. Competências já salvas permanecem disponíveis.
+- O usuário prepara o arquivo e baixa dentro do portal. O servidor tenta o espelho primeiro e verifica assinatura, tamanho e SHA-256 quando disponível. Se o espelho falhar, tenta a fonte oficial. Uma página de erro nunca é oferecida como instalador.
+- As versões e revisões anteriores continuam acessíveis quando uma versão oficial nova ainda não foi espelhada.
+- Nenhum instalador é executado. Arquivos ainda sem espelho dependem da fonte oficial. O GitHub e o Streamlit também podem sofrer indisponibilidades; o serviço não promete disponibilidade absoluta.
 
 ## Sistemas cobertos
 
@@ -44,9 +38,9 @@ cartão de cada sistema.
 - `catalogs/` — leitura e validação das páginas/FTP/API oficiais (sem
   executar nada); `_common.py` tem o parser HTML e as checagens de host/
   tamanho/assinatura (`MZ` ou `PK`) compartilhadas pelos módulos por sistema.
-- `scripts/sync_catalog.py` — roda no cron do GitHub Actions: confere as
-  sete fontes, baixa o que mudou para `dist/` e atualiza
-  `data/catalog.json`. O workflow sobe cada arquivo de `dist/` como asset de
+- `scripts/sync_catalog.py` — roda no cron do GitHub Actions com `--publish`: confere as
+  sete fontes, baixa o que mudou para `dist/`, publica e verifica os assets antes de atualizar
+  `data/catalog.json`. O script sobe cada arquivo de `dist/` como asset de
   uma GitHub Release (`bpa-latest`, `sia-latest`, `sihd2-latest`,
   `cnes-app-latest`, `bdsia-<competência>`, `sigtap-<competência>`,
   `cnes-base-<competência>`) e só comita o catálogo quando algo muda.
@@ -77,7 +71,15 @@ dormir, igual ao BPA Novo. Configure a URL publicada em `DOWNLOAD_APP_URL`
 ## Testes
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest test_catalogs.py -v
+.\.venv\Scripts\python.exe -m unittest discover -v
 ```
 
 Os testes usam HTML/FTP simulados — não acessam a rede.
+
+## Publicação e recuperação
+
+O workflow de sincronização executa automaticamente após mudanças nos scripts e a cada 6 horas. Também pode ser acionado manualmente na aba Actions. Precisa de permissão `contents: write`, já declarada no workflow. Os arquivos ficam em Releases públicas do repositório.
+
+Para publicar manualmente, autentique o GitHub CLI (`gh auth login`), defina `GITHUB_REPOSITORY=alexfernandocagnin-ux/DownloadSistemas` e execute `python scripts/sync_catalog.py --publish`. Sem `--publish`, os arquivos são apenas preparados localmente e novos links de espelho não são inventados.
+
+Links legados são novamente conferidos na sincronização. Assets ausentes são baixados e publicados de novo. `last_success_at` informa a última consulta bem-sucedida; `checked_at` registra a tentativa mais recente. Cada espelho novo registra tamanho, SHA-256 e data de verificação.

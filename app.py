@@ -9,10 +9,12 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Callable
+from html import escape
+from datetime import datetime
 
 import streamlit as st
 
+from catalogs.mirrors import matching_mirror, download_mirror
 from catalogs import bpa_portal, cnes_portal, sia_portal, sigtap_portal, sihd_portal
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
@@ -97,7 +99,11 @@ st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 def load_snapshot() -> dict[str, object]:
     if not CATALOG_PATH.is_file():
         return {"systems": {}}
-    data = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    try:
+        data = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        st.warning("O catálogo salvo não pôde ser lido. Consulte as fontes oficiais abaixo.")
+        return {"systems": {}}
     return data if isinstance(data, dict) else {"systems": {}}
 
 
@@ -109,56 +115,79 @@ def live_catalog(system_key: str) -> tuple[list[dict[str, object]] | None, str |
         return None, type(exc).__name__
 
 
-@st.cache_data(ttl=LIVE_CHECK_TTL, max_entries=16, show_spinner=False)
-def cached_official_download(system_key: str, name: str, url: str) -> bytes:
-    return SYSTEM_META[system_key]["download"]({"name": name, "url": url})
+@st.cache_data(ttl=10 * 60, max_entries=3, show_spinner=False)
+def cached_download(system_key, name, url, mirror):
+    mirror_error = False
+    if matching_mirror(name, mirror):
+        try:
+            return download_mirror(name, mirror), "Espelho independente", False
+        except (OSError, ValueError):
+            mirror_error = True
+    data = SYSTEM_META[system_key]["download"]({"name": name, "url": url})
+    return data, "Fonte oficial", mirror_error
 
 
-def badge(kind: str, text: str) -> None:
+def badge(kind, text):
     css_class = {"ok": "ds-badge-ok", "warn": "ds-badge-warn", "error": "ds-badge-error"}[kind]
-    st.markdown(f'<span class="ds-badge {css_class}">{text}</span>', unsafe_allow_html=True)
+    st.markdown(f'<span class="ds-badge {css_class}">{escape(text)}</span>', unsafe_allow_html=True)
 
 
-def render_download_button(system_key: str, name: str, url: str, mirror: dict[str, object] | None) -> None:
-    """Baixa do espelho próprio quando publicado; senão, prepara ao vivo da fonte oficial."""
-    asset_url = (mirror or {}).get("asset_url")
-    if asset_url:
-        st.link_button(f"⬇️ Baixar {name}", str(asset_url), width="stretch")
-        return
+def readable_date(value):
+    if not value:
+        return "ainda não confirmada"
+    try:
+        return datetime.fromisoformat(value).strftime("%d/%m/%Y às %H:%M UTC")
+    except (TypeError, ValueError):
+        return str(value)
+
+
+def render_download_button(system_key, name, url, mirror):
+    mirror = matching_mirror(name, mirror)
+    if mirror and mirror.get("verified_at"):
+        badge("ok", "Espelho publicado · disponível sem o DATASUS")
+    elif mirror:
+        badge("warn", "Espelho antigo · será verificado ao preparar")
+    else:
+        badge("warn", "Ainda depende da fonte oficial")
+    if mirror and mirror.get("size"):
+        st.caption(f'{mirror["size"] / 1_000_000:.1f} MB · arquivo conferido')
 
     state_key = f"official_download_{system_key}"
-    error_key = f"official_download_error_{system_key}"
     cached = st.session_state.get(state_key)
-    if cached and cached.get("name") != name:
+    identity = (name, url, (mirror or {}).get("asset_url"), (mirror or {}).get("sha256"))
+    if cached and cached.get("identity") != identity:
         st.session_state.pop(state_key, None)
         cached = None
-
-    if st.button(f"Preparar download de {name}", key=f"prep_{system_key}_{name}", width="stretch"):
+    if not cached and st.button("Preparar arquivo para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary"):
         try:
-            with st.spinner("Baixando direto da fonte oficial..."):
-                data = cached_official_download(system_key, name, url)
-            st.session_state[state_key] = {"name": name, "data": data}
-            st.session_state.pop(error_key, None)
-        except (OSError, ValueError) as exc:
-            st.session_state[error_key] = type(exc).__name__
-
-    cached = st.session_state.get(state_key)
-    if cached and cached.get("name") == name:
-        st.download_button(
-            f"⬇️ Baixar {name}", data=cached["data"], file_name=name,
-            mime="application/octet-stream", width="stretch", key=f"dl_{system_key}_{name}",
-        )
-    elif st.session_state.get(error_key):
-        st.warning("Não consegui baixar agora. Tente de novo em instantes ou use o portal oficial abaixo.")
+            with st.spinner("Preparando o arquivo; arquivos grandes podem levar alguns minutos..."):
+                data, source, fallback = cached_download(system_key.removesuffix("_backup"), name, url, mirror)
+            cached = {"identity": identity, "data": data, "source": source}
+            st.session_state[state_key] = cached
+            if fallback:
+                st.warning("O espelho não respondeu. Recuperamos este arquivo da fonte oficial.")
+        except (OSError, ValueError):
+            st.error("O arquivo não está disponível agora. Tente novamente mais tarde. Os demais downloads continuam disponíveis.")
+    if cached:
+        st.caption(f'Arquivo pronto · {cached["source"]}')
+        st.download_button(f"⬇️ Baixar {name}", data=cached["data"], file_name=name,
+                           mime="application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
+                           width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore")
 
 
-def render_status(releases: list[dict[str, object]] | None, error: str | None, checked_at: str | None) -> None:
+def render_status(releases, error, checked_at):
     if releases:
-        badge("ok", "✅ Confirmado agora")
+        badge("ok", "Versões consultadas na fonte oficial (cache de 15 min)")
+    elif error:
+        badge("warn", "Fonte oficial indisponível · usando catálogo salvo")
     elif checked_at:
-        badge("warn", f"⚠️ Fonte oficial indisponível ({error}) · snapshot de {checked_at}")
+        st.caption(f"Última confirmação: {readable_date(checked_at)}")
     else:
-        badge("error", "❌ Sem versão conhecida ainda")
+        st.caption("Nenhuma versão salva. Ative a consulta oficial para procurar arquivos.")
+
+
+def card_catalog(system_key):
+    return live_catalog(system_key) if check_official else (None, None)
 
 
 def render_single_version_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
@@ -166,9 +195,9 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
     info = snapshot_systems.get(system_key, {})
     with st.container(border=True):
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
-        releases, error = live_catalog(system_key)
+        releases, error = card_catalog(system_key)
         current = info.get("current")
-        render_status(releases, error, info.get("checked_at") if not releases else None)
+        render_status(releases, error, info.get("last_success_at", info.get("checked_at")) if not releases else None)
         if releases:
             name, url = releases[0]["name"], releases[0]["url"]
         elif current:
@@ -178,6 +207,9 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
         if name:
             st.caption(name)
             render_download_button(system_key, str(name), str(url), info.get("mirror"))
+            if current and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
+                with st.expander("Versão anterior preservada no espelho"):
+                    render_download_button(system_key + "_backup", current["name"], current["url"], info["mirror"])
         st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
 
 
@@ -187,10 +219,9 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
     saved_competences = info.get("competences", {}) if isinstance(info.get("competences"), dict) else {}
     with st.container(border=True):
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
-        releases, error = live_catalog(system_key)
-        render_status(releases, error, info.get("checked_at") if not releases else None)
-        available = sorted({str(item["competence"]) for item in releases}, reverse=True) if releases \
-            else sorted(saved_competences.keys(), reverse=True)
+        releases, error = card_catalog(system_key)
+        render_status(releases, error, info.get("last_success_at", info.get("checked_at")) if not releases else None)
+        available = sorted(set(saved_competences) | {str(item["competence"]) for item in (releases or [])}, reverse=True)
 
         if not available:
             st.error("Nenhuma competência disponível ainda.")
@@ -217,6 +248,9 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
             name, url, mirror = saved_entry.get("name"), saved_entry.get("url"), saved_entry.get("mirror")
         if name and url:
             render_download_button(system_key, str(name), str(url), mirror)
+            if saved_entry.get("name") and saved_entry["name"] != name and matching_mirror(saved_entry["name"], saved_entry.get("mirror")):
+                with st.expander("Revisão anterior preservada no espelho"):
+                    render_download_button(system_key + "_backup", saved_entry["name"], saved_entry["url"], saved_entry["mirror"])
         else:
             st.caption("Ainda não há pacote espelhado para esta competência.")
         st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
@@ -231,13 +265,16 @@ st.markdown(
     <div class="ds-hero">
         <h1>⬇️ DownloadSistemas</h1>
         <p>BPA · SIA · BDSIA · SIHD2 · CNES · SIGTAP — espelho próprio dos instaladores e
-        tabelas oficiais do DATASUS. O botão de download funciona mesmo quando o site do
-        Ministério está fora do ar. Último snapshot do espelho: {updated_at}.</p>
+        tabelas oficiais do DATASUS. Arquivos com espelho publicado podem ser baixados mesmo
+        quando o Ministério está fora do ar. Catálogo atualizado: {escape(readable_date(updated_at))}.</p>
     </div>
     """,
     unsafe_allow_html=True,
 )
 
+check_official = st.checkbox("Consultar versões nas fontes oficiais agora", value=False,
+                             help="Os downloads do espelho não precisam desta consulta. As fontes oficiais podem demorar ou estar fora do ar.")
+st.caption("Escolha o sistema, prepare o arquivo e baixe aqui mesmo, sem abrir uma página do GitHub.")
 single_cols = st.columns(2)
 for index, key in enumerate(SINGLE_VERSION_SYSTEMS):
     with single_cols[index % 2]:
