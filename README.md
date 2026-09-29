@@ -29,6 +29,10 @@ sites estão fora do ar, o que acontece com frequência.
 | SIGTAP · Tabela Unificada | RSS de `sigtap.datasus.gov.br/tabela-unificada/competencias.rss` | por competência (seletor de mês) |
 | CNES · Base de dados mensal | API JSON por trás de `cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp` | por competência (seletor de mês) |
 
+Se a listagem HTTPS da FPO não responder, o sincronizador consulta o diretório
+FTP oficial `/siasus/FPO` e continua validando os nomes e os arquivos antes de
+publicá-los no espelho.
+
 **Fora do escopo por enquanto:** os arquivos `DSIHD017_<UF>_<competência>.ZIP`
 do SIHD2 (dados mensais por estado, usados durante a importação de AIH) e as
 variantes "SCNES Simplificado" do CNES — modalidades com mais arquivos por

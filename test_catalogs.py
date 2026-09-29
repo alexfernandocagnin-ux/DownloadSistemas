@@ -59,6 +59,15 @@ class FpoPortalTests(unittest.TestCase):
         self.assertFalse(fpo_portal.safe_url("https://attacker.example/FPOMAG_Atualiza_0302.exe", "FPOMAG_Atualiza_0302.exe"))
         self.assertFalse(fpo_portal.safe_url("ftp://ftp.datasus.gov.br/siasus/SIA/FPOMAG_Atualiza_0302.exe", "FPOMAG_Atualiza_0302.exe"))
 
+    def test_uses_official_ftp_directory_when_listing_is_unavailable(self):
+        with (
+            patch("catalogs.fpo_portal._entries_from_index", side_effect=OSError("certificate failure")),
+            patch("catalogs.fpo_portal.fetch_ftp_names", return_value=["FPOMAG_Atualiza_0302.exe", "FPO_Leiame.txt"]),
+        ):
+            updates = fpo_portal.fetch_fpo_update_catalog()
+        self.assertEqual([item["name"] for item in updates], ["FPOMAG_Atualiza_0302.exe"])
+        self.assertEqual(updates[0]["url"], "ftp://arpoador.datasus.gov.br/siasus/FPO/FPOMAG_Atualiza_0302.exe")
+
 
 class BpaPortalTests(unittest.TestCase):
     def test_only_the_installer_pattern_is_kept(self):
