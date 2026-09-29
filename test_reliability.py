@@ -122,6 +122,12 @@ class SynchronizationTests(unittest.TestCase):
         self.assertEqual(result["last_success_at"], self.old["checked_at"])
         self.assertFalse(result["official_reachable"])
 
+    def test_same_release_keeps_its_known_official_date_when_listing_has_no_date(self):
+        old = {**self.old, "current": {**self.old["current"], "release_date": "2026-07-09"}}
+        previous = {"systems": {"bpa": old}}
+        result = sync.sync_single_version_system("bpa", self.config, previous)
+        self.assertEqual(result["current"]["release_date"], "2026-07-09")
+
     def test_missing_remote_asset_is_downloaded_again(self):
         with patch.object(sync, "PUBLISH", True), patch.object(sync, "remote_asset", return_value=None), patch.object(sync, "store_package", return_value={**MIRROR, "verified_at": "now"}) as store:
             result = sync.sync_single_version_system("bpa", self.config, self.previous)
@@ -174,11 +180,13 @@ class SynchronizationTests(unittest.TestCase):
         self.assertEqual(set(progress[0][1]["competences"]), {"202608"})
 
     def test_month_tag_comes_from_competence_not_filename_guess(self):
-        release = {"name": "BASE_DE_DADOS_CNES_202608.ZIP", "url": "official", "competence": "202608"}
+        release = {"name": "BASE_DE_DADOS_CNES_202608.ZIP", "url": "official", "competence": "202608",
+                   "release_date": "2026-08-28"}
         config = {**sync.COMPETENCE_SYSTEMS["cnes_base"], "fetch": lambda: [release]}
         with patch.object(sync, "store_package", return_value=MIRROR) as store:
-            sync.sync_competence_system("cnes_base", config, {})
+            result = sync.sync_competence_system("cnes_base", config, {})
         self.assertEqual(store.call_args.args[3], "cnes-base-202608")
+        self.assertEqual(result["competences"]["202608"]["release_date"], "2026-08-28")
 
     def test_older_months_survive_new_catalog_and_failed_download(self):
         old_entry = {"name": "old.exe", "url": "old", "mirror": MIRROR}
@@ -214,8 +222,13 @@ class PortalTests(unittest.TestCase):
             app = self.app().run()
         self.assertFalse(app.exception)
         self.assertTrue(app.button)
+        self.assertTrue(app.dataframe)
         rendered = "\n".join(element.value for element in app.markdown)
+        self.assertIn("Downloads Sistemas", rendered)
+        self.assertNotIn("Downloads sem rodeios", rendered)
         self.assertIn("Novidades dos sistemas", rendered)
+        self.assertIn("Últimos lançamentos", rendered)
+        self.assertIn("Data em branco significa", "\n".join(element.value for element in app.caption))
         self.assertTrue(any(button.key == "force_catalog_check" for button in app.button))
         self.assertIn("FPO Magnético · instalação", rendered)
         self.assertIn("FPO Magnético · atualização", rendered)

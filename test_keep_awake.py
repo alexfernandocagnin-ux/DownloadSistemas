@@ -7,6 +7,9 @@ from scripts import keep_awake
 
 
 class KeepAwakeTests(unittest.TestCase):
+    def test_portal_brand_is_the_readiness_heading(self):
+        self.assertEqual(keep_awake.READY_HEADING, "Downloads Sistemas")
+
     def frame(self, ready=False, asleep=False, error=False):
         frame = MagicMock()
         frame.locator.return_value.first.is_visible.return_value = error

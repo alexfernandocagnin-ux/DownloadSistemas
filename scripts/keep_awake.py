@@ -6,7 +6,7 @@ from urllib.parse import urlsplit
 
 DEFAULT_URL = "https://downloadsistemas.streamlit.app/"
 WAKE_BUTTON = "Yes, get this app back up!"
-READY_HEADING = "Downloads sem rodeios."
+READY_HEADING = "Downloads Sistemas"
 LOAD_TIMEOUT_SECONDS = 240
 
 

@@ -214,8 +214,12 @@ def sync_single_version_system(key, config, previous):
         if announcements:
             result["_announcements"] = announcements
         return result
+    release_date = latest.get("release_date")
+    if not release_date and old_current.get("name") == name:
+        release_date = old_current.get("release_date")
     result = {"label": config["label"], "official_page": config["official_page"],
-              "current": {"name": name, "size": latest.get("size"), "url": latest["url"]},
+              "current": {"name": name, "size": latest.get("size"), "url": latest["url"],
+                          "release_date": release_date},
               "mirror": mirror, "checked_at": checked_at, "last_success_at": checked_at, "official_reachable": True}
     if announcements:
         result["_announcements"] = announcements
@@ -268,9 +272,13 @@ def sync_competence_system(key, config, previous, on_progress=None):
             mirror = confirmed_previous(entry) if entry.get("name") == release["name"] else None
             if not mirror:
                 mirror = store_package(key, release, config, f"{key.replace('_', '-')}-{month}")
+            release_date = release.get("release_date")
+            if not release_date and entry.get("name") == release["name"]:
+                release_date = entry.get("release_date")
             updated[month] = {"name": release["name"], "size": release.get("size"),
                               "url": release["url"], "mirror": mirror,
-                              "catalog_source": release.get("catalog_source")}
+                              "catalog_source": release.get("catalog_source"),
+                              "release_date": release_date}
             if on_progress:
                 on_progress(key, result())
         except (OSError, ValueError, subprocess.CalledProcessError) as exc:

@@ -8,7 +8,7 @@ from ftplib import Error as FTPError
 from catalogs._common import (
     download_release as _download_release,
     fetch_ftp_names,
-    fetch_index_links,
+    fetch_index_entries,
     resolve_href,
     safe_official_url,
 )
@@ -36,10 +36,11 @@ def safe_url(url: str, name: str) -> bool:
 
 def _entries_from_index() -> list[dict[str, object]]:
     entries = []
-    for text, href in fetch_index_links(INDEX_URL):
-        url = resolve_href(INDEX_URL, href)
-        name = text or url.rsplit("/", 1)[-1]
-        entries.append({"name": name, "url": url, "size": None})
+    for item in fetch_index_entries(INDEX_URL):
+        url = resolve_href(INDEX_URL, str(item["url"]))
+        name = item.get("name") or url.rsplit("/", 1)[-1]
+        entries.append({"name": name, "url": url, "size": item.get("size"),
+                        "release_date": item.get("release_date")})
     return entries
 
 
@@ -64,7 +65,8 @@ def _matching_releases(entries: list[dict[str, object]], pattern: re.Pattern[str
         url = entry.get("url")
         if not match or not isinstance(url, str) or not safe_url(url, str(name)):
             continue
-        releases.append({"name": name, "url": url, "size": entry.get("size"), "version": match.group(1)})
+        releases.append({"name": name, "url": url, "size": entry.get("size"), "version": match.group(1),
+                         "release_date": entry.get("release_date")})
     return releases
 
 

@@ -6,7 +6,7 @@ import re
 from ftplib import Error as FTPError
 
 from catalogs._common import (
-    download_release as _download_release, fetch_ftp_names, fetch_index_links, resolve_href, safe_official_url,
+    download_release as _download_release, fetch_ftp_names, fetch_index_entries, resolve_href, safe_official_url,
 )
 
 MAX_PACKAGE_SIZE = 50_000_000
@@ -29,10 +29,11 @@ def safe_url(url: str, name: str) -> bool:
 
 def _entries_from_index() -> list[dict[str, object]]:
     entries = []
-    for text, href in fetch_index_links(INDEX_URL):
-        href_url = resolve_href(INDEX_URL, href)
-        name = text if text else href_url.rsplit("/", 1)[-1]
-        entries.append({"name": name, "url": href_url, "size": None})
+    for item in fetch_index_entries(INDEX_URL):
+        href_url = resolve_href(INDEX_URL, str(item["url"]))
+        name = item.get("name") or href_url.rsplit("/", 1)[-1]
+        entries.append({"name": name, "url": href_url, "size": item.get("size"),
+                        "release_date": item.get("release_date")})
     return entries
 
 
@@ -62,7 +63,8 @@ def fetch_bpa_catalog() -> list[dict[str, object]]:
         url = entry.get("url")
         if not match or not isinstance(url, str) or not safe_url(url, str(name)):
             continue
-        releases.append({"name": name, "url": url, "size": entry.get("size"), "version": match.group(1)})
+        releases.append({"name": name, "url": url, "size": entry.get("size"), "version": match.group(1),
+                         "release_date": entry.get("release_date")})
     if not releases:
         raise ValueError("Nenhum instalador do BPA Magnético foi encontrado.")
     return sorted(releases, key=lambda item: item["version"], reverse=True)

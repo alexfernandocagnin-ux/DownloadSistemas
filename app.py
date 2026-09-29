@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 from html import escape
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 
 import streamlit as st
 
@@ -78,7 +78,7 @@ SYSTEM_META: dict[str, dict[str, object]] = {
     },
 }
 
-st.set_page_config(page_title="DownloadSistemas", page_icon="⬇️", layout="wide")
+st.set_page_config(page_title="Downloads Sistemas", page_icon="📦", layout="wide")
 
 CUSTOM_CSS = """
 <style>
@@ -467,13 +467,93 @@ def render_grid(keys, snapshot_systems, renderer):
                 renderer(key, snapshot_systems)
 
 
+def release_date_value(value):
+    if not value:
+        return None
+    if isinstance(value, datetime):
+        return value.date()
+    try:
+        return date.fromisoformat(str(value)[:10])
+    except ValueError:
+        return None
+
+
+def latest_release_rows(snapshot_systems):
+    live_catalogs = st.session_state.get("forced_live_catalogs", {})
+    rows = []
+    for system_key, meta in SYSTEM_META.items():
+        saved = snapshot_systems.get(system_key, {})
+        releases, _error = live_catalogs.get(system_key, (None, None))
+        release = None
+        version = "—"
+        if system_key in COMPETENCE_SYSTEMS:
+            competences = saved.get("competences", {})
+            competences = competences if isinstance(competences, dict) else {}
+            saved_month = max(competences, default=None)
+            saved_release = competences.get(saved_month, {}) if saved_month else {}
+            live_release = max(
+                releases or [], key=lambda item: str(item.get("competence", "")), default=None,
+            )
+            if live_release and (not saved_month or str(live_release.get("competence", "")) >= saved_month):
+                release = dict(live_release)
+                month = str(live_release.get("competence", ""))
+                if not release.get("release_date") and saved_release.get("name") == release.get("name"):
+                    release["release_date"] = saved_release.get("release_date")
+            elif saved_release:
+                release = saved_release
+                month = str(saved_month)
+            else:
+                month = ""
+            if release:
+                period = f"{month[4:6]}/{month[:4]} · " if len(month) == 6 else ""
+                version = f"{period}{release.get('name', '—')}"
+        else:
+            current = saved.get("current") or {}
+            release = dict(releases[0]) if releases else current
+            if releases and not release.get("release_date") and current.get("name") == release.get("name"):
+                release["release_date"] = current.get("release_date")
+            if release:
+                version = str(release.get("name", "—"))
+        rows.append({
+            "Sistema": str(meta["label"]),
+            "Última versão": version,
+            "Data do lançamento": release_date_value((release or {}).get("release_date")),
+        })
+    return rows
+
+
+def render_latest_releases_table(snapshot_systems):
+    st.markdown(
+        '<div class="ds-section"><div class="ds-eyebrow">ACOMPANHAMENTO</div>'
+        '<h2>Últimos lançamentos</h2>'
+        '<p>A versão mais recente identificada em cada catálogo e a data publicada pela fonte oficial.</p></div>',
+        unsafe_allow_html=True,
+    )
+    st.dataframe(
+        latest_release_rows(snapshot_systems),
+        hide_index=True,
+        width="stretch",
+        height=410,
+        column_config={
+            "Sistema": st.column_config.TextColumn("Sistema"),
+            "Última versão": st.column_config.TextColumn("Última versão"),
+            "Data do lançamento": st.column_config.DateColumn(
+                "Data do lançamento", format="DD/MM/YYYY",
+                help="Data indicada na listagem oficial. Quando ela não é publicada, o campo fica em branco.",
+            ),
+        },
+        key="latest_releases_table",
+    )
+    st.caption("Data em branco significa que a fonte oficial consultada não informou quando o arquivo foi publicado.")
+
+
 def render_updates_panel(snapshot):
     left, action = st.columns([2.4, 1], vertical_alignment="center")
     with left:
         st.markdown(
             '<div class="ds-update-heading"><div class="ds-update-icon">✦</div>'
             '<div><strong>Novidades dos sistemas</strong>'
-            '<span>Atualizações encontradas nas fontes oficiais, com a data da descoberta.</span></div></div>',
+            '<span>Novas versões encontradas, organizadas pela data em que foram descobertas.</span></div></div>',
             unsafe_allow_html=True,
         )
     with action:
@@ -528,7 +608,7 @@ st.markdown(
     <div class="ds-hero">
         <div class="ds-hero-copy">
             <div class="ds-eyebrow">DATASUS &nbsp;·&nbsp; CENTRAL DE ARQUIVOS</div>
-            <h1>Downloads sem rodeios.</h1>
+            <h1>Downloads Sistemas</h1>
             <p>Instaladores e tabelas oficiais do SUS em um só lugar. Quando o portal do Ministério
             oscila, os arquivos já espelhados continuam disponíveis para baixar.</p>
         </div>
@@ -552,6 +632,8 @@ with st.container(border=True):
     with control:
         scan_time = st.session_state.get("forced_live_checked_at")
         st.caption(f"Última busca manual: {update_day(scan_time)}" if scan_time else "A consulta dos sistemas é sob demanda.")
+
+render_latest_releases_table(systems)
 
 st.markdown(
     '<div class="ds-section"><div class="ds-eyebrow">01 &nbsp;·&nbsp; APLICATIVOS</div>'

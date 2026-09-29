@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import re
+import unicodedata
+from datetime import date
 from ftplib import FTP, Error as FTPError
 from html.parser import HTMLParser
 from pathlib import Path
@@ -9,6 +12,14 @@ from urllib.parse import unquote, urljoin, urlsplit
 from urllib.request import Request, urlopen
 
 USER_AGENT = "PortalDownloadsDATASUS/1.0"
+_DATE_PATTERN = re.compile(
+    r"(?<!\d)(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{4}|\d{1,2}[-/][A-Za-zÀ-ÿ.]{3,9}[-/]\d{4})(?!\d)"
+)
+_MONTHS = {
+    "jan": 1, "fev": 2, "feb": 2, "mar": 3, "abr": 4, "apr": 4,
+    "mai": 5, "may": 5, "jun": 6, "jul": 7, "ago": 8, "aug": 8,
+    "set": 9, "sep": 9, "out": 10, "oct": 10, "nov": 11, "dez": 12, "dec": 12,
+}
 
 
 class LinkParser(HTMLParser):
@@ -37,6 +48,78 @@ class LinkParser(HTMLParser):
         self._text = []
 
 
+class CatalogTableParser(HTMLParser):
+    """Collect download links and their official file date from table rows."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.entries: list[dict[str, object]] = []
+        self._row: list[dict[str, object]] | None = None
+        self._cell: dict[str, object] | None = None
+        self._anchor: dict[str, object] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        tag = tag.lower()
+        if tag == "tr":
+            self._row = []
+        elif tag in {"td", "th"} and self._row is not None:
+            self._cell = {"text": [], "links": []}
+        elif tag == "a" and self._cell is not None:
+            href = next((value for key, value in attrs if key.lower() == "href"), None)
+            if href:
+                self._anchor = {"href": href, "text": []}
+
+    def handle_data(self, data: str) -> None:
+        if self._cell is not None:
+            self._cell["text"].append(data)
+        if self._anchor is not None:
+            self._anchor["text"].append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if tag == "a" and self._anchor is not None:
+            if self._cell is not None:
+                self._cell["links"].append(self._anchor)
+            self._anchor = None
+        elif tag in {"td", "th"} and self._cell is not None:
+            if self._row is not None:
+                self._row.append(self._cell)
+            self._cell = None
+        elif tag == "tr" and self._row is not None:
+            cells = self._row
+            date_value = next(
+                (release_date for cell in cells if (release_date := parse_release_date(" ".join(cell["text"])))),
+                None,
+            )
+            for cell in cells:
+                for link in cell["links"]:
+                    name = " ".join(link["text"]).strip() or str(link["href"]).rsplit("/", 1)[-1]
+                    entry = {"name": name, "url": link["href"], "size": None}
+                    if date_value:
+                        entry["release_date"] = date_value
+                    self.entries.append(entry)
+            self._row = None
+
+
+def parse_release_date(value: str) -> str | None:
+    """Normalize common date formats from official file listings to YYYY-MM-DD."""
+    match = _DATE_PATTERN.search(str(value))
+    if not match:
+        return None
+    candidate = match.group(0).strip().replace(".", "")
+    try:
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", candidate):
+            return date.fromisoformat(candidate).isoformat()
+        if "/" in candidate and candidate.split("/")[1].isdigit():
+            day, month, year = (int(part) for part in candidate.split("/"))
+            return date(year, month, day).isoformat()
+        day_text, month_text, year_text = re.split(r"[-/]", candidate)
+        month_key = unicodedata.normalize("NFKD", month_text).encode("ascii", "ignore").decode().lower()[:3]
+        return date(int(year_text), _MONTHS[month_key], int(day_text)).isoformat()
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
 def fetch_index_links(url: str, *, timeout: int = 15, max_bytes: int = 2_000_000) -> list[tuple[str, str]]:
     """Baixa uma página de listagem e devolve os links encontrados nela."""
     request = Request(url, headers={"User-Agent": USER_AGENT})
@@ -47,6 +130,26 @@ def fetch_index_links(url: str, *, timeout: int = 15, max_bytes: int = 2_000_000
     parser = LinkParser()
     parser.feed(document.decode("utf-8", "replace"))
     return parser.links
+
+
+def fetch_index_entries(url: str, *, timeout: int = 15, max_bytes: int = 2_000_000) -> list[dict[str, object]]:
+    """Read file rows, retaining a publication date when the official page lists one."""
+    request = Request(url, headers={"User-Agent": USER_AGENT})
+    with urlopen(request, timeout=timeout) as response:
+        document = response.read(max_bytes + 1)
+    if len(document) > max_bytes:
+        raise ValueError(f"A página {url} excedeu o tamanho esperado.")
+    source = document.decode("utf-8", "replace")
+    parser = CatalogTableParser()
+    parser.feed(source)
+    if parser.entries:
+        return parser.entries
+    links = LinkParser()
+    links.feed(source)
+    return [
+        {"name": name or href.rsplit("/", 1)[-1], "url": href, "size": None}
+        for name, href in links.links
+    ]
 
 
 def safe_official_url(

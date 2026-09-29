@@ -11,7 +11,7 @@ import re
 from ftplib import Error as FTPError
 
 from catalogs._common import (
-    download_release as _download_release, fetch_ftp_names, fetch_index_links, resolve_href, safe_official_url,
+    download_release as _download_release, fetch_ftp_names, fetch_index_entries, resolve_href, safe_official_url,
 )
 
 HTTPS_HOST = "sia.datasus.gov.br"
@@ -34,10 +34,11 @@ def safe_url(url: str, name: str) -> bool:
 def _entries_from_index() -> list[dict[str, object]]:
     """Read every filename+link on the shared SIA download index page."""
     entries = []
-    for text, href in fetch_index_links(INDEX_URL):
-        href_url = resolve_href(INDEX_URL, href)
-        name = text if text else href_url.rsplit("/", 1)[-1]
-        entries.append({"name": name, "url": href_url, "size": None})
+    for item in fetch_index_entries(INDEX_URL):
+        href_url = resolve_href(INDEX_URL, str(item["url"]))
+        name = item.get("name") or href_url.rsplit("/", 1)[-1]
+        entries.append({"name": name, "url": href_url, "size": item.get("size"),
+                        "release_date": item.get("release_date")})
     return entries
 
 
@@ -71,7 +72,8 @@ def _filter_and_validate(
         url = entry.get("url")
         if not match or not isinstance(url, str) or not safe_url(url, str(name)):
             continue
-        releases.append({"name": name, "url": url, "size": entry.get("size"), "match": match})
+        releases.append({"name": name, "url": url, "size": entry.get("size"), "match": match,
+                         "release_date": entry.get("release_date")})
     return releases
 
 
@@ -85,6 +87,7 @@ def fetch_bdsia_catalog() -> list[dict[str, object]]:
             "name": item["name"], "url": item["url"], "size": item["size"],
             "competence": item["match"].group(1) + item["match"].group(2),
             "revision": item["match"].group(3).lower(),
+            "release_date": item["release_date"],
         }
         for item in releases
     ]
@@ -97,7 +100,8 @@ def fetch_sia_catalog() -> list[dict[str, object]]:
     if not releases:
         raise ValueError("Nenhum instalador do SIA foi encontrado.")
     result = [
-        {"name": item["name"], "url": item["url"], "size": item["size"], "version": item["match"].group(1)}
+        {"name": item["name"], "url": item["url"], "size": item["size"], "version": item["match"].group(1),
+         "release_date": item["release_date"]}
         for item in releases
     ]
     return sorted(result, key=lambda item: item["version"], reverse=True)

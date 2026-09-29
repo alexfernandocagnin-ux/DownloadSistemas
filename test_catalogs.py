@@ -4,7 +4,27 @@ import io
 import unittest
 from unittest.mock import patch
 
-from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import _common, bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+
+
+class CommonCatalogTests(unittest.TestCase):
+    def test_table_parser_reads_official_publication_date(self):
+        page = b"""
+        <table>
+          <tr><th>Descricao</th><th>Data</th><th>Tamanho</th></tr>
+          <tr><td><a href="/files/BPAMAG0500.exe">BPAMAG0500.exe</a></td><td>09-Jul-2026</td><td>7,4 MB</td></tr>
+        </table>
+        """
+        with patch("catalogs._common.urlopen") as urlopen:
+            urlopen.return_value.__enter__.return_value = io.BytesIO(page)
+            entries = _common.fetch_index_entries("https://sia.datasus.gov.br/versao/listar_ftp_bpa.php")
+        self.assertEqual(entries[0]["name"], "BPAMAG0500.exe")
+        self.assertEqual(entries[0]["release_date"], "2026-07-09")
+
+    def test_date_parser_accepts_official_month_name_and_numeric_dates(self):
+        self.assertEqual(_common.parse_release_date("25-Sep-2026"), "2026-09-25")
+        self.assertEqual(_common.parse_release_date("24/09/2026"), "2026-09-24")
+        self.assertIsNone(_common.parse_release_date("sem data"))
 
 
 class SiaPortalTests(unittest.TestCase):
@@ -17,12 +37,13 @@ class SiaPortalTests(unittest.TestCase):
             ("LERNOTAS.TXT", "ftp://ftp.datasus.gov.br/siasus/SIA/LERNOTAS.TXT"),
         ]
         with patch("catalogs.sia_portal._entries_from_index", return_value=[
-            {"name": name, "url": url, "size": None} for name, url in entries
+            {"name": name, "url": url, "size": None, "release_date": "2026-09-24"} for name, url in entries
         ]):
             bdsia = sia_portal.fetch_bdsia_catalog()
             sia = sia_portal.fetch_sia_catalog()
         self.assertEqual([item["name"] for item in bdsia], ["BDSIA202608b.exe", "BDSIA202607a.exe"])
         self.assertEqual(bdsia[0]["competence"], "202608")
+        self.assertEqual(bdsia[0]["release_date"], "2026-09-24")
         self.assertEqual([item["name"] for item in sia], ["SIA0604.exe", "INSTSIA0200.exe"])
 
     def test_rejects_links_to_unofficial_hosts(self):
@@ -46,7 +67,7 @@ class FpoPortalTests(unittest.TestCase):
         entries = [
             {"name": "FPOMAG_Instalador_0100.exe", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPOMAG_Instalador_0100.exe", "size": None},
             {"name": "FPOMAG_Atualiza_0301.exe", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPOMAG_Atualiza_0301.exe", "size": None},
-            {"name": "FPOMAG_Atualiza_0302.exe", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPOMAG_Atualiza_0302.exe", "size": None},
+            {"name": "FPOMAG_Atualiza_0302.exe", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPOMAG_Atualiza_0302.exe", "size": None, "release_date": "2026-09-24"},
             {"name": "FPO_Leiame.txt", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPO_Leiame.txt", "size": None},
         ]
         with patch("catalogs.fpo_portal._entries_from_index", return_value=entries):
@@ -54,6 +75,7 @@ class FpoPortalTests(unittest.TestCase):
             updates = fpo_portal.fetch_fpo_update_catalog()
         self.assertEqual([item["name"] for item in installers], ["FPOMAG_Instalador_0100.exe"])
         self.assertEqual([item["name"] for item in updates], ["FPOMAG_Atualiza_0302.exe", "FPOMAG_Atualiza_0301.exe"])
+        self.assertEqual(updates[0]["release_date"], "2026-09-24")
 
     def test_rejects_unofficial_host_and_wrong_ftp_directory(self):
         self.assertFalse(fpo_portal.safe_url("https://attacker.example/FPOMAG_Atualiza_0302.exe", "FPOMAG_Atualiza_0302.exe"))
@@ -72,12 +94,14 @@ class FpoPortalTests(unittest.TestCase):
 class BpaPortalTests(unittest.TestCase):
     def test_only_the_installer_pattern_is_kept(self):
         with patch("catalogs.bpa_portal._entries_from_index", return_value=[
-            {"name": "BPAMAG0500.exe", "url": "ftp://ftp.datasus.gov.br/siasus/BPA/BPAMAG0500.exe", "size": None},
+            {"name": "BPAMAG0500.exe", "url": "ftp://ftp.datasus.gov.br/siasus/BPA/BPAMAG0500.exe", "size": None,
+             "release_date": "2026-07-09"},
             {"name": "BPA_LEIAME.txt", "url": "ftp://ftp.datasus.gov.br/siasus/BPA/BPA_LEIAME.txt", "size": None},
             {"name": "BPAMAG0414.exe", "url": "ftp://ftp.datasus.gov.br/siasus/BPA/BPAMAG0414.exe", "size": None},
         ]):
             releases = bpa_portal.fetch_bpa_catalog()
         self.assertEqual([item["name"] for item in releases], ["BPAMAG0500.exe", "BPAMAG0414.exe"])
+        self.assertEqual(releases[0]["release_date"], "2026-07-09")
 
 
 class Sihd2PortalTests(unittest.TestCase):
