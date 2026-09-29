@@ -1,9 +1,18 @@
 {
-  "updated_at": "2026-09-29T13:11:27+00:00",
+  "updated_at": "2026-09-29T13:39:58+00:00",
   "systems": {
     "bpa": {
       "label": "BPA Magnético",
       "official_page": "https://sia.datasus.gov.br/versao/listar_ftp_bpa.php",
+      "latest": {
+        "name": "BPAMAG0500.exe",
+        "url": "ftp://arpoador.datasus.gov.br/siasus/BPA/BPAMAG0500.exe",
+        "size": null,
+        "version": "0500",
+        "release_date": "2026-07-09"
+      },
+      "catalog_checked_at": "2026-09-29T13:39:08+00:00",
+      "pending_download": false,
       "current": {
         "name": "BPAMAG0500.exe",
         "size": null,
@@ -15,17 +24,26 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
         "size": 7785806,
-        "verified_at": "2026-09-29T13:10:40+00:00",
+        "verified_at": "2026-09-29T13:39:10+00:00",
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-09-29T13:10:37+00:00",
-      "last_success_at": "2026-09-29T13:10:37+00:00",
+      "checked_at": "2026-09-29T13:39:08+00:00",
+      "last_success_at": "2026-09-29T13:39:08+00:00",
       "official_reachable": true
     },
     "sia": {
       "label": "SIA (instalador)",
       "official_page": "https://sia.datasus.gov.br/versao/listar_ftp_sia.php",
+      "latest": {
+        "name": "SIA0604.exe",
+        "url": "ftp://arpoador.datasus.gov.br/siasus/sia/SIA0604.exe",
+        "size": null,
+        "version": "0604",
+        "release_date": "2026-09-25"
+      },
+      "catalog_checked_at": "2026-09-29T13:39:08+00:00",
+      "pending_download": false,
       "current": {
         "name": "SIA0604.exe",
         "size": null,
@@ -37,17 +55,26 @@
         "asset_name": "SIA0604.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0604.exe",
         "size": 7590903,
-        "verified_at": "2026-09-29T13:10:48+00:00",
+        "verified_at": "2026-09-29T13:39:24+00:00",
         "sha256": "c716dadbf7d8f89c4f7d8637cb1b09352de625ef0a64203f1ed5d50a175b202b",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-09-29T13:10:37+00:00",
-      "last_success_at": "2026-09-29T13:10:37+00:00",
+      "checked_at": "2026-09-29T13:39:08+00:00",
+      "last_success_at": "2026-09-29T13:39:08+00:00",
       "official_reachable": true
     },
     "fpo_installer": {
       "label": "FPO Magnético (instalador)",
       "official_page": "https://sia.datasus.gov.br/versao/listar_ftp_fpo.php",
+      "latest": {
+        "name": "FPOMAG_Instalador_0100.exe",
+        "url": "ftp://arpoador.datasus.gov.br/siasus/fpo/FPOMAG_Instalador_0100.exe",
+        "size": null,
+        "version": "0100",
+        "release_date": "2008-06-10"
+      },
+      "catalog_checked_at": "2026-09-29T13:39:08+00:00",
+      "pending_download": false,
       "current": {
         "name": "FPOMAG_Instalador_0100.exe",
         "size": null,
@@ -60,15 +87,24 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-installer-latest/FPOMAG_Instalador_0100.exe",
         "size": 6347935,
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
-        "verified_at": "2026-09-29T13:10:40+00:00"
+        "verified_at": "2026-09-29T13:39:12+00:00"
       },
-      "checked_at": "2026-09-29T13:10:37+00:00",
-      "last_success_at": "2026-09-29T13:10:37+00:00",
+      "checked_at": "2026-09-29T13:39:08+00:00",
+      "last_success_at": "2026-09-29T13:39:08+00:00",
       "official_reachable": true
     },
     "fpo_update": {
       "label": "FPO Magnético (atualização)",
       "official_page": "https://sia.datasus.gov.br/versao/listar_ftp_fpo.php",
+      "latest": {
+        "name": "FPOMAG_Atualiza_0302.exe",
+        "url": "ftp://arpoador.datasus.gov.br/siasus/fpo/FPOMAG_Atualiza_0302.exe",
+        "size": null,
+        "version": "0302",
+        "release_date": "2026-09-24"
+      },
+      "catalog_checked_at": "2026-09-29T13:39:08+00:00",
+      "pending_download": false,
       "current": {
         "name": "FPOMAG_Atualiza_0302.exe",
         "size": null,
@@ -81,10 +117,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-update-latest/FPOMAG_Atualiza_0302.exe",
         "size": 3642375,
         "sha256": "ee5470f011919a44323827159f41a20f23f08942afd8a9e0535cbc09c49bdffa",
-        "verified_at": "2026-09-29T13:10:41+00:00"
+        "verified_at": "2026-09-29T13:39:20+00:00"
       },
-      "checked_at": "2026-09-29T13:10:37+00:00",
-      "last_success_at": "2026-09-29T13:10:37+00:00",
+      "checked_at": "2026-09-29T13:39:08+00:00",
+      "last_success_at": "2026-09-29T13:39:08+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -96,15 +132,34 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/Programas/SIHD2_2340.exe"
       },
       "mirror": null,
-      "official_reachable": false,
-      "checked_at": "2026-09-29T13:10:40+00:00",
+      "official_reachable": true,
+      "checked_at": "2026-09-29T13:39:10+00:00",
       "last_success_at": "2026-09-28T15:12:33+00:00",
       "pending_download": true,
-      "error": "OSError"
+      "error": "OSError",
+      "latest": {
+        "name": "SIHD2_2340.exe",
+        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/Programas/SIHD2_2340.exe",
+        "size": null,
+        "version": "23.40",
+        "competence": "202608",
+        "release_date": null
+      },
+      "catalog_checked_at": "2026-09-29T13:39:10+00:00",
+      "download_error": "OSError"
     },
     "cnes_app": {
       "label": "CNES · SCNES (atualização)",
       "official_page": "https://cnes.datasus.gov.br/pages/downloads/aplicativos.jsp",
+      "latest": {
+        "name": "SCNES4850-ATUALIZACAO.ZIP",
+        "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
+        "size": null,
+        "version": "4850",
+        "release_date": null
+      },
+      "catalog_checked_at": "2026-09-29T13:39:12+00:00",
+      "pending_download": false,
       "current": {
         "name": "SCNES4850-ATUALIZACAO.ZIP",
         "size": null,
@@ -117,15 +172,24 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-app-latest/SCNES4850-ATUALIZACAO.ZIP",
         "size": 261903438,
         "sha256": "56898c285edf2c3e434c8039369342eeb2e5d040a340dc642527b5325c478647",
-        "verified_at": "2026-09-29T13:10:42+00:00"
+        "verified_at": "2026-09-29T13:39:14+00:00"
       },
-      "checked_at": "2026-09-29T13:10:40+00:00",
-      "last_success_at": "2026-09-29T13:10:40+00:00",
+      "checked_at": "2026-09-29T13:39:12+00:00",
+      "last_success_at": "2026-09-29T13:39:12+00:00",
       "official_reachable": true
     },
     "cnes_complete": {
       "label": "CNES · SCNES completo",
       "official_page": "https://cnes.datasus.gov.br/pages/downloads/aplicativos.jsp",
+      "latest": {
+        "name": "SCNES4850-COMPLETA.ZIP",
+        "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-COMPLETA.ZIP",
+        "size": null,
+        "version": "4850",
+        "release_date": null
+      },
+      "catalog_checked_at": "2026-09-29T13:39:14+00:00",
+      "pending_download": false,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
         "size": null,
@@ -138,15 +202,24 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-complete-latest/SCNES4850-COMPLETA.ZIP",
         "size": 403575891,
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
-        "verified_at": "2026-09-29T13:10:43+00:00"
+        "verified_at": "2026-09-29T13:39:15+00:00"
       },
-      "checked_at": "2026-09-29T13:10:41+00:00",
-      "last_success_at": "2026-09-29T13:10:41+00:00",
+      "checked_at": "2026-09-29T13:39:14+00:00",
+      "last_success_at": "2026-09-29T13:39:14+00:00",
       "official_reachable": true
     },
     "bdsia": {
       "label": "Tabela mensal do SIA (BDSIA)",
       "official_page": "https://sia.datasus.gov.br/versao/listar_ftp_sia.php",
+      "latest": {
+        "name": "BDSIA202609a.exe",
+        "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202609a.exe",
+        "size": null,
+        "competence": "202609",
+        "revision": "a",
+        "release_date": "2026-09-24"
+      },
+      "catalog_checked_at": "2026-09-29T13:39:15+00:00",
       "competences": {
         "202604": {
           "name": "BDSIA202604d.exe",
@@ -157,7 +230,7 @@
             "asset_name": "BDSIA202604d.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202604/BDSIA202604d.exe",
             "size": 9240683,
-            "verified_at": "2026-09-29T13:10:58+00:00",
+            "verified_at": "2026-09-29T13:39:31+00:00",
             "sha256": "ff1585ed7b3a1a6825e36e70d8ed10ce3cc556a490a1705bebda123242db12f0",
             "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
@@ -173,7 +246,7 @@
             "asset_name": "BDSIA202605d.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202605/BDSIA202605d.exe",
             "size": 9425905,
-            "verified_at": "2026-09-29T13:10:58+00:00",
+            "verified_at": "2026-09-29T13:39:30+00:00",
             "sha256": "1770ea935d04a5ab8fea56997ef241f71c855e53bd98f154a5b95d4fdeb144c7",
             "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
@@ -189,7 +262,7 @@
             "asset_name": "BDSIA202606b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202606/BDSIA202606b.exe",
             "size": 9548777,
-            "verified_at": "2026-09-29T13:10:57+00:00",
+            "verified_at": "2026-09-29T13:39:30+00:00",
             "sha256": "50c50c8d414b1a9dc5ea4d48b1d29a4987282208b5a3db230915d57b7729992b",
             "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
@@ -205,7 +278,7 @@
             "asset_name": "BDSIA202607b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202607/BDSIA202607b.exe",
             "size": 9755342,
-            "verified_at": "2026-09-29T13:10:57+00:00",
+            "verified_at": "2026-09-29T13:39:28+00:00",
             "sha256": "1494ef5d1d51ce7bf8f78de83f210d1528855e23f532c58e5ac870625576bb64",
             "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
@@ -221,7 +294,7 @@
             "asset_name": "BDSIA202608b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202608/BDSIA202608b.exe",
             "size": 9683025,
-            "verified_at": "2026-09-29T13:10:57+00:00",
+            "verified_at": "2026-09-29T13:39:28+00:00",
             "sha256": "93508db7a088f4ec400ded712aed3b44dcffe5919bc50e1f2d18c9b8c5e4cd4e",
             "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
@@ -237,7 +310,7 @@
             "asset_name": "BDSIA202609a.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609a.exe",
             "size": 9818678,
-            "verified_at": "2026-09-29T13:10:56+00:00",
+            "verified_at": "2026-09-29T13:39:27+00:00",
             "sha256": "d04e58a2a0f4de0eef720eae53a7882a4f36fdec2cb8803c35a818fc3f698a69",
             "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
@@ -245,14 +318,22 @@
           "release_date": "2026-09-24"
         }
       },
-      "checked_at": "2026-09-29T13:10:42+00:00",
-      "last_success_at": "2026-09-29T13:10:42+00:00",
+      "checked_at": "2026-09-29T13:39:15+00:00",
+      "last_success_at": "2026-09-29T13:39:15+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
     "sigtap": {
       "label": "SIGTAP · Tabela Unificada",
       "official_page": "http://sigtap.datasus.gov.br/tabela-unificada/app/download.jsp",
+      "latest": {
+        "name": "TabelaUnificada_202609_v2609171117.zip",
+        "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202609_v2609171117.zip",
+        "size": null,
+        "competence": "202609",
+        "revision": "2609171117"
+      },
+      "catalog_checked_at": "2026-09-29T13:39:20+00:00",
       "competences": {
         "202609": {
           "name": "TabelaUnificada_202609_v2609171117.zip",
@@ -264,7 +345,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202609/TabelaUnificada_202609_v2609171117.zip",
             "size": 2155846,
             "sha256": "19d612f6997b5c6fdf32d7d1f8186d110880b658c4776f6a7c22771a2d3f605f",
-            "verified_at": "2026-09-29T13:10:56+00:00"
+            "verified_at": "2026-09-29T13:39:21+00:00"
           },
           "catalog_source": null,
           "release_date": null
@@ -279,7 +360,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202608/TabelaUnificada_202608_v2608141139.zip",
             "size": 2153883,
             "sha256": "477ae7ee8c8c7a3a458dace6607b1666edd8f50a2936cc1b1d737bf8ff6dcc7c",
-            "verified_at": "2026-09-29T13:10:56+00:00"
+            "verified_at": "2026-09-29T13:39:22+00:00"
           },
           "catalog_source": null,
           "release_date": null
@@ -294,7 +375,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202607/TabelaUnificada_202607_v2607101010.zip",
             "size": 2144592,
             "sha256": "4137d87a051fcdbff0d50054a2c0ed8de152107c23d3d66a5cdff41d8fe2fc4e",
-            "verified_at": "2026-09-29T13:10:56+00:00"
+            "verified_at": "2026-09-29T13:39:22+00:00"
           },
           "catalog_source": null,
           "release_date": null
@@ -309,7 +390,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202606/TabelaUnificada_202606_v2606091427.zip",
             "size": 2141359,
             "sha256": "c573e01806da0a491bbd68f50acbebf30c8b9be7043877a4a24e96e3b99160d1",
-            "verified_at": "2026-09-29T13:10:57+00:00"
+            "verified_at": "2026-09-29T13:39:23+00:00"
           },
           "catalog_source": null,
           "release_date": null
@@ -324,7 +405,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202605/TabelaUnificada_202605_v2605210940.zip",
             "size": 2137819,
             "sha256": "a3d4d85f6bc87ab4fdb404acc863e3421b70dc1a632562852dae6d3b59712e48",
-            "verified_at": "2026-09-29T13:10:57+00:00"
+            "verified_at": "2026-09-29T13:39:23+00:00"
           },
           "catalog_source": null,
           "release_date": null
@@ -339,20 +420,27 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202604/TabelaUnificada_202604_v2605181544.zip",
             "size": 2137200,
             "sha256": "3c1cdf5fea60d2a84b2161a1d53df0985506765afa3741463753548b0686a1a8",
-            "verified_at": "2026-09-29T13:10:57+00:00"
+            "verified_at": "2026-09-29T13:39:24+00:00"
           },
           "catalog_source": null,
           "release_date": null
         }
       },
-      "checked_at": "2026-09-29T13:10:43+00:00",
-      "last_success_at": "2026-09-29T13:10:43+00:00",
+      "checked_at": "2026-09-29T13:39:20+00:00",
+      "last_success_at": "2026-09-29T13:39:20+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
     "cnes_base": {
       "label": "CNES · Base de dados mensal",
       "official_page": "https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp",
+      "latest": {
+        "name": "BASE_DE_DADOS_CNES_202608.ZIP",
+        "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202608.ZIP",
+        "size": null,
+        "competence": "202608"
+      },
+      "catalog_checked_at": "2026-09-29T13:39:24+00:00",
       "competences": {
         "202608": {
           "name": "BASE_DE_DADOS_CNES_202608.ZIP",
@@ -363,7 +451,7 @@
             "asset_name": "BASE_DE_DADOS_CNES_202608.ZIP",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-base-202608/BASE_DE_DADOS_CNES_202608.ZIP",
             "size": 739134749,
-            "verified_at": "2026-09-29T13:10:50+00:00",
+            "verified_at": "2026-09-29T13:39:25+00:00",
             "sha256": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a"
           },
           "catalog_source": null,
@@ -383,8 +471,8 @@
           }
         }
       },
-      "checked_at": "2026-09-29T13:10:48+00:00",
-      "last_success_at": "2026-09-29T13:10:48+00:00",
+      "checked_at": "2026-09-29T13:39:24+00:00",
+      "last_success_at": "2026-09-29T13:39:24+00:00",
       "official_reachable": true,
       "pending_competences": []
     }
