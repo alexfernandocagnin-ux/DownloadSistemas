@@ -10,11 +10,11 @@ sites estão fora do ar, o que acontece com frequência.
 ## Como funciona
 
 - O portal abre pelo catálogo salvo, sem esperar o DATASUS. **Verificar todos os sistemas** consulta, sob demanda e sem cache, os dez catálogos oficiais em paralelo; uma fonte indisponível não bloqueia as outras.
-- A cada 6 horas, o GitHub Actions tenta obter as versões oficiais, publicar os arquivos e confirmar que cada asset existe e tem o tamanho esperado. Só depois atualiza o catálogo. Downloads ou uploads que falharem preservam a cópia anterior.
+- A cada 6 horas, o GitHub Actions consulta as versões e tenta publicar os arquivos. A última versão encontrada é salva mesmo se o download falhar. O link do espelho só muda após a confirmação do asset; falhas preservam a cópia anterior.
 - Quando uma versão muda em relação a uma já conhecida, essa sincronização registra sistema, arquivo e data em um histórico persistente que aparece no quadro **Novidades dos sistemas** para todos os visitantes. A primeira coleta de um sistema serve como referência e não é anunciada como novidade.
-- A tabela **Últimos lançamentos** mostra a versão mais recente de cada sistema. A data só aparece quando o catálogo oficial informa a publicação do arquivo; quando a fonte não oferece esse dado, a célula fica vazia.
+- A tabela **Últimos lançamentos** mostra a versão mais recente de cada sistema e se existe uma cópia disponível. A data só aparece quando o catálogo oficial informa a publicação do arquivo; quando a fonte não oferece esse dado, a célula fica vazia. Na FPO, a atualização atual fica no cartão principal e o instalador base está no expansor de primeira instalação.
 - Os instaladores e os seis meses recentes de cada tabela são espelhados. Na primeira sincronização de uma tabela, a competência atual tem prioridade; o histórico entra nas próximas execuções. Competências já salvas permanecem disponíveis.
-- O usuário prepara o arquivo e baixa dentro do portal. O servidor verifica se o espelho entrega o arquivo esperado e confere assinatura e tamanho, lendo apenas dois bytes. O arquivo é entregue diretamente pelo espelho, sem ocupar a memória do Streamlit. O SHA-256 é registrado na publicação. Se o espelho falhar, tenta a fonte oficial. Uma página de erro nunca é oferecida como instalador.
+- Ao preparar um arquivo de até 50 MB, o servidor baixa a cópia completa e verifica assinatura, tamanho e SHA-256 registrado, antes de oferecer o download dentro do portal. Pacotes maiores têm assinatura e tamanho conferidos por uma leitura parcial e são entregues diretamente pelo espelho. Se o espelho falhar, tenta a fonte oficial. Uma página de erro nunca é oferecida como instalador.
 - As versões e revisões anteriores continuam acessíveis quando uma versão oficial nova ainda não foi espelhada.
 - Nenhum instalador é executado. Arquivos ainda sem espelho dependem da fonte oficial. O GitHub e o Streamlit também podem sofrer indisponibilidades; o serviço não promete disponibilidade absoluta.
 
@@ -47,8 +47,9 @@ cartão de cada sistema.
   executar nada); `_common.py` tem o parser HTML e as checagens de host/
   tamanho/assinatura (`MZ` ou `PK`) compartilhadas pelos módulos por sistema.
 - `scripts/sync_catalog.py` — roda no cron do GitHub Actions com `--publish`: confere os
-  catálogos, baixa o que mudou para `dist/`, publica e verifica os assets antes de atualizar
-  `data/catalog.json`. O script sobe cada arquivo de `dist/` como asset de
+  catálogos e salva a última versão encontrada em `data/catalog.json`. Baixa o que mudou
+  para `dist/`, publica e verifica os assets antes de atualizar os links de download.
+  O script sobe cada arquivo de `dist/` como asset de
   uma GitHub Release (`bpa-latest`, `sia-latest`, `fpo-installer-latest`,
   `fpo-update-latest`, `sihd2-latest`, `cnes-app-latest`, `cnes-complete-latest`,
   `bdsia-<competência>`, `sigtap-<competência>`,
@@ -97,7 +98,20 @@ públicos, o GitHub pode desativar agendamentos após 60 dias sem atividade.
 .\.venv\Scripts\python.exe -m unittest discover -v
 ```
 
-Os testes usam HTML/FTP simulados — não acessam a rede.
+Os testes usam HTML/FTP simulados - não acessam a rede.
+
+Para conferir os downloads reais, incluindo o conteúdo completo dos pacotes grandes:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\audit_downloads.py --full --output dist\download-audit.json
+```
+
+A auditoria não executa instaladores. Compara tamanho e SHA-256 dos espelhos e,
+nos arquivos pequenos encontrados no catálogo atual, compara também com a origem.
+O relatório identifica a fonte utilizada, inclusive o apoio comunitário do SIGTAP.
+Sem `--full`, pacotes acima de 50 MB recebem apenas uma verificação parcial.
+O comando retorna erro se houver arquivo inválido, catálogo inacessível ou uma
+versão atual sem espelho.
 
 ## Publicação e recuperação
 
@@ -105,7 +119,7 @@ O workflow de sincronização executa automaticamente após mudanças nos script
 
 Para publicar manualmente, autentique o GitHub CLI (`gh auth login`), defina `GITHUB_REPOSITORY=alexfernandocagnin-ux/DownloadSistemas` e execute `python scripts/sync_catalog.py --publish`. Sem `--publish`, os arquivos são apenas preparados localmente e novos links de espelho não são inventados.
 
-Links legados são novamente conferidos na sincronização. Assets ausentes são baixados e publicados de novo. `last_success_at` informa a última consulta bem-sucedida; `checked_at` registra a tentativa mais recente. Cada espelho novo registra tamanho, SHA-256 e data de verificação.
+Links legados são novamente conferidos na sincronização. Assets ausentes são baixados e publicados de novo. `catalog_checked_at` registra a consulta que identificou `latest`; `current` preserva o arquivo publicado e `pending_download` indica uma publicação pendente. `checked_at` registra a tentativa mais recente. Cada espelho novo registra tamanho, SHA-256 e data de verificação.
 
 Os downloads CNES usam os diretórios oficiais `/cnes/Versoes-Fces-Nacional` e `/cnes` nos servidores `arpoador.datasus.gov.br` e `ftp.datasus.gov.br`, contornando o servlet de estatísticas quando indisponível. O catálogo também consulta esses diretórios se a API cair.
 

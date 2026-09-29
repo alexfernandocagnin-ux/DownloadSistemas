@@ -24,12 +24,20 @@ def matching_mirror(name, mirror):
     return mirror
 
 
-def download_mirror(name, mirror):
+def _expected_signature(name):
+    if name.lower().endswith(".exe"):
+        return b"MZ"
+    if name.lower().endswith(".zip"):
+        return b"PK"
+    raise ValueError("Tipo de arquivo não permitido no espelho.")
+
+
+def download_mirror(name, mirror, *, max_size=MAX_PACKAGE_SIZE):
     mirror = matching_mirror(name, mirror)
     if not mirror:
         raise ValueError("O espelho não corresponde ao arquivo selecionado.")
-    package = download_via_http(mirror["asset_url"], name, max_size=MAX_PACKAGE_SIZE, timeout=90)
-    if len(package) < 100_000 or package[:2] not in (b"MZ", b"PK"):
+    package = download_via_http(mirror["asset_url"], name, max_size=max_size, timeout=90)
+    if len(package) < 100_000 or package[:2] != _expected_signature(name):
         raise ValueError("O espelho não entregou um instalador ou ZIP válido.")
     if mirror.get("size") and len(package) != mirror["size"]:
         raise ValueError("O arquivo do espelho está incompleto.")
@@ -48,7 +56,7 @@ def probe_mirror(name, mirror):
         signature = response.read(2)
         content_range = response.headers.get("Content-Range", "")
         total = content_range.rsplit("/", 1)[-1] if "/" in content_range else response.headers.get("Content-Length")
-    if signature not in (b"MZ", b"PK"):
+    if signature != _expected_signature(name):
         raise ValueError("O espelho não entregou um instalador ou ZIP válido.")
     if total and total.isdigit():
         size = int(total)

@@ -21,6 +21,7 @@ FTP_HOSTS = frozenset({"ftp2.datasus.gov.br"})
 FTP_PATH_PREFIX = "/public/sistemas/dsweb/sihd/programas/"
 VERSION_TEXT_PATTERN = re.compile(r"Vers[aã]o\s+(\d+\.\d+)", re.IGNORECASE)
 FILE_PATTERN = re.compile(r"SIHD2_(\d{3,4})\.exe", re.IGNORECASE)
+COMPETENCE_PATTERN = re.compile(r"CMPT\s+(0[1-9]|1[0-2])/(20\d{2})", re.IGNORECASE)
 MAX_INDEX_BYTES = 3_000_000
 MAX_PACKAGE_SIZE = 100_000_000
 
@@ -31,8 +32,13 @@ class _SihdVersionParser(HTMLParser):
         self.entries: list[dict[str, object]] = []
         self._href: str | None = None
         self._text: list[str] = []
+        self._competence: str | None = None
+        self._last_version: dict[str, object] | None = None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() == "li":
+            self._competence = None
+            self._last_version = None
         if tag.lower() == "a":
             href = next((value for key, value in attrs if key.lower() == "href"), None)
             # A página quebra o href em várias linhas; um FTP URL nunca leva espaço/quebra de linha.
@@ -40,15 +46,23 @@ class _SihdVersionParser(HTMLParser):
             self._text = []
 
     def handle_data(self, data: str) -> None:
+        competence = COMPETENCE_PATTERN.search(data)
+        if competence:
+            self._competence = competence.group(2) + competence.group(1)
         if self._href is not None:
             self._text.append(data)
-        elif self.entries and "cancelada" in data.lower():
-            self.entries[-1]["cancelled"] = True
+        elif self._last_version is not None and "cancelada" in data.lower():
+            self._last_version["cancelled"] = True
 
     def handle_endtag(self, tag: str) -> None:
         if tag.lower() != "a" or self._href is None:
             return
-        self.entries.append({"text": "".join(self._text).strip(), "href": self._href, "cancelled": False})
+        text = "".join(self._text).strip()
+        entry = {"text": text, "href": self._href, "cancelled": "cancelada" in text.lower(),
+                 "competence": self._competence}
+        self.entries.append(entry)
+        if FILE_PATTERN.fullmatch(self._href.rsplit("/", 1)[-1]):
+            self._last_version = entry
         self._href = None
         self._text = []
 
@@ -79,7 +93,11 @@ def fetch_sihd2_catalog() -> list[dict[str, object]]:
         file_match = FILE_PATTERN.fullmatch(name)
         if not text_match or not file_match or not safe_url(href_url, name):
             continue
-        releases.append({"name": name, "url": href_url, "size": None, "version": text_match.group(1)})
+        major, minor = (int(part) for part in text_match.group(1).split("."))
+        if int(file_match.group(1)) != major * 100 + minor:
+            continue
+        releases.append({"name": name, "url": href_url, "size": None, "version": text_match.group(1),
+                         "competence": entry.get("competence")})
     if not releases:
         raise ValueError("Nenhuma versão vigente do SIHD2 foi encontrada.")
     return sorted(releases, key=lambda item: [int(part) for part in item["version"].split(".")], reverse=True)

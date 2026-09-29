@@ -15,7 +15,9 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
         "size": 7785806,
-        "verified_at": "2026-09-29T13:10:40+00:00"
+        "verified_at": "2026-09-29T13:10:40+00:00",
+        "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
+        "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
       "checked_at": "2026-09-29T13:10:37+00:00",
       "last_success_at": "2026-09-29T13:10:37+00:00",
@@ -35,7 +37,9 @@
         "asset_name": "SIA0604.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0604.exe",
         "size": 7590903,
-        "verified_at": "2026-09-29T13:10:48+00:00"
+        "verified_at": "2026-09-29T13:10:48+00:00",
+        "sha256": "c716dadbf7d8f89c4f7d8637cb1b09352de625ef0a64203f1ed5d50a175b202b",
+        "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
       "checked_at": "2026-09-29T13:10:37+00:00",
       "last_success_at": "2026-09-29T13:10:37+00:00",
@@ -153,7 +157,9 @@
             "asset_name": "BDSIA202604d.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202604/BDSIA202604d.exe",
             "size": 9240683,
-            "verified_at": "2026-09-29T13:10:58+00:00"
+            "verified_at": "2026-09-29T13:10:58+00:00",
+            "sha256": "ff1585ed7b3a1a6825e36e70d8ed10ce3cc556a490a1705bebda123242db12f0",
+            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-05-27"
@@ -167,7 +173,9 @@
             "asset_name": "BDSIA202605d.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202605/BDSIA202605d.exe",
             "size": 9425905,
-            "verified_at": "2026-09-29T13:10:58+00:00"
+            "verified_at": "2026-09-29T13:10:58+00:00",
+            "sha256": "1770ea935d04a5ab8fea56997ef241f71c855e53bd98f154a5b95d4fdeb144c7",
+            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-06-16"
@@ -181,7 +189,9 @@
             "asset_name": "BDSIA202606b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202606/BDSIA202606b.exe",
             "size": 9548777,
-            "verified_at": "2026-09-29T13:10:57+00:00"
+            "verified_at": "2026-09-29T13:10:57+00:00",
+            "sha256": "50c50c8d414b1a9dc5ea4d48b1d29a4987282208b5a3db230915d57b7729992b",
+            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-07-08"
@@ -195,7 +205,9 @@
             "asset_name": "BDSIA202607b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202607/BDSIA202607b.exe",
             "size": 9755342,
-            "verified_at": "2026-09-29T13:10:57+00:00"
+            "verified_at": "2026-09-29T13:10:57+00:00",
+            "sha256": "1494ef5d1d51ce7bf8f78de83f210d1528855e23f532c58e5ac870625576bb64",
+            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-08-13"
@@ -209,7 +221,9 @@
             "asset_name": "BDSIA202608b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202608/BDSIA202608b.exe",
             "size": 9683025,
-            "verified_at": "2026-09-29T13:10:57+00:00"
+            "verified_at": "2026-09-29T13:10:57+00:00",
+            "sha256": "93508db7a088f4ec400ded712aed3b44dcffe5919bc50e1f2d18c9b8c5e4cd4e",
+            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-09-24"
@@ -223,7 +237,9 @@
             "asset_name": "BDSIA202609a.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609a.exe",
             "size": 9818678,
-            "verified_at": "2026-09-29T13:10:56+00:00"
+            "verified_at": "2026-09-29T13:10:56+00:00",
+            "sha256": "d04e58a2a0f4de0eef720eae53a7882a4f36fdec2cb8803c35a818fc3f698a69",
+            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-09-24"

@@ -1,8 +1,8 @@
 """Portal de download dos instaladores e tabelas oficiais do DATASUS.
 
-Consulta o site do Ministério a cada visita; quando ele está fora do ar,
-mostra o último snapshot conferido (data/catalog.json) e o botão de download
-continua funcionando pelo espelho próprio em GitHub Releases.
+Abre pelo catálogo salvo e permite uma consulta manual às fontes.
+As cópias confirmadas em GitHub Releases permitem baixar arquivos
+quando o servidor de origem está indisponível.
 """
 
 from __future__ import annotations
@@ -15,14 +15,15 @@ from datetime import date, datetime, timedelta, timezone
 
 import streamlit as st
 
-from catalogs.mirrors import matching_mirror, probe_mirror
+from catalogs.mirrors import download_mirror, matching_mirror, probe_mirror
 from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 from catalogs.updates import make_update_event, merge_updates
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
-SINGLE_VERSION_SYSTEMS = ("bpa", "sia", "fpo_installer", "fpo_update", "sihd2", "cnes_complete", "cnes_app")
+SINGLE_VERSION_SYSTEMS = ("bpa", "sia", "fpo_update", "sihd2", "cnes_complete", "cnes_app")
 COMPETENCE_SYSTEMS = ("bdsia", "sigtap", "cnes_base")
+DIRECT_DOWNLOAD_LIMIT = 50_000_000
 
 SYSTEM_META: dict[str, dict[str, object]] = {
     "bpa": {
@@ -36,12 +37,12 @@ SYSTEM_META: dict[str, dict[str, object]] = {
         "official_page": sia_portal.INDEX_URL,
     },
     "fpo_installer": {
-        "label": "FPO Magnético · instalação", "icon": "🧮",
+        "label": "FPO · instalador base (primeira instalação)", "icon": "🧮",
         "fetch": fpo_portal.fetch_fpo_installer_catalog, "download": fpo_portal.download_release,
         "official_page": fpo_portal.INDEX_URL,
     },
     "fpo_update": {
-        "label": "FPO Magnético · atualização", "icon": "🔄",
+        "label": "FPO Magnético · atualização atual", "icon": "🔄",
         "fetch": fpo_portal.fetch_fpo_update_catalog, "download": fpo_portal.download_release,
         "official_page": fpo_portal.INDEX_URL,
     },
@@ -187,8 +188,13 @@ def prepare_download(system_key, name, url, mirror, on_progress=None):
     mirror_error = False
     if matching_mirror(name, mirror):
         if on_progress:
-            on_progress("Conferindo disponibilidade e integridade no espelho.")
+            on_progress("Conferindo o arquivo no espelho.")
         try:
+            size = mirror.get("size")
+            if isinstance(size, int) and 0 < size <= DIRECT_DOWNLOAD_LIMIT:
+                if on_progress:
+                    on_progress("Baixando e validando o arquivo completo antes de liberar o download.")
+                return {"data": download_mirror(name, mirror, max_size=DIRECT_DOWNLOAD_LIMIT)}, "Espelho independente · arquivo validado", False
             return {"url": cached_mirror_probe(name, mirror)}, "Espelho independente", False
         except (OSError, ValueError):
             mirror_error = True
@@ -249,7 +255,8 @@ def update_day(value):
 
 def fetch_official_catalog(system_key):
     try:
-        return system_key, SYSTEM_META[system_key]["fetch"](), None
+        releases = SYSTEM_META[system_key]["fetch"]()
+        return (system_key, releases, None) if releases else (system_key, None, "EmptyCatalog")
     except Exception as exc:
         # Uma fonte instável não interrompe a consulta dos demais sistemas.
         return system_key, None, type(exc).__name__
@@ -302,8 +309,11 @@ def force_check_all_systems(snapshot_systems):
     progress.empty()
     status.empty()
     errors = sum(error is not None for _, error in catalogs.values())
+    community = sum(bool(releases and releases[0].get("catalog_source") == "community") for releases, _ in catalogs.values())
     if errors:
         st.warning(f"Consulta concluída: {total - errors} de {total} fontes responderam. As demais podem estar temporariamente fora do ar.")
+    elif community:
+        st.info(f"Consulta concluída: {total - community} fontes oficiais e {community} catálogo(s) comunitário(s) de apoio responderam.")
     else:
         st.success(f"Consulta concluída: os {total} sistemas foram verificados nas fontes oficiais.")
     if events:
@@ -330,7 +340,8 @@ def render_download_button(system_key, name, url, mirror):
     if cached and cached.get("identity") != identity:
         st.session_state.pop(state_key, None)
         cached = None
-    if not cached and st.button("Preparar arquivo para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary"):
+    action = {"fpo_update": "atualização FPO", "fpo_installer": "instalador base FPO"}.get(system_key.removesuffix("_backup"), "arquivo")
+    if not cached and st.button(f"Preparar {action} para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary"):
         loading = st.empty()
         render_loading_card(loading, "Iniciando a verificação do arquivo.")
         try:
@@ -353,9 +364,9 @@ def render_download_button(system_key, name, url, mirror):
     if cached:
         st.caption(f'Arquivo pronto · {cached["source"]}')
         if cached.get("url"):
-            st.link_button(f"⬇️ Baixar {name}", cached["url"], width="stretch", type="primary")
+            st.link_button(f"⬇️ Baixar {action}: {name}", cached["url"], width="stretch", type="primary")
         else:
-            st.download_button(f"⬇️ Baixar {name}", data=cached["data"], file_name=name,
+            st.download_button(f"⬇️ Baixar {action}: {name}", data=cached["data"], file_name=name,
                                mime="application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
                                width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore")
 
@@ -381,12 +392,15 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
     with st.container(border=True):
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key)
+        if not releases and info.get("official_reachable") is False:
+            error = error or info.get("error") or "SourceUnavailable"
         current = info.get("current")
-        render_status(releases, error, info.get("last_success_at", info.get("checked_at")) if current and not releases else None)
+        latest = info.get("latest") or current
+        render_status(releases, error, info.get("catalog_checked_at", info.get("last_success_at", info.get("checked_at"))) if latest and not releases else None)
         if releases:
             name, url = releases[0]["name"], releases[0]["url"]
-        elif current:
-            name, url = current["name"], current["url"]
+        elif latest:
+            name, url = latest["name"], latest["url"]
         else:
             name = url = None
         if name:
@@ -396,33 +410,39 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
             elif system_key == "cnes_app":
                 st.caption("Atualização para o SCNES já instalado")
             elif system_key == "fpo_installer":
-                st.caption("Use antes da primeira instalação do FPO")
+                st.caption("Use na primeira instalação e, em seguida, aplique a atualização atual no cartão principal.")
             elif system_key == "fpo_update":
-                st.caption("Aplique após instalar o FPO ou para atualizar a versão")
+                st.caption("Este é o arquivo de atualização atual. Use com o FPO já instalado.")
             if system_key == "sihd2" and not matching_mirror(name, info.get("mirror")):
-                st.info("O arquivo não foi confirmado no espelho. Confira a disponibilidade no portal oficial abaixo.")
+                st.warning("Versão identificada na página oficial, mas o arquivo ainda não pôde ser baixado do servidor DATASUS. Download indisponível até a cópia ser confirmada.")
             else:
                 render_download_button(system_key, str(name), str(url), info.get("mirror"))
             if current and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
                 with st.expander("Versão anterior preservada no espelho"):
                     render_download_button(system_key + "_backup", current["name"], current["url"], info["mirror"])
         st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
+        if system_key == "fpo_update":
+            with st.expander("Primeira instalação? Abra o instalador base do FPO"):
+                render_single_version_card("fpo_installer", snapshot_systems)
 
 
 def render_competence_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
     meta = SYSTEM_META[system_key]
     info = snapshot_systems.get(system_key, {})
     saved_competences = info.get("competences", {}) if isinstance(info.get("competences"), dict) else {}
+    saved_latest = info.get("latest") or {}
     with st.container(border=True):
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key)
-        if system_key == "sigtap" and releases and releases[0].get("catalog_source") == "community":
+        source = (releases[0] if releases else saved_latest).get("catalog_source") if releases or saved_latest else None
+        if system_key == "sigtap" and source == "community":
             badge("warn", "Catálogo comunitário de apoio · cópias identificadas")
         else:
             render_status(releases, error, info.get("last_success_at", info.get("checked_at")) if not releases else None)
         if system_key == "sigtap":
             st.caption("Se o DATASUS falhar, consultamos o catálogo e as cópias comunitárias do SIGTAP.")
-        available = sorted(set(saved_competences) | {str(item["competence"]) for item in (releases or [])}, reverse=True)
+        latest_months = {str(saved_latest["competence"])} if saved_latest.get("competence") else set()
+        available = sorted(set(saved_competences) | latest_months | {str(item["competence"]) for item in (releases or [])}, reverse=True)
 
         if not available:
             st.info("Nenhuma competência disponível ainda. Consulte o catálogo oficial ou tente novamente mais tarde.")
@@ -430,7 +450,8 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
             return
 
         def release_for(month: str) -> dict[str, object] | None:
-            return next((item for item in releases if item["competence"] == month), None) if releases else None
+            live = next((item for item in releases if item["competence"] == month), None) if releases else None
+            return live or (saved_latest if saved_latest.get("competence") == month else None)
 
         def competence_label(month: str) -> str:
             release = release_for(month)
@@ -482,6 +503,8 @@ def latest_release_rows(snapshot_systems):
     live_catalogs = st.session_state.get("forced_live_catalogs", {})
     rows = []
     for system_key, meta in SYSTEM_META.items():
+        if system_key == "fpo_installer":
+            continue
         saved = snapshot_systems.get(system_key, {})
         releases, _error = live_catalogs.get(system_key, (None, None))
         release = None
@@ -494,6 +517,7 @@ def latest_release_rows(snapshot_systems):
             live_release = max(
                 releases or [], key=lambda item: str(item.get("competence", "")), default=None,
             )
+            live_release = live_release or saved.get("latest")
             if live_release and (not saved_month or str(live_release.get("competence", "")) >= saved_month):
                 release = dict(live_release)
                 month = str(live_release.get("competence", ""))
@@ -508,16 +532,19 @@ def latest_release_rows(snapshot_systems):
                 period = f"{month[4:6]}/{month[:4]} · " if len(month) == 6 else ""
                 version = f"{period}{release.get('name', '—')}"
         else:
-            current = saved.get("current") or {}
+            current = saved.get("latest") or saved.get("current") or {}
             release = dict(releases[0]) if releases else current
             if releases and not release.get("release_date") and current.get("name") == release.get("name"):
                 release["release_date"] = current.get("release_date")
             if release:
-                version = str(release.get("name", "—"))
+                version = str(release.get("name", "-"))
+        mirror_entry = saved_release if system_key in COMPETENCE_SYSTEMS else saved
+        has_mirror = matching_mirror(str((release or {}).get("name", "")), mirror_entry.get("mirror"))
         rows.append({
             "Sistema": str(meta["label"]),
             "Última versão": version,
             "Data do lançamento": release_date_value((release or {}).get("release_date")),
+            "Download": "Disponível no espelho" if has_mirror else "Cópia ainda indisponível",
         })
     return rows
 
@@ -537,6 +564,7 @@ def render_latest_releases_table(snapshot_systems):
         column_config={
             "Sistema": st.column_config.TextColumn("Sistema"),
             "Última versão": st.column_config.TextColumn("Última versão"),
+            "Download": st.column_config.TextColumn("Download"),
             "Data do lançamento": st.column_config.DateColumn(
                 "Data do lançamento", format="DD/MM/YYYY",
                 help="Data indicada na listagem oficial. Quando ela não é publicada, o campo fica em branco.",

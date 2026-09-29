@@ -199,11 +199,17 @@ def sync_single_version_system(key, config, previous):
         releases = config["fetch"]()
         if not releases:
             raise ValueError("Nenhuma versão encontrada.")
-        latest = releases[0]
-        name = latest["name"]
-        old_current = old.get("current") or {}
-        if old_current.get("name") and old_current["name"] != name:
-            announcements.append(make_update_event(key, config["label"], name, checked_at))
+    except (OSError, ValueError) as exc:
+        return failed(old, config, checked_at, exc)
+    latest = dict(releases[0])
+    name = latest["name"]
+    old_current = old.get("current") or {}
+    old_latest = old.get("latest") or old_current
+    if not latest.get("release_date") and old_latest.get("name") == name:
+        latest["release_date"] = old_latest.get("release_date")
+    if old_latest.get("name") and old_latest["name"] != name:
+        announcements.append(make_update_event(key, config["label"], name, checked_at))
+    try:
         previous_entry = {**(old.get("current") or {}), "mirror": old.get("mirror")}
         mirror = confirmed_previous(previous_entry) if previous_entry.get("name") == name else None
         if not mirror:
@@ -211,6 +217,8 @@ def sync_single_version_system(key, config, previous):
         print(f'[{key}] {name}: {"espelho confirmado" if mirror else "somente arquivo local"}')
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         result = failed(old, config, checked_at, exc)
+        result.update(latest=latest, official_reachable=True, catalog_checked_at=checked_at,
+                      pending_download=True, download_error=type(exc).__name__)
         if announcements:
             result["_announcements"] = announcements
         return result
@@ -218,6 +226,7 @@ def sync_single_version_system(key, config, previous):
     if not release_date and old_current.get("name") == name:
         release_date = old_current.get("release_date")
     result = {"label": config["label"], "official_page": config["official_page"],
+              "latest": latest, "catalog_checked_at": checked_at, "pending_download": False,
               "current": {"name": name, "size": latest.get("size"), "url": latest["url"],
                           "release_date": release_date},
               "mirror": mirror, "checked_at": checked_at, "last_success_at": checked_at, "official_reachable": True}
@@ -239,6 +248,7 @@ def sync_competence_system(key, config, previous, on_progress=None):
     announcements = []
     old_latest_month = max(updated, default=None)
     latest_release = max(releases, key=lambda item: str(item.get("competence", "")))
+    latest_release = dict(latest_release)
     latest_month = str(latest_release["competence"])
     if old_latest_month:
         old_latest = updated[old_latest_month]
@@ -259,8 +269,9 @@ def sync_competence_system(key, config, previous, on_progress=None):
 
     def result():
         data = {"label": config["label"], "official_page": config["official_page"],
+                "latest": latest_release, "catalog_checked_at": checked_at,
                 "competences": dict(updated), "checked_at": checked_at, "last_success_at": checked_at,
-                "official_reachable": True, "pending_competences": list(errors)}
+                "official_reachable": latest_release.get("catalog_source") != "community", "pending_competences": list(errors)}
         if announcements:
             data["_announcements"] = announcements
         return data

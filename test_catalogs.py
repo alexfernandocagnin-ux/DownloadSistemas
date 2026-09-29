@@ -166,6 +166,20 @@ class Sihd2PortalTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 sihd_portal.fetch_sihd2_catalog()
 
+    def test_cancelled_version_inside_link_is_not_offered(self):
+        page = self.PAGE.replace("Versão 23.40", "Versão 23.40 (Cancelada)")
+        with patch("catalogs.sihd_portal.urlopen") as opening:
+            opening.return_value.__enter__.return_value = io.BytesIO(page.encode("iso-8859-15"))
+            releases = sihd_portal.fetch_sihd2_catalog()
+        self.assertNotIn("SIHD2_2340.exe", [item["name"] for item in releases])
+
+    def test_version_text_must_match_the_actual_filename(self):
+        page = self.PAGE.replace("SIHD2_2340.exe", "SIHD2_2330.exe")
+        with patch("catalogs.sihd_portal.urlopen") as opening:
+            opening.return_value.__enter__.return_value = io.BytesIO(page.encode("iso-8859-15"))
+            releases = sihd_portal.fetch_sihd2_catalog()
+        self.assertNotIn("SIHD2_2330.exe", [item["name"] for item in releases])
+
 
 class SigtapPortalTests(unittest.TestCase):
     FEED = """<?xml version="1.0" encoding="UTF-8"?>

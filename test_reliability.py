@@ -48,13 +48,21 @@ class MirrorTests(unittest.TestCase):
 
     def test_probe_reads_only_signature_for_large_file(self):
         size = 739_134_749
+        name = "BASE_DE_DADOS_CNES_202608.ZIP"
+        mirror = {**MIRROR, "asset_name": name, "asset_url": MIRROR["asset_url"].replace(NAME, name)}
         with patch.object(mirrors, "urlopen") as opening:
             response = opening.return_value.__enter__.return_value
             response.read.return_value = b"PK"
             response.headers = {"Content-Range": f"bytes 0-1/{size}"}
-            result = mirrors.probe_mirror(NAME, {**MIRROR, "size": size})
+            result = mirrors.probe_mirror(name, {**mirror, "size": size})
         response.read.assert_called_once_with(2)
-        self.assertEqual(result, MIRROR["asset_url"])
+        self.assertEqual(result, mirror["asset_url"])
+
+    def test_zip_cannot_be_delivered_as_exe_even_with_matching_hash(self):
+        wrong = b"PK" + b"0" * 100_000
+        with patch.object(mirrors, "download_via_http", return_value=wrong):
+            with self.assertRaises(ValueError):
+                mirrors.download_mirror(NAME, {**MIRROR, "sha256": hashlib.sha256(wrong).hexdigest()})
 
     def test_probe_rejects_missing_or_wrong_file(self):
         with patch.object(mirrors, "urlopen") as opening:
@@ -140,6 +148,9 @@ class SynchronizationTests(unittest.TestCase):
             result = sync.sync_single_version_system("bpa", self.config, self.previous)
         self.assertEqual(result["current"], self.old["current"])
         self.assertEqual(result["mirror"], MIRROR)
+        self.assertEqual(result["latest"]["name"], "BPAMAG0501.exe")
+        self.assertTrue(result["official_reachable"])
+        self.assertTrue(result["pending_download"])
 
     def test_new_single_release_is_announced_even_when_mirror_upload_fails(self):
         self.config["fetch"] = lambda: [{"name": "BPAMAG0501.exe", "url": URL}]
@@ -196,6 +207,7 @@ class SynchronizationTests(unittest.TestCase):
             result = sync.sync_competence_system("bdsia", config, previous)
         self.assertEqual(result["competences"]["202601"], old_entry)
         self.assertEqual(result["pending_competences"], ["202609"])
+        self.assertEqual(result["latest"]["name"], "new.exe")
         self.assertEqual(result["_announcements"][0]["competence"], "202609")
 
     def test_update_feed_deduplicates_and_keeps_first_discovery_date(self):
@@ -230,8 +242,8 @@ class PortalTests(unittest.TestCase):
         self.assertIn("Últimos lançamentos", rendered)
         self.assertIn("Data em branco significa", "\n".join(element.value for element in app.caption))
         self.assertTrue(any(button.key == "force_catalog_check" for button in app.button))
-        self.assertIn("FPO Magnético · instalação", rendered)
-        self.assertIn("FPO Magnético · atualização", rendered)
+        self.assertIn("FPO · instalador base", rendered)
+        self.assertIn("FPO Magnético · atualização atual", rendered)
 
     def test_manual_check_forces_every_catalog_without_cache(self):
         fetchers = [
@@ -250,15 +262,15 @@ class PortalTests(unittest.TestCase):
         self.assertIn("Última verificação manual, sem cache", "\n".join(element.value for element in app.caption))
 
     def test_mirror_download_works_while_official_source_is_offline(self):
-        with patch("catalogs.mirrors.probe_mirror", return_value=MIRROR["asset_url"]), patch("catalogs.bpa_portal.download_release", side_effect=AssertionError("DATASUS should not be needed")) as official:
+        with patch("catalogs.mirrors.download_mirror", return_value=PACKAGE), patch("catalogs.bpa_portal.download_release", side_effect=AssertionError("DATASUS should not be needed")) as official:
             app = self.app().run()
             next(button for button in app.button if str(button.key).startswith("prep_bpa_")).click().run()
         self.assertFalse(app.exception)
         official.assert_not_called()
-        self.assertTrue(app.get("link_button"))
+        self.assertTrue(app.get("download_button"))
 
     def test_broken_mirror_falls_back_without_redirect(self):
-        with patch("catalogs.mirrors.probe_mirror", side_effect=OSError("404")), patch("catalogs.bpa_portal.download_release", return_value=PACKAGE) as official:
+        with patch("catalogs.mirrors.download_mirror", side_effect=OSError("404")), patch("catalogs.bpa_portal.download_release", return_value=PACKAGE) as official:
             app = self.app().run()
             next(button for button in app.button if str(button.key).startswith("prep_bpa_")).click().run()
         self.assertFalse(app.exception)
@@ -267,12 +279,32 @@ class PortalTests(unittest.TestCase):
         self.assertTrue(app.warning)
 
     def test_both_sources_offline_show_error_without_crashing(self):
-        with patch("catalogs.mirrors.probe_mirror", side_effect=OSError("404")), patch("catalogs.sia_portal.download_release", side_effect=OSError("offline")) as official:
+        with patch("catalogs.mirrors.download_mirror", side_effect=OSError("404")), patch("catalogs.sia_portal.download_release", side_effect=OSError("offline")) as official:
             app = self.app().run()
             next(button for button in app.button if str(button.key).startswith("prep_sia_")).click().run()
         self.assertFalse(app.exception)
         official.assert_called_once()
         self.assertTrue(app.error)
+
+    def test_fpo_buttons_deliver_the_selected_package_without_github_redirect(self):
+        downloads = []
+
+        def download(name, mirror, **kwargs):
+            self.assertEqual(mirror["asset_name"], name)
+            downloads.append(name)
+            return PACKAGE + name.encode()
+
+        with patch("catalogs.mirrors.download_mirror", side_effect=download):
+            app = self.app().run()
+            next(button for button in app.button if str(button.key).startswith("prep_fpo_update_")).click().run()
+            self.assertFalse(app.exception)
+            self.assertEqual(app.session_state["official_download_fpo_update"]["data"], PACKAGE + b"FPOMAG_Atualiza_0302.exe")
+            self.assertTrue(any("FPOMAG_Atualiza_0302.exe" in button.proto.label for button in app.get("download_button")))
+            next(button for button in app.button if str(button.key).startswith("prep_fpo_installer_")).click().run()
+            self.assertFalse(app.exception)
+            self.assertEqual(app.session_state["official_download_fpo_installer"]["data"], PACKAGE + b"FPOMAG_Instalador_0100.exe")
+            self.assertTrue(any("FPOMAG_Instalador_0100.exe" in button.proto.label for button in app.get("download_button")))
+        self.assertEqual(downloads, ["FPOMAG_Atualiza_0302.exe", "FPOMAG_Instalador_0100.exe"])
 
 
 if __name__ == "__main__":
