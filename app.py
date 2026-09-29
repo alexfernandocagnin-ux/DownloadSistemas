@@ -10,15 +10,16 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from html import escape
-from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timedelta, timezone
 
 import streamlit as st
 
 from catalogs.mirrors import matching_mirror, probe_mirror
 from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs.updates import make_update_event, merge_updates
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
-LIVE_CHECK_TTL = 15 * 60
 
 SINGLE_VERSION_SYSTEMS = ("bpa", "sia", "fpo_installer", "fpo_update", "sihd2", "cnes_complete", "cnes_app")
 COMPETENCE_SYSTEMS = ("bdsia", "sigtap", "cnes_base")
@@ -129,6 +130,24 @@ div[data-testid="stCaptionContainer"] { color: #69797b; }
     border-top-color: #126b59; border-radius: 50%; animation: ds-spin .85s linear infinite; }
 .ds-loading-copy strong { display: block; font-size: .91rem; }
 .ds-loading-copy span { display: block; color: #647477; font-size: .82rem; margin-top: .15rem; }
+.ds-update-panel { position: relative; overflow: hidden; padding: 1.2rem 1.35rem;
+    background: linear-gradient(120deg, #edf7f1 0%, #f8fbf8 58%, #fff 100%);
+    border: 1px solid #d9e8de; border-radius: 16px; margin: .3rem 0 1.2rem; }
+.ds-update-heading { display: flex; align-items: center; gap: .8rem; margin-bottom: .85rem; }
+.ds-update-icon { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 auto;
+    color: #126b59; background: #dcefe4; border-radius: 13px; font-size: 1.2rem; }
+.ds-update-heading strong { display: block; color: #17343a; font-size: 1.02rem; }
+.ds-update-heading span { color: #637477; display: block; font-size: .82rem; margin-top: .12rem; }
+.ds-update-list { display: grid; gap: .48rem; }
+.ds-update-item { display: grid; grid-template-columns: minmax(135px,.8fr) minmax(180px,1.5fr) auto;
+    align-items: center; gap: .7rem; padding: .62rem .75rem; background: rgba(255,255,255,.78);
+    border: 1px solid #e4ece6; border-radius: 10px; }
+.ds-update-system { color: #173c35; font-size: .86rem; font-weight: 750; }
+.ds-update-file { color: #536467; font-size: .81rem; overflow-wrap: anywhere; }
+.ds-update-date { color: #71817e; font-size: .76rem; white-space: nowrap; }
+.ds-update-empty { color: #47665c; font-size: .88rem; padding: .8rem .9rem;
+    background: rgba(255,255,255,.72); border: 1px solid #e4ece6; border-radius: 10px; }
+.ds-toolbar { display: flex; align-items: center; }
 .ds-progress-track { position: relative; height: 5px; margin-top: .85rem; overflow: hidden;
     background: #e1ece5; border-radius: 999px; }
 .ds-progress-track span { display: block; width: 34%; height: 100%; border-radius: inherit;
@@ -140,7 +159,9 @@ div[data-testid="stCaptionContainer"] { color: #69797b; }
     .ds-progress-track span { transform: translateX(80%); }
 }
 @media (max-width: 760px) { .ds-hero { grid-template-columns: 1fr; gap: 1.3rem; padding: 2rem 1.5rem; }
-    .ds-hero-meta { border-left: 0; border-top: 1px solid rgba(255,255,255,.2); padding: .8rem 0 0; } }
+    .ds-hero-meta { border-left: 0; border-top: 1px solid rgba(255,255,255,.2); padding: .8rem 0 0; }
+    .ds-update-item { grid-template-columns: 1fr; gap: .2rem; }
+    .ds-update-date { white-space: normal; } }
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
@@ -155,14 +176,6 @@ def load_snapshot() -> dict[str, object]:
         st.warning("O catálogo salvo não pôde ser lido. Consulte as fontes oficiais abaixo.")
         return {"systems": {}}
     return data if isinstance(data, dict) else {"systems": {}}
-
-
-@st.cache_data(ttl=LIVE_CHECK_TTL, show_spinner=False)
-def live_catalog(system_key: str) -> tuple[list[dict[str, object]] | None, str | None]:
-    try:
-        return SYSTEM_META[system_key]["fetch"](), None
-    except (OSError, ValueError) as exc:
-        return None, type(exc).__name__
 
 
 @st.cache_data(ttl=5 * 60, max_entries=64, show_spinner=False)
@@ -214,9 +227,87 @@ def readable_date(value):
     if not value:
         return "ainda não confirmada"
     try:
-        return datetime.fromisoformat(value).strftime("%d/%m/%Y às %H:%M UTC")
+        parsed = datetime.fromisoformat(value)
+        if parsed.tzinfo:
+            parsed = parsed.astimezone(timezone(timedelta(hours=-3)))
+        return parsed.strftime("%d/%m/%Y às %H:%M (horário de Brasília)")
     except (TypeError, ValueError):
         return str(value)
+
+
+def update_day(value):
+    if not value:
+        return "data não informada"
+    try:
+        parsed = datetime.fromisoformat(value)
+        if parsed.tzinfo:
+            parsed = parsed.astimezone(timezone(timedelta(hours=-3)))
+        return parsed.strftime("%d/%m/%Y")
+    except (TypeError, ValueError):
+        return str(value)
+
+
+def fetch_official_catalog(system_key):
+    try:
+        return system_key, SYSTEM_META[system_key]["fetch"](), None
+    except Exception as exc:
+        # Uma fonte instável não interrompe a consulta dos demais sistemas.
+        return system_key, None, type(exc).__name__
+
+
+def find_live_updates(snapshot_systems, catalogs, found_at):
+    events = []
+    for system_key, (releases, error) in catalogs.items():
+        if not releases:
+            continue
+        saved = snapshot_systems.get(system_key, {})
+        meta = SYSTEM_META[system_key]
+        if system_key in COMPETENCE_SYSTEMS:
+            competences = saved.get("competences", {})
+            competences = competences if isinstance(competences, dict) else {}
+            old_month = max(competences, default=None)
+            latest = max(releases, key=lambda item: str(item.get("competence", "")))
+            month = str(latest.get("competence", ""))
+            previous_name = (competences.get(old_month) or {}).get("name") if old_month else None
+            if old_month and (month > old_month or (month == old_month and previous_name != latest.get("name"))):
+                events.append(make_update_event(
+                    system_key, meta["label"], latest["name"], found_at,
+                    competence=month, catalog_source=latest.get("catalog_source"),
+                ))
+        else:
+            previous_name = (saved.get("current") or {}).get("name")
+            latest = releases[0]
+            if previous_name and previous_name != latest.get("name"):
+                events.append(make_update_event(system_key, meta["label"], latest["name"], found_at))
+    return events
+
+
+def force_check_all_systems(snapshot_systems):
+    total = len(SYSTEM_META)
+    progress = st.progress(0, text=f"Consultando 0 de {total} sistemas…")
+    status = st.empty()
+    catalogs = {}
+    with ThreadPoolExecutor(max_workers=min(6, total)) as executor:
+        tasks = {executor.submit(fetch_official_catalog, key): key for key in SYSTEM_META}
+        for completed, future in enumerate(as_completed(tasks), start=1):
+            key, releases, error = future.result()
+            catalogs[key] = (releases, error)
+            progress.progress(completed / total, text=f"Consultando {completed} de {total} sistemas…")
+            status.caption(f"Conferido: {SYSTEM_META[key]['label']}")
+    st.session_state["forced_live_catalogs"] = catalogs
+    checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    events = find_live_updates(snapshot_systems, catalogs, checked_at)
+    st.session_state["forced_live_checked_at"] = checked_at
+    st.session_state["forced_live_updates"] = events
+    progress.empty()
+    status.empty()
+    errors = sum(error is not None for _, error in catalogs.values())
+    if errors:
+        st.warning(f"Consulta concluída: {total - errors} de {total} fontes responderam. As demais podem estar temporariamente fora do ar.")
+    else:
+        st.success(f"Consulta concluída: os {total} sistemas foram verificados nas fontes oficiais.")
+    if events:
+        st.info(f"Encontramos {len(events)} atualização(ões) desde o último catálogo. Elas já aparecem no painel de novidades abaixo.")
 
 
 def render_download_button(system_key, name, url, mirror):
@@ -271,17 +362,17 @@ def render_download_button(system_key, name, url, mirror):
 
 def render_status(releases, error, checked_at):
     if releases:
-        badge("ok", "Versões consultadas na fonte oficial (cache de 15 min)")
+        badge("ok", "Versões consultadas na fonte oficial")
     elif error:
         badge("warn", "Fonte oficial indisponível · usando catálogo salvo")
     elif checked_at:
         st.caption(f"Última confirmação: {readable_date(checked_at)}")
     else:
-        st.caption("Nenhuma versão salva. Ative a consulta oficial para procurar arquivos.")
+        st.caption("Nenhuma versão salva. Use o botão de verificação para consultar a fonte oficial.")
 
 
 def card_catalog(system_key):
-    return live_catalog(system_key) if check_official else (None, None)
+    return st.session_state.get("forced_live_catalogs", {}).get(system_key, (None, None))
 
 
 def render_single_version_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
@@ -376,6 +467,57 @@ def render_grid(keys, snapshot_systems, renderer):
                 renderer(key, snapshot_systems)
 
 
+def render_updates_panel(snapshot):
+    left, action = st.columns([2.4, 1], vertical_alignment="center")
+    with left:
+        st.markdown(
+            '<div class="ds-update-heading"><div class="ds-update-icon">✦</div>'
+            '<div><strong>Novidades dos sistemas</strong>'
+            '<span>Atualizações encontradas nas fontes oficiais, com a data da descoberta.</span></div></div>',
+            unsafe_allow_html=True,
+        )
+    with action:
+        check_now = st.button(
+            "🔄 Verificar todos os sistemas", key="force_catalog_check",
+            type="primary", width="stretch",
+            help="Consulta agora, sem cache, os catálogos oficiais de todos os sistemas.",
+        )
+    if check_now:
+        force_check_all_systems(snapshot.get("systems", {}))
+
+    stored = snapshot.get("updates", [])
+    live = st.session_state.get("forced_live_updates", [])
+    updates = merge_updates(stored, live)
+    if updates:
+        items = []
+        for event in updates[:6]:
+            source_note = " · catálogo comunitário" if event.get("catalog_source") == "community" else ""
+            items.append(
+                '<div class="ds-update-item">'
+                f'<span class="ds-update-system">{escape(str(event.get("system", "Sistema")))}</span>'
+                f'<span class="ds-update-file">{escape(str(event.get("name", "Nova versão")))}{source_note}</span>'
+                f'<span class="ds-update-date">Encontrada em {escape(update_day(event.get("found_at")))}</span>'
+                '</div>'
+            )
+        extra = f"<p>Exibindo as 6 novidades mais recentes de {len(updates)} registradas.</p>" if len(updates) > 6 else ""
+        content = f'<div class="ds-update-list">{"".join(items)}</div>{extra}'
+    else:
+        checked_at = st.session_state.get("forced_live_checked_at")
+        if checked_at:
+            message = f"Nenhuma versão nova encontrada na última verificação de {update_day(checked_at)}."
+        else:
+            message = "Ainda não há uma versão nova registrada desde o início do histórico. A verificação automática confere os sistemas ao longo do dia."
+        content = f'<div class="ds-update-empty">{escape(message)}</div>'
+
+    st.markdown(
+        f'<div class="ds-update-panel">{content}</div>',
+        unsafe_allow_html=True,
+    )
+    checked_at = st.session_state.get("forced_live_checked_at")
+    if checked_at:
+        st.caption(f"Última verificação manual, sem cache: {readable_date(checked_at)}")
+
+
 snapshot = load_snapshot()
 systems = snapshot.get("systems", {}) if isinstance(snapshot.get("systems"), dict) else {}
 updated_at = snapshot.get("updated_at", "ainda não sincronizado")
@@ -400,15 +542,16 @@ st.markdown(
 )
 
 with st.container(border=True):
+    render_updates_panel(snapshot)
+
+with st.container(border=True):
     note, control = st.columns([1.6, 1])
     with note:
         st.markdown("**Baixe pelo arquivo confirmado**")
-        st.caption("A consulta ao portal oficial é opcional e pode demorar durante instabilidades.")
+        st.caption("Os downloads espelhados continuam disponíveis mesmo durante falhas nos portais oficiais.")
     with control:
-        check_official = st.checkbox(
-            "Consultar versões oficiais agora", value=False,
-            help="Os downloads já espelhados não precisam desta consulta.",
-        )
+        scan_time = st.session_state.get("forced_live_checked_at")
+        st.caption(f"Última busca manual: {update_day(scan_time)}" if scan_time else "A consulta dos sistemas é sob demanda.")
 
 st.markdown(
     '<div class="ds-section"><div class="ds-eyebrow">01 &nbsp;·&nbsp; APLICATIVOS</div>'

@@ -7,10 +7,12 @@ import importlib.util
 from ftplib import error_perm
 import tempfile
 import unittest
+from contextlib import ExitStack
 from pathlib import Path
 from unittest.mock import patch
 
-from catalogs import mirrors, _common, bpa_portal, cnes_portal
+from catalogs import mirrors, _common, bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs.updates import merge_updates
 from scripts import sync_catalog as sync
 
 
@@ -133,6 +135,14 @@ class SynchronizationTests(unittest.TestCase):
         self.assertEqual(result["current"], self.old["current"])
         self.assertEqual(result["mirror"], MIRROR)
 
+    def test_new_single_release_is_announced_even_when_mirror_upload_fails(self):
+        self.config["fetch"] = lambda: [{"name": "BPAMAG0501.exe", "url": URL}]
+        with patch.object(sync, "store_package", side_effect=OSError("upload offline")):
+            result = sync.sync_single_version_system("bpa", self.config, self.previous)
+        self.assertEqual(result["current"], self.old["current"])
+        self.assertEqual(result["_announcements"][0]["system"], "BPA Magnético")
+        self.assertEqual(result["_announcements"][0]["name"], "BPAMAG0501.exe")
+
     def test_draft_asset_is_not_announced_as_public_download(self):
         draft = {"isDraft": True, "assets": [{"name": NAME, "size": len(PACKAGE), "url": MIRROR["asset_url"]}]}
         with patch.dict(os.environ, {"GITHUB_REPOSITORY": mirrors.REPOSITORY}), patch.object(sync, "gh", return_value=json.dumps(draft)):
@@ -178,6 +188,15 @@ class SynchronizationTests(unittest.TestCase):
             result = sync.sync_competence_system("bdsia", config, previous)
         self.assertEqual(result["competences"]["202601"], old_entry)
         self.assertEqual(result["pending_competences"], ["202609"])
+        self.assertEqual(result["_announcements"][0]["competence"], "202609")
+
+    def test_update_feed_deduplicates_and_keeps_first_discovery_date(self):
+        old = {"id": "bpa:BPAMAG0501.exe", "name": "BPAMAG0501.exe", "found_at": "2026-09-20T10:00:00+00:00"}
+        repeated = {**old, "found_at": "2026-09-29T10:00:00+00:00"}
+        newest = {"id": "sia:SIA0605.exe", "name": "SIA0605.exe", "found_at": "2026-09-29T12:00:00+00:00"}
+        merged = merge_updates([old], [repeated, newest])
+        self.assertEqual([event["id"] for event in merged], [newest["id"], old["id"]])
+        self.assertEqual(merged[1]["found_at"], old["found_at"])
 
 
 @unittest.skipUnless(importlib.util.find_spec("streamlit"), "Requer Streamlit")
@@ -194,16 +213,33 @@ class PortalTests(unittest.TestCase):
         with patch("catalogs.bpa_portal.fetch_bpa_catalog", side_effect=AssertionError("official request")):
             app = self.app().run()
         self.assertFalse(app.exception)
-        self.assertFalse(app.checkbox[0].value)
         self.assertTrue(app.button)
         rendered = "\n".join(element.value for element in app.markdown)
+        self.assertIn("Novidades dos sistemas", rendered)
+        self.assertTrue(any(button.key == "force_catalog_check" for button in app.button))
         self.assertIn("FPO Magnético · instalação", rendered)
         self.assertIn("FPO Magnético · atualização", rendered)
+
+    def test_manual_check_forces_every_catalog_without_cache(self):
+        fetchers = [
+            (bpa_portal, "fetch_bpa_catalog"), (sia_portal, "fetch_sia_catalog"),
+            (fpo_portal, "fetch_fpo_installer_catalog"), (fpo_portal, "fetch_fpo_update_catalog"),
+            (sihd_portal, "fetch_sihd2_catalog"), (cnes_portal, "fetch_cnes_complete_catalog"),
+            (cnes_portal, "fetch_cnes_app_catalog"), (sia_portal, "fetch_bdsia_catalog"),
+            (sigtap_portal, "fetch_sigtap_catalog"), (cnes_portal, "fetch_cnes_base_catalog"),
+        ]
+        with ExitStack() as stack:
+            mocks = [stack.enter_context(patch.object(module, name, return_value=[])) for module, name in fetchers]
+            app = self.app().run()
+            next(button for button in app.button if button.key == "force_catalog_check").click().run()
+        self.assertFalse(app.exception)
+        self.assertTrue(all(fetch.call_count == 1 for fetch in mocks))
+        self.assertIn("Última verificação manual, sem cache", "\n".join(element.value for element in app.caption))
 
     def test_mirror_download_works_while_official_source_is_offline(self):
         with patch("catalogs.mirrors.probe_mirror", return_value=MIRROR["asset_url"]), patch("catalogs.bpa_portal.download_release", side_effect=AssertionError("DATASUS should not be needed")) as official:
             app = self.app().run()
-            app.button[0].click().run()
+            next(button for button in app.button if str(button.key).startswith("prep_bpa_")).click().run()
         self.assertFalse(app.exception)
         official.assert_not_called()
         self.assertTrue(app.get("link_button"))
@@ -211,7 +247,7 @@ class PortalTests(unittest.TestCase):
     def test_broken_mirror_falls_back_without_redirect(self):
         with patch("catalogs.mirrors.probe_mirror", side_effect=OSError("404")), patch("catalogs.bpa_portal.download_release", return_value=PACKAGE) as official:
             app = self.app().run()
-            app.button[0].click().run()
+            next(button for button in app.button if str(button.key).startswith("prep_bpa_")).click().run()
         self.assertFalse(app.exception)
         official.assert_called_once()
         self.assertTrue(app.get("download_button"))

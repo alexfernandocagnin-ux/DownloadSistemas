@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
+from catalogs.updates import make_update_event, merge_updates  # noqa: E402
 
 CATALOG_PATH = ROOT / "data" / "catalog.json"
 DIST_DIR = ROOT / "dist"
@@ -193,22 +194,32 @@ def failed(previous, config, checked_at, exc):
 def sync_single_version_system(key, config, previous):
     checked_at = now()
     old = previous.get("systems", {}).get(key, {})
+    announcements = []
     try:
         releases = config["fetch"]()
         if not releases:
             raise ValueError("Nenhuma versão encontrada.")
         latest = releases[0]
         name = latest["name"]
+        old_current = old.get("current") or {}
+        if old_current.get("name") and old_current["name"] != name:
+            announcements.append(make_update_event(key, config["label"], name, checked_at))
         previous_entry = {**(old.get("current") or {}), "mirror": old.get("mirror")}
         mirror = confirmed_previous(previous_entry) if previous_entry.get("name") == name else None
         if not mirror:
             mirror = store_package(key, latest, config, config["tag"])
         print(f'[{key}] {name}: {"espelho confirmado" if mirror else "somente arquivo local"}')
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
-        return failed(old, config, checked_at, exc)
-    return {"label": config["label"], "official_page": config["official_page"],
-            "current": {"name": name, "size": latest.get("size"), "url": latest["url"]},
-            "mirror": mirror, "checked_at": checked_at, "last_success_at": checked_at, "official_reachable": True}
+        result = failed(old, config, checked_at, exc)
+        if announcements:
+            result["_announcements"] = announcements
+        return result
+    result = {"label": config["label"], "official_page": config["official_page"],
+              "current": {"name": name, "size": latest.get("size"), "url": latest["url"]},
+              "mirror": mirror, "checked_at": checked_at, "last_success_at": checked_at, "official_reachable": True}
+    if announcements:
+        result["_announcements"] = announcements
+    return result
 
 
 def sync_competence_system(key, config, previous, on_progress=None):
@@ -221,6 +232,19 @@ def sync_competence_system(key, config, previous, on_progress=None):
     except (OSError, ValueError) as exc:
         return failed(old, config, checked_at, exc)
     updated = dict(old.get("competences") or {})
+    announcements = []
+    old_latest_month = max(updated, default=None)
+    latest_release = max(releases, key=lambda item: str(item.get("competence", "")))
+    latest_month = str(latest_release["competence"])
+    if old_latest_month:
+        old_latest = updated[old_latest_month]
+        if latest_month > old_latest_month or (
+            latest_month == old_latest_month and old_latest.get("name") != latest_release["name"]
+        ):
+            announcements.append(make_update_event(
+                key, config["label"], latest_release["name"], checked_at,
+                competence=latest_month, catalog_source=latest_release.get("catalog_source"),
+            ))
     # Todas as cópias antigas ficam disponíveis; cada catálogo define seu limite de sincronização.
     limit = int(config.get("competence_limit", COMPETENCE_LIMIT))
     months = sorted({str(item["competence"]) for item in releases}, reverse=True)[:limit]
@@ -230,9 +254,12 @@ def sync_competence_system(key, config, previous, on_progress=None):
     errors = []
 
     def result():
-        return {"label": config["label"], "official_page": config["official_page"],
+        data = {"label": config["label"], "official_page": config["official_page"],
                 "competences": dict(updated), "checked_at": checked_at, "last_success_at": checked_at,
                 "official_reachable": True, "pending_competences": list(errors)}
+        if announcements:
+            data["_announcements"] = announcements
+        return data
 
     for month in months:
         release = next(item for item in releases if item["competence"] == month)
@@ -252,9 +279,9 @@ def sync_competence_system(key, config, previous, on_progress=None):
     return result()
 
 
-def save_catalog(systems):
+def save_catalog(systems, updates=None):
     ordered = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS) if key in systems}
-    catalog = {"updated_at": now(), "systems": ordered}
+    catalog = {"updated_at": now(), "systems": ordered, "updates": merge_updates(updates or [])}
     CATALOG_PATH.parent.mkdir(parents=True, exist_ok=True)
     temporary = CATALOG_PATH.with_suffix(".tmp")
     temporary.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -272,12 +299,16 @@ def main():
         gh("auth", "status")
     previous = _load_previous()
     systems = dict(previous.get("systems", {}))
+    updates = list(previous.get("updates", []))
     catalog_lock = Lock()
 
     def record(key, info):
+        info = dict(info)
+        announcements = info.pop("_announcements", [])
         with catalog_lock:
             systems[key] = info
-            save_catalog(systems)
+            updates[:] = merge_updates(updates, announcements)
+            save_catalog(systems, updates)
 
     # Uma fonte lenta não impede os demais sistemas de publicar seus arquivos.
     with ThreadPoolExecutor(max_workers=4) as executor:
@@ -288,7 +319,7 @@ def main():
         for task in as_completed(tasks):
             record(tasks[task], task.result())
     systems = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS)}
-    save_catalog(systems)
+    save_catalog(systems, updates)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
             summary.write("## Espelhos DATASUS\n\n")

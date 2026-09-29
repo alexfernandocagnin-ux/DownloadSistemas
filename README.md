@@ -9,8 +9,9 @@ sites estão fora do ar, o que acontece com frequência.
 
 ## Como funciona
 
-- O portal abre pelo catálogo salvo, sem esperar o DATASUS. A consulta oficial é opcional e tem cache de 15 minutos.
+- O portal abre pelo catálogo salvo, sem esperar o DATASUS. **Verificar todos os sistemas** consulta, sob demanda e sem cache, os dez catálogos oficiais em paralelo; uma fonte indisponível não bloqueia as outras.
 - A cada 6 horas, o GitHub Actions tenta obter as versões oficiais, publicar os arquivos e confirmar que cada asset existe e tem o tamanho esperado. Só depois atualiza o catálogo. Downloads ou uploads que falharem preservam a cópia anterior.
+- Quando uma versão muda em relação a uma já conhecida, essa sincronização registra sistema, arquivo e data em um histórico persistente que aparece no quadro **Novidades dos sistemas** para todos os visitantes. A primeira coleta de um sistema serve como referência e não é anunciada como novidade.
 - Os instaladores e os seis meses recentes de cada tabela são espelhados. Na primeira sincronização de uma tabela, a competência atual tem prioridade; o histórico entra nas próximas execuções. Competências já salvas permanecem disponíveis.
 - O usuário prepara o arquivo e baixa dentro do portal. O servidor verifica se o espelho entrega o arquivo esperado e confere assinatura e tamanho, lendo apenas dois bytes. O arquivo é entregue diretamente pelo espelho, sem ocupar a memória do Streamlit. O SHA-256 é registrado na publicação. Se o espelho falhar, tenta a fonte oficial. Uma página de erro nunca é oferecida como instalador.
 - As versões e revisões anteriores continuam acessíveis quando uma versão oficial nova ainda não foi espelhada.
@@ -51,7 +52,8 @@ cartão de cada sistema.
   `fpo-update-latest`, `sihd2-latest`, `cnes-app-latest`, `cnes-complete-latest`,
   `bdsia-<competência>`, `sigtap-<competência>`,
   `cnes-base-<competência>`) e só comita o catálogo quando algo muda.
-- `app.py` — a tela do portal.
+- `app.py` - a tela do portal.
+- `catalogs/updates.py` - deduplicação e retenção do histórico de novidades exibido no portal.
 
 ## Executar localmente
 
