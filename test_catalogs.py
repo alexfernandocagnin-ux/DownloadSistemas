@@ -1,8 +1,10 @@
 """Testes dos catálogos de download, sem acessar a rede nem executar nada."""
 
 import io
+import ssl
 import unittest
 from unittest.mock import patch
+from urllib.error import URLError
 
 from catalogs import _common, bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 
@@ -25,6 +27,36 @@ class CommonCatalogTests(unittest.TestCase):
         self.assertEqual(_common.parse_release_date("25-Sep-2026"), "2026-09-25")
         self.assertEqual(_common.parse_release_date("24/09/2026"), "2026-09-24")
         self.assertIsNone(_common.parse_release_date("sem data"))
+
+    def test_official_sia_index_falls_back_to_http_on_certificate_error(self):
+        page = b"""
+        <table>
+          <tr><td><a href="ftp://arpoador.datasus.gov.br/siasus/BPA/BPAMAG0500.exe">BPAMAG0500.exe</a></td>
+          <td>09-Jul-2026</td><td>7,4 MB</td></tr>
+        </table>
+        """
+        urls = []
+
+        def open_page(request, timeout):
+            urls.append(request.full_url)
+            if len(urls) == 1:
+                raise URLError(ssl.SSLCertVerificationError(1, "certificate verify failed"))
+            return io.BytesIO(page)
+
+        with patch("catalogs._common.urlopen", side_effect=open_page):
+            entries = _common.fetch_index_entries("https://sia.datasus.gov.br/versao/listar_ftp_bpa.php")
+
+        self.assertEqual(urls, [
+            "https://sia.datasus.gov.br/versao/listar_ftp_bpa.php",
+            "http://sia.datasus.gov.br/versao/listar_ftp_bpa.php",
+        ])
+        self.assertEqual(entries[0]["release_date"], "2026-07-09")
+
+    def test_index_does_not_fall_back_to_http_for_timeout(self):
+        with patch("catalogs._common.urlopen", side_effect=URLError(TimeoutError("timed out"))) as urlopen:
+            with self.assertRaises(URLError):
+                _common.fetch_index_entries("https://sia.datasus.gov.br/versao/listar_ftp_bpa.php")
+        urlopen.assert_called_once()
 
 
 class SiaPortalTests(unittest.TestCase):
