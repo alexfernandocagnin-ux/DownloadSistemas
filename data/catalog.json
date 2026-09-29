@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-29T12:46:20+00:00",
+  "updated_at": "2026-09-29T12:50:31+00:00",
   "systems": {
     "bpa": {
       "label": "BPA Magnético",
@@ -14,10 +14,10 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
         "size": 7785806,
-        "verified_at": "2026-09-29T12:45:33+00:00"
+        "verified_at": "2026-09-29T12:49:44+00:00"
       },
-      "checked_at": "2026-09-29T12:45:29+00:00",
-      "last_success_at": "2026-09-29T12:45:29+00:00",
+      "checked_at": "2026-09-29T12:49:41+00:00",
+      "last_success_at": "2026-09-29T12:49:41+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -33,10 +33,10 @@
         "asset_name": "SIA0604.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0604.exe",
         "size": 7590903,
-        "verified_at": "2026-09-29T12:45:33+00:00"
+        "verified_at": "2026-09-29T12:49:44+00:00"
       },
-      "checked_at": "2026-09-29T12:45:29+00:00",
-      "last_success_at": "2026-09-29T12:45:29+00:00",
+      "checked_at": "2026-09-29T12:49:41+00:00",
+      "last_success_at": "2026-09-29T12:49:41+00:00",
       "official_reachable": true
     },
     "fpo_installer": {
@@ -53,10 +53,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-installer-latest/FPOMAG_Instalador_0100.exe",
         "size": 6347935,
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
-        "verified_at": "2026-09-29T12:45:33+00:00"
+        "verified_at": "2026-09-29T12:49:44+00:00"
       },
-      "checked_at": "2026-09-29T12:45:29+00:00",
-      "last_success_at": "2026-09-29T12:45:29+00:00",
+      "checked_at": "2026-09-29T12:49:41+00:00",
+      "last_success_at": "2026-09-29T12:49:41+00:00",
       "official_reachable": true
     },
     "fpo_update": {
@@ -73,10 +73,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-update-latest/FPOMAG_Atualiza_0302.exe",
         "size": 3642375,
         "sha256": "ee5470f011919a44323827159f41a20f23f08942afd8a9e0535cbc09c49bdffa",
-        "verified_at": "2026-09-29T12:45:33+00:00"
+        "verified_at": "2026-09-29T12:49:44+00:00"
       },
-      "checked_at": "2026-09-29T12:45:29+00:00",
-      "last_success_at": "2026-09-29T12:45:29+00:00",
+      "checked_at": "2026-09-29T12:49:41+00:00",
+      "last_success_at": "2026-09-29T12:49:41+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -89,7 +89,7 @@
       },
       "mirror": null,
       "official_reachable": false,
-      "checked_at": "2026-09-29T12:45:33+00:00",
+      "checked_at": "2026-09-29T12:49:44+00:00",
       "last_success_at": "2026-09-28T15:12:33+00:00",
       "pending_download": true,
       "error": "OSError"
@@ -108,10 +108,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-app-latest/SCNES4850-ATUALIZACAO.ZIP",
         "size": 261903438,
         "sha256": "56898c285edf2c3e434c8039369342eeb2e5d040a340dc642527b5325c478647",
-        "verified_at": "2026-09-29T12:45:34+00:00"
+        "verified_at": "2026-09-29T12:49:45+00:00"
       },
-      "checked_at": "2026-09-29T12:45:33+00:00",
-      "last_success_at": "2026-09-29T12:45:33+00:00",
+      "checked_at": "2026-09-29T12:49:44+00:00",
+      "last_success_at": "2026-09-29T12:49:44+00:00",
       "official_reachable": true
     },
     "cnes_complete": {
@@ -128,10 +128,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-complete-latest/SCNES4850-COMPLETA.ZIP",
         "size": 403575891,
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
-        "verified_at": "2026-09-29T12:45:34+00:00"
+        "verified_at": "2026-09-29T12:49:45+00:00"
       },
-      "checked_at": "2026-09-29T12:45:33+00:00",
-      "last_success_at": "2026-09-29T12:45:33+00:00",
+      "checked_at": "2026-09-29T12:49:44+00:00",
+      "last_success_at": "2026-09-29T12:49:44+00:00",
       "official_reachable": true
     },
     "bdsia": {
@@ -147,7 +147,7 @@
             "asset_name": "BDSIA202604d.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202604/BDSIA202604d.exe",
             "size": 9240683,
-            "verified_at": "2026-09-29T12:45:40+00:00"
+            "verified_at": "2026-09-29T12:49:48+00:00"
           },
           "catalog_source": null
         },
@@ -160,7 +160,7 @@
             "asset_name": "BDSIA202605d.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202605/BDSIA202605d.exe",
             "size": 9425905,
-            "verified_at": "2026-09-29T12:45:39+00:00"
+            "verified_at": "2026-09-29T12:49:48+00:00"
           },
           "catalog_source": null
         },
@@ -173,7 +173,7 @@
             "asset_name": "BDSIA202606b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202606/BDSIA202606b.exe",
             "size": 9548777,
-            "verified_at": "2026-09-29T12:45:39+00:00"
+            "verified_at": "2026-09-29T12:49:47+00:00"
           },
           "catalog_source": null
         },
@@ -186,7 +186,7 @@
             "asset_name": "BDSIA202607b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202607/BDSIA202607b.exe",
             "size": 9755342,
-            "verified_at": "2026-09-29T12:45:39+00:00"
+            "verified_at": "2026-09-29T12:49:47+00:00"
           },
           "catalog_source": null
         },
@@ -199,7 +199,7 @@
             "asset_name": "BDSIA202608b.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202608/BDSIA202608b.exe",
             "size": 9683025,
-            "verified_at": "2026-09-29T12:45:38+00:00"
+            "verified_at": "2026-09-29T12:49:47+00:00"
           },
           "catalog_source": null
         },
@@ -212,13 +212,13 @@
             "asset_name": "BDSIA202609a.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609a.exe",
             "size": 9818678,
-            "verified_at": "2026-09-29T12:45:38+00:00"
+            "verified_at": "2026-09-29T12:49:46+00:00"
           },
           "catalog_source": null
         }
       },
-      "checked_at": "2026-09-29T12:45:33+00:00",
-      "last_success_at": "2026-09-29T12:45:33+00:00",
+      "checked_at": "2026-09-29T12:49:44+00:00",
+      "last_success_at": "2026-09-29T12:49:44+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
@@ -236,7 +236,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202609/TabelaUnificada_202609_v2609171117.zip",
             "size": 2155846,
             "sha256": "19d612f6997b5c6fdf32d7d1f8186d110880b658c4776f6a7c22771a2d3f605f",
-            "verified_at": "2026-09-29T12:45:36+00:00"
+            "verified_at": "2026-09-29T12:49:51+00:00"
           },
           "catalog_source": null
         },
@@ -250,7 +250,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202608/TabelaUnificada_202608_v2608141139.zip",
             "size": 2153883,
             "sha256": "477ae7ee8c8c7a3a458dace6607b1666edd8f50a2936cc1b1d737bf8ff6dcc7c",
-            "verified_at": "2026-09-29T12:45:36+00:00"
+            "verified_at": "2026-09-29T12:49:51+00:00"
           },
           "catalog_source": null
         },
@@ -264,7 +264,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202607/TabelaUnificada_202607_v2607101010.zip",
             "size": 2144592,
             "sha256": "4137d87a051fcdbff0d50054a2c0ed8de152107c23d3d66a5cdff41d8fe2fc4e",
-            "verified_at": "2026-09-29T12:45:37+00:00"
+            "verified_at": "2026-09-29T12:49:51+00:00"
           },
           "catalog_source": null
         },
@@ -278,7 +278,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202606/TabelaUnificada_202606_v2606091427.zip",
             "size": 2141359,
             "sha256": "c573e01806da0a491bbd68f50acbebf30c8b9be7043877a4a24e96e3b99160d1",
-            "verified_at": "2026-09-29T12:45:37+00:00"
+            "verified_at": "2026-09-29T12:49:52+00:00"
           },
           "catalog_source": null
         },
@@ -292,7 +292,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202605/TabelaUnificada_202605_v2605210940.zip",
             "size": 2137819,
             "sha256": "a3d4d85f6bc87ab4fdb404acc863e3421b70dc1a632562852dae6d3b59712e48",
-            "verified_at": "2026-09-29T12:45:38+00:00"
+            "verified_at": "2026-09-29T12:49:52+00:00"
           },
           "catalog_source": null
         },
@@ -306,13 +306,13 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202604/TabelaUnificada_202604_v2605181544.zip",
             "size": 2137200,
             "sha256": "3c1cdf5fea60d2a84b2161a1d53df0985506765afa3741463753548b0686a1a8",
-            "verified_at": "2026-09-29T12:45:38+00:00"
+            "verified_at": "2026-09-29T12:49:53+00:00"
           },
           "catalog_source": null
         }
       },
-      "checked_at": "2026-09-29T12:45:34+00:00",
-      "last_success_at": "2026-09-29T12:45:34+00:00",
+      "checked_at": "2026-09-29T12:49:45+00:00",
+      "last_success_at": "2026-09-29T12:49:45+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
@@ -329,7 +329,7 @@
             "asset_name": "BASE_DE_DADOS_CNES_202608.ZIP",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-base-202608/BASE_DE_DADOS_CNES_202608.ZIP",
             "size": 739134749,
-            "verified_at": "2026-09-29T12:45:36+00:00",
+            "verified_at": "2026-09-29T12:49:46+00:00",
             "sha256": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a"
           },
           "catalog_source": null
@@ -348,10 +348,11 @@
           }
         }
       },
-      "checked_at": "2026-09-29T12:45:34+00:00",
-      "last_success_at": "2026-09-29T12:45:34+00:00",
+      "checked_at": "2026-09-29T12:49:45+00:00",
+      "last_success_at": "2026-09-29T12:49:45+00:00",
       "official_reachable": true,
       "pending_competences": []
     }
-  }
+  },
+  "updates": []
 }
