@@ -4,7 +4,7 @@ import io
 import unittest
 from unittest.mock import patch
 
-from catalogs import bpa_portal, cnes_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 
 
 class SiaPortalTests(unittest.TestCase):
@@ -39,6 +39,25 @@ class SiaPortalTests(unittest.TestCase):
         ):
             releases = sia_portal.fetch_sia_catalog()
         self.assertEqual([item["name"] for item in releases], ["SIA0604.exe"])
+
+
+class FpoPortalTests(unittest.TestCase):
+    def test_installer_and_updates_are_separated_and_latest_update_is_first(self):
+        entries = [
+            {"name": "FPOMAG_Instalador_0100.exe", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPOMAG_Instalador_0100.exe", "size": None},
+            {"name": "FPOMAG_Atualiza_0301.exe", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPOMAG_Atualiza_0301.exe", "size": None},
+            {"name": "FPOMAG_Atualiza_0302.exe", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPOMAG_Atualiza_0302.exe", "size": None},
+            {"name": "FPO_Leiame.txt", "url": "ftp://ftp.datasus.gov.br/siasus/FPO/FPO_Leiame.txt", "size": None},
+        ]
+        with patch("catalogs.fpo_portal._entries_from_index", return_value=entries):
+            installers = fpo_portal.fetch_fpo_installer_catalog()
+            updates = fpo_portal.fetch_fpo_update_catalog()
+        self.assertEqual([item["name"] for item in installers], ["FPOMAG_Instalador_0100.exe"])
+        self.assertEqual([item["name"] for item in updates], ["FPOMAG_Atualiza_0302.exe", "FPOMAG_Atualiza_0301.exe"])
+
+    def test_rejects_unofficial_host_and_wrong_ftp_directory(self):
+        self.assertFalse(fpo_portal.safe_url("https://attacker.example/FPOMAG_Atualiza_0302.exe", "FPOMAG_Atualiza_0302.exe"))
+        self.assertFalse(fpo_portal.safe_url("ftp://ftp.datasus.gov.br/siasus/SIA/FPOMAG_Atualiza_0302.exe", "FPOMAG_Atualiza_0302.exe"))
 
 
 class BpaPortalTests(unittest.TestCase):

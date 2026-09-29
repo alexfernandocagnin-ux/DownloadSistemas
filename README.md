@@ -1,7 +1,8 @@
 # DownloadSistemas
 
 Portal Streamlit que confere as versões oficiais do BPA Magnético, do SIA, da
-tabela mensal BDSIA, do SIHD2, do CNES e do SIGTAP no site do Ministério
+FPO Magnética, da tabela mensal BDSIA, do SIHD2, do CNES e do SIGTAP no site
+do Ministério
 (`sia.datasus.gov.br`, `sihd.datasus.gov.br`, `cnes.datasus.gov.br`,
 `sigtap.datasus.gov.br`) e oferece o download direto — mesmo quando esses
 sites estão fora do ar, o que acontece com frequência.
@@ -21,6 +22,7 @@ sites estão fora do ar, o que acontece com frequência.
 |---|---|---|
 | BPA Magnético | `sia.datasus.gov.br/versao/listar_ftp_bpa.php` | instalador, versão única |
 | SIA | `sia.datasus.gov.br/versao/listar_ftp_sia.php` | instalador, versão única |
+| FPO Magnético | `sia.datasus.gov.br/versao/listar_ftp_fpo.php` | instalador inicial e atualização mais recente |
 | SIHD2 | `sihd.datasus.gov.br/versao/versao_sihd2.php` | instalador, versão única |
 | CNES · SCNES (atualização) | API JSON por trás de `cnes.datasus.gov.br/pages/downloads/aplicativos.jsp` | instalador, versão única |
 | BDSIA (tabela mensal do SIA) | mesma página do SIA | por competência (seletor de mês) |
@@ -38,11 +40,12 @@ cartão de cada sistema.
 - `catalogs/` — leitura e validação das páginas/FTP/API oficiais (sem
   executar nada); `_common.py` tem o parser HTML e as checagens de host/
   tamanho/assinatura (`MZ` ou `PK`) compartilhadas pelos módulos por sistema.
-- `scripts/sync_catalog.py` — roda no cron do GitHub Actions com `--publish`: confere as
-  sete fontes, baixa o que mudou para `dist/`, publica e verifica os assets antes de atualizar
+- `scripts/sync_catalog.py` — roda no cron do GitHub Actions com `--publish`: confere os
+  catálogos, baixa o que mudou para `dist/`, publica e verifica os assets antes de atualizar
   `data/catalog.json`. O script sobe cada arquivo de `dist/` como asset de
-  uma GitHub Release (`bpa-latest`, `sia-latest`, `sihd2-latest`,
-  `cnes-app-latest`, `bdsia-<competência>`, `sigtap-<competência>`,
+  uma GitHub Release (`bpa-latest`, `sia-latest`, `fpo-installer-latest`,
+  `fpo-update-latest`, `sihd2-latest`, `cnes-app-latest`, `cnes-complete-latest`,
+  `bdsia-<competência>`, `sigtap-<competência>`,
   `cnes-base-<competência>`) e só comita o catálogo quando algo muda.
 - `app.py` — a tela do portal.
 

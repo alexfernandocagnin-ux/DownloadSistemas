@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from catalogs import bpa_portal, cnes_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
+from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
 
 CATALOG_PATH = ROOT / "data" / "catalog.json"
 DIST_DIR = ROOT / "dist"
@@ -44,6 +44,20 @@ SINGLE_VERSION_SYSTEMS = {
         "fetch": sia_portal.fetch_sia_catalog,
         "download": sia_portal.download_release,
         "tag": "sia-latest",
+    },
+    "fpo_installer": {
+        "label": "FPO Magnético (instalador)",
+        "official_page": fpo_portal.INDEX_URL,
+        "fetch": fpo_portal.fetch_fpo_installer_catalog,
+        "download": fpo_portal.download_release,
+        "tag": "fpo-installer-latest",
+    },
+    "fpo_update": {
+        "label": "FPO Magnético (atualização)",
+        "official_page": fpo_portal.INDEX_URL,
+        "fetch": fpo_portal.fetch_fpo_update_catalog,
+        "download": fpo_portal.download_release,
+        "tag": "fpo-update-latest",
     },
     "sihd2": {
         "label": "SIHD2 (instalador)",

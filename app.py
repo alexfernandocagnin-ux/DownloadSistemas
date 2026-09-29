@@ -15,12 +15,12 @@ from datetime import datetime
 import streamlit as st
 
 from catalogs.mirrors import matching_mirror, probe_mirror
-from catalogs import bpa_portal, cnes_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 LIVE_CHECK_TTL = 15 * 60
 
-SINGLE_VERSION_SYSTEMS = ("bpa", "sia", "sihd2", "cnes_complete", "cnes_app")
+SINGLE_VERSION_SYSTEMS = ("bpa", "sia", "fpo_installer", "fpo_update", "sihd2", "cnes_complete", "cnes_app")
 COMPETENCE_SYSTEMS = ("bdsia", "sigtap", "cnes_base")
 
 SYSTEM_META: dict[str, dict[str, object]] = {
@@ -33,6 +33,16 @@ SYSTEM_META: dict[str, dict[str, object]] = {
         "label": "SIA (instalador)", "icon": "🏥",
         "fetch": sia_portal.fetch_sia_catalog, "download": sia_portal.download_release,
         "official_page": sia_portal.INDEX_URL,
+    },
+    "fpo_installer": {
+        "label": "FPO Magnético · instalação", "icon": "🧮",
+        "fetch": fpo_portal.fetch_fpo_installer_catalog, "download": fpo_portal.download_release,
+        "official_page": fpo_portal.INDEX_URL,
+    },
+    "fpo_update": {
+        "label": "FPO Magnético · atualização", "icon": "🔄",
+        "fetch": fpo_portal.fetch_fpo_update_catalog, "download": fpo_portal.download_release,
+        "official_page": fpo_portal.INDEX_URL,
     },
     "sihd2": {
         "label": "SIHD2 (instalador)", "icon": "🏨",
@@ -294,6 +304,10 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
                 st.caption("Instalação nova do SCNES")
             elif system_key == "cnes_app":
                 st.caption("Atualização para o SCNES já instalado")
+            elif system_key == "fpo_installer":
+                st.caption("Use antes da primeira instalação do FPO")
+            elif system_key == "fpo_update":
+                st.caption("Aplique após instalar o FPO ou para atualizar a versão")
             if system_key == "sihd2" and not matching_mirror(name, info.get("mirror")):
                 st.info("O arquivo não foi confirmado no espelho. Confira a disponibilidade no portal oficial abaixo.")
             else:
@@ -401,7 +415,7 @@ st.markdown(
     '<h2>Instaladores</h2><p>Programas e atualizações para processamento das informações do SUS.</p></div>',
     unsafe_allow_html=True,
 )
-st.info("No SCNES, use **completo** para uma nova instalação e **atualização** se já tiver o sistema. O Firebird é necessário.", icon="ℹ️")
+st.info("**SCNES:** use **completo** para uma nova instalação ou **atualização** se já tiver o sistema; o Firebird é necessário. **FPO:** faça a instalação inicial e depois aplique a atualização mais recente.", icon="ℹ️")
 render_grid(SINGLE_VERSION_SYSTEMS, systems, render_single_version_card)
 
 st.markdown(

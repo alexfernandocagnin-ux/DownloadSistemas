@@ -196,6 +196,9 @@ class PortalTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertFalse(app.checkbox[0].value)
         self.assertTrue(app.button)
+        rendered = "\n".join(element.value for element in app.markdown)
+        self.assertIn("FPO Magnético · instalação", rendered)
+        self.assertIn("FPO Magnético · atualização", rendered)
 
     def test_mirror_download_works_while_official_source_is_offline(self):
         with patch("catalogs.mirrors.probe_mirror", return_value=MIRROR["asset_url"]), patch("catalogs.bpa_portal.download_release", side_effect=AssertionError("DATASUS should not be needed")) as official:
