@@ -194,7 +194,11 @@ def prepare_download(system_key, name, url, mirror, on_progress=None):
             if isinstance(size, int) and 0 < size <= DIRECT_DOWNLOAD_LIMIT:
                 if on_progress:
                     on_progress("Baixando e validando o arquivo completo antes de liberar o download.")
-                return {"data": download_mirror(name, mirror, max_size=DIRECT_DOWNLOAD_LIMIT)}, "Espelho independente · arquivo validado", False
+                package = download_mirror(name, mirror)
+                expected_signature = b"PK" if name.lower().endswith(".zip") else b"MZ"
+                if len(package) > DIRECT_DOWNLOAD_LIMIT or package[:2] != expected_signature:
+                    raise ValueError("O arquivo entregue não corresponde ao download selecionado.")
+                return {"data": package}, "Espelho independente · arquivo validado", False
             return {"url": cached_mirror_probe(name, mirror)}, "Espelho independente", False
         except (OSError, ValueError):
             mirror_error = True
