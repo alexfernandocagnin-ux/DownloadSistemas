@@ -125,6 +125,27 @@ class SynchronizationTests(unittest.TestCase):
         self.assertEqual(result["current"]["name"], NAME)
         self.assertNotIn("_announcements", result)
 
+    def test_unexpected_source_error_does_not_abort_other_systems(self):
+        def broken():
+            raise RuntimeError("invalid response")
+        configs = {"bpa": {"label": "BPA", "official_page": "https://example", "fetch": broken},
+                   "sia": {"label": "SIA", "official_page": "https://example",
+                           "fetch": lambda: [{"name": "SIA0605.exe", "url": "ftp://example/SIA0605.exe"}]}}
+        with tempfile.TemporaryDirectory() as directory, ExitStack() as stack:
+            path = Path(directory) / "catalog.json"
+            path.write_text(json.dumps({"systems": {"bpa": {"current": {"name": NAME}}}}), encoding="utf-8")
+            stack.enter_context(patch.object(sync, "CATALOG_PATH", path))
+            stack.enter_context(patch.object(sync, "SINGLE_VERSION_SYSTEMS", configs))
+            stack.enter_context(patch.object(sync, "COMPETENCE_SYSTEMS", {}))
+            stack.enter_context(patch("sys.argv", ["sync_catalog.py", "--catalog-only"]))
+            stack.enter_context(patch.object(sync, "CATALOG_ONLY", False))
+            stack.enter_context(patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": ""}))
+            sync.main()
+            result = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(result["systems"]["bpa"]["current"]["name"], NAME)
+            self.assertEqual(result["systems"]["sia"]["latest"]["name"], "SIA0605.exe")
+            self.assertEqual(result["systems"]["bpa"]["error"], "RuntimeError")
+
     def setUp(self):
         self.old = {"current": {"name": NAME, "url": URL}, "mirror": MIRROR,
                     "checked_at": "2026-09-20T12:00:00+00:00", "official_reachable": True}

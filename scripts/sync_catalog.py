@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
+from catalogs.state import atomic_write, normalize_catalog  # noqa: E402
 from catalogs.updates import make_update_event, merge_updates  # noqa: E402
 
 CATALOG_PATH = ROOT / "data" / "catalog.json"
@@ -216,6 +217,7 @@ def sync_single_version_system(key, config, previous):
             raise ValueError("Nenhuma versão encontrada.")
     except (OSError, ValueError) as exc:
         return failed(old, config, checked_at, exc)
+    releases = normalize_catalog(old, releases)
     latest = dict(releases[0])
     name = latest["name"]
     old_current = old.get("current") or {}
@@ -266,6 +268,7 @@ def sync_competence_system(key, config, previous, on_progress=None):
             raise ValueError("Nenhuma competência encontrada.")
     except (OSError, ValueError) as exc:
         return failed(old, config, checked_at, exc)
+    releases = normalize_catalog(old, releases, monthly=True)
     updated = dict(old.get("competences") or {})
     announcements = []
     known_latest = old.get("latest") or {}
@@ -310,6 +313,8 @@ def sync_competence_system(key, config, previous, on_progress=None):
     for month in months:
         release = by_month[month]
         entry = updated.get(month, {})
+        if month != latest_month and entry.get("name") == release["name"] and entry.get("mirror"):
+            continue
         try:
             mirror = None
             if entry.get("name") == release["name"]:
@@ -339,10 +344,7 @@ def sync_competence_system(key, config, previous, on_progress=None):
 def save_catalog(systems, updates=None):
     ordered = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS) if key in systems}
     catalog = {"updated_at": now(), "systems": ordered, "updates": merge_updates(updates or [])}
-    CATALOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    temporary = CATALOG_PATH.with_suffix(".tmp")
-    temporary.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    temporary.replace(CATALOG_PATH)
+    atomic_write(CATALOG_PATH, catalog)
 
 
 def main():
@@ -377,7 +379,13 @@ def main():
         tasks.update({executor.submit(sync_competence_system, key, config, previous, record): key
                       for key, config in COMPETENCE_SYSTEMS.items()})
         for task in as_completed(tasks):
-            record(tasks[task], task.result())
+            key = tasks[task]
+            try:
+                info = task.result()
+            except Exception as exc:
+                config = SINGLE_VERSION_SYSTEMS.get(key) or COMPETENCE_SYSTEMS[key]
+                info = failed(previous.get("systems", {}).get(key, {}), config, now(), exc)
+            record(key, info)
     systems = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS)}
     save_catalog(systems, updates)
     if os.environ.get("GITHUB_STEP_SUMMARY"):

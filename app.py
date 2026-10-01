@@ -18,6 +18,7 @@ import streamlit as st
 from catalogs.mirrors import download_mirror, matching_mirror, probe_mirror
 from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 from catalogs.updates import make_update_event, merge_updates
+from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
@@ -321,28 +322,35 @@ def force_check_all_systems(snapshot_systems):
             catalogs[key] = (releases, error)
             progress.progress(completed / total, text=f"Consultando {completed} de {total} sistemas…")
             status.caption(f"Conferido: {SYSTEM_META[key]['label']}")
-    st.session_state["forced_live_catalogs"] = catalogs
     checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    events = find_live_updates(snapshot_systems, catalogs, checked_at)
+    with CATALOG_LOCK:
+        snapshot = load_snapshot()
+        saved_systems = snapshot.setdefault("systems", {})
+        catalogs = {key: (normalize_catalog(saved_systems.get(key, {}), releases, key in COMPETENCE_SYSTEMS), error)
+                    if releases else (releases, error) for key, (releases, error) in catalogs.items()}
+        events = find_live_updates(saved_systems, catalogs, checked_at)
+        for key, (releases, error) in catalogs.items():
+            if not releases:
+                continue
+            info = saved_systems.setdefault(key, {})
+            info.update(latest=dict(releases[0]), catalog_checked_at=checked_at,
+                        official_reachable=releases[0].get("catalog_source") != "community")
+            info.pop("error", None)
+            if key not in COMPETENCE_SYSTEMS:
+                info["pending_download"] = not matching_mirror(releases[0]["name"], info.get("mirror"))
+            if key in COMPETENCE_SYSTEMS:
+                info["available_releases"] = releases
+        snapshot["updates"] = merge_updates(snapshot.get("updates", []), events)
+        if any(releases for releases, _ in catalogs.values()):
+            snapshot["updated_at"] = checked_at
+        try:
+            if any(releases for releases, _ in catalogs.values()):
+                atomic_write(CATALOG_PATH, snapshot)
+        except OSError:
+            st.warning("A consulta foi concluída, mas não foi possível salvar o catálogo neste servidor.")
+    st.session_state["forced_live_catalogs"] = catalogs
     st.session_state["forced_live_checked_at"] = checked_at
     st.session_state["forced_live_updates"] = events
-    snapshot = load_snapshot()
-    saved_systems = snapshot.setdefault("systems", {})
-    for key, (releases, error) in catalogs.items():
-        if not releases:
-            continue
-        info = saved_systems.setdefault(key, {})
-        info.update(latest=dict(releases[0]), catalog_checked_at=checked_at)
-        if key in COMPETENCE_SYSTEMS:
-            info["available_releases"] = releases
-    snapshot["updates"] = merge_updates(snapshot.get("updates", []), events)
-    snapshot["updated_at"] = checked_at
-    try:
-        temporary = CATALOG_PATH.with_suffix(".tmp")
-        temporary.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        temporary.replace(CATALOG_PATH)
-    except OSError:
-        st.warning("A consulta foi concluída, mas não foi possível salvar o catálogo neste servidor.")
     progress.empty()
     status.empty()
     errors = sum(error is not None for _, error in catalogs.values())
