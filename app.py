@@ -155,7 +155,7 @@ div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLin
 [class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button p,
 [class*="st-key-ready_download_"] [data-testid="stLinkButton"] a p { color:#fff !important; }
 div[data-testid="stCaptionContainer"], div[data-testid="stCaptionContainer"] p {
-    color:#243b48 !important; font-size:.85rem; font-weight:500; }
+    color:#172f3d !important; font-size:.9rem !important; font-weight:600 !important; }
 [data-testid="stWidgetLabel"] p { color:#243b48 !important; }
 button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
 [role="tablist"] { gap:.7rem; background:transparent; border-bottom:0;
