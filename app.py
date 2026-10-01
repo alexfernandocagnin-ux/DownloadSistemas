@@ -99,7 +99,7 @@ st.set_page_config(page_title="Downloads Sistemas", page_icon="📦", layout="wi
 
 CUSTOM_CSS = """
 <style>
-:root { --ds-ink:#172f3d; --ds-muted:#465e6b; --ds-green:#087568; --ds-line:#dce5e9; }
+:root { --ds-ink:#172f3d; --ds-muted:#243b48; --ds-green:#087568; --ds-line:#dce5e9; }
 .stApp { background:#f3f6f8; color:var(--ds-ink); }
 .block-container { max-width:1440px; padding-top:1.6rem; padding-bottom:3rem; }
 .ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:2rem;
@@ -124,7 +124,7 @@ CUSTOM_CSS = """
 .ds-overview-item strong { display:block; font-size:.84rem; color:#193b49; }
 .ds-overview-item span { display:block; font-size:.74rem; color:var(--ds-muted); margin-top:.15rem; }
 .ds-section { margin:1.3rem 0 1rem; }
-.ds-section .ds-eyebrow { color:#547583; font-size:.67rem; }
+.ds-section .ds-eyebrow { color:#243b48; font-size:.67rem; }
 .ds-section h2 { font-family:Georgia,serif; color:#183a49; font-size:1.7rem; letter-spacing:-.025em; margin:0; }
 .ds-section p { color:var(--ds-muted); font-size:.89rem; margin:.3rem 0 0; }
 .ds-card-title { display:flex; align-items:center; gap:.7rem; min-height:44px; font-size:1rem;
@@ -154,7 +154,9 @@ div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLin
     background:#104570 !important; border-color:#104570 !important; color:#fff !important; }
 [class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button p,
 [class*="st-key-ready_download_"] [data-testid="stLinkButton"] a p { color:#fff !important; }
-div[data-testid="stCaptionContainer"], div[data-testid="stCaptionContainer"] p { color:#465e6b !important; font-size:.8rem; }
+div[data-testid="stCaptionContainer"], div[data-testid="stCaptionContainer"] p {
+    color:#243b48 !important; font-size:.85rem; font-weight:500; }
+[data-testid="stWidgetLabel"] p { color:#243b48 !important; }
 button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
 [role="tablist"] { gap:.7rem; background:transparent; border-bottom:0;
     padding:.3rem .2rem .65rem; }
@@ -181,18 +183,18 @@ button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; ou
 .ds-update-item { display:grid; grid-template-columns:minmax(140px,1fr) minmax(160px,1.2fr) auto; align-items:center;
     gap:.8rem; background:#f6fbf9; padding:.8rem 1rem; border:1px solid #e0ece6; border-left:3px solid #4b9b83; border-radius:8px; }
 .ds-update-system { color:#1f463d; font-size:.84rem; font-weight:750; }
-.ds-update-file { color:#526c70; font-size:.8rem; overflow-wrap:anywhere; }
-.ds-update-date { color:#536f6b; font-size:.74rem; white-space:nowrap; }
-.ds-update-empty { background:#f5f8fa; color:#536a76; padding:.85rem 1rem; border-radius:9px; font-size:.86rem; }
+.ds-update-file { color:#243b48; font-size:.86rem; font-weight:500; overflow-wrap:anywhere; }
+.ds-update-date { color:#243b48; font-size:.82rem; font-weight:500; white-space:nowrap; }
+.ds-update-empty { background:#f5f8fa; color:#243b48; padding:.85rem 1rem; border-radius:9px; font-size:.86rem; }
 .ds-loading-card { background:#f1f8f5; border:1px solid #d5e9df; border-radius:10px; padding:.85rem 1rem; margin:.5rem 0; }
 .ds-loading-copy { display:flex; align-items:center; gap:.7rem; color:#173849; }
 .ds-loading-copy strong { display:block; font-size:.88rem; }
-.ds-loading-copy span { display:block; color:#566e76; font-size:.8rem; margin-top:.2rem; }
+.ds-loading-copy span { display:block; color:#243b48; font-size:.8rem; margin-top:.2rem; }
 .ds-loading-dot { width:12px; height:12px; flex:0 0 auto; border:2px solid #bbdacf; border-top-color:#087568;
     border-radius:50%; animation:ds-spin .85s linear infinite; }
 .ds-progress-track { height:4px; overflow:hidden; background:#daeae2; border-radius:9px; margin-top:.8rem; }
 .ds-progress-track span { display:block; width:34%; height:100%; background:#087568; animation:ds-slide 1.3s ease-in-out infinite; }
-.ds-footer { border-top:1px solid var(--ds-line); margin-top:2rem; padding-top:1rem; color:#536d79; font-size:.77rem; }
+.ds-footer { border-top:1px solid var(--ds-line); margin-top:2rem; padding-top:1rem; color:#243b48; font-size:.77rem; }
 @keyframes ds-spin { to { transform:rotate(360deg); } }
 @keyframes ds-slide { from { transform:translateX(-120%); } to { transform:translateX(330%); } }
 @media (prefers-reduced-motion:reduce) { .ds-loading-dot,.ds-progress-track span { animation:none; } }
