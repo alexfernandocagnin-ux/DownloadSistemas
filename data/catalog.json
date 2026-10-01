@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-01T17:46:51+00:00",
+  "updated_at": "2026-10-01T17:47:09+00:00",
   "systems": {
     "apac": {
       "label": "APAC Magnético",
@@ -10,7 +10,7 @@
         "version": "0402",
         "release_date": "2026-09-24"
       },
-      "catalog_checked_at": "2026-10-01T17:46:43+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:02+00:00",
       "pending_download": false,
       "current": {
         "name": "APACMAG_0402.exe",
@@ -23,11 +23,11 @@
         "asset_name": "APACMAG_0402.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/apac-latest/APACMAG_0402.exe",
         "size": 2110203,
-        "verified_at": "2026-10-01T16:11:36+00:00",
+        "verified_at": "2026-10-01T17:47:04+00:00",
         "sha256": "63f8dd542bef6ef4bff26e590ce4dbf1287f5113132ec2c6b801e80d9db4db3b"
       },
-      "checked_at": "2026-10-01T16:11:34+00:00",
-      "last_success_at": "2026-10-01T16:11:34+00:00",
+      "checked_at": "2026-10-01T17:47:02+00:00",
+      "last_success_at": "2026-10-01T17:47:02+00:00",
       "official_reachable": true
     },
     "ciha02": {
@@ -38,7 +38,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
         "version": "2034"
       },
-      "catalog_checked_at": "2026-10-01T17:46:43+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:02+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_VER2034.exe",
@@ -51,11 +51,11 @@
         "asset_name": "CIHA02_VER2034.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-latest/CIHA02_VER2034.exe",
         "size": 3330491,
-        "verified_at": "2026-10-01T16:11:37+00:00",
+        "verified_at": "2026-10-01T17:47:05+00:00",
         "sha256": "8d762dd16670530ee31cb28a5cdb35a14a66f828eee874da33305f97dc8ec2be"
       },
-      "checked_at": "2026-10-01T16:11:34+00:00",
-      "last_success_at": "2026-10-01T16:11:34+00:00",
+      "checked_at": "2026-10-01T17:47:02+00:00",
+      "last_success_at": "2026-10-01T17:47:02+00:00",
       "official_reachable": true
     },
     "ciha02_installer": {
@@ -66,7 +66,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
         "version": "2000"
       },
-      "catalog_checked_at": "2026-10-01T17:46:43+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:02+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_SETUP_20.00.exe",
@@ -79,11 +79,11 @@
         "asset_name": "CIHA02_SETUP_20.00.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-installer-latest/CIHA02_SETUP_20.00.exe",
         "size": 16393417,
-        "verified_at": "2026-10-01T16:12:08+00:00",
+        "verified_at": "2026-10-01T17:47:05+00:00",
         "sha256": "6b738c05d560d7e55cbd46c047c022a62465b817f4ca9408bea94f4f4b81d32b"
       },
-      "checked_at": "2026-10-01T16:11:34+00:00",
-      "last_success_at": "2026-10-01T16:11:34+00:00",
+      "checked_at": "2026-10-01T17:47:02+00:00",
+      "last_success_at": "2026-10-01T17:47:02+00:00",
       "official_reachable": true
     },
     "bpa": {
@@ -95,7 +95,7 @@
         "version": "0500",
         "release_date": "2026-07-09"
       },
-      "catalog_checked_at": "2026-10-01T17:46:43+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:02+00:00",
       "pending_download": false,
       "current": {
         "name": "BPAMAG0500.exe",
@@ -108,12 +108,12 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
         "size": 7785806,
-        "verified_at": "2026-10-01T16:11:36+00:00",
+        "verified_at": "2026-10-01T17:47:05+00:00",
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-10-01T16:11:34+00:00",
-      "last_success_at": "2026-10-01T16:11:34+00:00",
+      "checked_at": "2026-10-01T17:47:02+00:00",
+      "last_success_at": "2026-10-01T17:47:02+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -125,7 +125,7 @@
         "version": "0605",
         "release_date": "2026-09-30"
       },
-      "catalog_checked_at": "2026-10-01T17:46:46+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:04+00:00",
       "pending_download": false,
       "current": {
         "name": "SIA0605.exe",
@@ -138,11 +138,11 @@
         "asset_name": "SIA0605.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0605.exe",
         "size": 7589332,
-        "verified_at": "2026-10-01T16:11:46+00:00",
+        "verified_at": "2026-10-01T17:47:15+00:00",
         "sha256": "c271905e73a12c4a9a69976657990043489fb1cec575b271a298450bd2188c3e"
       },
-      "checked_at": "2026-10-01T16:11:36+00:00",
-      "last_success_at": "2026-10-01T16:11:36+00:00",
+      "checked_at": "2026-10-01T17:47:04+00:00",
+      "last_success_at": "2026-10-01T17:47:04+00:00",
       "official_reachable": true
     },
     "fpo_installer": {
@@ -154,7 +154,7 @@
         "version": "0100",
         "release_date": "2008-06-10"
       },
-      "catalog_checked_at": "2026-10-01T17:46:46+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:05+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Instalador_0100.exe",
@@ -168,10 +168,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-installer-latest/FPOMAG_Instalador_0100.exe",
         "size": 6347935,
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
-        "verified_at": "2026-10-01T16:11:37+00:00"
+        "verified_at": "2026-10-01T17:47:06+00:00"
       },
-      "checked_at": "2026-10-01T16:11:36+00:00",
-      "last_success_at": "2026-10-01T16:11:36+00:00",
+      "checked_at": "2026-10-01T17:47:05+00:00",
+      "last_success_at": "2026-10-01T17:47:05+00:00",
       "official_reachable": true
     },
     "fpo_update": {
@@ -183,7 +183,7 @@
         "version": "0303",
         "release_date": "2026-09-29"
       },
-      "catalog_checked_at": "2026-10-01T17:46:47+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:05+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Atualiza_0303.exe",
@@ -197,10 +197,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-update-latest/FPOMAG_Atualiza_0303.exe",
         "size": 3641857,
         "sha256": "23aba8c8348b305e6ac5fd18eaaeeb1061ab69ee0a469b4897e09c31d717a586",
-        "verified_at": "2026-10-01T16:11:38+00:00"
+        "verified_at": "2026-10-01T17:47:07+00:00"
       },
-      "checked_at": "2026-10-01T16:11:37+00:00",
-      "last_success_at": "2026-10-01T16:11:37+00:00",
+      "checked_at": "2026-10-01T17:47:05+00:00",
+      "last_success_at": "2026-10-01T17:47:05+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -226,7 +226,7 @@
           "sihd2_2272.exe"
         ]
       },
-      "catalog_checked_at": "2026-10-01T17:46:48+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:05+00:00",
       "pending_download": false,
       "current": {
         "name": "SIHD2_2340.exe",
@@ -240,10 +240,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sihd2-latest/SIHD2_2340.exe",
         "size": 60986757,
         "sha256": "e801a1b7eb2770dc7da59e67974af92b4833483fef234c7c819abf2e68955698",
-        "verified_at": "2026-10-01T16:11:39+00:00"
+        "verified_at": "2026-10-01T17:47:06+00:00"
       },
-      "checked_at": "2026-10-01T16:11:37+00:00",
-      "last_success_at": "2026-10-01T16:11:37+00:00",
+      "checked_at": "2026-10-01T17:47:05+00:00",
+      "last_success_at": "2026-10-01T17:47:05+00:00",
       "official_reachable": true
     },
     "cnes_app": {
@@ -254,7 +254,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-01T17:46:48+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:06+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-ATUALIZACAO.ZIP",
@@ -268,10 +268,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-app-latest/SCNES4850-ATUALIZACAO.ZIP",
         "size": 261903438,
         "sha256": "56898c285edf2c3e434c8039369342eeb2e5d040a340dc642527b5325c478647",
-        "verified_at": "2026-10-01T16:11:39+00:00"
+        "verified_at": "2026-10-01T17:47:09+00:00"
       },
-      "checked_at": "2026-10-01T16:11:38+00:00",
-      "last_success_at": "2026-10-01T16:11:38+00:00",
+      "checked_at": "2026-10-01T17:47:06+00:00",
+      "last_success_at": "2026-10-01T17:47:06+00:00",
       "official_reachable": true
     },
     "cnes_complete": {
@@ -282,7 +282,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-COMPLETA.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-01T17:46:49+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:06+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
@@ -296,10 +296,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-complete-latest/SCNES4850-COMPLETA.ZIP",
         "size": 403575891,
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
-        "verified_at": "2026-10-01T16:11:40+00:00"
+        "verified_at": "2026-10-01T17:47:09+00:00"
       },
-      "checked_at": "2026-10-01T16:11:39+00:00",
-      "last_success_at": "2026-10-01T16:11:39+00:00",
+      "checked_at": "2026-10-01T17:47:06+00:00",
+      "last_success_at": "2026-10-01T17:47:06+00:00",
       "official_reachable": true
     },
     "bdsia": {
@@ -321,7 +321,7 @@
           "integrity_verified_at": "2026-09-29T13:30:13+00:00"
         }
       },
-      "catalog_checked_at": "2026-10-01T17:46:49+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:07+00:00",
       "available_releases": [
         {
           "name": "BDSIA202609a.exe",
@@ -1144,112 +1144,240 @@
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202203b.exe",
           "competence": "202203",
           "revision": "b",
-          "release_date": "2022-04-05"
+          "release_date": "2022-04-05",
+          "mirror": {
+            "tag": "bdsia-202203",
+            "asset_name": "BDSIA202203b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202203/BDSIA202203b.exe",
+            "size": 8712834,
+            "sha256": "e7638b55d6b7bbedc61ed2745b6742ece24c023b1bb19db2fda7d7d3a8062585",
+            "verified_at": "2026-10-01T17:47:26+00:00"
+          }
         },
         {
           "name": "BDSIA202202b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202202b.exe",
           "competence": "202202",
           "revision": "b",
-          "release_date": "2022-03-09"
+          "release_date": "2022-03-09",
+          "mirror": {
+            "tag": "bdsia-202202",
+            "asset_name": "BDSIA202202b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202202/BDSIA202202b.exe",
+            "size": 8463165,
+            "sha256": "8b0153416ceb744e0c883ebe2affd2a36aa16cce1348983ce572867309247533",
+            "verified_at": "2026-10-01T17:47:34+00:00"
+          }
         },
         {
           "name": "BDSIA202201b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202201b.exe",
           "competence": "202201",
           "revision": "b",
-          "release_date": "2022-02-08"
+          "release_date": "2022-02-08",
+          "mirror": {
+            "tag": "bdsia-202201",
+            "asset_name": "BDSIA202201b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202201/BDSIA202201b.exe",
+            "size": 8139501,
+            "sha256": "8436413bdf8403b21df475d053ca6393fb216ff2cf4595d08f2f66eb78f6e8d0",
+            "verified_at": "2026-10-01T17:47:42+00:00"
+          }
         },
         {
           "name": "BDSIA202112b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202112b.exe",
           "competence": "202112",
           "revision": "b",
-          "release_date": "2022-01-07"
+          "release_date": "2022-01-07",
+          "mirror": {
+            "tag": "bdsia-202112",
+            "asset_name": "BDSIA202112b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202112/BDSIA202112b.exe",
+            "size": 8203221,
+            "sha256": "df1448fe81d5edc3f8ab2d5a70ab5f465c9329d6e7b8d414babd02a9c0cf5f32",
+            "verified_at": "2026-10-01T17:47:51+00:00"
+          }
         },
         {
           "name": "BDSIA202111b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202111b.exe",
           "competence": "202111",
           "revision": "b",
-          "release_date": "2021-12-09"
+          "release_date": "2021-12-09",
+          "mirror": {
+            "tag": "bdsia-202111",
+            "asset_name": "BDSIA202111b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202111/BDSIA202111b.exe",
+            "size": 8600315,
+            "sha256": "7cc290af65e876a971c2a570c662fc3ac8802ae13a0661b41f31060985913f57",
+            "verified_at": "2026-10-01T17:47:58+00:00"
+          }
         },
         {
           "name": "BDSIA202110c.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202110c.exe",
           "competence": "202110",
           "revision": "c",
-          "release_date": "2021-11-11"
+          "release_date": "2021-11-11",
+          "mirror": {
+            "tag": "bdsia-202110",
+            "asset_name": "BDSIA202110c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202110/BDSIA202110c.exe",
+            "size": 8495382,
+            "sha256": "3d0735c06f77f7facb8e474154f065335b60d3a43c86db102bdeaa862235f722",
+            "verified_at": "2026-10-01T17:48:05+00:00"
+          }
         },
         {
           "name": "BDSIA202109c.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202109c.exe",
           "competence": "202109",
           "revision": "c",
-          "release_date": "2021-10-14"
+          "release_date": "2021-10-14",
+          "mirror": {
+            "tag": "bdsia-202109",
+            "asset_name": "BDSIA202109c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202109/BDSIA202109c.exe",
+            "size": 8319408,
+            "sha256": "9bb50f0e5fcb4ece59955b0513c3c538997d55959694a398a0f7237b26a4e5e7",
+            "verified_at": "2026-10-01T17:48:13+00:00"
+          }
         },
         {
           "name": "BDSIA202108b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202108b.exe",
           "competence": "202108",
           "revision": "b",
-          "release_date": "2021-09-09"
+          "release_date": "2021-09-09",
+          "mirror": {
+            "tag": "bdsia-202108",
+            "asset_name": "BDSIA202108b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202108/BDSIA202108b.exe",
+            "size": 8488139,
+            "sha256": "16bf619ce4c191e6c720ed0b459bcfa76fb1ae9b2a5580d534131f2a098bde1a",
+            "verified_at": "2026-10-01T17:48:21+00:00"
+          }
         },
         {
           "name": "BDSIA202107c.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202107c.exe",
           "competence": "202107",
           "revision": "c",
-          "release_date": "2021-08-09"
+          "release_date": "2021-08-09",
+          "mirror": {
+            "tag": "bdsia-202107",
+            "asset_name": "BDSIA202107c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202107/BDSIA202107c.exe",
+            "size": 8489686,
+            "sha256": "03a9d8fd0c4a5cd70a0739acec3090c5d792d7299b021c8ee3157e4c222296ca",
+            "verified_at": "2026-10-01T17:48:29+00:00"
+          }
         },
         {
           "name": "BDSIA202106b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202106b.exe",
           "competence": "202106",
           "revision": "b",
-          "release_date": "2021-07-12"
+          "release_date": "2021-07-12",
+          "mirror": {
+            "tag": "bdsia-202106",
+            "asset_name": "BDSIA202106b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202106/BDSIA202106b.exe",
+            "size": 8474312,
+            "sha256": "2a49bf54e0050a64c4a5a01dce1f4ed9f21d95658bd262df8ff9e4dd275317af",
+            "verified_at": "2026-10-01T17:48:36+00:00"
+          }
         },
         {
           "name": "BDSIA202105b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202105b.exe",
           "competence": "202105",
           "revision": "b",
-          "release_date": "2021-06-09"
+          "release_date": "2021-06-09",
+          "mirror": {
+            "tag": "bdsia-202105",
+            "asset_name": "BDSIA202105b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202105/BDSIA202105b.exe",
+            "size": 8435763,
+            "sha256": "06829607da580fff1437ad78cacec96c1d86165f3983dc43e60d78189ab6edf8",
+            "verified_at": "2026-10-01T17:49:04+00:00"
+          }
         },
         {
           "name": "BDSIA202104b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202104b.exe",
           "competence": "202104",
           "revision": "b",
-          "release_date": "2021-05-06"
+          "release_date": "2021-05-06",
+          "mirror": {
+            "tag": "bdsia-202104",
+            "asset_name": "BDSIA202104b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202104/BDSIA202104b.exe",
+            "size": 8385203,
+            "sha256": "eb884c5f92544393dff14b7a1bba96b29dafefb0d7e7efe168517fa49f82634d",
+            "verified_at": "2026-10-01T17:49:11+00:00"
+          }
         },
         {
           "name": "BDSIA202103b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202103b.exe",
           "competence": "202103",
           "revision": "b",
-          "release_date": "2021-04-09"
+          "release_date": "2021-04-09",
+          "mirror": {
+            "tag": "bdsia-202103",
+            "asset_name": "BDSIA202103b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202103/BDSIA202103b.exe",
+            "size": 8346047,
+            "sha256": "489a4483c80b1a542b773d3eb8e5223a22c6548f18f6333224791336b7e39a4b",
+            "verified_at": "2026-10-01T17:49:19+00:00"
+          }
         },
         {
           "name": "BDSIA202102b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202102b.exe",
           "competence": "202102",
           "revision": "b",
-          "release_date": "2021-03-12"
+          "release_date": "2021-03-12",
+          "mirror": {
+            "tag": "bdsia-202102",
+            "asset_name": "BDSIA202102b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202102/BDSIA202102b.exe",
+            "size": 8202250,
+            "sha256": "65d42235d63dcbcc96f725105f2d1b71482b45fa6360ec251e857339b96b9903",
+            "verified_at": "2026-10-01T17:49:27+00:00"
+          }
         },
         {
           "name": "BDSIA202101b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202101b.exe",
           "competence": "202101",
           "revision": "b",
-          "release_date": "2021-02-10"
+          "release_date": "2021-02-10",
+          "mirror": {
+            "tag": "bdsia-202101",
+            "asset_name": "BDSIA202101b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202101/BDSIA202101b.exe",
+            "size": 7931650,
+            "sha256": "c3bdc55cffba813aa1160f0f5cb565434384c59717ed6a16f470435a295dcffa",
+            "verified_at": "2026-10-01T17:49:34+00:00"
+          }
         },
         {
           "name": "BDSIA202012c.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202012c.exe",
           "competence": "202012",
           "revision": "c",
-          "release_date": "2021-01-12"
+          "release_date": "2021-01-12",
+          "mirror": {
+            "tag": "bdsia-202012",
+            "asset_name": "BDSIA202012c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202012/BDSIA202012c.exe",
+            "size": 8200304,
+            "sha256": "94ad8e9a865a63c8cfa5378cb905f79118ed5617ce08074bc237eab9166983f5",
+            "verified_at": "2026-10-01T17:49:45+00:00"
+          }
         },
         {
           "name": "BDSIA202011c.exe",
@@ -2427,7 +2555,7 @@
             "asset_name": "BDSIA202609a.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609a.exe",
             "size": 9818678,
-            "verified_at": "2026-10-01T16:11:51+00:00",
+            "verified_at": "2026-10-01T17:47:19+00:00",
             "sha256": "d04e58a2a0f4de0eef720eae53a7882a4f36fdec2cb8803c35a818fc3f698a69",
             "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
@@ -3153,10 +3281,250 @@
           },
           "catalog_source": null,
           "release_date": "2022-05-17"
+        },
+        "202203": {
+          "name": "BDSIA202203b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202203b.exe",
+          "mirror": {
+            "tag": "bdsia-202203",
+            "asset_name": "BDSIA202203b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202203/BDSIA202203b.exe",
+            "size": 8712834,
+            "sha256": "e7638b55d6b7bbedc61ed2745b6742ece24c023b1bb19db2fda7d7d3a8062585",
+            "verified_at": "2026-10-01T17:47:26+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2022-04-05"
+        },
+        "202202": {
+          "name": "BDSIA202202b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202202b.exe",
+          "mirror": {
+            "tag": "bdsia-202202",
+            "asset_name": "BDSIA202202b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202202/BDSIA202202b.exe",
+            "size": 8463165,
+            "sha256": "8b0153416ceb744e0c883ebe2affd2a36aa16cce1348983ce572867309247533",
+            "verified_at": "2026-10-01T17:47:34+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2022-03-09"
+        },
+        "202201": {
+          "name": "BDSIA202201b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202201b.exe",
+          "mirror": {
+            "tag": "bdsia-202201",
+            "asset_name": "BDSIA202201b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202201/BDSIA202201b.exe",
+            "size": 8139501,
+            "sha256": "8436413bdf8403b21df475d053ca6393fb216ff2cf4595d08f2f66eb78f6e8d0",
+            "verified_at": "2026-10-01T17:47:42+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2022-02-08"
+        },
+        "202112": {
+          "name": "BDSIA202112b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202112b.exe",
+          "mirror": {
+            "tag": "bdsia-202112",
+            "asset_name": "BDSIA202112b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202112/BDSIA202112b.exe",
+            "size": 8203221,
+            "sha256": "df1448fe81d5edc3f8ab2d5a70ab5f465c9329d6e7b8d414babd02a9c0cf5f32",
+            "verified_at": "2026-10-01T17:47:51+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2022-01-07"
+        },
+        "202111": {
+          "name": "BDSIA202111b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202111b.exe",
+          "mirror": {
+            "tag": "bdsia-202111",
+            "asset_name": "BDSIA202111b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202111/BDSIA202111b.exe",
+            "size": 8600315,
+            "sha256": "7cc290af65e876a971c2a570c662fc3ac8802ae13a0661b41f31060985913f57",
+            "verified_at": "2026-10-01T17:47:58+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-12-09"
+        },
+        "202110": {
+          "name": "BDSIA202110c.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202110c.exe",
+          "mirror": {
+            "tag": "bdsia-202110",
+            "asset_name": "BDSIA202110c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202110/BDSIA202110c.exe",
+            "size": 8495382,
+            "sha256": "3d0735c06f77f7facb8e474154f065335b60d3a43c86db102bdeaa862235f722",
+            "verified_at": "2026-10-01T17:48:05+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-11-11"
+        },
+        "202109": {
+          "name": "BDSIA202109c.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202109c.exe",
+          "mirror": {
+            "tag": "bdsia-202109",
+            "asset_name": "BDSIA202109c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202109/BDSIA202109c.exe",
+            "size": 8319408,
+            "sha256": "9bb50f0e5fcb4ece59955b0513c3c538997d55959694a398a0f7237b26a4e5e7",
+            "verified_at": "2026-10-01T17:48:13+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-10-14"
+        },
+        "202108": {
+          "name": "BDSIA202108b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202108b.exe",
+          "mirror": {
+            "tag": "bdsia-202108",
+            "asset_name": "BDSIA202108b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202108/BDSIA202108b.exe",
+            "size": 8488139,
+            "sha256": "16bf619ce4c191e6c720ed0b459bcfa76fb1ae9b2a5580d534131f2a098bde1a",
+            "verified_at": "2026-10-01T17:48:21+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-09-09"
+        },
+        "202107": {
+          "name": "BDSIA202107c.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202107c.exe",
+          "mirror": {
+            "tag": "bdsia-202107",
+            "asset_name": "BDSIA202107c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202107/BDSIA202107c.exe",
+            "size": 8489686,
+            "sha256": "03a9d8fd0c4a5cd70a0739acec3090c5d792d7299b021c8ee3157e4c222296ca",
+            "verified_at": "2026-10-01T17:48:29+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-08-09"
+        },
+        "202106": {
+          "name": "BDSIA202106b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202106b.exe",
+          "mirror": {
+            "tag": "bdsia-202106",
+            "asset_name": "BDSIA202106b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202106/BDSIA202106b.exe",
+            "size": 8474312,
+            "sha256": "2a49bf54e0050a64c4a5a01dce1f4ed9f21d95658bd262df8ff9e4dd275317af",
+            "verified_at": "2026-10-01T17:48:36+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-07-12"
+        },
+        "202105": {
+          "name": "BDSIA202105b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202105b.exe",
+          "mirror": {
+            "tag": "bdsia-202105",
+            "asset_name": "BDSIA202105b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202105/BDSIA202105b.exe",
+            "size": 8435763,
+            "sha256": "06829607da580fff1437ad78cacec96c1d86165f3983dc43e60d78189ab6edf8",
+            "verified_at": "2026-10-01T17:49:04+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-06-09"
+        },
+        "202104": {
+          "name": "BDSIA202104b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202104b.exe",
+          "mirror": {
+            "tag": "bdsia-202104",
+            "asset_name": "BDSIA202104b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202104/BDSIA202104b.exe",
+            "size": 8385203,
+            "sha256": "eb884c5f92544393dff14b7a1bba96b29dafefb0d7e7efe168517fa49f82634d",
+            "verified_at": "2026-10-01T17:49:11+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-05-06"
+        },
+        "202103": {
+          "name": "BDSIA202103b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202103b.exe",
+          "mirror": {
+            "tag": "bdsia-202103",
+            "asset_name": "BDSIA202103b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202103/BDSIA202103b.exe",
+            "size": 8346047,
+            "sha256": "489a4483c80b1a542b773d3eb8e5223a22c6548f18f6333224791336b7e39a4b",
+            "verified_at": "2026-10-01T17:49:19+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-04-09"
+        },
+        "202102": {
+          "name": "BDSIA202102b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202102b.exe",
+          "mirror": {
+            "tag": "bdsia-202102",
+            "asset_name": "BDSIA202102b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202102/BDSIA202102b.exe",
+            "size": 8202250,
+            "sha256": "65d42235d63dcbcc96f725105f2d1b71482b45fa6360ec251e857339b96b9903",
+            "verified_at": "2026-10-01T17:49:27+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-03-12"
+        },
+        "202101": {
+          "name": "BDSIA202101b.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202101b.exe",
+          "mirror": {
+            "tag": "bdsia-202101",
+            "asset_name": "BDSIA202101b.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202101/BDSIA202101b.exe",
+            "size": 7931650,
+            "sha256": "c3bdc55cffba813aa1160f0f5cb565434384c59717ed6a16f470435a295dcffa",
+            "verified_at": "2026-10-01T17:49:34+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-02-10"
+        },
+        "202012": {
+          "name": "BDSIA202012c.exe",
+          "size": null,
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202012c.exe",
+          "mirror": {
+            "tag": "bdsia-202012",
+            "asset_name": "BDSIA202012c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202012/BDSIA202012c.exe",
+            "size": 8200304,
+            "sha256": "94ad8e9a865a63c8cfa5378cb905f79118ed5617ce08074bc237eab9166983f5",
+            "verified_at": "2026-10-01T17:49:45+00:00"
+          },
+          "catalog_source": null,
+          "release_date": "2021-01-12"
         }
       },
-      "checked_at": "2026-10-01T17:46:49+00:00",
-      "last_success_at": "2026-10-01T17:46:49+00:00",
+      "checked_at": "2026-10-01T17:47:07+00:00",
+      "last_success_at": "2026-10-01T17:47:07+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
@@ -3176,7 +3544,7 @@
         },
         "competence": "202609"
       },
-      "catalog_checked_at": "2026-10-01T17:46:50+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:09+00:00",
       "available_releases": [
         {
           "name": "TabelaUnificada_202609_v2609171117.zip",
@@ -3937,97 +4305,225 @@
           "name": "TabelaUnificada_202203_v2203031643.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202203_v2203031643.zip",
           "competence": "202203",
-          "revision": "2203031643"
+          "revision": "2203031643",
+          "mirror": {
+            "tag": "sigtap-202203",
+            "asset_name": "TabelaUnificada_202203_v2203031643.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202203/TabelaUnificada_202203_v2203031643.zip",
+            "size": 1946246,
+            "sha256": "3c4bf6dfe28cbe82e03495bcd6f26151bc59e8b29b5f469c7e09fa7051e57dc2",
+            "verified_at": "2026-10-01T17:47:17+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202202_v2202101642.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202202_v2202101642.zip",
           "competence": "202202",
-          "revision": "2202101642"
+          "revision": "2202101642",
+          "mirror": {
+            "tag": "sigtap-202202",
+            "asset_name": "TabelaUnificada_202202_v2202101642.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202202/TabelaUnificada_202202_v2202101642.zip",
+            "size": 1946235,
+            "sha256": "e8c37ce3fcd4b38e3ba779b259869115f3c50dc3bd57e243afdfa5592cb03b27",
+            "verified_at": "2026-10-01T17:47:24+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202201_v2201180947.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202201_v2201180947.zip",
           "competence": "202201",
-          "revision": "2201180947"
+          "revision": "2201180947",
+          "mirror": {
+            "tag": "sigtap-202201",
+            "asset_name": "TabelaUnificada_202201_v2201180947.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202201/TabelaUnificada_202201_v2201180947.zip",
+            "size": 1945974,
+            "sha256": "5051a5d0c03d23840c701d563576c781bda49bf50343f075e75d07682a4b8cd4",
+            "verified_at": "2026-10-01T17:47:31+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202112_v2112141200.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202112_v2112141200.zip",
           "competence": "202112",
-          "revision": "2112141200"
+          "revision": "2112141200",
+          "mirror": {
+            "tag": "sigtap-202112",
+            "asset_name": "TabelaUnificada_202112_v2112141200.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202112/TabelaUnificada_202112_v2112141200.zip",
+            "size": 1950669,
+            "sha256": "548a972b902c24da950090a2ed48b29eb7282f36cef5a475db764a176da489e8",
+            "verified_at": "2026-10-01T17:47:37+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202111_v2111081626.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202111_v2111081626.zip",
           "competence": "202111",
-          "revision": "2111081626"
+          "revision": "2111081626",
+          "mirror": {
+            "tag": "sigtap-202111",
+            "asset_name": "TabelaUnificada_202111_v2111081626.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202111/TabelaUnificada_202111_v2111081626.zip",
+            "size": 1949137,
+            "sha256": "cc996e2cecfde7cb5b96eed28b8a19f8e7eefb64b2333b3ade017b476510c4cc",
+            "verified_at": "2026-10-01T17:47:44+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202110_v2111081624.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202110_v2111081624.zip",
           "competence": "202110",
-          "revision": "2111081624"
+          "revision": "2111081624",
+          "mirror": {
+            "tag": "sigtap-202110",
+            "asset_name": "TabelaUnificada_202110_v2111081624.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202110/TabelaUnificada_202110_v2111081624.zip",
+            "size": 1948868,
+            "sha256": "ae7aa70dfddc644a86af2c6d92ec02521e20cfa23087fc7c3b6cef745b5b0b8e",
+            "verified_at": "2026-10-01T17:47:50+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202109_v2109011702.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202109_v2109011702.zip",
           "competence": "202109",
-          "revision": "2109011702"
+          "revision": "2109011702",
+          "mirror": {
+            "tag": "sigtap-202109",
+            "asset_name": "TabelaUnificada_202109_v2109011702.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202109/TabelaUnificada_202109_v2109011702.zip",
+            "size": 1948371,
+            "sha256": "a766c2c265c1b482f32f7f0dab358d49842c3bbcc88a32b1a2009fd350c25a0e",
+            "verified_at": "2026-10-01T17:47:57+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202108_v2108021412.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202108_v2108021412.zip",
           "competence": "202108",
-          "revision": "2108021412"
+          "revision": "2108021412",
+          "mirror": {
+            "tag": "sigtap-202108",
+            "asset_name": "TabelaUnificada_202108_v2108021412.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202108/TabelaUnificada_202108_v2108021412.zip",
+            "size": 1948398,
+            "sha256": "bf0b5134d5a0aef0b55804aab1bdf69674fe1d03c6dd89c698f0779df88d5b08",
+            "verified_at": "2026-10-01T17:48:03+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202107_v2107021357.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202107_v2107021357.zip",
           "competence": "202107",
-          "revision": "2107021357"
+          "revision": "2107021357",
+          "mirror": {
+            "tag": "sigtap-202107",
+            "asset_name": "TabelaUnificada_202107_v2107021357.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202107/TabelaUnificada_202107_v2107021357.zip",
+            "size": 1948200,
+            "sha256": "9e64fa27a7f6e02c3efb5ee9cbdbe93ae1af3548cb655503b97683388858b885",
+            "verified_at": "2026-10-01T17:48:10+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202106_v2106081641.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202106_v2106081641.zip",
           "competence": "202106",
-          "revision": "2106081641"
+          "revision": "2106081641",
+          "mirror": {
+            "tag": "sigtap-202106",
+            "asset_name": "TabelaUnificada_202106_v2106081641.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202106/TabelaUnificada_202106_v2106081641.zip",
+            "size": 1949209,
+            "sha256": "7fece806c8f2aef150b0376ea9072e56ff1233bb8a1c66fe03f43513dbc68a7b",
+            "verified_at": "2026-10-01T17:48:16+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202105_v2105031054.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202105_v2105031054.zip",
           "competence": "202105",
-          "revision": "2105031054"
+          "revision": "2105031054",
+          "mirror": {
+            "tag": "sigtap-202105",
+            "asset_name": "TabelaUnificada_202105_v2105031054.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202105/TabelaUnificada_202105_v2105031054.zip",
+            "size": 1940701,
+            "sha256": "c284830941c7674878343c4bea99156441ed89e87fea1ea7ff78cf8fc6186b94",
+            "verified_at": "2026-10-01T17:48:23+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202104_v2104011208.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202104_v2104011208.zip",
           "competence": "202104",
-          "revision": "2104011208"
+          "revision": "2104011208",
+          "mirror": {
+            "tag": "sigtap-202104",
+            "asset_name": "TabelaUnificada_202104_v2104011208.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202104/TabelaUnificada_202104_v2104011208.zip",
+            "size": 1940438,
+            "sha256": "07ecda5ab7a41e48bcbf3859fc977d4ca752231ac50afd5165740b82559351dc",
+            "verified_at": "2026-10-01T17:48:29+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202103_v2103031426.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202103_v2103031426.zip",
           "competence": "202103",
-          "revision": "2103031426"
+          "revision": "2103031426",
+          "mirror": {
+            "tag": "sigtap-202103",
+            "asset_name": "TabelaUnificada_202103_v2103031426.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202103/TabelaUnificada_202103_v2103031426.zip",
+            "size": 1940389,
+            "sha256": "c4451c2cefdbaf473d2368afe66b2dff6ba9b0d2f8e6d276ead370972520aa80",
+            "verified_at": "2026-10-01T17:48:36+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202102_v2102011855.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202102_v2102011855.zip",
           "competence": "202102",
-          "revision": "2102011855"
+          "revision": "2102011855",
+          "mirror": {
+            "tag": "sigtap-202102",
+            "asset_name": "TabelaUnificada_202102_v2102011855.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202102/TabelaUnificada_202102_v2102011855.zip",
+            "size": 1940053,
+            "sha256": "f6cd4f406bcb732e01836d49250ffe0e76d4fd2175a3256eff6759d8c48f2381",
+            "verified_at": "2026-10-01T17:48:42+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202101_v2101271632.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202101_v2101271632.zip",
           "competence": "202101",
-          "revision": "2101271632"
+          "revision": "2101271632",
+          "mirror": {
+            "tag": "sigtap-202101",
+            "asset_name": "TabelaUnificada_202101_v2101271632.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202101/TabelaUnificada_202101_v2101271632.zip",
+            "size": 1939720,
+            "sha256": "3d2d2292475b570581b22294c4d4990e0346a91be35f4a7db8e49f83b4b71a97",
+            "verified_at": "2026-10-01T17:48:48+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202012_v2012091602.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202012_v2012091602.zip",
           "competence": "202012",
-          "revision": "2012091602"
+          "revision": "2012091602",
+          "mirror": {
+            "tag": "sigtap-202012",
+            "asset_name": "TabelaUnificada_202012_v2012091602.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202012/TabelaUnificada_202012_v2012091602.zip",
+            "size": 1934499,
+            "sha256": "7895519026096e46ba270f32fb5f1762475ba7abbf949e819c214f1e517dc85c",
+            "verified_at": "2026-10-01T17:48:54+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202011_v2011031118.zip",
@@ -4875,7 +5371,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202609/TabelaUnificada_202609_v2609171117.zip",
             "size": 2155846,
             "sha256": "19d612f6997b5c6fdf32d7d1f8186d110880b658c4776f6a7c22771a2d3f605f",
-            "verified_at": "2026-10-01T16:11:41+00:00"
+            "verified_at": "2026-10-01T17:47:10+00:00"
           },
           "catalog_source": null,
           "release_date": null
@@ -5674,10 +6170,250 @@
           },
           "catalog_source": null,
           "release_date": null
+        },
+        "202203": {
+          "name": "TabelaUnificada_202203_v2203031643.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202203_v2203031643.zip",
+          "mirror": {
+            "tag": "sigtap-202203",
+            "asset_name": "TabelaUnificada_202203_v2203031643.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202203/TabelaUnificada_202203_v2203031643.zip",
+            "size": 1946246,
+            "sha256": "3c4bf6dfe28cbe82e03495bcd6f26151bc59e8b29b5f469c7e09fa7051e57dc2",
+            "verified_at": "2026-10-01T17:47:17+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202202": {
+          "name": "TabelaUnificada_202202_v2202101642.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202202_v2202101642.zip",
+          "mirror": {
+            "tag": "sigtap-202202",
+            "asset_name": "TabelaUnificada_202202_v2202101642.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202202/TabelaUnificada_202202_v2202101642.zip",
+            "size": 1946235,
+            "sha256": "e8c37ce3fcd4b38e3ba779b259869115f3c50dc3bd57e243afdfa5592cb03b27",
+            "verified_at": "2026-10-01T17:47:24+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202201": {
+          "name": "TabelaUnificada_202201_v2201180947.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202201_v2201180947.zip",
+          "mirror": {
+            "tag": "sigtap-202201",
+            "asset_name": "TabelaUnificada_202201_v2201180947.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202201/TabelaUnificada_202201_v2201180947.zip",
+            "size": 1945974,
+            "sha256": "5051a5d0c03d23840c701d563576c781bda49bf50343f075e75d07682a4b8cd4",
+            "verified_at": "2026-10-01T17:47:31+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202112": {
+          "name": "TabelaUnificada_202112_v2112141200.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202112_v2112141200.zip",
+          "mirror": {
+            "tag": "sigtap-202112",
+            "asset_name": "TabelaUnificada_202112_v2112141200.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202112/TabelaUnificada_202112_v2112141200.zip",
+            "size": 1950669,
+            "sha256": "548a972b902c24da950090a2ed48b29eb7282f36cef5a475db764a176da489e8",
+            "verified_at": "2026-10-01T17:47:37+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202111": {
+          "name": "TabelaUnificada_202111_v2111081626.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202111_v2111081626.zip",
+          "mirror": {
+            "tag": "sigtap-202111",
+            "asset_name": "TabelaUnificada_202111_v2111081626.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202111/TabelaUnificada_202111_v2111081626.zip",
+            "size": 1949137,
+            "sha256": "cc996e2cecfde7cb5b96eed28b8a19f8e7eefb64b2333b3ade017b476510c4cc",
+            "verified_at": "2026-10-01T17:47:44+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202110": {
+          "name": "TabelaUnificada_202110_v2111081624.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202110_v2111081624.zip",
+          "mirror": {
+            "tag": "sigtap-202110",
+            "asset_name": "TabelaUnificada_202110_v2111081624.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202110/TabelaUnificada_202110_v2111081624.zip",
+            "size": 1948868,
+            "sha256": "ae7aa70dfddc644a86af2c6d92ec02521e20cfa23087fc7c3b6cef745b5b0b8e",
+            "verified_at": "2026-10-01T17:47:50+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202109": {
+          "name": "TabelaUnificada_202109_v2109011702.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202109_v2109011702.zip",
+          "mirror": {
+            "tag": "sigtap-202109",
+            "asset_name": "TabelaUnificada_202109_v2109011702.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202109/TabelaUnificada_202109_v2109011702.zip",
+            "size": 1948371,
+            "sha256": "a766c2c265c1b482f32f7f0dab358d49842c3bbcc88a32b1a2009fd350c25a0e",
+            "verified_at": "2026-10-01T17:47:57+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202108": {
+          "name": "TabelaUnificada_202108_v2108021412.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202108_v2108021412.zip",
+          "mirror": {
+            "tag": "sigtap-202108",
+            "asset_name": "TabelaUnificada_202108_v2108021412.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202108/TabelaUnificada_202108_v2108021412.zip",
+            "size": 1948398,
+            "sha256": "bf0b5134d5a0aef0b55804aab1bdf69674fe1d03c6dd89c698f0779df88d5b08",
+            "verified_at": "2026-10-01T17:48:03+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202107": {
+          "name": "TabelaUnificada_202107_v2107021357.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202107_v2107021357.zip",
+          "mirror": {
+            "tag": "sigtap-202107",
+            "asset_name": "TabelaUnificada_202107_v2107021357.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202107/TabelaUnificada_202107_v2107021357.zip",
+            "size": 1948200,
+            "sha256": "9e64fa27a7f6e02c3efb5ee9cbdbe93ae1af3548cb655503b97683388858b885",
+            "verified_at": "2026-10-01T17:48:10+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202106": {
+          "name": "TabelaUnificada_202106_v2106081641.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202106_v2106081641.zip",
+          "mirror": {
+            "tag": "sigtap-202106",
+            "asset_name": "TabelaUnificada_202106_v2106081641.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202106/TabelaUnificada_202106_v2106081641.zip",
+            "size": 1949209,
+            "sha256": "7fece806c8f2aef150b0376ea9072e56ff1233bb8a1c66fe03f43513dbc68a7b",
+            "verified_at": "2026-10-01T17:48:16+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202105": {
+          "name": "TabelaUnificada_202105_v2105031054.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202105_v2105031054.zip",
+          "mirror": {
+            "tag": "sigtap-202105",
+            "asset_name": "TabelaUnificada_202105_v2105031054.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202105/TabelaUnificada_202105_v2105031054.zip",
+            "size": 1940701,
+            "sha256": "c284830941c7674878343c4bea99156441ed89e87fea1ea7ff78cf8fc6186b94",
+            "verified_at": "2026-10-01T17:48:23+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202104": {
+          "name": "TabelaUnificada_202104_v2104011208.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202104_v2104011208.zip",
+          "mirror": {
+            "tag": "sigtap-202104",
+            "asset_name": "TabelaUnificada_202104_v2104011208.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202104/TabelaUnificada_202104_v2104011208.zip",
+            "size": 1940438,
+            "sha256": "07ecda5ab7a41e48bcbf3859fc977d4ca752231ac50afd5165740b82559351dc",
+            "verified_at": "2026-10-01T17:48:29+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202103": {
+          "name": "TabelaUnificada_202103_v2103031426.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202103_v2103031426.zip",
+          "mirror": {
+            "tag": "sigtap-202103",
+            "asset_name": "TabelaUnificada_202103_v2103031426.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202103/TabelaUnificada_202103_v2103031426.zip",
+            "size": 1940389,
+            "sha256": "c4451c2cefdbaf473d2368afe66b2dff6ba9b0d2f8e6d276ead370972520aa80",
+            "verified_at": "2026-10-01T17:48:36+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202102": {
+          "name": "TabelaUnificada_202102_v2102011855.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202102_v2102011855.zip",
+          "mirror": {
+            "tag": "sigtap-202102",
+            "asset_name": "TabelaUnificada_202102_v2102011855.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202102/TabelaUnificada_202102_v2102011855.zip",
+            "size": 1940053,
+            "sha256": "f6cd4f406bcb732e01836d49250ffe0e76d4fd2175a3256eff6759d8c48f2381",
+            "verified_at": "2026-10-01T17:48:42+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202101": {
+          "name": "TabelaUnificada_202101_v2101271632.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202101_v2101271632.zip",
+          "mirror": {
+            "tag": "sigtap-202101",
+            "asset_name": "TabelaUnificada_202101_v2101271632.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202101/TabelaUnificada_202101_v2101271632.zip",
+            "size": 1939720,
+            "sha256": "3d2d2292475b570581b22294c4d4990e0346a91be35f4a7db8e49f83b4b71a97",
+            "verified_at": "2026-10-01T17:48:48+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
+        },
+        "202012": {
+          "name": "TabelaUnificada_202012_v2012091602.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202012_v2012091602.zip",
+          "mirror": {
+            "tag": "sigtap-202012",
+            "asset_name": "TabelaUnificada_202012_v2012091602.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202012/TabelaUnificada_202012_v2012091602.zip",
+            "size": 1934499,
+            "sha256": "7895519026096e46ba270f32fb5f1762475ba7abbf949e819c214f1e517dc85c",
+            "verified_at": "2026-10-01T17:48:54+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
         }
       },
-      "checked_at": "2026-10-01T17:46:50+00:00",
-      "last_success_at": "2026-10-01T17:46:50+00:00",
+      "checked_at": "2026-10-01T17:47:09+00:00",
+      "last_success_at": "2026-10-01T17:47:09+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
@@ -5697,7 +6433,7 @@
           "sha256": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a"
         }
       },
-      "catalog_checked_at": "2026-10-01T17:46:51+00:00",
+      "catalog_checked_at": "2026-10-01T17:47:09+00:00",
       "available_releases": [
         {
           "name": "BASE_DE_DADOS_CNES_202608.ZIP",
@@ -5806,7 +6542,15 @@
         {
           "name": "BASE_DE_DADOS_CNES_202512.ZIP",
           "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202512.ZIP",
-          "competence": "202512"
+          "competence": "202512",
+          "mirror": {
+            "tag": "cnes-base-202512",
+            "asset_name": "BASE_DE_DADOS_CNES_202512.ZIP",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-base-202512/BASE_DE_DADOS_CNES_202512.ZIP",
+            "size": 710623472,
+            "sha256": "0f76ed35c5c36a655c96653efa4d88c79e1648f71bccd9fd392663c64b4a8e75",
+            "verified_at": "2026-10-01T18:16:16+00:00"
+          }
         },
         {
           "name": "BASE_DE_DADOS_CNES_202511.ZIP",
@@ -6354,7 +7098,7 @@
             "asset_name": "BASE_DE_DADOS_CNES_202608.ZIP",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-base-202608/BASE_DE_DADOS_CNES_202608.ZIP",
             "size": 739134749,
-            "verified_at": "2026-10-01T16:11:47+00:00",
+            "verified_at": "2026-10-01T17:47:10+00:00",
             "sha256": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a"
           },
           "catalog_source": null,
@@ -6462,10 +7206,25 @@
           },
           "catalog_source": null,
           "release_date": null
+        },
+        "202512": {
+          "name": "BASE_DE_DADOS_CNES_202512.ZIP",
+          "size": null,
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202512.ZIP",
+          "mirror": {
+            "tag": "cnes-base-202512",
+            "asset_name": "BASE_DE_DADOS_CNES_202512.ZIP",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-base-202512/BASE_DE_DADOS_CNES_202512.ZIP",
+            "size": 710623472,
+            "sha256": "0f76ed35c5c36a655c96653efa4d88c79e1648f71bccd9fd392663c64b4a8e75",
+            "verified_at": "2026-10-01T18:16:16+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
         }
       },
-      "checked_at": "2026-10-01T17:46:51+00:00",
-      "last_success_at": "2026-10-01T17:46:51+00:00",
+      "checked_at": "2026-10-01T17:47:09+00:00",
+      "last_success_at": "2026-10-01T17:47:09+00:00",
       "official_reachable": true,
       "pending_competences": []
     }
