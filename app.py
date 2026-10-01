@@ -99,7 +99,7 @@ st.set_page_config(page_title="Downloads Sistemas", page_icon="📦", layout="wi
 
 CUSTOM_CSS = """
 <style>
-:root { --ds-ink:#172f3d; --ds-muted:#596c78; --ds-green:#087568; --ds-line:#dce5e9; }
+:root { --ds-ink:#172f3d; --ds-muted:#465e6b; --ds-green:#087568; --ds-line:#dce5e9; }
 .stApp { background:#f3f6f8; color:var(--ds-ink); }
 .block-container { max-width:1440px; padding-top:1.6rem; padding-bottom:3rem; }
 .ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:2rem;
@@ -154,7 +154,7 @@ div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLin
     background:#104570 !important; border-color:#104570 !important; color:#fff !important; }
 [class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button p,
 [class*="st-key-ready_download_"] [data-testid="stLinkButton"] a p { color:#fff !important; }
-div[data-testid="stCaptionContainer"] { color:#607580; font-size:.78rem; }
+div[data-testid="stCaptionContainer"], div[data-testid="stCaptionContainer"] p { color:#465e6b !important; font-size:.8rem; }
 button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
 [role="tablist"] { gap:.7rem; background:transparent; border-bottom:0;
     padding:.3rem .2rem .65rem; }
@@ -169,7 +169,8 @@ button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; ou
 [role="tab"]:hover { box-shadow:0 3px 9px #15303b16; }
 [role="tab"][aria-selected="true"] { background:var(--tab-color) !important;
     border-color:var(--tab-color) !important; color:#fff !important; box-shadow:0 3px 9px #15303b20; }
-[data-baseweb="tab-highlight"], [data-baseweb="tab-border"] { display:none; }
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"],
+[role="tablist"]::after, [role="tab"] .react-aria-SelectionIndicator { display:none !important; }
 .ds-update-heading { display:flex; align-items:center; gap:.8rem; padding:.15rem 0; }
 .ds-update-icon { width:40px; height:40px; flex:0 0 40px; display:grid; place-items:center; background:#e7f3ef;
     color:#087568; border-radius:10px; font-size:1.1rem; }
