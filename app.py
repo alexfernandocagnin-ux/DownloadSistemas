@@ -10,7 +10,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from html import escape
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
 
 import streamlit as st
@@ -18,7 +17,6 @@ import streamlit as st
 from catalogs.mirrors import download_mirror, matching_mirror, probe_mirror
 from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 from catalogs.updates import make_update_event, merge_updates, recent_updates
-from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
@@ -273,96 +271,10 @@ def update_day(value):
         return str(value)
 
 
-def fetch_official_catalog(system_key):
-    try:
-        releases = SYSTEM_META[system_key]["fetch"]()
-        return (system_key, releases, None) if releases else (system_key, None, "EmptyCatalog")
-    except Exception as exc:
-        # Uma fonte instável não interrompe a consulta dos demais sistemas.
-        return system_key, None, type(exc).__name__
 
 
-def find_live_updates(snapshot_systems, catalogs, found_at):
-    events = []
-    for system_key, (releases, error) in catalogs.items():
-        if not releases:
-            continue
-        saved = snapshot_systems.get(system_key, {})
-        meta = SYSTEM_META[system_key]
-        if system_key in COMPETENCE_SYSTEMS:
-            competences = saved.get("competences", {})
-            competences = competences if isinstance(competences, dict) else {}
-            known_latest = saved.get("latest") or {}
-            old_month = max([*competences, str(known_latest.get("competence", ""))], default="") or None
-            latest = max(releases, key=lambda item: str(item.get("competence", "")))
-            month = str(latest.get("competence", ""))
-            previous_name = (known_latest if str(known_latest.get("competence", "")) == old_month else competences.get(old_month, {})).get("name") if old_month else None
-            if old_month and (month > old_month or (month == old_month and previous_name != latest.get("name"))):
-                events.append(make_update_event(
-                    system_key, meta["label"], latest["name"], found_at,
-                    competence=month, catalog_source=latest.get("catalog_source"),
-                ))
-        else:
-            previous_name = (saved.get("latest") or saved.get("current") or {}).get("name")
-            latest = releases[0]
-            if previous_name and previous_name != latest.get("name"):
-                events.append(make_update_event(system_key, meta["label"], latest["name"], found_at))
-    return events
 
 
-def force_check_all_systems(snapshot_systems):
-    total = len(SYSTEM_META)
-    progress = st.progress(0, text=f"Consultando 0 de {total} sistemas…")
-    status = st.empty()
-    catalogs = {}
-    with ThreadPoolExecutor(max_workers=min(6, total)) as executor:
-        tasks = {executor.submit(fetch_official_catalog, key): key for key in SYSTEM_META}
-        for completed, future in enumerate(as_completed(tasks), start=1):
-            key, releases, error = future.result()
-            catalogs[key] = (releases, error)
-            progress.progress(completed / total, text=f"Consultando {completed} de {total} sistemas…")
-            status.caption(f"Conferido: {SYSTEM_META[key]['label']}")
-    checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    with CATALOG_LOCK:
-        snapshot = load_snapshot()
-        saved_systems = snapshot.setdefault("systems", {})
-        catalogs = {key: (normalize_catalog(saved_systems.get(key, {}), releases, key in COMPETENCE_SYSTEMS), error)
-                    if releases else (releases, error) for key, (releases, error) in catalogs.items()}
-        events = find_live_updates(saved_systems, catalogs, checked_at)
-        for key, (releases, error) in catalogs.items():
-            if not releases:
-                continue
-            info = saved_systems.setdefault(key, {})
-            info.update(latest=dict(releases[0]), catalog_checked_at=checked_at,
-                        official_reachable=releases[0].get("catalog_source") != "community")
-            info.pop("error", None)
-            if key not in COMPETENCE_SYSTEMS:
-                info["pending_download"] = not matching_mirror(releases[0]["name"], info.get("mirror"))
-            if key in COMPETENCE_SYSTEMS:
-                info["available_releases"] = releases
-        snapshot["updates"] = merge_updates(snapshot.get("updates", []), events)
-        if any(releases for releases, _ in catalogs.values()):
-            snapshot["updated_at"] = checked_at
-        try:
-            if any(releases for releases, _ in catalogs.values()):
-                atomic_write(CATALOG_PATH, snapshot)
-        except OSError:
-            st.warning("A consulta foi concluída, mas não foi possível salvar o catálogo neste servidor.")
-    st.session_state["forced_live_catalogs"] = catalogs
-    st.session_state["forced_live_checked_at"] = checked_at
-    st.session_state["forced_live_updates"] = events
-    progress.empty()
-    status.empty()
-    errors = sum(error is not None for _, error in catalogs.values())
-    community = sum(bool(releases and releases[0].get("catalog_source") == "community") for releases, _ in catalogs.values())
-    if errors:
-        st.warning(f"Consulta concluída: {total - errors} de {total} fontes responderam. As demais podem estar temporariamente fora do ar.")
-    elif community:
-        st.info(f"Consulta concluída: {total - community} fontes oficiais e {community} catálogo(s) comunitário(s) de apoio responderam.")
-    else:
-        st.success(f"Consulta concluída: os {total} sistemas foram verificados nas fontes oficiais.")
-    if events:
-        st.info(f"Encontramos {len(events)} atualização(ões) desde o último catálogo. Elas já aparecem no painel de novidades abaixo.")
 
 
 def render_download_button(system_key, name, url, mirror):
@@ -630,26 +542,13 @@ def render_latest_releases_table(snapshot_systems):
 
 
 def render_updates_panel(snapshot):
-    left, action = st.columns([2.4, 1], vertical_alignment="center")
-    with left:
-        st.markdown(
-            '<div class="ds-update-heading"><div class="ds-update-icon">✦</div>'
-            '<div><strong>Novidades dos sistemas</strong>'
-            '<span>Atualizações identificadas nos últimos 7 dias.</span></div></div>',
-            unsafe_allow_html=True,
-        )
-    with action:
-        check_now = st.button(
-            "🔄 Verificar todos os sistemas", key="force_catalog_check",
-            type="primary", width="stretch",
-            help="Consulta agora, sem cache, os catálogos oficiais de todos os sistemas.",
-        )
-    if check_now:
-        force_check_all_systems(snapshot.get("systems", {}))
-
-    stored = snapshot.get("updates", [])
-    live = st.session_state.get("forced_live_updates", [])
-    updates = recent_updates(merge_updates(stored, live))
+    st.markdown(
+        '<div class="ds-update-heading"><div class="ds-update-icon">✦</div>'
+        '<div><strong>Novidades dos sistemas</strong>'
+        '<span>Atualizações identificadas nos últimos 7 dias. Consulta automática a cada duas horas.</span></div></div>',
+        unsafe_allow_html=True,
+    )
+    updates = recent_updates(merge_updates(snapshot.get("updates", [])))
     if updates:
         items = []
         for event in updates:
@@ -664,20 +563,13 @@ def render_updates_panel(snapshot):
         extra = ""
         content = f'<div class="ds-update-list">{"".join(items)}</div>{extra}'
     else:
-        checked_at = st.session_state.get("forced_live_checked_at")
-        if checked_at:
-            message = f"Nenhuma versão nova encontrada na última verificação de {update_day(checked_at)}."
-        else:
-            message = "Nenhuma atualização identificada nos últimos 7 dias. A consulta automática é realizada a cada duas horas."
+        message = "Nenhuma atualização identificada nos últimos 7 dias. A consulta automática é realizada a cada duas horas."
         content = f'<div class="ds-update-empty">{escape(message)}</div>'
 
     st.markdown(
         f'<div class="ds-update-panel">{content}</div>',
         unsafe_allow_html=True,
     )
-    checked_at = st.session_state.get("forced_live_checked_at")
-    if checked_at:
-        st.caption(f"Última verificação manual, sem cache: {readable_date(checked_at)}")
 
 
 snapshot = load_snapshot()
@@ -712,8 +604,7 @@ with st.container(border=True):
         st.markdown("**Baixe pelo arquivo confirmado**")
         st.caption("Os downloads espelhados continuam disponíveis mesmo durante falhas nos portais oficiais.")
     with control:
-        scan_time = st.session_state.get("forced_live_checked_at")
-        st.caption(f"Última busca manual: {update_day(scan_time)}" if scan_time else "A consulta dos sistemas é sob demanda.")
+        st.caption("Consulta automática a cada duas horas, incluindo 06:50 (horário de Brasília).")
 
 render_latest_releases_table(systems)
 
