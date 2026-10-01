@@ -144,6 +144,16 @@ div[data-testid="stButton"] button[kind="primary"], div[data-testid="stLinkButto
     background:#087568; border-color:#087568; color:#fff; }
 div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLinkButton"] a[kind="primary"]:hover {
     background:#075e54; border-color:#075e54; }
+/* A mesma cor para arquivos prontos, servidos pelo app ou por link direto. */
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a {
+    background:#175b91 !important; border-color:#175b91 !important; color:#fff !important;
+    box-shadow:0 3px 8px #175b9120; }
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button:hover,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a:hover {
+    background:#104570 !important; border-color:#104570 !important; color:#fff !important; }
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button p,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a p { color:#fff !important; }
 div[data-testid="stCaptionContainer"] { color:#607580; font-size:.78rem; }
 button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
 [data-baseweb="tab-list"] { gap:1.25rem; background:transparent; border-bottom:1px solid var(--ds-line); }
@@ -416,12 +426,13 @@ def render_download_button(system_key, name, url, mirror):
                 st.link_button(f"Tentar download na fonte oficial: {name}", url, width="stretch")
     if cached:
         st.caption(f'Arquivo pronto · {cached["source"]}')
-        if cached.get("url"):
-            st.link_button(f"⬇️ Baixar {action}: {name}", cached["url"], width="stretch", type="primary")
-        else:
-            st.download_button(f"⬇️ Baixar {action}: {name}", data=cached["data"], file_name=name,
-                               mime="application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
-                               width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore")
+        with st.container(key=f"ready_download_{system_key}"):
+            if cached.get("url"):
+                st.link_button(f"⬇️ Baixar {action}: {name}", cached["url"], width="stretch", type="primary")
+            else:
+                st.download_button(f"⬇️ Baixar {action}: {name}", data=cached["data"], file_name=name,
+                                   mime="application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
+                                   width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore", type="primary")
 
 
 def render_status(releases, error, checked_at):
