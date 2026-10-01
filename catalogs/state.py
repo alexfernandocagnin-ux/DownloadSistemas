@@ -18,9 +18,10 @@ def normalize_catalog(saved, releases, monthly=False):
         for month, entry in (saved.get("competences") or {}).items():
             known.append({**entry, "competence": month})
         known += saved.get("available_releases") or []
+    withdrawn = {str(name).lower() for release in releases for name in release.get("withdrawn_names", [])}
     merged = {}
     for release in known + list(releases):
-        if not release.get("name") or not release.get("url"):
+        if not release.get("name") or not release.get("url") or str(release["name"]).lower() in withdrawn:
             continue
         identity = str(release.get("competence", "")) if monthly else release["name"]
         if monthly and not identity:
@@ -28,7 +29,8 @@ def normalize_catalog(saved, releases, monthly=False):
         previous = merged.get(identity)
         if previous is None or release_rank(release) >= release_rank(previous):
             merged[identity] = {**(previous or {}), **{k: v for k, v in release.items() if v is not None}}
-    ordered = sorted(merged.values(), key=release_rank, reverse=True)
+    rank = release_rank if monthly else lambda release: release_rank(release)[1:]
+    ordered = sorted(merged.values(), key=rank, reverse=True)
     return ordered if monthly else ordered[:1]
 
 

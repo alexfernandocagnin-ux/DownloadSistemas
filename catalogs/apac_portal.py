@@ -21,6 +21,8 @@ def safe_url(url, name):
 def fetch_apac_catalog():
     try:
         entries = fetch_index_entries(INDEX_URL)
+        if not any(FILE_PATTERN.fullmatch(str(entry.get("name", ""))) for entry in entries):
+            raise ValueError("A página não entregou instaladores APAC.")
     except (OSError, ValueError):
         for host in sorted(FTP_HOSTS):
             try:

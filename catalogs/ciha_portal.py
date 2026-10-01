@@ -3,7 +3,7 @@
 import re
 from urllib.parse import urlsplit
 
-from catalogs._common import download_release as _download_release, fetch_index_entries, safe_official_url
+from catalogs._common import download_release as _download_release, fetch_index_entries, fetch_ftp_names, safe_official_url
 
 PAGES = {"01": "http://ciha.saude.gov.br/versao/versao_ciha1.php",
          "02": "http://ciha.saude.gov.br/versao/versao_ciha2.php"}
@@ -20,8 +20,16 @@ def fetch_ciha_catalog(module, installer=False):
     releases = []
     try:
         entries = fetch_index_entries(PAGES[module])
-    except OSError:
-        entries = fetch_index_entries(PAGES[module].replace("http://", "https://", 1))
+        if not entries:
+            raise ValueError("Catálogo CIHA vazio.")
+    except (OSError, ValueError):
+        try:
+            entries = fetch_index_entries(PAGES[module].replace("http://", "https://", 1))
+            if not entries:
+                raise ValueError("Catálogo CIHA vazio.")
+        except (OSError, ValueError):
+            entries = [{"url": f"ftp://ftp2.datasus.gov.br{FTP_DIRECTORY}{name}"}
+                       for name in fetch_ftp_names("ftp2.datasus.gov.br", FTP_DIRECTORY)]
     for entry in entries:
         url = "".join(str(entry["url"]).split())
         name = urlsplit(url).path.rsplit("/", 1)[-1]

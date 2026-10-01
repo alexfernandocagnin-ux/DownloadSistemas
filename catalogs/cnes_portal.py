@@ -56,8 +56,8 @@ def _fetch_json(url: str, referer: str) -> object:
 def _catalog_payload(api, referer, directory):
     try:
         payload = _fetch_json(api, referer)
-        if not isinstance(payload, list):
-            raise ValueError("O catálogo CNES não é uma lista.")
+        if not isinstance(payload, list) or not payload:
+            raise ValueError("O catálogo CNES está vazio ou não é uma lista.")
         return payload
     except (OSError, ValueError):
         for host in FTP_HOSTS:
@@ -85,7 +85,7 @@ def _fetch_cnes_app_catalog(pattern: re.Pattern[str], kind: str) -> list[dict[st
         })
     if not releases:
         raise ValueError(f"Nenhum instalador SCNES {kind} foi encontrado.")
-    return sorted(releases, key=lambda item: item["version"], reverse=True)
+    return sorted(releases, key=lambda item: int(item["version"]), reverse=True)
 
 
 def fetch_cnes_app_catalog() -> list[dict[str, object]]:

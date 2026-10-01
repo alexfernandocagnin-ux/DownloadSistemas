@@ -1,6 +1,8 @@
 """Regressões: espelhos quebrados, publicação incompleta e DATASUS indisponível."""
 
 import hashlib
+import io
+import zipfile
 import json
 import os
 import importlib.util
@@ -21,6 +23,12 @@ URL = "ftp://arpoador.datasus.gov.br/siasus/BPA/" + NAME
 MIRROR = {"tag": "bpa-latest", "asset_name": NAME,
           "asset_url": f"https://github.com/{mirrors.REPOSITORY}/releases/download/bpa-latest/{NAME}"}
 PACKAGE = b"MZ" + b"0" * 100_000
+
+def zip_package():
+    output = io.BytesIO()
+    with zipfile.ZipFile(output, "w") as archive:
+        archive.writestr("data.txt", b"0" * 100_000)
+    return output.getvalue()
 
 
 class MirrorTests(unittest.TestCase):
@@ -86,7 +94,7 @@ class CnesRecoveryTests(unittest.TestCase):
 
     def test_download_avoids_unavailable_servlet(self):
         name = "SCNES4850-ATUALIZACAO.ZIP"
-        package = b"PK" + b"0" * 100_000
+        package = zip_package()
         with patch.object(cnes_portal, "download_via_ftp", return_value=package) as ftp, patch.object(cnes_portal, "download_via_http", side_effect=AssertionError("servlet should not be needed")):
             result = cnes_portal.download_app_release({"name": name, "url": cnes_portal._download_url(name)})
         self.assertEqual(result, package)
@@ -94,7 +102,7 @@ class CnesRecoveryTests(unittest.TestCase):
 
     def test_base_download_uses_correct_directory(self):
         name = "BASE_DE_DADOS_CNES_202608.ZIP"
-        with patch.object(cnes_portal, "download_via_ftp", return_value=b"PK" + b"0" * 100_000) as ftp:
+        with patch.object(cnes_portal, "download_via_ftp", return_value=zip_package()) as ftp:
             cnes_portal.download_base_release({"name": name, "url": cnes_portal._download_url(name)})
         self.assertEqual(ftp.call_args.args[1], "/cnes")
 

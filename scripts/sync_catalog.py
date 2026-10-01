@@ -230,6 +230,9 @@ def sync_single_version_system(key, config, previous):
         result = {**old, "label": config["label"], "official_page": config["official_page"],
                   "latest": latest, "catalog_checked_at": checked_at, "official_reachable": True,
                   "pending_download": old_current.get("name") != name or not old.get("mirror")}
+        if old_current.get("name") in latest.get("withdrawn_names", []):
+            result.pop("current", None)
+            result.pop("mirror", None)
         if announcements:
             result["_announcements"] = announcements
         return result
@@ -343,7 +346,8 @@ def sync_competence_system(key, config, previous, on_progress=None):
 
 def save_catalog(systems, updates=None):
     ordered = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS) if key in systems}
-    catalog = {"updated_at": now(), "systems": ordered, "updates": merge_updates(updates or [])}
+    confirmed_at = max((str(info.get("catalog_checked_at") or info.get("last_success_at") or "") for info in ordered.values()), default="")
+    catalog = {"updated_at": confirmed_at or now(), "systems": ordered, "updates": merge_updates(updates or [])}
     atomic_write(CATALOG_PATH, catalog)
 
 

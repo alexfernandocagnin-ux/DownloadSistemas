@@ -7,6 +7,7 @@ jsessionid e formulários) e já traz o link FTP de cada competência.
 from __future__ import annotations
 
 import gzip
+import io
 import json
 import os
 import re
@@ -42,7 +43,13 @@ def fetch_sigtap_catalog() -> list[dict[str, object]]:
             payload = response.read(MAX_FEED_BYTES + 1)
         if len(payload) > MAX_FEED_BYTES:
             raise ValueError("O feed de competências do SIGTAP excedeu o tamanho esperado.")
-        document = gzip.decompress(payload) if payload[:2] == b"\x1f\x8b" else payload
+        if payload[:2] == b"\x1f\x8b":
+            with gzip.GzipFile(fileobj=io.BytesIO(payload)) as feed:
+                document = feed.read(MAX_FEED_BYTES + 1)
+        else:
+            document = payload
+        if len(document) > MAX_FEED_BYTES:
+            raise ValueError("O feed descompactado excedeu o tamanho esperado.")
         for url in LINK_PATTERN.findall(document.decode("utf-8", "replace")):
             name = url.rsplit("/", 1)[-1]
             match = FILE_PATTERN.fullmatch(name)
@@ -51,7 +58,7 @@ def fetch_sigtap_catalog() -> list[dict[str, object]]:
                     "name": name, "url": url, "size": None,
                     "competence": match.group(1) + match.group(2), "revision": match.group(3),
                 })
-    except (OSError, ValueError):
+    except (OSError, ValueError, EOFError):
         releases = []
     if not releases:
         releases = _fetch_community_catalog()

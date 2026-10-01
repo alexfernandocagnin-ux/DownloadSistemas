@@ -128,3 +128,10 @@ Links legados são novamente conferidos na sincronização. Assets ausentes são
 Os downloads CNES usam os diretórios oficiais `/cnes/Versoes-Fces-Nacional` e `/cnes` nos servidores `arpoador.datasus.gov.br` e `ftp.datasus.gov.br`, contornando o servlet de estatísticas quando indisponível. O catálogo também consulta esses diretórios se a API cair.
 
 Bases CNES atuais ultrapassam 700 MB. O espelho aceita pacotes CNES até 1 GB e entrega arquivos grandes diretamente pelo GitHub. Bases ainda sem espelho não são carregadas na memória do Streamlit; aguardam sincronização ou podem ser obtidas pelo portal oficial.
+
+
+## Revisão de confiabilidade — 01/10/2026
+
+A publicação do catálogo usa `scripts/publish_catalog.py`: lê a revisão atual do GitHub, combina versões e cópias confirmadas e atualiza apenas `data/catalog.json`. Conflitos de gravação são repetidos com a nova revisão, sem rebase dos arquivos de código. Os downloads HTTP/FTP conferem o tamanho anunciado; ZIPs também precisam apresentar uma estrutura de arquivo válida. Fontes vazias tentam as alternativas oficiais disponíveis.
+
+Detalhes da revisão, evidências e limites em `AUDITORIA-2026-10-01.md`.

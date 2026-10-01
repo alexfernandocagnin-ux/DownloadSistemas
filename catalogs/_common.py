@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import re
+import io
+import zipfile
 import ssl
 import unicodedata
 from datetime import date
@@ -204,6 +206,10 @@ def fetch_ftp_names(host: str, directory: str, *, timeout: int = 15) -> list[str
 def download_via_http(url: str, name: str, *, max_size: int, timeout: int = 45) -> bytes:
     request = Request(url, headers={"User-Agent": USER_AGENT})
     with urlopen(request, timeout=timeout) as response:
+        declared = response.headers.get("Content-Length")
+        expected = int(declared) if isinstance(declared, str) and declared.isdigit() else None
+        if expected is not None and expected > max_size:
+            raise ValueError(f"O download de {name} excedeu o limite de tamanho.")
         chunks: list[bytes] = []
         total = 0
         while block := response.read(1024 * 1024):
@@ -211,6 +217,8 @@ def download_via_http(url: str, name: str, *, max_size: int, timeout: int = 45) 
             if total > max_size:
                 raise ValueError(f"O download de {name} excedeu o limite de tamanho.")
             chunks.append(block)
+        if expected is not None and total != expected:
+            raise ValueError(f"O download de {name} foi interrompido ou está incompleto.")
     return b"".join(chunks)
 
 
@@ -229,9 +237,20 @@ def download_via_ftp(host: str, directory: str, name: str, *, max_size: int, tim
         with FTP(host, timeout=timeout) as server:
             server.login()
             server.cwd(directory)
+            expected = None
+            try:
+                server.voidcmd("TYPE I")
+                size = server.size(name)
+                expected = size if isinstance(size, int) and size >= 0 else None
+            except FTPError:
+                pass
+            if expected is not None and expected > max_size:
+                raise ValueError(f"O download de {name} excedeu o limite de tamanho.")
             server.retrbinary(f"RETR {name}", collect, blocksize=1024 * 1024)
     except FTPError as exc:
         raise OSError(f"O servidor FTP não conseguiu entregar {name}.") from exc
+    if expected is not None and total != expected:
+        raise ValueError(f"O download de {name} foi interrompido ou está incompleto.")
     return b"".join(chunks)
 
 
@@ -244,7 +263,7 @@ def looks_like_windows_executable(package: bytes, *, min_size: int = 1_000_000) 
 
 
 def looks_like_zip(package: bytes, *, min_size: int = 1_000_000) -> bool:
-    return len(package) >= min_size and package[:2] == b"PK"
+    return len(package) >= min_size and package[:2] == b"PK" and zipfile.is_zipfile(io.BytesIO(package))
 
 
 def download_release(
@@ -271,8 +290,10 @@ def download_release(
                 continue
             try:
                 package = download_via_ftp(host, directory, filename, max_size=max_size)
+                if not looks_valid_fn(package, min_size=min_size):
+                    raise ValueError(f"O download de {name} não parece ser um pacote válido.")
                 break
-            except OSError as exc:
+            except (OSError, ValueError) as exc:
                 last_error = exc
         else:
             raise OSError(f"Nenhum servidor FTP conseguiu entregar {name}.") from last_error

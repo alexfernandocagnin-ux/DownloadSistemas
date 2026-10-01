@@ -100,7 +100,11 @@ def fetch_sihd2_catalog() -> list[dict[str, object]]:
                          "competence": entry.get("competence")})
     if not releases:
         raise ValueError("Nenhuma versão vigente do SIHD2 foi encontrada.")
-    return sorted(releases, key=lambda item: [int(part) for part in item["version"].split(".")], reverse=True)
+    releases = sorted(releases, key=lambda item: [int(part) for part in item["version"].split(".")], reverse=True)
+    withdrawn = [str(entry["href"]).rsplit("/", 1)[-1] for entry in parser.entries if entry["cancelled"]]
+    if withdrawn:
+        releases[0]["withdrawn_names"] = withdrawn
+    return releases
 
 
 def download_release(release: dict[str, object]) -> bytes:

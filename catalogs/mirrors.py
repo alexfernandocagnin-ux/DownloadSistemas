@@ -5,7 +5,7 @@ from urllib.parse import unquote, urlsplit
 from urllib.request import Request, urlopen
 from catalogs._common import USER_AGENT
 
-from catalogs._common import download_via_http
+from catalogs._common import download_via_http, looks_like_zip
 
 REPOSITORY = "alexfernandocagnin-ux/DownloadSistemas"
 MAX_PACKAGE_SIZE = 1_000_000_000
@@ -39,6 +39,8 @@ def download_mirror(name, mirror, *, max_size=MAX_PACKAGE_SIZE):
     package = download_via_http(mirror["asset_url"], name, max_size=max_size, timeout=90)
     if len(package) < 100_000 or package[:2] != _expected_signature(name):
         raise ValueError("O espelho não entregou um instalador ou ZIP válido.")
+    if name.lower().endswith(".zip") and not looks_like_zip(package, min_size=100_000):
+        raise ValueError("O ZIP do espelho está incompleto ou inválido.")
     if mirror.get("size") and len(package) != mirror["size"]:
         raise ValueError("O arquivo do espelho está incompleto.")
     if mirror.get("sha256") and hashlib.sha256(package).hexdigest() != mirror["sha256"]:

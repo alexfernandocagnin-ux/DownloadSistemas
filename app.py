@@ -408,6 +408,8 @@ def render_download_button(system_key, name, url, mirror):
         except (OSError, ValueError):
             loading.empty()
             st.error("O arquivo não está disponível agora. Tente novamente mais tarde. Os demais downloads continuam disponíveis.")
+            if system_key.removesuffix("_backup") in {"cnes_base", "cnes_complete"} and cnes_portal.safe_url(url, name):
+                st.link_button(f"Tentar download na fonte oficial: {name}", url, width="stretch")
     if cached:
         st.caption(f'Arquivo pronto · {cached["source"]}')
         if cached.get("url"):
@@ -429,8 +431,11 @@ def render_status(releases, error, checked_at):
         st.caption("Nenhuma versão salva. Use o botão de verificação para consultar a fonte oficial.")
 
 
-def card_catalog(system_key):
-    return st.session_state.get("forced_live_catalogs", {}).get(system_key, (None, None))
+def card_catalog(system_key, saved):
+    releases, error = st.session_state.get("forced_live_catalogs", {}).get(system_key, (None, None))
+    if releases:
+        releases = normalize_catalog(saved, releases, system_key in COMPETENCE_SYSTEMS)
+    return releases, error
 
 
 def render_single_version_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
@@ -438,7 +443,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
     info = snapshot_systems.get(system_key, {})
     with st.container(border=True):
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
-        releases, error = card_catalog(system_key)
+        releases, error = card_catalog(system_key, info)
         if not releases and info.get("official_reachable") is False:
             error = error or info.get("error") or "SourceUnavailable"
         current = info.get("current")
@@ -465,7 +470,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
             elif system_key == "ciha02_installer":
                 st.caption("Primeira instalação: inclui banco de dados vazio. Não substitua o banco de uma instalação existente.")
             render_download_button(system_key, str(name), str(url), info.get("mirror"))
-            if current and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
+            if current and current.get("name") not in (latest or {}).get("withdrawn_names", []) and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
                 with st.expander("Versão anterior preservada no espelho"):
                     render_download_button(system_key + "_backup", current["name"], current["url"], info["mirror"])
         st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
@@ -485,7 +490,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
     stored_releases = info.get("available_releases") or []
     with st.container(border=True):
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
-        releases, error = card_catalog(system_key)
+        releases, error = card_catalog(system_key, info)
         source = (releases[0] if releases else saved_latest).get("catalog_source") if releases or saved_latest else None
         if system_key == "sigtap" and source == "community":
             badge("warn", "Catálogo comunitário de apoio · cópias identificadas")
@@ -561,6 +566,7 @@ def latest_release_rows(snapshot_systems):
             continue
         saved = snapshot_systems.get(system_key, {})
         releases, _error = live_catalogs.get(system_key, (None, None))
+        releases = normalize_catalog(saved, releases or [], system_key in COMPETENCE_SYSTEMS)
         release = None
         version = "—"
         if system_key in COMPETENCE_SYSTEMS:

@@ -106,7 +106,7 @@ class SiaPortalTests(unittest.TestCase):
         self.assertEqual([item["name"] for item in sia], ["SIA0604.exe", "INSTSIA0200.exe"])
 
     def test_rejects_links_to_unofficial_hosts(self):
-        with patch("catalogs.sia_portal._entries_from_index", return_value=[
+        with patch("catalogs.sia_portal._entries_from_ftp", return_value=[]), patch("catalogs.sia_portal._entries_from_index", return_value=[
             {"name": "BDSIA202608b.exe", "url": "https://attacker.example/BDSIA202608b.exe", "size": None},
         ]):
             with self.assertRaises(ValueError):

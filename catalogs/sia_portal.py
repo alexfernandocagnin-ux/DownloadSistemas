@@ -81,6 +81,8 @@ def fetch_bdsia_catalog() -> list[dict[str, object]]:
     """Pacotes mensais BDSIA, mais recentes primeiro."""
     releases = _filter_and_validate(_fetch_raw_entries(), BDSIA_PATTERN)
     if not releases:
+        releases = _filter_and_validate(_entries_from_ftp(), BDSIA_PATTERN)
+    if not releases:
         raise ValueError("Nenhum pacote BDSIA oficial foi encontrado.")
     result = [
         {
@@ -97,6 +99,8 @@ def fetch_bdsia_catalog() -> list[dict[str, object]]:
 def fetch_sia_catalog() -> list[dict[str, object]]:
     """Instalador do SIA (versão única, sem competência), mais recente primeiro."""
     releases = _filter_and_validate(_fetch_raw_entries(), SIA_PATTERN)
+    if not releases:
+        releases = _filter_and_validate(_entries_from_ftp(), SIA_PATTERN)
     if not releases:
         raise ValueError("Nenhum instalador do SIA foi encontrado.")
     result = [

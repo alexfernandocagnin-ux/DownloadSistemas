@@ -54,6 +54,8 @@ def fetch_bpa_catalog() -> list[dict[str, object]]:
     """Instalador do BPA Magnético (versão única), mais recente primeiro."""
     try:
         entries = _entries_from_index()
+        if not any(BPA_PATTERN.fullmatch(str(entry.get("name", ""))) for entry in entries):
+            raise ValueError("A página não entregou instaladores BPA.")
     except (OSError, ValueError):
         entries = _entries_from_ftp()
     releases = []
