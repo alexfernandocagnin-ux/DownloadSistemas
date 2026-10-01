@@ -99,90 +99,86 @@ st.set_page_config(page_title="Downloads Sistemas", page_icon="📦", layout="wi
 
 CUSTOM_CSS = """
 <style>
-:root { --ds-ink:#172f3d; --ds-muted:#596c78; --ds-green:#087568; --ds-line:#dce5e9; }
-.stApp { background:#f3f6f8; color:var(--ds-ink); }
-.block-container { max-width:1440px; padding-top:1.6rem; padding-bottom:3rem; }
-.ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:2rem;
-    position:relative; overflow:hidden; padding:2.15rem 2.4rem; margin-bottom:1.2rem;
-    background:#132f3b; border:1px solid #234550; border-radius:20px; color:#fff; }
-.ds-hero:after { content:''; position:absolute; width:360px; height:360px; right:180px; top:-250px;
-    border:1px solid #41606a; border-radius:50%; box-shadow:0 0 0 45px #1b3945,0 0 0 90px #183440;
-    pointer-events:none; }
-.ds-hero-copy,.ds-hero-meta { position:relative; z-index:1; }
-.ds-eyebrow { color:#a8dbce; font-size:.7rem; font-weight:750; letter-spacing:.16em; text-transform:uppercase; margin:0 0 .65rem; }
-.ds-hero h1 { font-family:Georgia,'Times New Roman',serif; font-size:clamp(2rem,3.3vw,3rem);
-    font-weight:700; letter-spacing:-.045em; line-height:1.12; margin:0 0 .7rem; }
-.ds-hero p { color:#d5e3e9; font-size:.96rem; line-height:1.6; max-width:680px; margin:0; }
-.ds-hero-meta { align-self:center; padding:1.1rem 1.2rem; border:1px solid #46616b; border-radius:12px; background:#1c3b46; }
-.ds-hero-meta strong { display:block; color:#b8e8d8; font-size:.69rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.55rem; }
-.ds-hero-meta span { display:block; color:#f7fafb; font-size:.85rem; line-height:1.5; }
-.ds-hero-meta small { display:block; margin-top:.55rem; color:#c4d9df; font-size:.73rem; }
-.ds-overview { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; margin:0 0 1.25rem;
-    border:1px solid var(--ds-line); border-radius:12px; overflow:hidden; background:var(--ds-line); }
-.ds-overview-item { background:#fff; padding:1rem 1.3rem; display:flex; align-items:center; gap:.9rem; }
-.ds-overview-number { font-family:Georgia,serif; color:#096c61; font-size:1.65rem; font-weight:700; line-height:1; }
-.ds-overview-item strong { display:block; font-size:.84rem; color:#193b49; }
-.ds-overview-item span { display:block; font-size:.74rem; color:var(--ds-muted); margin-top:.15rem; }
-.ds-section { margin:1.3rem 0 1rem; }
-.ds-section .ds-eyebrow { color:#547583; font-size:.67rem; }
-.ds-section h2 { font-family:Georgia,serif; color:#183a49; font-size:1.7rem; letter-spacing:-.025em; margin:0; }
-.ds-section p { color:var(--ds-muted); font-size:.89rem; margin:.3rem 0 0; }
-.ds-card-title { display:flex; align-items:center; gap:.7rem; min-height:44px; font-size:1rem;
-    font-weight:750; color:#173849; line-height:1.35; margin:.1rem 0 .7rem; }
-.ds-card-icon { display:grid; place-items:center; width:38px; height:38px; flex:0 0 38px;
-    background:#edf4f5; border:1px solid #e0ebef; border-radius:10px; font-size:1.1rem; }
-.ds-badge { display:inline-block; padding:.26rem .65rem; border-radius:6px; font-size:.72rem; font-weight:700;
-    line-height:1.35; margin:0 0 .55rem; }
-.ds-badge-ok { background:#e8f5ef; color:#116144; border:1px solid #d3eade; }
-.ds-badge-warn { background:#fff4df; color:#775114; border:1px solid #efdcb2; }
-.ds-badge-error { background:#fbecea; color:#933c35; border:1px solid #f1d3ce; }
-div[data-testid="stVerticalBlockBorderWrapper"] { background:#fff; border-color:var(--ds-line) !important;
-    border-radius:14px !important; box-shadow:0 3px 10px #15303b06; }
-div[data-testid="stButton"] button, div[data-testid="stDownloadButton"] button, div[data-testid="stLinkButton"] a {
-    border-radius:9px; min-height:42px; font-weight:650; transition:background .15s ease,border-color .15s ease; }
+.stApp { background: #f5f4ef; color: #172c32; }
+.block-container { max-width: 1480px; padding-top: 2.2rem; padding-bottom: 4rem; }
+.ds-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto;
+    align-items: end; gap: 2rem; background: #16343a; color: #f8f7f0; padding: 2.7rem 3rem;
+    border-radius: 22px; margin: 0 0 1.4rem; box-shadow: 0 18px 42px rgba(22,52,58,.12); }
+.ds-hero:after { content: ''; position: absolute; width: 280px; height: 280px; right: 16%; top: -185px;
+    border: 1px solid rgba(170,222,204,.24); border-radius: 50%;
+    box-shadow: 0 0 0 34px rgba(170,222,204,.04), 0 0 0 68px rgba(170,222,204,.04); }
+.ds-hero-copy, .ds-hero-meta { position: relative; z-index: 1; }
+.ds-eyebrow { color: #a8d8c3; font-size: .73rem; font-weight: 750; letter-spacing: .16em;
+    text-transform: uppercase; margin: 0 0 .7rem; }
+.ds-hero h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.35rem,4vw,3.55rem);
+    letter-spacing: -.045em; line-height: 1; margin: 0 0 .85rem; }
+.ds-hero p { color: #d2dfd9; font-size: 1rem; line-height: 1.6; max-width: 680px; margin: 0; }
+.ds-hero-meta { min-width: 205px; border-left: 1px solid rgba(255,255,255,.2); padding-left: 1.35rem; }
+.ds-hero-meta strong { display: block; color: #b8e2ce; font-size: .77rem; letter-spacing: .06em;
+    text-transform: uppercase; margin-bottom: .4rem; }
+.ds-hero-meta span { color: #edf2ee; font-size: .9rem; }
+.ds-toolbar { background: #fff; border: 1px solid #e1e3dc; border-radius: 15px; padding: .25rem .85rem; margin-bottom: 2.3rem; }
+.ds-section { margin: 2.2rem 0 1rem; }
+.ds-section h2 { font-family: Georgia, 'Times New Roman', serif; color: #17343a; font-size: 1.7rem;
+    letter-spacing: -.025em; margin: 0; }
+.ds-section p { color: #637277; font-size: .92rem; margin: .25rem 0 0; }
+.ds-card-title { display: flex; gap: .55rem; align-items: center; color: #18353a; font-size: 1.04rem;
+    font-weight: 750; letter-spacing: -.015em; margin: .15rem 0 .75rem; }
+.ds-badge { display: inline-block; padding: .28rem .68rem; border-radius: 999px; font-size: .74rem;
+    font-weight: 700; line-height: 1.25; margin: .05rem 0 .6rem; }
+.ds-badge-ok { background: #e1f2e9; color: #176347; }
+.ds-badge-warn { background: #fbefd9; color: #805514; }
+.ds-badge-error { background: #f8e4df; color: #8d3428; }
+div[data-testid="stVerticalBlockBorderWrapper"] { background: #fff; border-color: #e1e3dc !important;
+    border-radius: 17px !important; box-shadow: 0 5px 17px rgba(30,49,47,.045);
+    transition: transform .18s ease, box-shadow .18s ease; }
+div[data-testid="stVerticalBlockBorderWrapper"]:hover { transform: translateY(-2px);
+    box-shadow: 0 12px 27px rgba(30,49,47,.09); }
 div[data-testid="stButton"] button[kind="primary"], div[data-testid="stLinkButton"] a[kind="primary"] {
-    background:#087568; border-color:#087568; color:#fff; }
+    background: #126b59; border-color: #126b59; color: #fff; border-radius: 10px; font-weight: 700; }
 div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLinkButton"] a[kind="primary"]:hover {
-    background:#075e54; border-color:#075e54; }
-div[data-testid="stCaptionContainer"] { color:#607580; font-size:.78rem; }
-button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
-[data-baseweb="tab-list"] { gap:1.25rem; background:transparent; border-bottom:1px solid var(--ds-line); }
-[data-baseweb="tab"] { min-height:50px; padding:0 .25rem; font-size:.94rem; font-weight:700; }
-.ds-update-heading { display:flex; align-items:center; gap:.8rem; padding:.15rem 0; }
-.ds-update-icon { width:40px; height:40px; flex:0 0 40px; display:grid; place-items:center; background:#e7f3ef;
-    color:#087568; border-radius:10px; font-size:1.1rem; }
-.ds-update-heading strong { display:block; font-size:.99rem; color:#173a48; }
-.ds-update-heading span { display:block; font-size:.8rem; color:var(--ds-muted); margin-top:.2rem; }
-.ds-update-panel { margin:.4rem 0 .2rem; }
-.ds-update-list { display:grid; gap:.55rem; }
-.ds-update-item { display:grid; grid-template-columns:minmax(140px,1fr) minmax(160px,1.2fr) auto; align-items:center;
-    gap:.8rem; background:#f6fbf9; padding:.8rem 1rem; border:1px solid #e0ece6; border-left:3px solid #4b9b83; border-radius:8px; }
-.ds-update-system { color:#1f463d; font-size:.84rem; font-weight:750; }
-.ds-update-file { color:#526c70; font-size:.8rem; overflow-wrap:anywhere; }
-.ds-update-date { color:#536f6b; font-size:.74rem; white-space:nowrap; }
-.ds-update-empty { background:#f5f8fa; color:#536a76; padding:.85rem 1rem; border-radius:9px; font-size:.86rem; }
-.ds-loading-card { background:#f1f8f5; border:1px solid #d5e9df; border-radius:10px; padding:.85rem 1rem; margin:.5rem 0; }
-.ds-loading-copy { display:flex; align-items:center; gap:.7rem; color:#173849; }
-.ds-loading-copy strong { display:block; font-size:.88rem; }
-.ds-loading-copy span { display:block; color:#566e76; font-size:.8rem; margin-top:.2rem; }
-.ds-loading-dot { width:12px; height:12px; flex:0 0 auto; border:2px solid #bbdacf; border-top-color:#087568;
-    border-radius:50%; animation:ds-spin .85s linear infinite; }
-.ds-progress-track { height:4px; overflow:hidden; background:#daeae2; border-radius:9px; margin-top:.8rem; }
-.ds-progress-track span { display:block; width:34%; height:100%; background:#087568; animation:ds-slide 1.3s ease-in-out infinite; }
-.ds-footer { border-top:1px solid var(--ds-line); margin-top:2rem; padding-top:1rem; color:#536d79; font-size:.77rem; }
-@keyframes ds-spin { to { transform:rotate(360deg); } }
-@keyframes ds-slide { from { transform:translateX(-120%); } to { transform:translateX(330%); } }
-@media (prefers-reduced-motion:reduce) { .ds-loading-dot,.ds-progress-track span { animation:none; } }
-@media (max-width:760px) {
-    .block-container { padding-top:1rem; padding-left:1rem; padding-right:1rem; }
-    .ds-hero { grid-template-columns:1fr; padding:1.5rem; gap:1.2rem; }
-    .ds-overview { grid-template-columns:1fr; }
-    .ds-overview-item { padding:.8rem 1rem; }
-    .ds-update-item { grid-template-columns:1fr; gap:.25rem; }
-    .ds-update-date { white-space:normal; }
-    [data-baseweb="tab-list"] { gap:.65rem; }
-    [data-baseweb="tab"] { font-size:.8rem; }
+    background: #0d594a; border-color: #0d594a; }
+div[data-testid="stLinkButton"] a { border-radius: 10px; }
+div[data-testid="stCaptionContainer"] { color: #69797b; }
+.ds-loading-card { background: #f7fbf8; border: 1px solid #dce9e1; border-radius: 12px;
+    padding: .85rem 1rem; margin: .65rem 0 .9rem; }
+.ds-loading-copy { display: flex; align-items: center; gap: .7rem; color: #17343a; }
+.ds-loading-dot { width: 11px; height: 11px; flex: 0 0 auto; border: 2px solid #c6ded2;
+    border-top-color: #126b59; border-radius: 50%; animation: ds-spin .85s linear infinite; }
+.ds-loading-copy strong { display: block; font-size: .91rem; }
+.ds-loading-copy span { display: block; color: #647477; font-size: .82rem; margin-top: .15rem; }
+.ds-update-panel { position: relative; overflow: hidden; padding: 1.2rem 1.35rem;
+    background: linear-gradient(120deg, #edf7f1 0%, #f8fbf8 58%, #fff 100%);
+    border: 1px solid #d9e8de; border-radius: 16px; margin: .3rem 0 1.2rem; }
+.ds-update-heading { display: flex; align-items: center; gap: .8rem; margin-bottom: .85rem; }
+.ds-update-icon { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 auto;
+    color: #126b59; background: #dcefe4; border-radius: 13px; font-size: 1.2rem; }
+.ds-update-heading strong { display: block; color: #17343a; font-size: 1.02rem; }
+.ds-update-heading span { color: #637477; display: block; font-size: .82rem; margin-top: .12rem; }
+.ds-update-list { display: grid; gap: .48rem; }
+.ds-update-item { display: grid; grid-template-columns: minmax(135px,.8fr) minmax(180px,1.5fr) auto;
+    align-items: center; gap: .7rem; padding: .62rem .75rem; background: rgba(255,255,255,.78);
+    border: 1px solid #e4ece6; border-radius: 10px; }
+.ds-update-system { color: #173c35; font-size: .86rem; font-weight: 750; }
+.ds-update-file { color: #536467; font-size: .81rem; overflow-wrap: anywhere; }
+.ds-update-date { color: #71817e; font-size: .76rem; white-space: nowrap; }
+.ds-update-empty { color: #47665c; font-size: .88rem; padding: .8rem .9rem;
+    background: rgba(255,255,255,.72); border: 1px solid #e4ece6; border-radius: 10px; }
+.ds-toolbar { display: flex; align-items: center; }
+.ds-progress-track { position: relative; height: 5px; margin-top: .85rem; overflow: hidden;
+    background: #e1ece5; border-radius: 999px; }
+.ds-progress-track span { display: block; width: 34%; height: 100%; border-radius: inherit;
+    background: #126b59; animation: ds-progress-slide 1.3s ease-in-out infinite; }
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+@keyframes ds-progress-slide { from { transform: translateX(-120%); } to { transform: translateX(330%); } }
+@media (prefers-reduced-motion: reduce) {
+    .ds-loading-dot, .ds-progress-track span { animation: none; }
+    .ds-progress-track span { transform: translateX(80%); }
 }
+@media (max-width: 760px) { .ds-hero { grid-template-columns: 1fr; gap: 1.3rem; padding: 2rem 1.5rem; }
+    .ds-hero-meta { border-left: 0; border-top: 1px solid rgba(255,255,255,.2); padding: .8rem 0 0; }
+    .ds-update-item { grid-template-columns: 1fr; gap: .2rem; }
+    .ds-update-date { white-space: normal; } }
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
@@ -446,7 +442,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
     meta = SYSTEM_META[system_key]
     info = snapshot_systems.get(system_key, {})
     with st.container(border=True):
-        st.markdown(f'<div class="ds-card-title"><span class="ds-card-icon" aria-hidden="true">{meta["icon"]}</span><span>{meta["label"]}</span></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key, info)
         if not releases and info.get("official_reachable") is False:
             error = error or info.get("error") or "SourceUnavailable"
@@ -493,7 +489,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
     saved_latest = info.get("latest") or {}
     stored_releases = info.get("available_releases") or []
     with st.container(border=True):
-        st.markdown(f'<div class="ds-card-title"><span class="ds-card-icon" aria-hidden="true">{meta["icon"]}</span><span>{meta["label"]}</span></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key, info)
         source = (releases[0] if releases else saved_latest).get("catalog_source") if releases or saved_latest else None
         if system_key == "sigtap" and source == "community":
@@ -699,7 +695,7 @@ st.markdown(
     f"""
     <div class="ds-hero">
         <div class="ds-hero-copy">
-            <div class="ds-eyebrow">SISTEMAS DE INFORMAÇÃO DO SUS</div>
+            <div class="ds-eyebrow">DATASUS &nbsp;·&nbsp; CENTRAL DE ARQUIVOS</div>
             <h1>Downloads Sistemas</h1>
             <p>Acesso centralizado a instaladores, atualizações e tabelas dos sistemas de informação do SUS.
             Apoio às atividades de gestão, processamento e envio de dados em saúde.</p>
@@ -707,19 +703,10 @@ st.markdown(
         <div class="ds-hero-meta">
             <strong>Catálogo conferido</strong>
             <span>{escape(readable_updated_at)}</span>
-            <small>Consulta automática a cada duas horas</small>
         </div>
     </div>
     """,
     unsafe_allow_html=True,
-)
-
-st.markdown(
-    f'<div class="ds-overview">'
-    f'<div class="ds-overview-item"><div class="ds-overview-number">{len(SYSTEM_META)}</div><div><strong>Pacotes acompanhados</strong><span>Instaladores, atualizações e tabelas</span></div></div>'
-    '<div class="ds-overview-item"><div class="ds-overview-number">2h</div><div><strong>Consulta automática</strong><span>Inclui 06:50, no horário de Brasília</span></div></div>'
-    '<div class="ds-overview-item"><div class="ds-overview-number">7d</div><div><strong>Novidades em destaque</strong><span>Avisos disponíveis por sete dias</span></div></div>'
-    '</div>', unsafe_allow_html=True,
 )
 
 with st.container(border=True):
@@ -733,27 +720,19 @@ with st.container(border=True):
     with control:
         st.caption("Consulta automática a cada duas horas, incluindo 06:50 (horário de Brasília). O botão permite antecipar a consulta.")
 
+render_latest_releases_table(systems)
 
-programs_tab, tables_tab, releases_tab = st.tabs(["Programas e instaladores", "Tabelas e bases", "Últimos lançamentos"])
+st.markdown(
+    '<div class="ds-section"><div class="ds-eyebrow">01 &nbsp;·&nbsp; APLICATIVOS</div>'
+    '<h2>Instaladores</h2><p>Programas e atualizações para processamento das informações do SUS.</p></div>',
+    unsafe_allow_html=True,
+)
+st.info("**SCNES:** use **completo** para uma nova instalação ou **atualização** se já tiver o sistema; o Firebird é necessário. **FPO:** faça a instalação inicial e depois aplique a atualização mais recente.", icon="ℹ️")
+render_grid(SINGLE_VERSION_SYSTEMS, systems, render_single_version_card)
 
-with programs_tab:
-    st.markdown(
-        '<div class="ds-section"><div class="ds-eyebrow">01 &nbsp;·&nbsp; APLICATIVOS</div>'
-        '<h2>Instaladores</h2><p>Programas e atualizações para processamento das informações do SUS.</p></div>',
-        unsafe_allow_html=True,
-    )
-    st.info("**SCNES:** use **completo** para uma nova instalação ou **atualização** se já tiver o sistema; o Firebird é necessário. **FPO:** faça a instalação inicial e depois aplique a atualização mais recente.", icon="ℹ️")
-    render_grid(SINGLE_VERSION_SYSTEMS, systems, render_single_version_card)
-
-with tables_tab:
-    st.markdown(
-        '<div class="ds-section"><div class="ds-eyebrow">02 &nbsp;·&nbsp; COMPETÊNCIAS</div>'
-        '<h2>Tabelas e bases</h2><p>Selecione o mês que você precisa e baixe o pacote correspondente.</p></div>',
-        unsafe_allow_html=True,
-    )
-    render_grid(COMPETENCE_SYSTEMS, systems, render_competence_card)
-
-with releases_tab:
-    render_latest_releases_table(systems)
-
-st.markdown('<div class="ds-footer">Downloads Sistemas · Central de acesso a arquivos dos sistemas de informação do SUS</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="ds-section"><div class="ds-eyebrow">02 &nbsp;·&nbsp; COMPETÊNCIAS</div>'
+    '<h2>Tabelas e bases</h2><p>Selecione o mês que você precisa e baixe o pacote correspondente.</p></div>',
+    unsafe_allow_html=True,
+)
+render_grid(COMPETENCE_SYSTEMS, systems, render_competence_card)
