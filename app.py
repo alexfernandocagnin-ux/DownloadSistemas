@@ -23,7 +23,7 @@ from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
 SINGLE_VERSION_SYSTEMS = ("bpa", "apac", "sia", "fpo_update", "sihd2", "ciha02", "cnes_complete", "cnes_app")
-COMPETENCE_SYSTEMS = ("bdsia", "sigtap", "cnes_base")
+COMPETENCE_SYSTEMS = ("bdsia", "sigtap")
 DIRECT_DOWNLOAD_LIMIT = 50_000_000
 
 SYSTEM_META: dict[str, dict[str, object]] = {
@@ -87,11 +87,6 @@ SYSTEM_META: dict[str, dict[str, object]] = {
         "fetch": sigtap_portal.fetch_sigtap_catalog, "download": sigtap_portal.download_release,
         "download_with_source": sigtap_portal.download_release_with_source,
         "official_page": sigtap_portal.DOWNLOAD_PAGE,
-    },
-    "cnes_base": {
-        "label": "CNES · Base de dados mensal", "icon": "🗃️",
-        "fetch": cnes_portal.fetch_cnes_base_catalog, "download": cnes_portal.download_base_release,
-        "official_page": cnes_portal.BASE_DADOS_PAGE,
     },
 }
 
@@ -685,7 +680,8 @@ def render_updates_panel(snapshot):
 
     stored = snapshot.get("updates", [])
     live = st.session_state.get("forced_live_updates", [])
-    updates = recent_updates(merge_updates(stored, live))
+    updates = [event for event in recent_updates(merge_updates(stored, live))
+               if event.get("system_key") != "cnes_base"]
     if updates:
         items = []
         for event in updates:

@@ -337,7 +337,7 @@ class PortalTests(unittest.TestCase):
             (fpo_portal, "fetch_fpo_installer_catalog"), (fpo_portal, "fetch_fpo_update_catalog"),
             (sihd_portal, "fetch_sihd2_catalog"), (cnes_portal, "fetch_cnes_complete_catalog"),
             (cnes_portal, "fetch_cnes_app_catalog"), (sia_portal, "fetch_bdsia_catalog"),
-            (sigtap_portal, "fetch_sigtap_catalog"), (cnes_portal, "fetch_cnes_base_catalog"),
+            (sigtap_portal, "fetch_sigtap_catalog"),
         ]
         with ExitStack() as stack:
             mocks = [stack.enter_context(patch.object(module, name, return_value=[])) for module, name in fetchers]
