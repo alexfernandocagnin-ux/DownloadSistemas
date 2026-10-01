@@ -29,6 +29,7 @@ from catalogs.updates import make_update_event, merge_updates  # noqa: E402
 CATALOG_PATH = ROOT / "data" / "catalog.json"
 DIST_DIR = ROOT / "dist"
 PUBLISH = False
+CATALOG_ONLY = False
 
 SINGLE_VERSION_SYSTEMS = {
     "apac": {
@@ -223,6 +224,13 @@ def sync_single_version_system(key, config, previous):
         latest["release_date"] = old_latest.get("release_date")
     if old_latest.get("name") and old_latest["name"] != name:
         announcements.append(make_update_event(key, config["label"], name, checked_at))
+    if CATALOG_ONLY:
+        result = {**old, "label": config["label"], "official_page": config["official_page"],
+                  "latest": latest, "catalog_checked_at": checked_at, "official_reachable": True,
+                  "pending_download": old_current.get("name") != name or not old.get("mirror")}
+        if announcements:
+            result["_announcements"] = announcements
+        return result
     try:
         previous_entry = {**(old.get("current") or {}), "mirror": old.get("mirror")}
         mirror = confirmed_previous(previous_entry) if previous_entry.get("name") == name else None
@@ -260,12 +268,13 @@ def sync_competence_system(key, config, previous, on_progress=None):
         return failed(old, config, checked_at, exc)
     updated = dict(old.get("competences") or {})
     announcements = []
-    old_latest_month = max(updated, default=None)
+    known_latest = old.get("latest") or {}
+    old_latest_month = max([*updated, str(known_latest.get("competence", ""))], default="") or None
     latest_release = max(releases, key=lambda item: str(item.get("competence", "")))
     latest_release = dict(latest_release)
     latest_month = str(latest_release["competence"])
     if old_latest_month:
-        old_latest = updated[old_latest_month]
+        old_latest = known_latest if str(known_latest.get("competence", "")) == old_latest_month else updated[old_latest_month]
         if latest_month > old_latest_month or (
             latest_month == old_latest_month and old_latest.get("name") != latest_release["name"]
         ):
@@ -296,6 +305,8 @@ def sync_competence_system(key, config, previous, on_progress=None):
 
     if on_progress:
         on_progress(key, result())
+    if CATALOG_ONLY:
+        return result()
     for month in months:
         release = by_month[month]
         entry = updated.get(month, {})
@@ -335,10 +346,13 @@ def save_catalog(systems, updates=None):
 
 
 def main():
-    global PUBLISH
+    global PUBLISH, CATALOG_ONLY
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--publish", action="store_true", help="Publicar e verificar cada arquivo antes de atualizar o catálogo")
-    PUBLISH = parser.parse_args().publish
+    parser.add_argument("--catalog-only", action="store_true", help="Salvar versões encontradas sem aguardar downloads")
+    args = parser.parse_args()
+    PUBLISH = args.publish
+    CATALOG_ONLY = args.catalog_only
     if PUBLISH:
         if not os.environ.get("GITHUB_REPOSITORY"):
             parser.error("--publish requer GITHUB_REPOSITORY")

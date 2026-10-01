@@ -291,17 +291,18 @@ def find_live_updates(snapshot_systems, catalogs, found_at):
         if system_key in COMPETENCE_SYSTEMS:
             competences = saved.get("competences", {})
             competences = competences if isinstance(competences, dict) else {}
-            old_month = max(competences, default=None)
+            known_latest = saved.get("latest") or {}
+            old_month = max([*competences, str(known_latest.get("competence", ""))], default="") or None
             latest = max(releases, key=lambda item: str(item.get("competence", "")))
             month = str(latest.get("competence", ""))
-            previous_name = (competences.get(old_month) or {}).get("name") if old_month else None
+            previous_name = (known_latest if str(known_latest.get("competence", "")) == old_month else competences.get(old_month, {})).get("name") if old_month else None
             if old_month and (month > old_month or (month == old_month and previous_name != latest.get("name"))):
                 events.append(make_update_event(
                     system_key, meta["label"], latest["name"], found_at,
                     competence=month, catalog_source=latest.get("catalog_source"),
                 ))
         else:
-            previous_name = (saved.get("current") or {}).get("name")
+            previous_name = (saved.get("latest") or saved.get("current") or {}).get("name")
             latest = releases[0]
             if previous_name and previous_name != latest.get("name"):
                 events.append(make_update_event(system_key, meta["label"], latest["name"], found_at))
@@ -325,6 +326,23 @@ def force_check_all_systems(snapshot_systems):
     events = find_live_updates(snapshot_systems, catalogs, checked_at)
     st.session_state["forced_live_checked_at"] = checked_at
     st.session_state["forced_live_updates"] = events
+    snapshot = load_snapshot()
+    saved_systems = snapshot.setdefault("systems", {})
+    for key, (releases, error) in catalogs.items():
+        if not releases:
+            continue
+        info = saved_systems.setdefault(key, {})
+        info.update(latest=dict(releases[0]), catalog_checked_at=checked_at)
+        if key in COMPETENCE_SYSTEMS:
+            info["available_releases"] = releases
+    snapshot["updates"] = merge_updates(snapshot.get("updates", []), events)
+    snapshot["updated_at"] = checked_at
+    try:
+        temporary = CATALOG_PATH.with_suffix(".tmp")
+        temporary.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(CATALOG_PATH)
+    except OSError:
+        st.warning("A consulta foi concluída, mas não foi possível salvar o catálogo neste servidor.")
     progress.empty()
     status.empty()
     errors = sum(error is not None for _, error in catalogs.values())

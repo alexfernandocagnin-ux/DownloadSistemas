@@ -115,6 +115,16 @@ class FtpRecoveryTests(unittest.TestCase):
 
 
 class SynchronizationTests(unittest.TestCase):
+    def test_discovery_records_latest_without_downloading_or_announcing_it_again(self):
+        release = {"name": "BPAMAG9999.exe", "url": URL}
+        config = {"label": "BPA", "official_page": "https://sia.datasus.gov.br", "fetch": lambda: [release]}
+        previous = {"systems": {"bpa": {"current": {"name": NAME}, "latest": release}}}
+        with patch.object(sync, "CATALOG_ONLY", True), patch.object(sync, "store_package", side_effect=AssertionError("download")):
+            result = sync.sync_single_version_system("bpa", config, previous)
+        self.assertEqual(result["latest"]["name"], release["name"])
+        self.assertEqual(result["current"]["name"], NAME)
+        self.assertNotIn("_announcements", result)
+
     def setUp(self):
         self.old = {"current": {"name": NAME, "url": URL}, "mirror": MIRROR,
                     "checked_at": "2026-09-20T12:00:00+00:00", "official_reachable": True}
@@ -255,6 +265,32 @@ class PortalTests(unittest.TestCase):
         self.assertTrue(any(button.key == "force_catalog_check" for button in app.button))
         self.assertIn("FPO · instalador base", rendered)
         self.assertIn("FPO Magnético · atualização atual", rendered)
+
+    def test_manual_discovery_survives_a_new_session_and_is_not_announced_twice(self):
+        path = Path(__file__).parent / "data" / "catalog.json"
+        original = path.read_bytes()
+        new = {"name": "BPAMAG9999.exe", "url": URL.replace(NAME, "BPAMAG9999.exe")}
+        try:
+            with ExitStack() as stack:
+                stack.enter_context(patch.object(bpa_portal, "fetch_bpa_catalog", return_value=[new]))
+                for module, name in [(apac_portal, "fetch_apac_catalog"), (ciha_portal, "fetch_ciha02_catalog"),
+                                     (ciha_portal, "fetch_ciha02_installer_catalog"), (sia_portal, "fetch_sia_catalog"),
+                                     (sia_portal, "fetch_bdsia_catalog"), (fpo_portal, "fetch_fpo_installer_catalog"),
+                                     (fpo_portal, "fetch_fpo_update_catalog"), (sihd_portal, "fetch_sihd2_catalog"),
+                                     (cnes_portal, "fetch_cnes_complete_catalog"), (cnes_portal, "fetch_cnes_app_catalog"),
+                                     (cnes_portal, "fetch_cnes_base_catalog"), (sigtap_portal, "fetch_sigtap_catalog")]:
+                    stack.enter_context(patch.object(module, name, return_value=[]))
+                app = self.app().run()
+                next(b for b in app.button if b.key == "force_catalog_check").click().run()
+                self.assertFalse(app.exception)
+                self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["systems"]["bpa"]["latest"]["name"], new["name"])
+                fresh = self.app().run()
+                self.assertTrue(any(c.value == new["name"] for c in fresh.caption))
+                next(b for b in fresh.button if b.key == "force_catalog_check").click().run()
+                self.assertFalse(fresh.exception)
+                self.assertEqual(fresh.session_state["forced_live_updates"], [])
+        finally:
+            path.write_bytes(original)
 
     def test_manual_check_forces_every_catalog_without_cache(self):
         fetchers = [
