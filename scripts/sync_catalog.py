@@ -23,15 +23,39 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
+from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
 from catalogs.updates import make_update_event, merge_updates  # noqa: E402
 
 CATALOG_PATH = ROOT / "data" / "catalog.json"
 DIST_DIR = ROOT / "dist"
-COMPETENCE_LIMIT = 6
 PUBLISH = False
 
 SINGLE_VERSION_SYSTEMS = {
+    "apac": {
+        "label": "APAC Magnético", "official_page": apac_portal.INDEX_URL,
+        "fetch": apac_portal.fetch_apac_catalog, "download": apac_portal.download_release,
+        "tag": "apac-latest",
+    },
+    "ciha01": {
+        "label": "CIHA01 · atualização", "official_page": ciha_portal.PAGES["01"],
+        "fetch": ciha_portal.fetch_ciha01_catalog, "download": ciha_portal.download_release,
+        "tag": "ciha01-latest",
+    },
+    "ciha02": {
+        "label": "CIHA02 · atualização", "official_page": ciha_portal.PAGES["02"],
+        "fetch": ciha_portal.fetch_ciha02_catalog, "download": ciha_portal.download_release,
+        "tag": "ciha02-latest",
+    },
+    "ciha01_installer": {
+        "label": "CIHA01 · instalação inicial", "official_page": ciha_portal.PAGES["01"],
+        "fetch": ciha_portal.fetch_ciha01_installer_catalog, "download": ciha_portal.download_release,
+        "tag": "ciha01-installer-latest",
+    },
+    "ciha02_installer": {
+        "label": "CIHA02 · instalação inicial", "official_page": ciha_portal.PAGES["02"],
+        "fetch": ciha_portal.fetch_ciha02_installer_catalog, "download": ciha_portal.download_release,
+        "tag": "ciha02-installer-latest",
+    },
     "bpa": {
         "label": "BPA Magnético",
         "official_page": bpa_portal.INDEX_URL,
@@ -101,7 +125,7 @@ COMPETENCE_SYSTEMS = {
         "official_page": cnes_portal.BASE_DADOS_PAGE,
         "fetch": cnes_portal.fetch_cnes_base_catalog,
         "download": cnes_portal.download_base_release,
-        "competence_limit": 1,
+        "new_packages_per_run": 2,
     },
 }
 
@@ -259,29 +283,42 @@ def sync_competence_system(key, config, previous, on_progress=None):
                 key, config["label"], latest_release["name"], checked_at,
                 competence=latest_month, catalog_source=latest_release.get("catalog_source"),
             ))
-    # Todas as cópias antigas ficam disponíveis; cada catálogo define seu limite de sincronização.
-    limit = int(config.get("competence_limit", COMPETENCE_LIMIT))
-    months = sorted({str(item["competence"]) for item in releases}, reverse=True)[:limit]
-    if not updated:
-        # Primeiro garante a competência atual; o histórico entra nas próximas execuções.
-        months = months[:1]
+    # Salva o índice inteiro antes dos downloads. O limite é de trabalho por execução,
+    # nunca de idade: qualquer competência catalogada aparece ao abrir o portal.
+    by_month = {}
+    for release in releases:
+        by_month.setdefault(str(release["competence"]), dict(release))
+    months = sorted(by_month, reverse=True)
+    available_releases = [by_month[month] for month in months]
+    package_budget = int(config.get("new_packages_per_run", 16))
+    attempts = 0
     errors = []
 
     def result():
         data = {"label": config["label"], "official_page": config["official_page"],
                 "latest": latest_release, "catalog_checked_at": checked_at,
+                "available_releases": available_releases,
                 "competences": dict(updated), "checked_at": checked_at, "last_success_at": checked_at,
                 "official_reachable": latest_release.get("catalog_source") != "community", "pending_competences": list(errors)}
         if announcements:
             data["_announcements"] = announcements
         return data
 
+    if on_progress:
+        on_progress(key, result())
     for month in months:
-        release = next(item for item in releases if item["competence"] == month)
+        release = by_month[month]
         entry = updated.get(month, {})
         try:
-            mirror = confirmed_previous(entry) if entry.get("name") == release["name"] else None
+            mirror = None
+            if entry.get("name") == release["name"]:
+                # Cópias históricas já confirmadas não precisam de centenas de consultas
+                # ao GitHub a cada execução. A competência atual é reconferida.
+                mirror = entry.get("mirror") if month != latest_month else confirmed_previous(entry)
             if not mirror:
+                if attempts >= package_budget:
+                    continue
+                attempts += 1
                 mirror = store_package(key, release, config, f"{key.replace('_', '-')}-{month}")
             release_date = release.get("release_date")
             if not release_date and entry.get("name") == release["name"]:

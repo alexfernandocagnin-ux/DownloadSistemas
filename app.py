@@ -16,16 +16,41 @@ from datetime import date, datetime, timedelta, timezone
 import streamlit as st
 
 from catalogs.mirrors import download_mirror, matching_mirror, probe_mirror
-from catalogs import bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 from catalogs.updates import make_update_event, merge_updates
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
-SINGLE_VERSION_SYSTEMS = ("bpa", "sia", "fpo_update", "sihd2", "cnes_complete", "cnes_app")
+SINGLE_VERSION_SYSTEMS = ("bpa", "apac", "sia", "fpo_update", "sihd2", "ciha01", "ciha02", "cnes_complete", "cnes_app")
 COMPETENCE_SYSTEMS = ("bdsia", "sigtap", "cnes_base")
 DIRECT_DOWNLOAD_LIMIT = 50_000_000
 
 SYSTEM_META: dict[str, dict[str, object]] = {
+    "apac": {
+        "label": "APAC Magnético", "icon": "📝",
+        "fetch": apac_portal.fetch_apac_catalog, "download": apac_portal.download_release,
+        "official_page": apac_portal.INDEX_URL,
+    },
+    "ciha01": {
+        "label": "CIHA01 · atualização", "icon": "🏥",
+        "fetch": ciha_portal.fetch_ciha01_catalog, "download": ciha_portal.download_release,
+        "official_page": ciha_portal.PAGES["01"],
+    },
+    "ciha02": {
+        "label": "CIHA02 · atualização", "icon": "🏛️",
+        "fetch": ciha_portal.fetch_ciha02_catalog, "download": ciha_portal.download_release,
+        "official_page": ciha_portal.PAGES["02"],
+    },
+    "ciha01_installer": {
+        "label": "CIHA01 · instalação inicial", "icon": "📦",
+        "fetch": ciha_portal.fetch_ciha01_installer_catalog, "download": ciha_portal.download_release,
+        "official_page": ciha_portal.PAGES["01"],
+    },
+    "ciha02_installer": {
+        "label": "CIHA02 · instalação inicial", "icon": "📦",
+        "fetch": ciha_portal.fetch_ciha02_installer_catalog, "download": ciha_portal.download_release,
+        "official_page": ciha_portal.PAGES["02"],
+    },
     "bpa": {
         "label": "BPA Magnético", "icon": "🧾",
         "fetch": bpa_portal.fetch_bpa_catalog, "download": bpa_portal.download_release,
@@ -333,7 +358,9 @@ def render_download_button(system_key, name, url, mirror):
     else:
         badge("warn", "Ainda depende da fonte oficial")
     if not mirror and system_key.removesuffix("_backup") in {"cnes_base", "cnes_complete"}:
-        st.info("Este pacote grande aguarda publicação no espelho. A sincronização automática fará novas tentativas; o portal oficial está disponível abaixo.")
+        st.info("A cópia deste pacote grande está sendo incluída no espelho. Enquanto isso, o download direto depende da disponibilidade do CNES.")
+        if cnes_portal.safe_url(url, name):
+            st.link_button(f"Baixar na fonte oficial: {name}", url, width="stretch")
         return
     if mirror and mirror.get("size"):
         st.caption(f'{mirror["size"] / 1_000_000:.1f} MB · arquivo conferido')
@@ -354,7 +381,7 @@ def render_download_button(system_key, name, url, mirror):
                 on_progress=lambda message: render_loading_card(loading, message),
             )
             loading.empty()
-            # Mantém apenas um fallback oficial por sessão; espelhos usam URL, não bytes.
+            # Mantém apenas um arquivo preparado por sessão.
             for other_key in list(st.session_state):
                 if other_key.startswith("official_download_") and other_key != state_key:
                     st.session_state.pop(other_key, None)
@@ -417,6 +444,10 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
                 st.caption("Use na primeira instalação e, em seguida, aplique a atualização atual no cartão principal.")
             elif system_key == "fpo_update":
                 st.caption("Este é o arquivo de atualização atual. Use com o FPO já instalado.")
+            elif system_key in {"ciha01", "ciha02"}:
+                st.caption("Atualização para o sistema já instalado. A primeira instalação fica na seção abaixo.")
+            elif system_key in {"ciha01_installer", "ciha02_installer"}:
+                st.caption("Primeira instalação: inclui banco de dados vazio. Não substitua o banco de uma instalação existente.")
             if system_key == "sihd2" and not matching_mirror(name, info.get("mirror")):
                 st.warning("Versão identificada na página oficial, mas o arquivo ainda não pôde ser baixado do servidor DATASUS. Download indisponível até a cópia ser confirmada.")
             else:
@@ -428,6 +459,9 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
         if system_key == "fpo_update":
             with st.expander("Primeira instalação? Abra o instalador base do FPO"):
                 render_single_version_card("fpo_installer", snapshot_systems)
+        if system_key in {"ciha01", "ciha02"}:
+            with st.expander(f"Primeira instalação do {system_key.upper()}"):
+                render_single_version_card(system_key + "_installer", snapshot_systems)
 
 
 def render_competence_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
@@ -435,6 +469,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
     info = snapshot_systems.get(system_key, {})
     saved_competences = info.get("competences", {}) if isinstance(info.get("competences"), dict) else {}
     saved_latest = info.get("latest") or {}
+    stored_releases = info.get("available_releases") or []
     with st.container(border=True):
         st.markdown(f'<div class="ds-card-title">{meta["icon"]} {meta["label"]}</div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key)
@@ -446,7 +481,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
         if system_key == "sigtap":
             st.caption("Se o DATASUS falhar, consultamos o catálogo e as cópias comunitárias do SIGTAP.")
         latest_months = {str(saved_latest["competence"])} if saved_latest.get("competence") else set()
-        available = sorted(set(saved_competences) | latest_months | {str(item["competence"]) for item in (releases or [])}, reverse=True)
+        available = sorted(set(saved_competences) | latest_months | {str(item["competence"]) for item in (releases or []) + stored_releases}, reverse=True)
 
         if not available:
             st.info("Nenhuma competência disponível ainda. Consulte o catálogo oficial ou tente novamente mais tarde.")
@@ -455,7 +490,8 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
 
         def release_for(month: str) -> dict[str, object] | None:
             live = next((item for item in releases if item["competence"] == month), None) if releases else None
-            return live or (saved_latest if saved_latest.get("competence") == month else None)
+            stored = next((item for item in stored_releases if item["competence"] == month), None)
+            return live or stored or (saved_latest if saved_latest.get("competence") == month else None)
 
         def competence_label(month: str) -> str:
             release = release_for(month)
@@ -466,6 +502,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
             "Competência para acompanhar/baixar", options=available, format_func=competence_label,
             key=f"competence_{system_key}",
         )
+        st.caption(f"{len(available)} competências no histórico · sem limite de meses")
         release = release_for(competence)
         saved_entry = saved_competences.get(competence, {})
         if system_key == "sigtap" and saved_entry.get("catalog_source") == "community":
@@ -507,7 +544,7 @@ def latest_release_rows(snapshot_systems):
     live_catalogs = st.session_state.get("forced_live_catalogs", {})
     rows = []
     for system_key, meta in SYSTEM_META.items():
-        if system_key == "fpo_installer":
+        if system_key in {"fpo_installer", "ciha01_installer", "ciha02_installer"}:
             continue
         saved = snapshot_systems.get(system_key, {})
         releases, _error = live_catalogs.get(system_key, (None, None))

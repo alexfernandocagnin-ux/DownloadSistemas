@@ -11,7 +11,7 @@ from contextlib import ExitStack
 from pathlib import Path
 from unittest.mock import patch
 
-from catalogs import mirrors, _common, bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import mirrors, _common, apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 from catalogs.updates import merge_updates
 from scripts import sync_catalog as sync
 
@@ -185,10 +185,21 @@ class SynchronizationTests(unittest.TestCase):
         progress = []
         with patch.object(sync, "store_package", return_value=MIRROR) as store:
             result = sync.sync_competence_system("cnes_base", config, {}, lambda key, info: progress.append((key, info)))
-        store.assert_called_once()
-        self.assertEqual(set(result["competences"]), {"202608"})
+        self.assertEqual(store.call_count, 2)
+        self.assertEqual(set(result["competences"]), {"202608", "202607"})
         self.assertEqual(progress[0][0], "cnes_base")
-        self.assertEqual(set(progress[0][1]["competences"]), {"202608"})
+        self.assertEqual(progress[0][1]["available_releases"], releases)
+        self.assertFalse(progress[0][1]["competences"])
+
+    def test_full_history_is_saved_even_when_publication_budget_is_exhausted(self):
+        releases = [{"name": f"BDSIA{month}a.exe", "url": "official", "competence": month}
+                    for month in ["202609", "202608", "201001"]]
+        config = {**sync.COMPETENCE_SYSTEMS["bdsia"], "fetch": lambda: releases, "new_packages_per_run": 1}
+        with patch.object(sync, "store_package", return_value=MIRROR) as store:
+            result = sync.sync_competence_system("bdsia", config, {})
+        store.assert_called_once()
+        self.assertEqual(result["available_releases"], releases)
+        self.assertEqual(set(result["competences"]), {"202609"})
 
     def test_month_tag_comes_from_competence_not_filename_guess(self):
         release = {"name": "BASE_DE_DADOS_CNES_202608.ZIP", "url": "official", "competence": "202608",
@@ -247,6 +258,9 @@ class PortalTests(unittest.TestCase):
 
     def test_manual_check_forces_every_catalog_without_cache(self):
         fetchers = [
+            (apac_portal, "fetch_apac_catalog"), (ciha_portal, "fetch_ciha01_catalog"),
+            (ciha_portal, "fetch_ciha02_catalog"), (ciha_portal, "fetch_ciha01_installer_catalog"),
+            (ciha_portal, "fetch_ciha02_installer_catalog"),
             (bpa_portal, "fetch_bpa_catalog"), (sia_portal, "fetch_sia_catalog"),
             (fpo_portal, "fetch_fpo_installer_catalog"), (fpo_portal, "fetch_fpo_update_catalog"),
             (sihd_portal, "fetch_sihd2_catalog"), (cnes_portal, "fetch_cnes_complete_catalog"),
@@ -260,6 +274,25 @@ class PortalTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertTrue(all(fetch.call_count == 1 for fetch in mocks))
         self.assertIn("Última verificação manual, sem cache", "\n".join(element.value for element in app.caption))
+
+    def test_saved_old_competence_downloads_without_manual_catalog_check(self):
+        catalog_path = Path(__file__).parent / "data" / "catalog.json"
+        old = {"name": "BDSIA201001a.exe", "url": "ftp://arpoador.datasus.gov.br/siasus/SIA/BDSIA201001a.exe",
+               "competence": "201001"}
+        snapshot = {"systems": {"bdsia": {"available_releases": [old]}}}
+        original_read = Path.read_text
+
+        def read(path, *args, **kwargs):
+            return json.dumps(snapshot) if path == catalog_path else original_read(path, *args, **kwargs)
+
+        with patch.object(Path, "read_text", read), patch.object(sia_portal, "fetch_bdsia_catalog", side_effect=AssertionError("manual check")), patch.object(sia_portal, "download_release", return_value=PACKAGE) as download:
+            app = self.app().run()
+            selector = next(box for box in app.selectbox if box.key == "competence_bdsia")
+            self.assertEqual(selector.value, "201001")
+            next(button for button in app.button if button.key == "prep_bdsia_BDSIA201001a.exe").click().run()
+            self.assertFalse(app.exception)
+            download.assert_called_once()
+            self.assertTrue(app.get("download_button"))
 
     def test_mirror_download_works_while_official_source_is_offline(self):
         with patch("catalogs.mirrors.download_mirror", return_value=PACKAGE), patch("catalogs.bpa_portal.download_release", side_effect=AssertionError("DATASUS should not be needed")) as official:
@@ -288,6 +321,9 @@ class PortalTests(unittest.TestCase):
 
     def test_fpo_buttons_deliver_the_selected_package_without_github_redirect(self):
         downloads = []
+        snapshot = json.loads((Path(__file__).parent / "data" / "catalog.json").read_text(encoding="utf-8"))
+        update_name = snapshot["systems"]["fpo_update"]["current"]["name"]
+        installer_name = snapshot["systems"]["fpo_installer"]["current"]["name"]
 
         def download(name, mirror, **kwargs):
             self.assertEqual(mirror["asset_name"], name)
@@ -298,13 +334,13 @@ class PortalTests(unittest.TestCase):
             app = self.app().run()
             next(button for button in app.button if str(button.key).startswith("prep_fpo_update_")).click().run()
             self.assertFalse(app.exception)
-            self.assertEqual(app.session_state["official_download_fpo_update"]["data"], PACKAGE + b"FPOMAG_Atualiza_0302.exe")
-            self.assertTrue(any("FPOMAG_Atualiza_0302.exe" in button.proto.label for button in app.get("download_button")))
+            self.assertEqual(app.session_state["official_download_fpo_update"]["data"], PACKAGE + update_name.encode())
+            self.assertTrue(any(update_name in button.proto.label for button in app.get("download_button")))
             next(button for button in app.button if str(button.key).startswith("prep_fpo_installer_")).click().run()
             self.assertFalse(app.exception)
-            self.assertEqual(app.session_state["official_download_fpo_installer"]["data"], PACKAGE + b"FPOMAG_Instalador_0100.exe")
-            self.assertTrue(any("FPOMAG_Instalador_0100.exe" in button.proto.label for button in app.get("download_button")))
-        self.assertEqual(downloads, ["FPOMAG_Atualiza_0302.exe", "FPOMAG_Instalador_0100.exe"])
+            self.assertEqual(app.session_state["official_download_fpo_installer"]["data"], PACKAGE + installer_name.encode())
+            self.assertTrue(any(installer_name in button.proto.label for button in app.get("download_button")))
+        self.assertEqual(downloads, [update_name, installer_name])
 
 
 if __name__ == "__main__":

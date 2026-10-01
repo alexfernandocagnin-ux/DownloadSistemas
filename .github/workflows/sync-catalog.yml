@@ -2,7 +2,9 @@ name: Sincronizar catálogo de downloads
 
 on:
   schedule:
-    - cron: '11 */6 * * *'
+    # Horário de Brasília (UTC-3): 00:50, 02:50, 04:50, 06:50, ...
+    # Inclui a consulta diária das 06:50 e repete a cada duas horas.
+    - cron: '50 1-23/2 * * *'
   workflow_dispatch:
   push:
     branches: [master]

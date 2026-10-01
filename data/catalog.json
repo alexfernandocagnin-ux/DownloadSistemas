@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-29T22:32:28+00:00",
+  "updated_at": "2026-10-01T12:40:53+00:00",
   "systems": {
     "bpa": {
       "label": "BPA Magnético",
@@ -321,7 +321,1809 @@
       "checked_at": "2026-09-29T22:11:46+00:00",
       "last_success_at": "2026-09-29T22:11:46+00:00",
       "official_reachable": true,
-      "pending_competences": []
+      "pending_competences": [],
+      "available_releases": [
+        {
+          "name": "BDSIA202609a.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202609a.exe",
+          "size": null,
+          "competence": "202609",
+          "revision": "a",
+          "release_date": "2026-09-24"
+        },
+        {
+          "name": "BDSIA202608b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202608b.exe",
+          "size": null,
+          "competence": "202608",
+          "revision": "b",
+          "release_date": "2026-09-24"
+        },
+        {
+          "name": "BDSIA202607b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202607b.exe",
+          "size": null,
+          "competence": "202607",
+          "revision": "b",
+          "release_date": "2026-08-13"
+        },
+        {
+          "name": "BDSIA202606b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202606b.exe",
+          "size": null,
+          "competence": "202606",
+          "revision": "b",
+          "release_date": "2026-07-08"
+        },
+        {
+          "name": "BDSIA202605d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202605d.exe",
+          "size": null,
+          "competence": "202605",
+          "revision": "d",
+          "release_date": "2026-06-16"
+        },
+        {
+          "name": "BDSIA202604d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202604d.exe",
+          "size": null,
+          "competence": "202604",
+          "revision": "d",
+          "release_date": "2026-05-27"
+        },
+        {
+          "name": "BDSIA202603d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202603d.exe",
+          "size": null,
+          "competence": "202603",
+          "revision": "d",
+          "release_date": "2026-05-27"
+        },
+        {
+          "name": "BDSIA202602b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202602b.exe",
+          "size": null,
+          "competence": "202602",
+          "revision": "b",
+          "release_date": "2026-03-10"
+        },
+        {
+          "name": "BDSIA202601b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202601b.exe",
+          "size": null,
+          "competence": "202601",
+          "revision": "b",
+          "release_date": "2026-02-13"
+        },
+        {
+          "name": "BDSIA202512d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202512d.exe",
+          "size": null,
+          "competence": "202512",
+          "revision": "d",
+          "release_date": "2026-01-23"
+        },
+        {
+          "name": "BDSIA202511b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202511b.exe",
+          "size": null,
+          "competence": "202511",
+          "revision": "b",
+          "release_date": "2025-12-09"
+        },
+        {
+          "name": "BDSIA202510b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202510b.exe",
+          "size": null,
+          "competence": "202510",
+          "revision": "b",
+          "release_date": "2025-11-11"
+        },
+        {
+          "name": "BDSIA202509b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202509b.exe",
+          "size": null,
+          "competence": "202509",
+          "revision": "b",
+          "release_date": "2025-10-09"
+        },
+        {
+          "name": "BDSIA202508b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202508b.exe",
+          "size": null,
+          "competence": "202508",
+          "revision": "b",
+          "release_date": "2025-09-08"
+        },
+        {
+          "name": "BDSIA202507b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202507b.exe",
+          "size": null,
+          "competence": "202507",
+          "revision": "b",
+          "release_date": "2025-08-19"
+        },
+        {
+          "name": "BDSIA202506b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202506b.exe",
+          "size": null,
+          "competence": "202506",
+          "revision": "b",
+          "release_date": "2025-07-07"
+        },
+        {
+          "name": "BDSIA202505b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202505b.exe",
+          "size": null,
+          "competence": "202505",
+          "revision": "b",
+          "release_date": "2025-06-10"
+        },
+        {
+          "name": "BDSIA202504d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202504d.exe",
+          "size": null,
+          "competence": "202504",
+          "revision": "d",
+          "release_date": "2025-06-10"
+        },
+        {
+          "name": "BDSIA202503c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202503c.exe",
+          "size": null,
+          "competence": "202503",
+          "revision": "c",
+          "release_date": "2025-06-10"
+        },
+        {
+          "name": "BDSIA202502c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202502c.exe",
+          "size": null,
+          "competence": "202502",
+          "revision": "c",
+          "release_date": "2025-03-25"
+        },
+        {
+          "name": "BDSIA202501c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202501c.exe",
+          "size": null,
+          "competence": "202501",
+          "revision": "c",
+          "release_date": "2025-02-10"
+        },
+        {
+          "name": "BDSIA202412b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202412b.exe",
+          "size": null,
+          "competence": "202412",
+          "revision": "b",
+          "release_date": "2025-01-09"
+        },
+        {
+          "name": "BDSIA202411c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202411c.exe",
+          "size": null,
+          "competence": "202411",
+          "revision": "c",
+          "release_date": "2024-12-11"
+        },
+        {
+          "name": "BDSIA202410b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202410b.exe",
+          "size": null,
+          "competence": "202410",
+          "revision": "b",
+          "release_date": "2024-11-07"
+        },
+        {
+          "name": "BDSIA202409d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202409d.exe",
+          "size": null,
+          "competence": "202409",
+          "revision": "d",
+          "release_date": "2024-10-10"
+        },
+        {
+          "name": "BDSIA202408c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202408c.exe",
+          "size": null,
+          "competence": "202408",
+          "revision": "c",
+          "release_date": "2024-09-12"
+        },
+        {
+          "name": "BDSIA202407b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202407b.exe",
+          "size": null,
+          "competence": "202407",
+          "revision": "b",
+          "release_date": "2024-08-08"
+        },
+        {
+          "name": "BDSIA202406b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202406b.exe",
+          "size": null,
+          "competence": "202406",
+          "revision": "b",
+          "release_date": "2024-07-08"
+        },
+        {
+          "name": "BDSIA202405b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202405b.exe",
+          "size": null,
+          "competence": "202405",
+          "revision": "b",
+          "release_date": "2024-06-11"
+        },
+        {
+          "name": "BDSIA202404b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202404b.exe",
+          "size": null,
+          "competence": "202404",
+          "revision": "b",
+          "release_date": "2024-05-14"
+        },
+        {
+          "name": "BDSIA202403b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202403b.exe",
+          "size": null,
+          "competence": "202403",
+          "revision": "b",
+          "release_date": "2024-04-09"
+        },
+        {
+          "name": "BDSIA202402b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202402b.exe",
+          "size": null,
+          "competence": "202402",
+          "revision": "b",
+          "release_date": "2024-03-12"
+        },
+        {
+          "name": "BDSIA202401c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202401c.exe",
+          "size": null,
+          "competence": "202401",
+          "revision": "c",
+          "release_date": "2024-02-15"
+        },
+        {
+          "name": "BDSIA202312c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202312c.exe",
+          "size": null,
+          "competence": "202312",
+          "revision": "c",
+          "release_date": "2024-01-24"
+        },
+        {
+          "name": "BDSIA202311c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202311c.exe",
+          "size": null,
+          "competence": "202311",
+          "revision": "c",
+          "release_date": "2024-01-24"
+        },
+        {
+          "name": "BDSIA202310c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202310c.exe",
+          "size": null,
+          "competence": "202310",
+          "revision": "c",
+          "release_date": "2024-01-24"
+        },
+        {
+          "name": "BDSIA202309c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202309c.exe",
+          "size": null,
+          "competence": "202309",
+          "revision": "c",
+          "release_date": "2023-10-17"
+        },
+        {
+          "name": "BDSIA202308b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202308b.exe",
+          "size": null,
+          "competence": "202308",
+          "revision": "b",
+          "release_date": "2023-09-15"
+        },
+        {
+          "name": "BDSIA202307b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202307b.exe",
+          "size": null,
+          "competence": "202307",
+          "revision": "b",
+          "release_date": "2023-08-08"
+        },
+        {
+          "name": "BDSIA202306b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202306b.exe",
+          "size": null,
+          "competence": "202306",
+          "revision": "b",
+          "release_date": "2023-07-10"
+        },
+        {
+          "name": "BDSIA202305b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202305b.exe",
+          "size": null,
+          "competence": "202305",
+          "revision": "b",
+          "release_date": "2023-06-13"
+        },
+        {
+          "name": "BDSIA202304b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202304b.exe",
+          "size": null,
+          "competence": "202304",
+          "revision": "b",
+          "release_date": "2023-05-10"
+        },
+        {
+          "name": "BDSIA202303d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202303d.exe",
+          "size": null,
+          "competence": "202303",
+          "revision": "d",
+          "release_date": "2023-04-11"
+        },
+        {
+          "name": "BDSIA202302b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202302b.exe",
+          "size": null,
+          "competence": "202302",
+          "revision": "b",
+          "release_date": "2023-03-09"
+        },
+        {
+          "name": "BDSIA202301b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202301b.exe",
+          "size": null,
+          "competence": "202301",
+          "revision": "b",
+          "release_date": "2023-02-09"
+        },
+        {
+          "name": "BDSIA202212c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202212c.exe",
+          "size": null,
+          "competence": "202212",
+          "revision": "c",
+          "release_date": "2023-01-16"
+        },
+        {
+          "name": "BDSIA202211b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202211b.exe",
+          "size": null,
+          "competence": "202211",
+          "revision": "b",
+          "release_date": "2022-12-12"
+        },
+        {
+          "name": "BDSIA202210c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202210c.exe",
+          "size": null,
+          "competence": "202210",
+          "revision": "c",
+          "release_date": "2022-11-23"
+        },
+        {
+          "name": "BDSIA202209b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202209b.exe",
+          "size": null,
+          "competence": "202209",
+          "revision": "b",
+          "release_date": "2022-10-07"
+        },
+        {
+          "name": "BDSIA202208b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202208b.exe",
+          "size": null,
+          "competence": "202208",
+          "revision": "b",
+          "release_date": "2022-09-12"
+        },
+        {
+          "name": "BDSIA202207d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202207d.exe",
+          "size": null,
+          "competence": "202207",
+          "revision": "d",
+          "release_date": "2022-08-31"
+        },
+        {
+          "name": "BDSIA202206b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202206b.exe",
+          "size": null,
+          "competence": "202206",
+          "revision": "b",
+          "release_date": "2022-07-07"
+        },
+        {
+          "name": "BDSIA202205d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202205d.exe",
+          "size": null,
+          "competence": "202205",
+          "revision": "d",
+          "release_date": "2022-06-08"
+        },
+        {
+          "name": "BDSIA202204d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202204d.exe",
+          "size": null,
+          "competence": "202204",
+          "revision": "d",
+          "release_date": "2022-05-17"
+        },
+        {
+          "name": "BDSIA202203b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202203b.exe",
+          "size": null,
+          "competence": "202203",
+          "revision": "b",
+          "release_date": "2022-04-05"
+        },
+        {
+          "name": "BDSIA202202b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202202b.exe",
+          "size": null,
+          "competence": "202202",
+          "revision": "b",
+          "release_date": "2022-03-09"
+        },
+        {
+          "name": "BDSIA202201b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202201b.exe",
+          "size": null,
+          "competence": "202201",
+          "revision": "b",
+          "release_date": "2022-02-08"
+        },
+        {
+          "name": "BDSIA202112b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202112b.exe",
+          "size": null,
+          "competence": "202112",
+          "revision": "b",
+          "release_date": "2022-01-07"
+        },
+        {
+          "name": "BDSIA202111b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202111b.exe",
+          "size": null,
+          "competence": "202111",
+          "revision": "b",
+          "release_date": "2021-12-09"
+        },
+        {
+          "name": "BDSIA202110c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202110c.exe",
+          "size": null,
+          "competence": "202110",
+          "revision": "c",
+          "release_date": "2021-11-11"
+        },
+        {
+          "name": "BDSIA202109c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202109c.exe",
+          "size": null,
+          "competence": "202109",
+          "revision": "c",
+          "release_date": "2021-10-14"
+        },
+        {
+          "name": "BDSIA202108b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202108b.exe",
+          "size": null,
+          "competence": "202108",
+          "revision": "b",
+          "release_date": "2021-09-09"
+        },
+        {
+          "name": "BDSIA202107c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202107c.exe",
+          "size": null,
+          "competence": "202107",
+          "revision": "c",
+          "release_date": "2021-08-09"
+        },
+        {
+          "name": "BDSIA202106b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202106b.exe",
+          "size": null,
+          "competence": "202106",
+          "revision": "b",
+          "release_date": "2021-07-12"
+        },
+        {
+          "name": "BDSIA202105b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202105b.exe",
+          "size": null,
+          "competence": "202105",
+          "revision": "b",
+          "release_date": "2021-06-09"
+        },
+        {
+          "name": "BDSIA202104b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202104b.exe",
+          "size": null,
+          "competence": "202104",
+          "revision": "b",
+          "release_date": "2021-05-06"
+        },
+        {
+          "name": "BDSIA202103b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202103b.exe",
+          "size": null,
+          "competence": "202103",
+          "revision": "b",
+          "release_date": "2021-04-09"
+        },
+        {
+          "name": "BDSIA202102b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202102b.exe",
+          "size": null,
+          "competence": "202102",
+          "revision": "b",
+          "release_date": "2021-03-12"
+        },
+        {
+          "name": "BDSIA202101b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202101b.exe",
+          "size": null,
+          "competence": "202101",
+          "revision": "b",
+          "release_date": "2021-02-10"
+        },
+        {
+          "name": "BDSIA202012c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202012c.exe",
+          "size": null,
+          "competence": "202012",
+          "revision": "c",
+          "release_date": "2021-01-12"
+        },
+        {
+          "name": "BDSIA202011c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202011c.exe",
+          "size": null,
+          "competence": "202011",
+          "revision": "c",
+          "release_date": "2020-12-14"
+        },
+        {
+          "name": "BDSIA202010b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202010b.exe",
+          "size": null,
+          "competence": "202010",
+          "revision": "b",
+          "release_date": "2020-11-16"
+        },
+        {
+          "name": "BDSIA202009b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202009b.exe",
+          "size": null,
+          "competence": "202009",
+          "revision": "b",
+          "release_date": "2020-10-14"
+        },
+        {
+          "name": "BDSIA202008b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202008b.exe",
+          "size": null,
+          "competence": "202008",
+          "revision": "b",
+          "release_date": "2020-09-10"
+        },
+        {
+          "name": "BDSIA202007b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202007b.exe",
+          "size": null,
+          "competence": "202007",
+          "revision": "b",
+          "release_date": "2020-08-10"
+        },
+        {
+          "name": "BDSIA202006b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202006b.exe",
+          "size": null,
+          "competence": "202006",
+          "revision": "b",
+          "release_date": "2020-07-09"
+        },
+        {
+          "name": "BDSIA202005c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202005c.exe",
+          "size": null,
+          "competence": "202005",
+          "revision": "c",
+          "release_date": "2020-06-22"
+        },
+        {
+          "name": "BDSIA202004c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202004c.exe",
+          "size": null,
+          "competence": "202004",
+          "revision": "c",
+          "release_date": "2020-05-08"
+        },
+        {
+          "name": "BDSIA202003b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202003b.exe",
+          "size": null,
+          "competence": "202003",
+          "revision": "b",
+          "release_date": "2020-04-09"
+        },
+        {
+          "name": "BDSIA202002b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202002b.exe",
+          "size": null,
+          "competence": "202002",
+          "revision": "b",
+          "release_date": "2020-03-09"
+        },
+        {
+          "name": "BDSIA202001b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202001b.exe",
+          "size": null,
+          "competence": "202001",
+          "revision": "b",
+          "release_date": "2020-02-11"
+        },
+        {
+          "name": "BDSIA201912b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201912b.exe",
+          "size": null,
+          "competence": "201912",
+          "revision": "b",
+          "release_date": "2020-01-07"
+        },
+        {
+          "name": "BDSIA201911b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201911b.exe",
+          "size": null,
+          "competence": "201911",
+          "revision": "b",
+          "release_date": "2019-12-06"
+        },
+        {
+          "name": "BDSIA201910b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201910b.exe",
+          "size": null,
+          "competence": "201910",
+          "revision": "b",
+          "release_date": "2019-11-07"
+        },
+        {
+          "name": "BDSIA201909b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201909b.exe",
+          "size": null,
+          "competence": "201909",
+          "revision": "b",
+          "release_date": "2019-10-07"
+        },
+        {
+          "name": "BDSIA201908d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201908d.exe",
+          "size": null,
+          "competence": "201908",
+          "revision": "d",
+          "release_date": "2019-10-02"
+        },
+        {
+          "name": "BDSIA201907b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201907b.exe",
+          "size": null,
+          "competence": "201907",
+          "revision": "b",
+          "release_date": "2019-08-07"
+        },
+        {
+          "name": "BDSIA201906b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201906b.exe",
+          "size": null,
+          "competence": "201906",
+          "revision": "b",
+          "release_date": "2019-07-05"
+        },
+        {
+          "name": "BDSIA201905b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201905b.exe",
+          "size": null,
+          "competence": "201905",
+          "revision": "b",
+          "release_date": "2019-06-06"
+        },
+        {
+          "name": "BDSIA201904b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201904b.exe",
+          "size": null,
+          "competence": "201904",
+          "revision": "b",
+          "release_date": "2019-05-07"
+        },
+        {
+          "name": "BDSIA201903c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201903c.exe",
+          "size": null,
+          "competence": "201903",
+          "revision": "c",
+          "release_date": "2019-04-09"
+        },
+        {
+          "name": "BDSIA201902d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201902d.exe",
+          "size": null,
+          "competence": "201902",
+          "revision": "d",
+          "release_date": "2019-03-19"
+        },
+        {
+          "name": "BDSIA201901b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201901b.exe",
+          "size": null,
+          "competence": "201901",
+          "revision": "b",
+          "release_date": "2019-02-08"
+        },
+        {
+          "name": "BDSIA201812c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201812c.exe",
+          "size": null,
+          "competence": "201812",
+          "revision": "c",
+          "release_date": "2019-01-04"
+        },
+        {
+          "name": "BDSIA201811b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201811b.exe",
+          "size": null,
+          "competence": "201811",
+          "revision": "b",
+          "release_date": "2018-12-06"
+        },
+        {
+          "name": "BDSIA201810b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201810b.exe",
+          "size": null,
+          "competence": "201810",
+          "revision": "b",
+          "release_date": "2018-11-12"
+        },
+        {
+          "name": "BDSIA201809c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201809c.exe",
+          "size": null,
+          "competence": "201809",
+          "revision": "c",
+          "release_date": "2018-10-16"
+        },
+        {
+          "name": "BDSIA201808b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201808b.exe",
+          "size": null,
+          "competence": "201808",
+          "revision": "b",
+          "release_date": "2018-09-20"
+        },
+        {
+          "name": "BDSIA201807c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201807c.exe",
+          "size": null,
+          "competence": "201807",
+          "revision": "c",
+          "release_date": "2018-08-17"
+        },
+        {
+          "name": "BDSIA201806c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201806c.exe",
+          "size": null,
+          "competence": "201806",
+          "revision": "c",
+          "release_date": "2018-07-16"
+        },
+        {
+          "name": "BDSIA201805c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201805c.exe",
+          "size": null,
+          "competence": "201805",
+          "revision": "c",
+          "release_date": "2018-07-04"
+        },
+        {
+          "name": "BDSIA201804b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201804b.exe",
+          "size": null,
+          "competence": "201804",
+          "revision": "b",
+          "release_date": "2018-05-09"
+        },
+        {
+          "name": "BDSIA201803b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201803b.exe",
+          "size": null,
+          "competence": "201803",
+          "revision": "b",
+          "release_date": "2018-04-09"
+        },
+        {
+          "name": "BDSIA201802c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201802c.exe",
+          "size": null,
+          "competence": "201802",
+          "revision": "c",
+          "release_date": "2018-03-07"
+        },
+        {
+          "name": "BDSIA201801c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201801c.exe",
+          "size": null,
+          "competence": "201801",
+          "revision": "c",
+          "release_date": "2018-02-15"
+        },
+        {
+          "name": "BDSIA201712b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201712b.exe",
+          "size": null,
+          "competence": "201712",
+          "revision": "b",
+          "release_date": "2018-01-05"
+        },
+        {
+          "name": "BDSIA201711c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201711c.exe",
+          "size": null,
+          "competence": "201711",
+          "revision": "c",
+          "release_date": "2017-12-11"
+        },
+        {
+          "name": "BDSIA201710b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201710b.exe",
+          "size": null,
+          "competence": "201710",
+          "revision": "b",
+          "release_date": "2017-11-08"
+        },
+        {
+          "name": "BDSIA201709b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201709b.exe",
+          "size": null,
+          "competence": "201709",
+          "revision": "b",
+          "release_date": "2017-10-06"
+        },
+        {
+          "name": "BDSIA201708c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201708c.exe",
+          "size": null,
+          "competence": "201708",
+          "revision": "c",
+          "release_date": "2017-09-04"
+        },
+        {
+          "name": "BDSIA201707c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201707c.exe",
+          "size": null,
+          "competence": "201707",
+          "revision": "c",
+          "release_date": "2017-08-15"
+        },
+        {
+          "name": "BDSIA201706c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201706c.exe",
+          "size": null,
+          "competence": "201706",
+          "revision": "c",
+          "release_date": "2017-07-10"
+        },
+        {
+          "name": "BDSIA201705d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201705d.exe",
+          "size": null,
+          "competence": "201705",
+          "revision": "d",
+          "release_date": "2017-06-12"
+        },
+        {
+          "name": "BDSIA201704c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201704c.exe",
+          "size": null,
+          "competence": "201704",
+          "revision": "c",
+          "release_date": "2017-05-05"
+        },
+        {
+          "name": "BDSIA201703c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201703c.exe",
+          "size": null,
+          "competence": "201703",
+          "revision": "c",
+          "release_date": "2017-04-17"
+        },
+        {
+          "name": "BDSIA201702b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201702b.exe",
+          "size": null,
+          "competence": "201702",
+          "revision": "b",
+          "release_date": "2017-03-07"
+        },
+        {
+          "name": "BDSIA201701b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201701b.exe",
+          "size": null,
+          "competence": "201701",
+          "revision": "b",
+          "release_date": "2017-02-06"
+        },
+        {
+          "name": "BDSIA201612b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201612b.exe",
+          "size": null,
+          "competence": "201612",
+          "revision": "b",
+          "release_date": "2017-01-06"
+        },
+        {
+          "name": "BDSIA201611b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201611b.exe",
+          "size": null,
+          "competence": "201611",
+          "revision": "b",
+          "release_date": "2016-12-05"
+        },
+        {
+          "name": "BDSIA201610b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201610b.exe",
+          "size": null,
+          "competence": "201610",
+          "revision": "b",
+          "release_date": "2016-11-03"
+        },
+        {
+          "name": "BDSIA201609c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201609c.exe",
+          "size": null,
+          "competence": "201609",
+          "revision": "c",
+          "release_date": "2016-10-06"
+        },
+        {
+          "name": "BDSIA201608b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201608b.exe",
+          "size": null,
+          "competence": "201608",
+          "revision": "b",
+          "release_date": "2016-09-12"
+        },
+        {
+          "name": "BDSIA201607b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201607b.exe",
+          "size": null,
+          "competence": "201607",
+          "revision": "b",
+          "release_date": "2016-08-09"
+        },
+        {
+          "name": "BDSIA201606b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201606b.exe",
+          "size": null,
+          "competence": "201606",
+          "revision": "b",
+          "release_date": "2016-07-06"
+        },
+        {
+          "name": "BDSIA201605b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201605b.exe",
+          "size": null,
+          "competence": "201605",
+          "revision": "b",
+          "release_date": "2016-06-07"
+        },
+        {
+          "name": "BDSIA201604d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201604d.exe",
+          "size": null,
+          "competence": "201604",
+          "revision": "d",
+          "release_date": "2016-05-18"
+        },
+        {
+          "name": "BDSIA201603b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201603b.exe",
+          "size": null,
+          "competence": "201603",
+          "revision": "b",
+          "release_date": "2016-04-06"
+        },
+        {
+          "name": "BDSIA201602b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201602b.exe",
+          "size": null,
+          "competence": "201602",
+          "revision": "b",
+          "release_date": "2016-03-07"
+        },
+        {
+          "name": "BDSIA201601b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201601b.exe",
+          "size": null,
+          "competence": "201601",
+          "revision": "b",
+          "release_date": "2016-02-05"
+        },
+        {
+          "name": "BDSIA201512b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201512b.exe",
+          "size": null,
+          "competence": "201512",
+          "revision": "b",
+          "release_date": "2016-01-08"
+        },
+        {
+          "name": "BDSIA201511b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201511b.exe",
+          "size": null,
+          "competence": "201511",
+          "revision": "b",
+          "release_date": "2015-12-07"
+        },
+        {
+          "name": "BDSIA201510b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201510b.exe",
+          "size": null,
+          "competence": "201510",
+          "revision": "b",
+          "release_date": "2015-11-06"
+        },
+        {
+          "name": "BDSIA201509d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201509d.exe",
+          "size": null,
+          "competence": "201509",
+          "revision": "d",
+          "release_date": "2015-10-08"
+        },
+        {
+          "name": "BDSIA201508b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201508b.exe",
+          "size": null,
+          "competence": "201508",
+          "revision": "b",
+          "release_date": "2015-09-04"
+        },
+        {
+          "name": "BDSIA201507b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201507b.exe",
+          "size": null,
+          "competence": "201507",
+          "revision": "b",
+          "release_date": "2015-08-03"
+        },
+        {
+          "name": "BDSIA201506b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201506b.exe",
+          "size": null,
+          "competence": "201506",
+          "revision": "b",
+          "release_date": "2015-07-06"
+        },
+        {
+          "name": "BDSIA201505b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201505b.exe",
+          "size": null,
+          "competence": "201505",
+          "revision": "b",
+          "release_date": "2015-06-05"
+        },
+        {
+          "name": "BDSIA201504b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201504b.exe",
+          "size": null,
+          "competence": "201504",
+          "revision": "b",
+          "release_date": "2015-05-08"
+        },
+        {
+          "name": "BDSIA201503b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201503b.exe",
+          "size": null,
+          "competence": "201503",
+          "revision": "b",
+          "release_date": "2015-04-06"
+        },
+        {
+          "name": "BDSIA201502b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201502b.exe",
+          "size": null,
+          "competence": "201502",
+          "revision": "b",
+          "release_date": "2015-03-05"
+        },
+        {
+          "name": "BDSIA201501b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201501b.exe",
+          "size": null,
+          "competence": "201501",
+          "revision": "b",
+          "release_date": "2015-02-02"
+        },
+        {
+          "name": "BDSIA201412b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201412b.exe",
+          "size": null,
+          "competence": "201412",
+          "revision": "b",
+          "release_date": "2015-01-06"
+        },
+        {
+          "name": "BDSIA201411b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201411b.exe",
+          "size": null,
+          "competence": "201411",
+          "revision": "b",
+          "release_date": "2014-12-03"
+        },
+        {
+          "name": "BDSIA201410b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201410b.exe",
+          "size": null,
+          "competence": "201410",
+          "revision": "b",
+          "release_date": "2014-11-05"
+        },
+        {
+          "name": "BDSIA201409d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201409d.exe",
+          "size": null,
+          "competence": "201409",
+          "revision": "d",
+          "release_date": "2014-10-17"
+        },
+        {
+          "name": "BDSIA201408b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201408b.exe",
+          "size": null,
+          "competence": "201408",
+          "revision": "b",
+          "release_date": "2014-09-05"
+        },
+        {
+          "name": "BDSIA201407b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201407b.exe",
+          "size": null,
+          "competence": "201407",
+          "revision": "b",
+          "release_date": "2014-08-01"
+        },
+        {
+          "name": "BDSIA201406c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201406c.exe",
+          "size": null,
+          "competence": "201406",
+          "revision": "c",
+          "release_date": "2014-07-09"
+        },
+        {
+          "name": "BDSIA201405b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201405b.exe",
+          "size": null,
+          "competence": "201405",
+          "revision": "b",
+          "release_date": "2014-05-28"
+        },
+        {
+          "name": "BDSIA201404f.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201404f.exe",
+          "size": null,
+          "competence": "201404",
+          "revision": "f",
+          "release_date": "2014-04-30"
+        },
+        {
+          "name": "BDSIA201403e.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201403e.exe",
+          "size": null,
+          "competence": "201403",
+          "revision": "e",
+          "release_date": "2014-04-25"
+        },
+        {
+          "name": "BDSIA201402e.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201402e.exe",
+          "size": null,
+          "competence": "201402",
+          "revision": "e",
+          "release_date": "2014-04-25"
+        },
+        {
+          "name": "BDSIA201401i.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201401i.exe",
+          "size": null,
+          "competence": "201401",
+          "revision": "i",
+          "release_date": "2014-04-24"
+        },
+        {
+          "name": "BDSIA201312d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201312d.exe",
+          "size": null,
+          "competence": "201312",
+          "revision": "d",
+          "release_date": "2014-02-04"
+        },
+        {
+          "name": "BDSIA201311c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201311c.exe",
+          "size": null,
+          "competence": "201311",
+          "revision": "c",
+          "release_date": "2013-12-06"
+        },
+        {
+          "name": "BDSIA201310f.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201310f.exe",
+          "size": null,
+          "competence": "201310",
+          "revision": "f",
+          "release_date": "2013-11-14"
+        },
+        {
+          "name": "BDSIA201309c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201309c.exe",
+          "size": null,
+          "competence": "201309",
+          "revision": "c",
+          "release_date": "2013-10-07"
+        },
+        {
+          "name": "BDSIA201308b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201308b.exe",
+          "size": null,
+          "competence": "201308",
+          "revision": "b",
+          "release_date": "2013-09-06"
+        },
+        {
+          "name": "BDSIA201307c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201307c.exe",
+          "size": null,
+          "competence": "201307",
+          "revision": "c",
+          "release_date": "2013-08-06"
+        },
+        {
+          "name": "BDSIA201306b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201306b.exe",
+          "size": null,
+          "competence": "201306",
+          "revision": "b",
+          "release_date": "2013-07-03"
+        },
+        {
+          "name": "BDSIA201305c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201305c.exe",
+          "size": null,
+          "competence": "201305",
+          "revision": "c",
+          "release_date": "2013-06-17"
+        },
+        {
+          "name": "BDSIA201304c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201304c.exe",
+          "size": null,
+          "competence": "201304",
+          "revision": "c",
+          "release_date": "2013-04-29"
+        },
+        {
+          "name": "BDSIA201303b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201303b.exe",
+          "size": null,
+          "competence": "201303",
+          "revision": "b",
+          "release_date": "2013-04-03"
+        },
+        {
+          "name": "BDSIA201302c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201302c.exe",
+          "size": null,
+          "competence": "201302",
+          "revision": "c",
+          "release_date": "2013-02-26"
+        },
+        {
+          "name": "BDSIA201301h.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201301h.exe",
+          "size": null,
+          "competence": "201301",
+          "revision": "h",
+          "release_date": "2013-02-19"
+        },
+        {
+          "name": "BDSIA201212c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201212c.exe",
+          "size": null,
+          "competence": "201212",
+          "revision": "c",
+          "release_date": "2013-01-03"
+        },
+        {
+          "name": "BDSIA201211h.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201211h.exe",
+          "size": null,
+          "competence": "201211",
+          "revision": "h",
+          "release_date": "2012-12-19"
+        },
+        {
+          "name": "BDSIA201210c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201210c.exe",
+          "size": null,
+          "competence": "201210",
+          "revision": "c",
+          "release_date": "2012-10-31"
+        },
+        {
+          "name": "BDSIA201209c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201209c.exe",
+          "size": null,
+          "competence": "201209",
+          "revision": "c",
+          "release_date": "2012-10-05"
+        },
+        {
+          "name": "BDSIA201208b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201208b.exe",
+          "size": null,
+          "competence": "201208",
+          "revision": "b",
+          "release_date": "2012-09-05"
+        },
+        {
+          "name": "BDSIA201207c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201207c.exe",
+          "size": null,
+          "competence": "201207",
+          "revision": "c",
+          "release_date": "2012-07-30"
+        },
+        {
+          "name": "BDSIA201206b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201206b.exe",
+          "size": null,
+          "competence": "201206",
+          "revision": "b",
+          "release_date": "2012-06-25"
+        },
+        {
+          "name": "BDSIA201205b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201205b.exe",
+          "size": null,
+          "competence": "201205",
+          "revision": "b",
+          "release_date": "2012-05-30"
+        },
+        {
+          "name": "BDSIA201204b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201204b.exe",
+          "size": null,
+          "competence": "201204",
+          "revision": "b",
+          "release_date": "2012-05-07"
+        },
+        {
+          "name": "BDSIA201203b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201203b.exe",
+          "size": null,
+          "competence": "201203",
+          "revision": "b",
+          "release_date": "2012-03-26"
+        },
+        {
+          "name": "BDSIA201202b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201202b.exe",
+          "size": null,
+          "competence": "201202",
+          "revision": "b",
+          "release_date": "2012-03-01"
+        },
+        {
+          "name": "BDSIA201201b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201201b.exe",
+          "size": null,
+          "competence": "201201",
+          "revision": "b",
+          "release_date": "2012-01-31"
+        },
+        {
+          "name": "BDSIA201112d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201112d.exe",
+          "size": null,
+          "competence": "201112",
+          "revision": "d",
+          "release_date": "2012-01-24"
+        },
+        {
+          "name": "BDSIA201111a.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201111a.exe",
+          "size": null,
+          "competence": "201111",
+          "revision": "a",
+          "release_date": "2011-11-25"
+        },
+        {
+          "name": "BDSIA201110c.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201110c.exe",
+          "size": null,
+          "competence": "201110",
+          "revision": "c",
+          "release_date": "2011-11-16"
+        },
+        {
+          "name": "BDSIA201109b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201109b.exe",
+          "size": null,
+          "competence": "201109",
+          "revision": "b",
+          "release_date": "2011-10-21"
+        },
+        {
+          "name": "BDSIA201108d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201108d.exe",
+          "size": null,
+          "competence": "201108",
+          "revision": "d",
+          "release_date": "2011-09-02"
+        },
+        {
+          "name": "BDSIA201107a.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201107a.exe",
+          "size": null,
+          "competence": "201107",
+          "revision": "a",
+          "release_date": "2011-08-08"
+        },
+        {
+          "name": "BDSIA201106b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201106b.exe",
+          "size": null,
+          "competence": "201106",
+          "revision": "b",
+          "release_date": "2011-07-01"
+        },
+        {
+          "name": "BDSIA201105b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201105b.exe",
+          "size": null,
+          "competence": "201105",
+          "revision": "b",
+          "release_date": "2011-06-08"
+        },
+        {
+          "name": "BDSIA201104b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201104b.exe",
+          "size": null,
+          "competence": "201104",
+          "revision": "b",
+          "release_date": "2011-04-28"
+        },
+        {
+          "name": "BDSIA201103b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201103b.exe",
+          "size": null,
+          "competence": "201103",
+          "revision": "b",
+          "release_date": "2011-04-11"
+        },
+        {
+          "name": "BDSIA201102b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201102b.exe",
+          "size": null,
+          "competence": "201102",
+          "revision": "b",
+          "release_date": "2011-03-02"
+        },
+        {
+          "name": "BDSIA201101c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201101c.EXE",
+          "size": null,
+          "competence": "201101",
+          "revision": "c",
+          "release_date": "2011-02-11"
+        },
+        {
+          "name": "BDSIA201012e.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201012e.EXE",
+          "size": null,
+          "competence": "201012",
+          "revision": "e",
+          "release_date": "2011-01-11"
+        },
+        {
+          "name": "BDSIA201011b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201011b.EXE",
+          "size": null,
+          "competence": "201011",
+          "revision": "b",
+          "release_date": "2010-12-01"
+        },
+        {
+          "name": "BDSIA201010a.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201010a.EXE",
+          "size": null,
+          "competence": "201010",
+          "revision": "a",
+          "release_date": "2010-10-26"
+        },
+        {
+          "name": "BDSIA201009d.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201009d.EXE",
+          "size": null,
+          "competence": "201009",
+          "revision": "d",
+          "release_date": "2010-10-08"
+        },
+        {
+          "name": "BDSIA201008c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201008c.EXE",
+          "size": null,
+          "competence": "201008",
+          "revision": "c",
+          "release_date": "2010-09-02"
+        },
+        {
+          "name": "BDSIA201007c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201007c.EXE",
+          "size": null,
+          "competence": "201007",
+          "revision": "c",
+          "release_date": "2010-07-29"
+        },
+        {
+          "name": "BDSIA201006b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201006b.EXE",
+          "size": null,
+          "competence": "201006",
+          "revision": "b",
+          "release_date": "2010-06-28"
+        },
+        {
+          "name": "BDSIA201005a.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201005a.EXE",
+          "size": null,
+          "competence": "201005",
+          "revision": "a",
+          "release_date": "2010-05-25"
+        },
+        {
+          "name": "BDSIA201004b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201004b.EXE",
+          "size": null,
+          "competence": "201004",
+          "revision": "b",
+          "release_date": "2010-05-03"
+        },
+        {
+          "name": "BDSIA201003e.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201003e.EXE",
+          "size": null,
+          "competence": "201003",
+          "revision": "e",
+          "release_date": "2010-03-31"
+        },
+        {
+          "name": "BDSIA201002b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201002b.EXE",
+          "size": null,
+          "competence": "201002",
+          "revision": "b",
+          "release_date": "2010-03-03"
+        },
+        {
+          "name": "BDSIA201001b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201001b.EXE",
+          "size": null,
+          "competence": "201001",
+          "revision": "b",
+          "release_date": "2010-02-10"
+        },
+        {
+          "name": "BDSIA200912b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200912b.EXE",
+          "size": null,
+          "competence": "200912",
+          "revision": "b",
+          "release_date": "2009-12-30"
+        },
+        {
+          "name": "BDSIA200911c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200911c.EXE",
+          "size": null,
+          "competence": "200911",
+          "revision": "c",
+          "release_date": "2009-12-16"
+        },
+        {
+          "name": "BDSIA200910b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200910b.EXE",
+          "size": null,
+          "competence": "200910",
+          "revision": "b",
+          "release_date": "2009-11-19"
+        },
+        {
+          "name": "BDSIA200909b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200909b.EXE",
+          "size": null,
+          "competence": "200909",
+          "revision": "b",
+          "release_date": "2009-09-30"
+        },
+        {
+          "name": "BDSIA200908d.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200908d.EXE",
+          "size": null,
+          "competence": "200908",
+          "revision": "d",
+          "release_date": "2009-09-10"
+        },
+        {
+          "name": "BDSIA200907b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200907b.EXE",
+          "size": null,
+          "competence": "200907",
+          "revision": "b",
+          "release_date": "2009-07-28"
+        },
+        {
+          "name": "BDSIA200906b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200906b.EXE",
+          "size": null,
+          "competence": "200906",
+          "revision": "b",
+          "release_date": "2009-07-06"
+        },
+        {
+          "name": "BDSIA200905b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200905b.EXE",
+          "size": null,
+          "competence": "200905",
+          "revision": "b",
+          "release_date": "2009-06-05"
+        },
+        {
+          "name": "BDSIA200904c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200904c.EXE",
+          "size": null,
+          "competence": "200904",
+          "revision": "c",
+          "release_date": "2009-05-13"
+        },
+        {
+          "name": "BDSIA200903b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200903b.EXE",
+          "size": null,
+          "competence": "200903",
+          "revision": "b",
+          "release_date": "2009-03-31"
+        },
+        {
+          "name": "BDSIA200902c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200902c.EXE",
+          "size": null,
+          "competence": "200902",
+          "revision": "c",
+          "release_date": "2009-03-06"
+        },
+        {
+          "name": "BDSIA200901c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200901c.EXE",
+          "size": null,
+          "competence": "200901",
+          "revision": "c",
+          "release_date": "2009-02-13"
+        },
+        {
+          "name": "BDSIA200812c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200812c.EXE",
+          "size": null,
+          "competence": "200812",
+          "revision": "c",
+          "release_date": "2009-01-21"
+        },
+        {
+          "name": "BDSIA200811c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200811c.EXE",
+          "size": null,
+          "competence": "200811",
+          "revision": "c",
+          "release_date": "2008-12-12"
+        },
+        {
+          "name": "BDSIA200810b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200810b.EXE",
+          "size": null,
+          "competence": "200810",
+          "revision": "b",
+          "release_date": "2008-11-05"
+        },
+        {
+          "name": "BDSIA200809d.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200809d.EXE",
+          "size": null,
+          "competence": "200809",
+          "revision": "d",
+          "release_date": "2008-10-20"
+        },
+        {
+          "name": "BDSIA200808b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200808b.EXE",
+          "size": null,
+          "competence": "200808",
+          "revision": "b",
+          "release_date": "2008-09-01"
+        },
+        {
+          "name": "BDSIA200807c.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200807c.EXE",
+          "size": null,
+          "competence": "200807",
+          "revision": "c",
+          "release_date": "2008-08-08"
+        },
+        {
+          "name": "BDSIA200806d.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200806d.exe",
+          "size": null,
+          "competence": "200806",
+          "revision": "d",
+          "release_date": "2008-08-13"
+        },
+        {
+          "name": "BDSIA200805a.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200805a.EXE",
+          "size": null,
+          "competence": "200805",
+          "revision": "a",
+          "release_date": "2008-05-26"
+        },
+        {
+          "name": "BDSIA200804b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200804b.EXE",
+          "size": null,
+          "competence": "200804",
+          "revision": "b",
+          "release_date": "2008-05-08"
+        },
+        {
+          "name": "BDSIA200803b.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200803b.EXE",
+          "size": null,
+          "competence": "200803",
+          "revision": "b",
+          "release_date": "2008-05-07"
+        },
+        {
+          "name": "BDSIA200802e.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200802e.EXE",
+          "size": null,
+          "competence": "200802",
+          "revision": "e",
+          "release_date": "2008-06-12"
+        },
+        {
+          "name": "BDSIA200801g.EXE",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200801g.EXE",
+          "size": null,
+          "competence": "200801",
+          "revision": "g",
+          "release_date": "2008-09-25"
+        }
+      ]
     },
     "sigtap": {
       "label": "SIGTAP · Tabela Unificada",
@@ -429,7 +2231,1465 @@
       "checked_at": "2026-09-29T22:11:52+00:00",
       "last_success_at": "2026-09-29T22:11:52+00:00",
       "official_reachable": true,
-      "pending_competences": []
+      "pending_competences": [],
+      "available_releases": [
+        {
+          "name": "TabelaUnificada_202608_v2608141139.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202608_v2608141139.zip",
+          "size": null,
+          "competence": "202608",
+          "revision": "2608141139"
+        },
+        {
+          "name": "TabelaUnificada_202607_v2607101010.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202607_v2607101010.zip",
+          "size": null,
+          "competence": "202607",
+          "revision": "2607101010"
+        },
+        {
+          "name": "TabelaUnificada_202606_v2606091427.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202606_v2606091427.zip",
+          "size": null,
+          "competence": "202606",
+          "revision": "2606091427"
+        },
+        {
+          "name": "TabelaUnificada_202605_v2605210940.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202605_v2605210940.zip",
+          "size": null,
+          "competence": "202605",
+          "revision": "2605210940"
+        },
+        {
+          "name": "TabelaUnificada_202604_v2605181544.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202604_v2605181544.zip",
+          "size": null,
+          "competence": "202604",
+          "revision": "2605181544"
+        },
+        {
+          "name": "TabelaUnificada_202603_v2605181534.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202603_v2605181534.zip",
+          "size": null,
+          "competence": "202603",
+          "revision": "2605181534"
+        },
+        {
+          "name": "TabelaUnificada_202602_v2602261644.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202602_v2602261644.zip",
+          "size": null,
+          "competence": "202602",
+          "revision": "2602261644"
+        },
+        {
+          "name": "TabelaUnificada_202601_v2602261640.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202601_v2602261640.zip",
+          "size": null,
+          "competence": "202601",
+          "revision": "2602261640"
+        },
+        {
+          "name": "TabelaUnificada_202512_v2602261637.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202512_v2602261637.zip",
+          "size": null,
+          "competence": "202512",
+          "revision": "2602261637"
+        },
+        {
+          "name": "TabelaUnificada_202511_v2602261636.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202511_v2602261636.zip",
+          "size": null,
+          "competence": "202511",
+          "revision": "2602261636"
+        },
+        {
+          "name": "TabelaUnificada_202510_v2602261632.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202510_v2602261632.zip",
+          "size": null,
+          "competence": "202510",
+          "revision": "2602261632"
+        },
+        {
+          "name": "TabelaUnificada_202509_v2602261623.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202509_v2602261623.zip",
+          "size": null,
+          "competence": "202509",
+          "revision": "2602261623"
+        },
+        {
+          "name": "TabelaUnificada_202508_v2509181304.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202508_v2509181304.zip",
+          "size": null,
+          "competence": "202508",
+          "revision": "2509181304"
+        },
+        {
+          "name": "TabelaUnificada_202507_v2509181303.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202507_v2509181303.zip",
+          "size": null,
+          "competence": "202507",
+          "revision": "2509181303"
+        },
+        {
+          "name": "TabelaUnificada_202506_v2506061904.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202506_v2506061904.zip",
+          "size": null,
+          "competence": "202506",
+          "revision": "2506061904"
+        },
+        {
+          "name": "TabelaUnificada_202505_v2505061938.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202505_v2505061938.zip",
+          "size": null,
+          "competence": "202505",
+          "revision": "2505061938"
+        },
+        {
+          "name": "TabelaUnificada_202504_v2504031832.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202504_v2504031832.zip",
+          "size": null,
+          "competence": "202504",
+          "revision": "2504031832"
+        },
+        {
+          "name": "TabelaUnificada_202503_v2503101901.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202503_v2503101901.zip",
+          "size": null,
+          "competence": "202503",
+          "revision": "2503101901"
+        },
+        {
+          "name": "TabelaUnificada_202502_v2502131336.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202502_v2502131336.zip",
+          "size": null,
+          "competence": "202502",
+          "revision": "2502131336"
+        },
+        {
+          "name": "TabelaUnificada_202501_v2501172128.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202501_v2501172128.zip",
+          "size": null,
+          "competence": "202501",
+          "revision": "2501172128"
+        },
+        {
+          "name": "TabelaUnificada_202412_v2501172121.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202412_v2501172121.zip",
+          "size": null,
+          "competence": "202412",
+          "revision": "2501172121"
+        },
+        {
+          "name": "TabelaUnificada_202411_v2411071955.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202411_v2411071955.zip",
+          "size": null,
+          "competence": "202411",
+          "revision": "2411071955"
+        },
+        {
+          "name": "TabelaUnificada_202410_v2410041744.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202410_v2410041744.zip",
+          "size": null,
+          "competence": "202410",
+          "revision": "2410041744"
+        },
+        {
+          "name": "TabelaUnificada_202409_v2409111422.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202409_v2409111422.zip",
+          "size": null,
+          "competence": "202409",
+          "revision": "2409111422"
+        },
+        {
+          "name": "TabelaUnificada_202408_v2409111413.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202408_v2409111413.zip",
+          "size": null,
+          "competence": "202408",
+          "revision": "2409111413"
+        },
+        {
+          "name": "TabelaUnificada_202407_v2408022004.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202407_v2408022004.zip",
+          "size": null,
+          "competence": "202407",
+          "revision": "2408022004"
+        },
+        {
+          "name": "TabelaUnificada_202406_v2406131920.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202406_v2406131920.zip",
+          "size": null,
+          "competence": "202406",
+          "revision": "2406131920"
+        },
+        {
+          "name": "TabelaUnificada_202405_v2406111315.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202405_v2406111315.zip",
+          "size": null,
+          "competence": "202405",
+          "revision": "2406111315"
+        },
+        {
+          "name": "TabelaUnificada_202404_v2404031505.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202404_v2404031505.zip",
+          "size": null,
+          "competence": "202404",
+          "revision": "2404031505"
+        },
+        {
+          "name": "TabelaUnificada_202403_v2403141447.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202403_v2403141447.zip",
+          "size": null,
+          "competence": "202403",
+          "revision": "2403141447"
+        },
+        {
+          "name": "TabelaUnificada_202402_v2402072041.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202402_v2402072041.zip",
+          "size": null,
+          "competence": "202402",
+          "revision": "2402072041"
+        },
+        {
+          "name": "TabelaUnificada_202401_v2402072029.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202401_v2402072029.zip",
+          "size": null,
+          "competence": "202401",
+          "revision": "2402072029"
+        },
+        {
+          "name": "TabelaUnificada_202312_v2401192004.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202312_v2401192004.zip",
+          "size": null,
+          "competence": "202312",
+          "revision": "2401192004"
+        },
+        {
+          "name": "TabelaUnificada_202311_v2401191958.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202311_v2401191958.zip",
+          "size": null,
+          "competence": "202311",
+          "revision": "2401191958"
+        },
+        {
+          "name": "TabelaUnificada_202310_v2401191955.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202310_v2401191955.zip",
+          "size": null,
+          "competence": "202310",
+          "revision": "2401191955"
+        },
+        {
+          "name": "TabelaUnificada_202309_v2310091912.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202309_v2310091912.zip",
+          "size": null,
+          "competence": "202309",
+          "revision": "2310091912"
+        },
+        {
+          "name": "TabelaUnificada_202308_v2308011908.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202308_v2308011908.zip",
+          "size": null,
+          "competence": "202308",
+          "revision": "2308011908"
+        },
+        {
+          "name": "TabelaUnificada_202307_v2307181839.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202307_v2307181839.zip",
+          "size": null,
+          "competence": "202307",
+          "revision": "2307181839"
+        },
+        {
+          "name": "TabelaUnificada_202306_v2306071954.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202306_v2306071954.zip",
+          "size": null,
+          "competence": "202306",
+          "revision": "2306071954"
+        },
+        {
+          "name": "TabelaUnificada_202305_v2305031818.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202305_v2305031818.zip",
+          "size": null,
+          "competence": "202305",
+          "revision": "2305031818"
+        },
+        {
+          "name": "TabelaUnificada_202304_v2304051404.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202304_v2304051404.zip",
+          "size": null,
+          "competence": "202304",
+          "revision": "2304051404"
+        },
+        {
+          "name": "TabelaUnificada_202303_v2303241709.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202303_v2303241709.zip",
+          "size": null,
+          "competence": "202303",
+          "revision": "2303241709"
+        },
+        {
+          "name": "TabelaUnificada_202302_v2303011819.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202302_v2303011819.zip",
+          "size": null,
+          "competence": "202302",
+          "revision": "2303011819"
+        },
+        {
+          "name": "TabelaUnificada_202301_v2301031530.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202301_v2301031530.zip",
+          "size": null,
+          "competence": "202301",
+          "revision": "2301031530"
+        },
+        {
+          "name": "TabelaUnificada_202212_v2212051647.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202212_v2212051647.zip",
+          "size": null,
+          "competence": "202212",
+          "revision": "2212051647"
+        },
+        {
+          "name": "TabelaUnificada_202211_v2211011719.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202211_v2211011719.zip",
+          "size": null,
+          "competence": "202211",
+          "revision": "2211011719"
+        },
+        {
+          "name": "TabelaUnificada_202210_v2210031108.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202210_v2210031108.zip",
+          "size": null,
+          "competence": "202210",
+          "revision": "2210031108"
+        },
+        {
+          "name": "TabelaUnificada_202209_v2209051121.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202209_v2209051121.zip",
+          "size": null,
+          "competence": "202209",
+          "revision": "2209051121"
+        },
+        {
+          "name": "TabelaUnificada_202208_v2208081620.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202208_v2208081620.zip",
+          "size": null,
+          "competence": "202208",
+          "revision": "2208081620"
+        },
+        {
+          "name": "TabelaUnificada_202207_v2208241425.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202207_v2208241425.zip",
+          "size": null,
+          "competence": "202207",
+          "revision": "2208241425"
+        },
+        {
+          "name": "TabelaUnificada_202206_v2206281712.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202206_v2206281712.zip",
+          "size": null,
+          "competence": "202206",
+          "revision": "2206281712"
+        },
+        {
+          "name": "TabelaUnificada_202205_v2205040851.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202205_v2205040851.zip",
+          "size": null,
+          "competence": "202205",
+          "revision": "2205040851"
+        },
+        {
+          "name": "TabelaUnificada_202204_v2205031645.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202204_v2205031645.zip",
+          "size": null,
+          "competence": "202204",
+          "revision": "2205031645"
+        },
+        {
+          "name": "TabelaUnificada_202203_v2203031643.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202203_v2203031643.zip",
+          "size": null,
+          "competence": "202203",
+          "revision": "2203031643"
+        },
+        {
+          "name": "TabelaUnificada_202202_v2202101642.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202202_v2202101642.zip",
+          "size": null,
+          "competence": "202202",
+          "revision": "2202101642"
+        },
+        {
+          "name": "TabelaUnificada_202201_v2201180947.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202201_v2201180947.zip",
+          "size": null,
+          "competence": "202201",
+          "revision": "2201180947"
+        },
+        {
+          "name": "TabelaUnificada_202112_v2112141200.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202112_v2112141200.zip",
+          "size": null,
+          "competence": "202112",
+          "revision": "2112141200"
+        },
+        {
+          "name": "TabelaUnificada_202111_v2111081626.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202111_v2111081626.zip",
+          "size": null,
+          "competence": "202111",
+          "revision": "2111081626"
+        },
+        {
+          "name": "TabelaUnificada_202110_v2111081624.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202110_v2111081624.zip",
+          "size": null,
+          "competence": "202110",
+          "revision": "2111081624"
+        },
+        {
+          "name": "TabelaUnificada_202109_v2109011702.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202109_v2109011702.zip",
+          "size": null,
+          "competence": "202109",
+          "revision": "2109011702"
+        },
+        {
+          "name": "TabelaUnificada_202108_v2108021412.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202108_v2108021412.zip",
+          "size": null,
+          "competence": "202108",
+          "revision": "2108021412"
+        },
+        {
+          "name": "TabelaUnificada_202107_v2107021357.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202107_v2107021357.zip",
+          "size": null,
+          "competence": "202107",
+          "revision": "2107021357"
+        },
+        {
+          "name": "TabelaUnificada_202106_v2106081641.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202106_v2106081641.zip",
+          "size": null,
+          "competence": "202106",
+          "revision": "2106081641"
+        },
+        {
+          "name": "TabelaUnificada_202105_v2105031054.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202105_v2105031054.zip",
+          "size": null,
+          "competence": "202105",
+          "revision": "2105031054"
+        },
+        {
+          "name": "TabelaUnificada_202104_v2104011208.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202104_v2104011208.zip",
+          "size": null,
+          "competence": "202104",
+          "revision": "2104011208"
+        },
+        {
+          "name": "TabelaUnificada_202103_v2103031426.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202103_v2103031426.zip",
+          "size": null,
+          "competence": "202103",
+          "revision": "2103031426"
+        },
+        {
+          "name": "TabelaUnificada_202102_v2102011855.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202102_v2102011855.zip",
+          "size": null,
+          "competence": "202102",
+          "revision": "2102011855"
+        },
+        {
+          "name": "TabelaUnificada_202101_v2101271632.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202101_v2101271632.zip",
+          "size": null,
+          "competence": "202101",
+          "revision": "2101271632"
+        },
+        {
+          "name": "TabelaUnificada_202012_v2012091602.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202012_v2012091602.zip",
+          "size": null,
+          "competence": "202012",
+          "revision": "2012091602"
+        },
+        {
+          "name": "TabelaUnificada_202011_v2011031118.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202011_v2011031118.zip",
+          "size": null,
+          "competence": "202011",
+          "revision": "2011031118"
+        },
+        {
+          "name": "TabelaUnificada_202010_v2010010944.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202010_v2010010944.zip",
+          "size": null,
+          "competence": "202010",
+          "revision": "2010010944"
+        },
+        {
+          "name": "TabelaUnificada_202009_v2009011133.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202009_v2009011133.zip",
+          "size": null,
+          "competence": "202009",
+          "revision": "2009011133"
+        },
+        {
+          "name": "TabelaUnificada_202008_v2008031642.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202008_v2008031642.zip",
+          "size": null,
+          "competence": "202008",
+          "revision": "2008031642"
+        },
+        {
+          "name": "TabelaUnificada_202007_v2007071432.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202007_v2007071432.zip",
+          "size": null,
+          "competence": "202007",
+          "revision": "2007071432"
+        },
+        {
+          "name": "TabelaUnificada_202006_v2006181804.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202006_v2006181804.zip",
+          "size": null,
+          "competence": "202006",
+          "revision": "2006181804"
+        },
+        {
+          "name": "TabelaUnificada_202005_v2006181741.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202005_v2006181741.zip",
+          "size": null,
+          "competence": "202005",
+          "revision": "2006181741"
+        },
+        {
+          "name": "TabelaUnificada_202004_v2004161144.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202004_v2004161144.zip",
+          "size": null,
+          "competence": "202004",
+          "revision": "2004161144"
+        },
+        {
+          "name": "TabelaUnificada_202003_v2003201430.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202003_v2003201430.zip",
+          "size": null,
+          "competence": "202003",
+          "revision": "2003201430"
+        },
+        {
+          "name": "TabelaUnificada_202002_v2002271640.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202002_v2002271640.zip",
+          "size": null,
+          "competence": "202002",
+          "revision": "2002271640"
+        },
+        {
+          "name": "TabelaUnificada_202001_v2001061722.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202001_v2001061722.zip",
+          "size": null,
+          "competence": "202001",
+          "revision": "2001061722"
+        },
+        {
+          "name": "TabelaUnificada_201912_v1912021555.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201912_v1912021555.zip",
+          "size": null,
+          "competence": "201912",
+          "revision": "1912021555"
+        },
+        {
+          "name": "TabelaUnificada_201911_v1911011715.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201911_v1911011715.zip",
+          "size": null,
+          "competence": "201911",
+          "revision": "1911011715"
+        },
+        {
+          "name": "TabelaUnificada_201910_v1910081639.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201910_v1910081639.zip",
+          "size": null,
+          "competence": "201910",
+          "revision": "1910081639"
+        },
+        {
+          "name": "TabelaUnificada_201909_v1909021454.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201909_v1909021454.zip",
+          "size": null,
+          "competence": "201909",
+          "revision": "1909021454"
+        },
+        {
+          "name": "TabelaUnificada_201908_v1908011650.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201908_v1908011650.zip",
+          "size": null,
+          "competence": "201908",
+          "revision": "1908011650"
+        },
+        {
+          "name": "TabelaUnificada_201907_v1907021533.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201907_v1907021533.zip",
+          "size": null,
+          "competence": "201907",
+          "revision": "1907021533"
+        },
+        {
+          "name": "TabelaUnificada_201906_v1905311610.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201906_v1905311610.zip",
+          "size": null,
+          "competence": "201906",
+          "revision": "1905311610"
+        },
+        {
+          "name": "TabelaUnificada_201905_v1905031613.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201905_v1905031613.zip",
+          "size": null,
+          "competence": "201905",
+          "revision": "1905031613"
+        },
+        {
+          "name": "TabelaUnificada_201904_v1904100923.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201904_v1904100923.zip",
+          "size": null,
+          "competence": "201904",
+          "revision": "1904100923"
+        },
+        {
+          "name": "TabelaUnificada_201903_v1904051248.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201903_v1904051248.zip",
+          "size": null,
+          "competence": "201903",
+          "revision": "1904051248"
+        },
+        {
+          "name": "TabelaUnificada_201902_v1902011657.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201902_v1902011657.zip",
+          "size": null,
+          "competence": "201902",
+          "revision": "1902011657"
+        },
+        {
+          "name": "TabelaUnificada_201901_v1901041617.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201901_v1901041617.zip",
+          "size": null,
+          "competence": "201901",
+          "revision": "1901041617"
+        },
+        {
+          "name": "TabelaUnificada_201812_v1812111703.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201812_v1812111703.zip",
+          "size": null,
+          "competence": "201812",
+          "revision": "1812111703"
+        },
+        {
+          "name": "TabelaUnificada_201811_v1811051314.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201811_v1811051314.zip",
+          "size": null,
+          "competence": "201811",
+          "revision": "1811051314"
+        },
+        {
+          "name": "TabelaUnificada_201810_v1810021705.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201810_v1810021705.zip",
+          "size": null,
+          "competence": "201810",
+          "revision": "1810021705"
+        },
+        {
+          "name": "TabelaUnificada_201809_v1809241702.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201809_v1809241702.zip",
+          "size": null,
+          "competence": "201809",
+          "revision": "1809241702"
+        },
+        {
+          "name": "TabelaUnificada_201808_v2102261143.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201808_v2102261143.zip",
+          "size": null,
+          "competence": "201808",
+          "revision": "2102261143"
+        },
+        {
+          "name": "TabelaUnificada_201807_v1807021706.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201807_v1807021706.zip",
+          "size": null,
+          "competence": "201807",
+          "revision": "1807021706"
+        },
+        {
+          "name": "TabelaUnificada_201806_v1806111512.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201806_v1806111512.zip",
+          "size": null,
+          "competence": "201806",
+          "revision": "1806111512"
+        },
+        {
+          "name": "TabelaUnificada_201805_v1806111505.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201805_v1806111505.zip",
+          "size": null,
+          "competence": "201805",
+          "revision": "1806111505"
+        },
+        {
+          "name": "TabelaUnificada_201804_v1804021534.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201804_v1804021534.zip",
+          "size": null,
+          "competence": "201804",
+          "revision": "1804021534"
+        },
+        {
+          "name": "TabelaUnificada_201803_v1803011824.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201803_v1803011824.zip",
+          "size": null,
+          "competence": "201803",
+          "revision": "1803011824"
+        },
+        {
+          "name": "TabelaUnificada_201802_v1809101730.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201802_v1809101730.zip",
+          "size": null,
+          "competence": "201802",
+          "revision": "1809101730"
+        },
+        {
+          "name": "TabelaUnificada_201801_v1801051551.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201801_v1801051551.zip",
+          "size": null,
+          "competence": "201801",
+          "revision": "1801051551"
+        },
+        {
+          "name": "TabelaUnificada_201712_v1712041407.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201712_v1712041407.zip",
+          "size": null,
+          "competence": "201712",
+          "revision": "1712041407"
+        },
+        {
+          "name": "TabelaUnificada_201711_v1711011202.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201711_v1711011202.zip",
+          "size": null,
+          "competence": "201711",
+          "revision": "1711011202"
+        },
+        {
+          "name": "TabelaUnificada_201710_v1710061553.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201710_v1710061553.zip",
+          "size": null,
+          "competence": "201710",
+          "revision": "1710061553"
+        },
+        {
+          "name": "TabelaUnificada_201709_v1709011646.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201709_v1709011646.zip",
+          "size": null,
+          "competence": "201709",
+          "revision": "1709011646"
+        },
+        {
+          "name": "TabelaUnificada_201708_v1708101635.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201708_v1708101635.zip",
+          "size": null,
+          "competence": "201708",
+          "revision": "1708101635"
+        },
+        {
+          "name": "TabelaUnificada_201707_v1708091618.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201707_v1708091618.zip",
+          "size": null,
+          "competence": "201707",
+          "revision": "1708091618"
+        },
+        {
+          "name": "TabelaUnificada_201706_v1706091815.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201706_v1706091815.zip",
+          "size": null,
+          "competence": "201706",
+          "revision": "1706091815"
+        },
+        {
+          "name": "TabelaUnificada_201705_v1705021422.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201705_v1705021422.zip",
+          "size": null,
+          "competence": "201705",
+          "revision": "1705021422"
+        },
+        {
+          "name": "TabelaUnificada_201704_v1704131606.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201704_v1704131606.zip",
+          "size": null,
+          "competence": "201704",
+          "revision": "1704131606"
+        },
+        {
+          "name": "TabelaUnificada_201703_v1703031708.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201703_v1703031708.zip",
+          "size": null,
+          "competence": "201703",
+          "revision": "1703031708"
+        },
+        {
+          "name": "TabelaUnificada_201702_v1703021637.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201702_v1703021637.zip",
+          "size": null,
+          "competence": "201702",
+          "revision": "1703021637"
+        },
+        {
+          "name": "TabelaUnificada_201701_v1702061521.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201701_v1702061521.zip",
+          "size": null,
+          "competence": "201701",
+          "revision": "1702061521"
+        },
+        {
+          "name": "TabelaUnificada_201612_v1612071619.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201612_v1612071619.zip",
+          "size": null,
+          "competence": "201612",
+          "revision": "1612071619"
+        },
+        {
+          "name": "TabelaUnificada_201611_v1611031724.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201611_v1611031724.zip",
+          "size": null,
+          "competence": "201611",
+          "revision": "1611031724"
+        },
+        {
+          "name": "TabelaUnificada_201610_v1611031723.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201610_v1611031723.zip",
+          "size": null,
+          "competence": "201610",
+          "revision": "1611031723"
+        },
+        {
+          "name": "TabelaUnificada_201609_v1610031604.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201609_v1610031604.zip",
+          "size": null,
+          "competence": "201609",
+          "revision": "1610031604"
+        },
+        {
+          "name": "TabelaUnificada_201608_v1608091118.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201608_v1608091118.zip",
+          "size": null,
+          "competence": "201608",
+          "revision": "1608091118"
+        },
+        {
+          "name": "TabelaUnificada_201607_v1608091118.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201607_v1608091118.zip",
+          "size": null,
+          "competence": "201607",
+          "revision": "1608091118"
+        },
+        {
+          "name": "TabelaUnificada_201606_v1606101035.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201606_v1606101035.zip",
+          "size": null,
+          "competence": "201606",
+          "revision": "1606101035"
+        },
+        {
+          "name": "TabelaUnificada_201605_v1605180923.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201605_v1605180923.zip",
+          "size": null,
+          "competence": "201605",
+          "revision": "1605180923"
+        },
+        {
+          "name": "TabelaUnificada_201604_v1605180922.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201604_v1605180922.zip",
+          "size": null,
+          "competence": "201604",
+          "revision": "1605180922"
+        },
+        {
+          "name": "TabelaUnificada_201603_v1603070927.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201603_v1603070927.zip",
+          "size": null,
+          "competence": "201603",
+          "revision": "1603070927"
+        },
+        {
+          "name": "TabelaUnificada_201602_v1603021717.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201602_v1603021717.zip",
+          "size": null,
+          "competence": "201602",
+          "revision": "1603021717"
+        },
+        {
+          "name": "TabelaUnificada_201601_v1601061734.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201601_v1601061734.zip",
+          "size": null,
+          "competence": "201601",
+          "revision": "1601061734"
+        },
+        {
+          "name": "TabelaUnificada_201512_v1512151448.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201512_v1512151448.zip",
+          "size": null,
+          "competence": "201512",
+          "revision": "1512151448"
+        },
+        {
+          "name": "TabelaUnificada_201511_v1512151444.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201511_v1512151444.zip",
+          "size": null,
+          "competence": "201511",
+          "revision": "1512151444"
+        },
+        {
+          "name": "TabelaUnificada_201510_v1511111440.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201510_v1511111440.zip",
+          "size": null,
+          "competence": "201510",
+          "revision": "1511111440"
+        },
+        {
+          "name": "TabelaUnificada_201509_v1510011702.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201509_v1510011702.zip",
+          "size": null,
+          "competence": "201509",
+          "revision": "1510011702"
+        },
+        {
+          "name": "TabelaUnificada_201508_v1509281140.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201508_v1509281140.zip",
+          "size": null,
+          "competence": "201508",
+          "revision": "1509281140"
+        },
+        {
+          "name": "TabelaUnificada_201507_v1507101522.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201507_v1507101522.zip",
+          "size": null,
+          "competence": "201507",
+          "revision": "1507101522"
+        },
+        {
+          "name": "TabelaUnificada_201506_v1506051541.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201506_v1506051541.zip",
+          "size": null,
+          "competence": "201506",
+          "revision": "1506051541"
+        },
+        {
+          "name": "TabelaUnificada_201505_v1505081408.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201505_v1505081408.zip",
+          "size": null,
+          "competence": "201505",
+          "revision": "1505081408"
+        },
+        {
+          "name": "TabelaUnificada_201504_v1505071539.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201504_v1505071539.zip",
+          "size": null,
+          "competence": "201504",
+          "revision": "1505071539"
+        },
+        {
+          "name": "TabelaUnificada_201503_v1504101116.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201503_v1504101116.zip",
+          "size": null,
+          "competence": "201503",
+          "revision": "1504101116"
+        },
+        {
+          "name": "TabelaUnificada_201502_v1503022052.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201502_v1503022052.zip",
+          "size": null,
+          "competence": "201502",
+          "revision": "1503022052"
+        },
+        {
+          "name": "TabelaUnificada_201501_v1501051026.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201501_v1501051026.zip",
+          "size": null,
+          "competence": "201501",
+          "revision": "1501051026"
+        },
+        {
+          "name": "TabelaUnificada_201412_v1412181350.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201412_v1412181350.zip",
+          "size": null,
+          "competence": "201412",
+          "revision": "1412181350"
+        },
+        {
+          "name": "TabelaUnificada_201411_v1411051203.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201411_v1411051203.zip",
+          "size": null,
+          "competence": "201411",
+          "revision": "1411051203"
+        },
+        {
+          "name": "TabelaUnificada_201410_v1410161050.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201410_v1410161050.zip",
+          "size": null,
+          "competence": "201410",
+          "revision": "1410161050"
+        },
+        {
+          "name": "TabelaUnificada_201409_v1410141607.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201409_v1410141607.zip",
+          "size": null,
+          "competence": "201409",
+          "revision": "1410141607"
+        },
+        {
+          "name": "TabelaUnificada_201408_v1409030953.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201408_v1409030953.zip",
+          "size": null,
+          "competence": "201408",
+          "revision": "1409030953"
+        },
+        {
+          "name": "TabelaUnificada_201407_v1407111654.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201407_v1407111654.zip",
+          "size": null,
+          "competence": "201407",
+          "revision": "1407111654"
+        },
+        {
+          "name": "TabelaUnificada_201406_v1406061614.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201406_v1406061614.zip",
+          "size": null,
+          "competence": "201406",
+          "revision": "1406061614"
+        },
+        {
+          "name": "TabelaUnificada_201405_v1405271633.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201405_v1405271633.zip",
+          "size": null,
+          "competence": "201405",
+          "revision": "1405271633"
+        },
+        {
+          "name": "TabelaUnificada_201404_v2002261635.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201404_v2002261635.zip",
+          "size": null,
+          "competence": "201404",
+          "revision": "2002261635"
+        },
+        {
+          "name": "TabelaUnificada_201403_v1405271537.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201403_v1405271537.zip",
+          "size": null,
+          "competence": "201403",
+          "revision": "1405271537"
+        },
+        {
+          "name": "TabelaUnificada_201402_v1405271531.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201402_v1405271531.zip",
+          "size": null,
+          "competence": "201402",
+          "revision": "1405271531"
+        },
+        {
+          "name": "TabelaUnificada_201401_v1405261730.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201401_v1405261730.zip",
+          "size": null,
+          "competence": "201401",
+          "revision": "1405261730"
+        },
+        {
+          "name": "TabelaUnificada_201312_v1312131553.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201312_v1312131553.zip",
+          "size": null,
+          "competence": "201312",
+          "revision": "1312131553"
+        },
+        {
+          "name": "TabelaUnificada_201311_v1311281909.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201311_v1311281909.zip",
+          "size": null,
+          "competence": "201311",
+          "revision": "1311281909"
+        },
+        {
+          "name": "TabelaUnificada_201310_v1311080930.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201310_v1311080930.zip",
+          "size": null,
+          "competence": "201310",
+          "revision": "1311080930"
+        },
+        {
+          "name": "TabelaUnificada_201309_v1310011206.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201309_v1310011206.zip",
+          "size": null,
+          "competence": "201309",
+          "revision": "1310011206"
+        },
+        {
+          "name": "TabelaUnificada_201308_v1308091715.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201308_v1308091715.zip",
+          "size": null,
+          "competence": "201308",
+          "revision": "1308091715"
+        },
+        {
+          "name": "TabelaUnificada_201307_v1307171408.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201307_v1307171408.zip",
+          "size": null,
+          "competence": "201307",
+          "revision": "1307171408"
+        },
+        {
+          "name": "TabelaUnificada_201306_v1307021748.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201306_v1307021748.zip",
+          "size": null,
+          "competence": "201306",
+          "revision": "1307021748"
+        },
+        {
+          "name": "TabelaUnificada_201305_v1306141259.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201305_v1306141259.zip",
+          "size": null,
+          "competence": "201305",
+          "revision": "1306141259"
+        },
+        {
+          "name": "TabelaUnificada_201304_v1304101754.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201304_v1304101754.zip",
+          "size": null,
+          "competence": "201304",
+          "revision": "1304101754"
+        },
+        {
+          "name": "TabelaUnificada_201303_v1303061120.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201303_v1303061120.zip",
+          "size": null,
+          "competence": "201303",
+          "revision": "1303061120"
+        },
+        {
+          "name": "TabelaUnificada_201302_v1302251625.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201302_v1302251625.zip",
+          "size": null,
+          "competence": "201302",
+          "revision": "1302251625"
+        },
+        {
+          "name": "TabelaUnificada_201301_v1302081106.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201301_v1302081106.zip",
+          "size": null,
+          "competence": "201301",
+          "revision": "1302081106"
+        },
+        {
+          "name": "TabelaUnificada_201212_v1212191254.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201212_v1212191254.zip",
+          "size": null,
+          "competence": "201212",
+          "revision": "1212191254"
+        },
+        {
+          "name": "TabelaUnificada_201211_v1212191245.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201211_v1212191245.zip",
+          "size": null,
+          "competence": "201211",
+          "revision": "1212191245"
+        },
+        {
+          "name": "TabelaUnificada_201210_v1210291037.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201210_v1210291037.zip",
+          "size": null,
+          "competence": "201210",
+          "revision": "1210291037"
+        },
+        {
+          "name": "TabelaUnificada_201209_v1209281618.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201209_v1209281618.zip",
+          "size": null,
+          "competence": "201209",
+          "revision": "1209281618"
+        },
+        {
+          "name": "TabelaUnificada_201208_v1208301009.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201208_v1208301009.zip",
+          "size": null,
+          "competence": "201208",
+          "revision": "1208301009"
+        },
+        {
+          "name": "TabelaUnificada_201207_v1208221527.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201207_v1208221527.zip",
+          "size": null,
+          "competence": "201207",
+          "revision": "1208221527"
+        },
+        {
+          "name": "TabelaUnificada_201206_v1206221538.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201206_v1206221538.zip",
+          "size": null,
+          "competence": "201206",
+          "revision": "1206221538"
+        },
+        {
+          "name": "TabelaUnificada_201205_v1206061241.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201205_v1206061241.zip",
+          "size": null,
+          "competence": "201205",
+          "revision": "1206061241"
+        },
+        {
+          "name": "TabelaUnificada_201204_v1203291454.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201204_v1203291454.zip",
+          "size": null,
+          "competence": "201204",
+          "revision": "1203291454"
+        },
+        {
+          "name": "TabelaUnificada_201203_v1203121157.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201203_v1203121157.zip",
+          "size": null,
+          "competence": "201203",
+          "revision": "1203121157"
+        },
+        {
+          "name": "TabelaUnificada_201202_v1202160902.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201202_v1202160902.zip",
+          "size": null,
+          "competence": "201202",
+          "revision": "1202160902"
+        },
+        {
+          "name": "TabelaUnificada_201201_v1201311547.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201201_v1201311547.zip",
+          "size": null,
+          "competence": "201201",
+          "revision": "1201311547"
+        },
+        {
+          "name": "TabelaUnificada_201112_v1201311738.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201112_v1201311738.zip",
+          "size": null,
+          "competence": "201112",
+          "revision": "1201311738"
+        },
+        {
+          "name": "TabelaUnificada_201111_v1111181444.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201111_v1111181444.zip",
+          "size": null,
+          "competence": "201111",
+          "revision": "1111181444"
+        },
+        {
+          "name": "TabelaUnificada_201110_v1111111517.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201110_v1111111517.zip",
+          "size": null,
+          "competence": "201110",
+          "revision": "1111111517"
+        },
+        {
+          "name": "TabelaUnificada_201109_v1109301613.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201109_v1109301613.zip",
+          "size": null,
+          "competence": "201109",
+          "revision": "1109301613"
+        },
+        {
+          "name": "TabelaUnificada_201108_v1108241629.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201108_v1108241629.zip",
+          "size": null,
+          "competence": "201108",
+          "revision": "1108241629"
+        },
+        {
+          "name": "TabelaUnificada_201107_v1108101610.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201107_v1108101610.zip",
+          "size": null,
+          "competence": "201107",
+          "revision": "1108101610"
+        },
+        {
+          "name": "TabelaUnificada_201106_v1106071108.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201106_v1106071108.zip",
+          "size": null,
+          "competence": "201106",
+          "revision": "1106071108"
+        },
+        {
+          "name": "TabelaUnificada_201105_v1105261203.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201105_v1105261203.zip",
+          "size": null,
+          "competence": "201105",
+          "revision": "1105261203"
+        },
+        {
+          "name": "TabelaUnificada_201104_v1104271451.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201104_v1104271451.zip",
+          "size": null,
+          "competence": "201104",
+          "revision": "1104271451"
+        },
+        {
+          "name": "TabelaUnificada_201103_v1103291803.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201103_v1103291803.zip",
+          "size": null,
+          "competence": "201103",
+          "revision": "1103291803"
+        },
+        {
+          "name": "TabelaUnificada_201102_v1103011130.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201102_v1103011130.zip",
+          "size": null,
+          "competence": "201102",
+          "revision": "1103011130"
+        },
+        {
+          "name": "TabelaUnificada_201101_v1102111247.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201101_v1102111247.zip",
+          "size": null,
+          "competence": "201101",
+          "revision": "1102111247"
+        },
+        {
+          "name": "TabelaUnificada_201012_v1102071943.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201012_v1102071943.zip",
+          "size": null,
+          "competence": "201012",
+          "revision": "1102071943"
+        },
+        {
+          "name": "TabelaUnificada_201011_v1012021720.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201011_v1012021720.zip",
+          "size": null,
+          "competence": "201011",
+          "revision": "1012021720"
+        },
+        {
+          "name": "TabelaUnificada_201010_v1010261701.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201010_v1010261701.zip",
+          "size": null,
+          "competence": "201010",
+          "revision": "1010261701"
+        },
+        {
+          "name": "TabelaUnificada_201009_v1010261656.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201009_v1010261656.zip",
+          "size": null,
+          "competence": "201009",
+          "revision": "1010261656"
+        },
+        {
+          "name": "TabelaUnificada_201008_v1008191716.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201008_v1008191716.zip",
+          "size": null,
+          "competence": "201008",
+          "revision": "1008191716"
+        },
+        {
+          "name": "TabelaUnificada_201007_v1007191802.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201007_v1007191802.zip",
+          "size": null,
+          "competence": "201007",
+          "revision": "1007191802"
+        },
+        {
+          "name": "TabelaUnificada_201006_v1006151030.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201006_v1006151030.zip",
+          "size": null,
+          "competence": "201006",
+          "revision": "1006151030"
+        },
+        {
+          "name": "TabelaUnificada_201005_v1004301524.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201005_v1004301524.zip",
+          "size": null,
+          "competence": "201005",
+          "revision": "1004301524"
+        },
+        {
+          "name": "TabelaUnificada_201004_v1004091047.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201004_v1004091047.zip",
+          "size": null,
+          "competence": "201004",
+          "revision": "1004091047"
+        },
+        {
+          "name": "TabelaUnificada_201003_v1003301549.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201003_v1003301549.zip",
+          "size": null,
+          "competence": "201003",
+          "revision": "1003301549"
+        },
+        {
+          "name": "TabelaUnificada_201002_v1003021002.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201002_v1003021002.zip",
+          "size": null,
+          "competence": "201002",
+          "revision": "1003021002"
+        },
+        {
+          "name": "TabelaUnificada_201001_v1002101002.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201001_v1002101002.zip",
+          "size": null,
+          "competence": "201001",
+          "revision": "1002101002"
+        },
+        {
+          "name": "TabelaUnificada_200912_v1001071408.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_200912_v1001071408.zip",
+          "size": null,
+          "competence": "200912",
+          "revision": "1001071408"
+        },
+        {
+          "name": "TabelaUnificada_200911_v0912161011.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_200911_v0912161011.zip",
+          "size": null,
+          "competence": "200911",
+          "revision": "0912161011"
+        },
+        {
+          "name": "TabelaUnificada_200910_v0911101613.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_200910_v0911101613.zip",
+          "size": null,
+          "competence": "200910",
+          "revision": "0911101613"
+        },
+        {
+          "name": "TabelaUnificada_200909_v0910021614.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_200909_v0910021614.zip",
+          "size": null,
+          "competence": "200909",
+          "revision": "0910021614"
+        },
+        {
+          "name": "TabelaUnificada_200908_v0909101418.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_200908_v0909101418.zip",
+          "size": null,
+          "competence": "200908",
+          "revision": "0909101418"
+        },
+        {
+          "name": "TabelaUnificada_200907_v0907171644.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_200907_v0907171644.zip",
+          "size": null,
+          "competence": "200907",
+          "revision": "0907171644"
+        },
+        {
+          "name": "TabelaUnificada_200906_v0907061519.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_200906_v0907061519.zip",
+          "size": null,
+          "competence": "200906",
+          "revision": "0907061519"
+        },
+        {
+          "name": "TabelaUnificada_200905_v0906081340.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_200905_v0906081340.zip",
+          "size": null,
+          "competence": "200905",
+          "revision": "0906081340"
+        }
+      ]
     },
     "cnes_base": {
       "label": "CNES · Base de dados mensal",
@@ -474,7 +3734,780 @@
       "checked_at": "2026-09-29T22:11:55+00:00",
       "last_success_at": "2026-09-29T22:11:55+00:00",
       "official_reachable": true,
-      "pending_competences": []
+      "pending_competences": [],
+      "available_releases": [
+        {
+          "name": "BASE_DE_DADOS_CNES_202608.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202608.ZIP",
+          "size": null,
+          "competence": "202608"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202607.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202607.ZIP",
+          "size": null,
+          "competence": "202607"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202606.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202606.ZIP",
+          "size": null,
+          "competence": "202606"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202605.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202605.ZIP",
+          "size": null,
+          "competence": "202605"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202604.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202604.ZIP",
+          "size": null,
+          "competence": "202604"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202603.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202603.ZIP",
+          "size": null,
+          "competence": "202603"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202602.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202602.ZIP",
+          "size": null,
+          "competence": "202602"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202601.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202601.ZIP",
+          "size": null,
+          "competence": "202601"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202512.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202512.ZIP",
+          "size": null,
+          "competence": "202512"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202511.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202511.ZIP",
+          "size": null,
+          "competence": "202511"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202510.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202510.ZIP",
+          "size": null,
+          "competence": "202510"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202509.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202509.ZIP",
+          "size": null,
+          "competence": "202509"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202508.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202508.ZIP",
+          "size": null,
+          "competence": "202508"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202507.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202507.ZIP",
+          "size": null,
+          "competence": "202507"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202506.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202506.ZIP",
+          "size": null,
+          "competence": "202506"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202505.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202505.ZIP",
+          "size": null,
+          "competence": "202505"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202504.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202504.ZIP",
+          "size": null,
+          "competence": "202504"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202503.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202503.ZIP",
+          "size": null,
+          "competence": "202503"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202502.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202502.ZIP",
+          "size": null,
+          "competence": "202502"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202501.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202501.ZIP",
+          "size": null,
+          "competence": "202501"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202412.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202412.ZIP",
+          "size": null,
+          "competence": "202412"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202411.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202411.ZIP",
+          "size": null,
+          "competence": "202411"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202410.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202410.ZIP",
+          "size": null,
+          "competence": "202410"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202409.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202409.ZIP",
+          "size": null,
+          "competence": "202409"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202408.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202408.ZIP",
+          "size": null,
+          "competence": "202408"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202407.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202407.ZIP",
+          "size": null,
+          "competence": "202407"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202406.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202406.ZIP",
+          "size": null,
+          "competence": "202406"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202405.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202405.ZIP",
+          "size": null,
+          "competence": "202405"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202404.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202404.ZIP",
+          "size": null,
+          "competence": "202404"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202403.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202403.ZIP",
+          "size": null,
+          "competence": "202403"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202402.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202402.ZIP",
+          "size": null,
+          "competence": "202402"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202401.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202401.ZIP",
+          "size": null,
+          "competence": "202401"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202312.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202312.ZIP",
+          "size": null,
+          "competence": "202312"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202311.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202311.ZIP",
+          "size": null,
+          "competence": "202311"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202310.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202310.ZIP",
+          "size": null,
+          "competence": "202310"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202309.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202309.ZIP",
+          "size": null,
+          "competence": "202309"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202308.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202308.ZIP",
+          "size": null,
+          "competence": "202308"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202307.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202307.ZIP",
+          "size": null,
+          "competence": "202307"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202306.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202306.ZIP",
+          "size": null,
+          "competence": "202306"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202305.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202305.ZIP",
+          "size": null,
+          "competence": "202305"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202304.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202304.ZIP",
+          "size": null,
+          "competence": "202304"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202303.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202303.ZIP",
+          "size": null,
+          "competence": "202303"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202302.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202302.ZIP",
+          "size": null,
+          "competence": "202302"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202301.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202301.ZIP",
+          "size": null,
+          "competence": "202301"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202212.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202212.ZIP",
+          "size": null,
+          "competence": "202212"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202211.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202211.ZIP",
+          "size": null,
+          "competence": "202211"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202210.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202210.ZIP",
+          "size": null,
+          "competence": "202210"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202209.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202209.ZIP",
+          "size": null,
+          "competence": "202209"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202208.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202208.ZIP",
+          "size": null,
+          "competence": "202208"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202207.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202207.ZIP",
+          "size": null,
+          "competence": "202207"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202206.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202206.ZIP",
+          "size": null,
+          "competence": "202206"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202205.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202205.ZIP",
+          "size": null,
+          "competence": "202205"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202204.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202204.ZIP",
+          "size": null,
+          "competence": "202204"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202203.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202203.ZIP",
+          "size": null,
+          "competence": "202203"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202202.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202202.ZIP",
+          "size": null,
+          "competence": "202202"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202201.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202201.ZIP",
+          "size": null,
+          "competence": "202201"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202112.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202112.ZIP",
+          "size": null,
+          "competence": "202112"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202111.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202111.ZIP",
+          "size": null,
+          "competence": "202111"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202110.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202110.ZIP",
+          "size": null,
+          "competence": "202110"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202109.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202109.ZIP",
+          "size": null,
+          "competence": "202109"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202108.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202108.ZIP",
+          "size": null,
+          "competence": "202108"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202107.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202107.ZIP",
+          "size": null,
+          "competence": "202107"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202106.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202106.ZIP",
+          "size": null,
+          "competence": "202106"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202105.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202105.ZIP",
+          "size": null,
+          "competence": "202105"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202104.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202104.ZIP",
+          "size": null,
+          "competence": "202104"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202103.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202103.ZIP",
+          "size": null,
+          "competence": "202103"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202102.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202102.ZIP",
+          "size": null,
+          "competence": "202102"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202101.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202101.ZIP",
+          "size": null,
+          "competence": "202101"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202012.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202012.ZIP",
+          "size": null,
+          "competence": "202012"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202011.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202011.ZIP",
+          "size": null,
+          "competence": "202011"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202010.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202010.ZIP",
+          "size": null,
+          "competence": "202010"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202009.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202009.ZIP",
+          "size": null,
+          "competence": "202009"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202008.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202008.ZIP",
+          "size": null,
+          "competence": "202008"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202007.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202007.ZIP",
+          "size": null,
+          "competence": "202007"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202006.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202006.ZIP",
+          "size": null,
+          "competence": "202006"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202005.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202005.ZIP",
+          "size": null,
+          "competence": "202005"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202004.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202004.ZIP",
+          "size": null,
+          "competence": "202004"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202003.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202003.ZIP",
+          "size": null,
+          "competence": "202003"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202002.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202002.ZIP",
+          "size": null,
+          "competence": "202002"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_202001.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202001.ZIP",
+          "size": null,
+          "competence": "202001"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201912.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201912.ZIP",
+          "size": null,
+          "competence": "201912"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201911.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201911.ZIP",
+          "size": null,
+          "competence": "201911"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201910.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201910.ZIP",
+          "size": null,
+          "competence": "201910"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201909.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201909.ZIP",
+          "size": null,
+          "competence": "201909"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201908.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201908.ZIP",
+          "size": null,
+          "competence": "201908"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201907.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201907.ZIP",
+          "size": null,
+          "competence": "201907"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201906.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201906.ZIP",
+          "size": null,
+          "competence": "201906"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201905.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201905.ZIP",
+          "size": null,
+          "competence": "201905"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201904.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201904.ZIP",
+          "size": null,
+          "competence": "201904"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201903.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201903.ZIP",
+          "size": null,
+          "competence": "201903"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201902.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201902.ZIP",
+          "size": null,
+          "competence": "201902"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201901.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201901.ZIP",
+          "size": null,
+          "competence": "201901"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201812.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201812.ZIP",
+          "size": null,
+          "competence": "201812"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201811.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201811.ZIP",
+          "size": null,
+          "competence": "201811"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201810.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201810.ZIP",
+          "size": null,
+          "competence": "201810"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201809.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201809.ZIP",
+          "size": null,
+          "competence": "201809"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201808.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201808.ZIP",
+          "size": null,
+          "competence": "201808"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201807.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201807.ZIP",
+          "size": null,
+          "competence": "201807"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201806.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201806.ZIP",
+          "size": null,
+          "competence": "201806"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201805.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201805.ZIP",
+          "size": null,
+          "competence": "201805"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201804.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201804.ZIP",
+          "size": null,
+          "competence": "201804"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201803.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201803.ZIP",
+          "size": null,
+          "competence": "201803"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201802.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201802.ZIP",
+          "size": null,
+          "competence": "201802"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201801.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201801.ZIP",
+          "size": null,
+          "competence": "201801"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201712.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201712.ZIP",
+          "size": null,
+          "competence": "201712"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201711.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201711.ZIP",
+          "size": null,
+          "competence": "201711"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201710.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201710.ZIP",
+          "size": null,
+          "competence": "201710"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201709.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201709.ZIP",
+          "size": null,
+          "competence": "201709"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201708.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201708.ZIP",
+          "size": null,
+          "competence": "201708"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201707.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201707.ZIP",
+          "size": null,
+          "competence": "201707"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201706.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201706.ZIP",
+          "size": null,
+          "competence": "201706"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201705.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201705.ZIP",
+          "size": null,
+          "competence": "201705"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201704.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201704.ZIP",
+          "size": null,
+          "competence": "201704"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201703.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201703.ZIP",
+          "size": null,
+          "competence": "201703"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201702.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201702.ZIP",
+          "size": null,
+          "competence": "201702"
+        },
+        {
+          "name": "BASE_DE_DADOS_CNES_201701.ZIP",
+          "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_201701.ZIP",
+          "size": null,
+          "competence": "201701"
+        }
+      ]
+    },
+    "apac": {
+      "label": "APAC Magnético",
+      "official_page": "https://sia.datasus.gov.br/versao/listar_ftp_apac.php",
+      "latest": {
+        "name": "APACMAG_0402.exe",
+        "url": "ftp://arpoador.datasus.gov.br/siasus/APAC/APACMAG_0402.exe",
+        "size": null,
+        "version": "0402",
+        "release_date": "2026-09-24"
+      },
+      "catalog_checked_at": "2026-10-01T12:40:36+00:00",
+      "checked_at": "2026-10-01T12:40:36+00:00",
+      "official_reachable": true,
+      "pending_download": true
+    },
+    "ciha01": {
+      "label": "CIHA01 · atualização",
+      "official_page": "http://ciha.saude.gov.br/versao/versao_ciha1.php",
+      "latest": {
+        "name": "CIHA01_VER2033.exe",
+        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA01_VER2033.exe",
+        "size": null,
+        "version": "2033",
+        "release_date": null
+      },
+      "catalog_checked_at": "2026-10-01T12:40:37+00:00",
+      "checked_at": "2026-10-01T12:40:37+00:00",
+      "official_reachable": true,
+      "pending_download": true
+    },
+    "ciha02": {
+      "label": "CIHA02 · atualização",
+      "official_page": "http://ciha.saude.gov.br/versao/versao_ciha2.php",
+      "latest": {
+        "name": "CIHA02_VER2034.exe",
+        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
+        "size": null,
+        "version": "2034",
+        "release_date": null
+      },
+      "catalog_checked_at": "2026-10-01T12:40:37+00:00",
+      "checked_at": "2026-10-01T12:40:37+00:00",
+      "official_reachable": true,
+      "pending_download": true
+    },
+    "ciha01_installer": {
+      "label": "CIHA01 · instalação inicial",
+      "official_page": "http://ciha.saude.gov.br/versao/versao_ciha1.php",
+      "latest": {
+        "name": "CIHA01_SETUP_20.00.exe",
+        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA01_SETUP_20.00.exe",
+        "size": null,
+        "version": "2000",
+        "release_date": null
+      },
+      "catalog_checked_at": "2026-10-01T12:40:37+00:00",
+      "checked_at": "2026-10-01T12:40:37+00:00",
+      "official_reachable": true,
+      "pending_download": true
+    },
+    "ciha02_installer": {
+      "label": "CIHA02 · instalação inicial",
+      "official_page": "http://ciha.saude.gov.br/versao/versao_ciha2.php",
+      "latest": {
+        "name": "CIHA02_SETUP_20.00.exe",
+        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
+        "size": null,
+        "version": "2000",
+        "release_date": null
+      },
+      "catalog_checked_at": "2026-10-01T12:40:53+00:00",
+      "checked_at": "2026-10-01T12:40:53+00:00",
+      "official_reachable": true,
+      "pending_download": true
     }
   },
   "updates": [

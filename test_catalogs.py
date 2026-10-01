@@ -6,7 +6,34 @@ import unittest
 from unittest.mock import patch
 from urllib.error import URLError
 
-from catalogs import _common, bpa_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import _common, apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+
+
+class AddedSystemsTests(unittest.TestCase):
+    def test_apac_keeps_latest_executable_and_official_date(self):
+        entries = [{"name": name, "url": f"ftp://arpoador.datasus.gov.br/siasus/APAC/{name}",
+                    "release_date": "2026-09-24"}
+                   for name in ["APACMAG_0401.exe", "APACMAG_0402.exe", "LERNOTAS.TXT"]]
+        with patch.object(apac_portal, "fetch_index_entries", return_value=entries):
+            releases = apac_portal.fetch_apac_catalog()
+        self.assertEqual([r["name"] for r in releases], ["APACMAG_0402.exe", "APACMAG_0401.exe"])
+        self.assertEqual(releases[0]["release_date"], "2026-09-24")
+
+    def test_ciha_separates_module_update_and_initial_installation(self):
+        names = ["CIHA01_VER2033.exe", "CIHA01_SETUP_20.00.exe", "CIHA02_VER2034.exe"]
+        entries = [{"name": "Versão ou instalador", "url": f"ftp://ftp2.datasus.gov.br{ciha_portal.FTP_DIRECTORY}\n{name} \n"}
+                   for name in names]
+        with patch.object(ciha_portal, "fetch_index_entries", return_value=entries):
+            self.assertEqual(ciha_portal.fetch_ciha01_catalog()[0]["name"], names[0])
+            self.assertEqual(ciha_portal.fetch_ciha01_installer_catalog()[0]["name"], names[1])
+            self.assertEqual(ciha_portal.fetch_ciha02_catalog()[0]["name"], names[2])
+
+    def test_ciha_rejects_foreign_host_and_directory(self):
+        entries = [{"url": "ftp://attacker.example/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA01_VER2033.exe"},
+                   {"url": "ftp://ftp2.datasus.gov.br/other/CIHA01_VER2033.exe"}]
+        with patch.object(ciha_portal, "fetch_index_entries", return_value=entries):
+            with self.assertRaises(ValueError):
+                ciha_portal.fetch_ciha01_catalog()
 
 
 class CommonCatalogTests(unittest.TestCase):

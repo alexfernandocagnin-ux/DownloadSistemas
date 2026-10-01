@@ -9,11 +9,11 @@ sites estão fora do ar, o que acontece com frequência.
 
 ## Como funciona
 
-- O portal abre pelo catálogo salvo, sem esperar o DATASUS. **Verificar todos os sistemas** consulta, sob demanda e sem cache, os dez catálogos oficiais em paralelo; uma fonte indisponível não bloqueia as outras.
-- A cada 6 horas, o GitHub Actions consulta as versões e tenta publicar os arquivos. A última versão encontrada é salva mesmo se o download falhar. O link do espelho só muda após a confirmação do asset; falhas preservam a cópia anterior.
+- O portal abre pelo catálogo salvo, incluindo todo o histórico encontrado, sem esperar o DATASUS. **Verificar todos os sistemas** consulta, sob demanda e sem cache, os catálogos em paralelo; uma fonte indisponível não bloqueia as outras.
+- A cada 2 horas, às 00:50, 02:50, 04:50, **06:50** e assim por diante no horário de Brasília, o GitHub Actions consulta as versões e tenta publicar os arquivos. O agendamento usa UTC e pode atrasar conforme a disponibilidade do GitHub. A última versão encontrada é salva mesmo se o download falhar. O link do espelho só muda após a confirmação do asset; falhas preservam a cópia anterior.
 - Quando uma versão muda em relação a uma já conhecida, essa sincronização registra sistema, arquivo e data em um histórico persistente que aparece no quadro **Novidades dos sistemas** para todos os visitantes. A primeira coleta de um sistema serve como referência e não é anunciada como novidade.
 - A tabela **Últimos lançamentos** mostra a versão mais recente de cada sistema e se existe uma cópia disponível. A data só aparece quando o catálogo oficial informa a publicação do arquivo; quando a fonte não oferece esse dado, a célula fica vazia. Na FPO, a atualização atual fica no cartão principal e o instalador base está no expansor de primeira instalação.
-- Os instaladores e os seis meses recentes de cada tabela são espelhados. Na primeira sincronização de uma tabela, a competência atual tem prioridade; o histórico entra nas próximas execuções. Competências já salvas permanecem disponíveis.
+- Não há corte de seis meses: todas as competências encontradas ficam no seletor ao abrir o site, mesmo que sua cópia ainda não esteja no espelho. Arquivos pequenos podem ser preparados na fonte oficial. O espelho amplia o histórico a cada execução, priorizando os meses recentes e publicando até 16 novos pacotes por tabela, ou 2 bases grandes CNES. Esse lote limita o trabalho da execução, não as competências disponíveis. Cópias já salvas permanecem disponíveis.
 - Ao preparar um arquivo de até 50 MB, o servidor baixa a cópia completa e verifica assinatura, tamanho e SHA-256 registrado, antes de oferecer o download dentro do portal. Pacotes maiores têm assinatura e tamanho conferidos por uma leitura parcial e são entregues diretamente pelo espelho. Se o espelho falhar, tenta a fonte oficial. Uma página de erro nunca é oferecida como instalador.
 - As versões e revisões anteriores continuam acessíveis quando uma versão oficial nova ainda não foi espelhada.
 - Nenhum instalador é executado. Arquivos ainda sem espelho dependem da fonte oficial. O GitHub e o Streamlit também podem sofrer indisponibilidades; o serviço não promete disponibilidade absoluta.
@@ -23,6 +23,8 @@ sites estão fora do ar, o que acontece com frequência.
 | Sistema | Fonte oficial | Natureza |
 |---|---|---|
 | BPA Magnético | `sia.datasus.gov.br/versao/listar_ftp_bpa.php` | instalador, versão única |
+| APAC Magnético | `sia.datasus.gov.br/versao/listar_ftp_apac.php` | instalador, versão única |
+| CIHA01 e CIHA02 | `ciha.saude.gov.br/versao/versao_ciha1.php` e `versao_ciha2.php` | atualização e instalação inicial separadas |
 | SIA | `sia.datasus.gov.br/versao/listar_ftp_sia.php` | instalador, versão única |
 | FPO Magnético | `sia.datasus.gov.br/versao/listar_ftp_fpo.php` | instalador inicial e atualização mais recente |
 | SIHD2 | `sihd.datasus.gov.br/versao/versao_sihd2.php` | instalador, versão única |
@@ -115,7 +117,9 @@ versão atual sem espelho.
 
 ## Publicação e recuperação
 
-O workflow de sincronização executa automaticamente após mudanças nos scripts e a cada 6 horas. Também pode ser acionado manualmente na aba Actions. Precisa de permissão `contents: write`, já declarada no workflow. Os arquivos ficam em Releases públicas do repositório.
+O workflow de sincronização executa automaticamente após mudanças nos scripts e a cada 2 horas, incluindo 06:50 no horário de Brasília. Também pode ser acionado manualmente na aba Actions. Precisa de permissão `contents: write`, já declarada no workflow. Os arquivos ficam em Releases públicas do repositório.
+
+O menu do portal usa `toolbarMode = "minimal"`. Isso simplifica a interface, mas não substitui permissões: o painel **Manage app** pertence ao Streamlit Community Cloud. Somente contas com acesso de desenvolvedor podem reiniciar ou excluir o app; visitantes comuns não recebem essas permissões. Uma senha dentro do portal não controla esse painel externo.
 
 Para publicar manualmente, autentique o GitHub CLI (`gh auth login`), defina `GITHUB_REPOSITORY=alexfernandocagnin-ux/DownloadSistemas` e execute `python scripts/sync_catalog.py --publish`. Sem `--publish`, os arquivos são apenas preparados localmente e novos links de espelho não são inventados.
 
