@@ -283,24 +283,61 @@ class PortalTests(unittest.TestCase):
         self.assertIn("Novidades dos sistemas", rendered)
         self.assertIn("Últimos lançamentos", rendered)
         self.assertIn("Data em branco significa", "\n".join(element.value for element in app.caption))
-        self.assertFalse(any(button.key == "force_catalog_check" for button in app.button))
+        self.assertTrue(any(button.key == "force_catalog_check" for button in app.button))
         self.assertIn("FPO · instalador base", rendered)
         self.assertIn("FPO Magnético · atualização atual", rendered)
 
+    def test_manual_discovery_survives_a_new_session_and_is_not_announced_twice(self):
+        path = Path(__file__).parent / "data" / "catalog.json"
+        original = path.read_bytes()
+        new = {"name": "BPAMAG9999.exe", "url": URL.replace(NAME, "BPAMAG9999.exe")}
+        try:
+            with ExitStack() as stack:
+                stack.enter_context(patch.object(bpa_portal, "fetch_bpa_catalog", return_value=[new]))
+                for module, name in [(apac_portal, "fetch_apac_catalog"), (ciha_portal, "fetch_ciha02_catalog"),
+                                     (ciha_portal, "fetch_ciha02_installer_catalog"), (sia_portal, "fetch_sia_catalog"),
+                                     (sia_portal, "fetch_bdsia_catalog"), (fpo_portal, "fetch_fpo_installer_catalog"),
+                                     (fpo_portal, "fetch_fpo_update_catalog"), (sihd_portal, "fetch_sihd2_catalog"),
+                                     (cnes_portal, "fetch_cnes_complete_catalog"), (cnes_portal, "fetch_cnes_app_catalog"),
+                                     (cnes_portal, "fetch_cnes_base_catalog"), (sigtap_portal, "fetch_sigtap_catalog")]:
+                    stack.enter_context(patch.object(module, name, return_value=[]))
+                app = self.app().run()
+                next(b for b in app.button if b.key == "force_catalog_check").click().run()
+                self.assertFalse(app.exception)
+                self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["systems"]["bpa"]["latest"]["name"], new["name"])
+                fresh = self.app().run()
+                self.assertTrue(any(c.value == new["name"] for c in fresh.caption))
+                next(b for b in fresh.button if b.key == "force_catalog_check").click().run()
+                self.assertFalse(fresh.exception)
+                self.assertEqual(fresh.session_state["forced_live_updates"], [])
+        finally:
+            path.write_bytes(original)
 
     def test_sihd_can_prepare_from_official_source_without_a_mirror(self):
-        with patch.object(sihd_portal, "download_release", return_value=PACKAGE):
+        with patch.object(sihd_portal, "download_release", return_value=PACKAGE), patch("catalogs.mirrors.matching_mirror", return_value=None):
             app = self.app().run()
             next(b for b in app.button if str(b.key).startswith("prep_sihd2_")).click().run()
             self.assertFalse(app.exception)
             self.assertTrue(any("SIHD2" in b.proto.label for b in app.get("download_button")))
 
-
-    def test_portal_uses_automatic_checks_without_manual_controls(self):
-        app = self.app().run()
+    def test_manual_check_forces_every_catalog_without_cache(self):
+        fetchers = [
+            (apac_portal, "fetch_apac_catalog"),
+            (ciha_portal, "fetch_ciha02_catalog"),
+            (ciha_portal, "fetch_ciha02_installer_catalog"),
+            (bpa_portal, "fetch_bpa_catalog"), (sia_portal, "fetch_sia_catalog"),
+            (fpo_portal, "fetch_fpo_installer_catalog"), (fpo_portal, "fetch_fpo_update_catalog"),
+            (sihd_portal, "fetch_sihd2_catalog"), (cnes_portal, "fetch_cnes_complete_catalog"),
+            (cnes_portal, "fetch_cnes_app_catalog"), (sia_portal, "fetch_bdsia_catalog"),
+            (sigtap_portal, "fetch_sigtap_catalog"), (cnes_portal, "fetch_cnes_base_catalog"),
+        ]
+        with ExitStack() as stack:
+            mocks = [stack.enter_context(patch.object(module, name, return_value=[])) for module, name in fetchers]
+            app = self.app().run()
+            next(button for button in app.button if button.key == "force_catalog_check").click().run()
         self.assertFalse(app.exception)
-        self.assertFalse(any(b.key == "force_catalog_check" for b in app.button))
-        self.assertTrue(any("Consulta automática a cada duas horas" in c.value for c in app.caption))
+        self.assertTrue(all(fetch.call_count == 1 for fetch in mocks))
+        self.assertIn("Última verificação manual, sem cache", "\n".join(element.value for element in app.caption))
 
     def test_saved_old_competence_downloads_without_manual_catalog_check(self):
         catalog_path = Path(__file__).parent / "data" / "catalog.json"
