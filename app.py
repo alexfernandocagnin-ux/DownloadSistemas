@@ -677,6 +677,8 @@ def render_updates_panel(snapshot):
         )
     if check_now:
         force_check_all_systems(snapshot.get("systems", {}))
+        # O cabeçalho foi desenhado antes da consulta; relê o horário salvo ao concluir.
+        st.rerun()
 
     stored = snapshot.get("updates", [])
     live = st.session_state.get("forced_live_updates", [])
