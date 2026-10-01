@@ -156,8 +156,20 @@ div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLin
 [class*="st-key-ready_download_"] [data-testid="stLinkButton"] a p { color:#fff !important; }
 div[data-testid="stCaptionContainer"] { color:#607580; font-size:.78rem; }
 button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
-[data-baseweb="tab-list"] { gap:1.25rem; background:transparent; border-bottom:1px solid var(--ds-line); }
-[data-baseweb="tab"] { min-height:50px; padding:0 .25rem; font-size:.94rem; font-weight:700; }
+[data-baseweb="tab-list"] { gap:.7rem; background:transparent; border-bottom:0;
+    padding:.3rem .2rem .65rem; }
+[data-baseweb="tab"] { --tab-color:#087568; --tab-soft:#e8f5ef; --tab-border:#c9e5da;
+    min-height:46px; padding:.65rem 1.15rem; font-size:.94rem; font-weight:700;
+    border:1px solid var(--tab-border) !important; border-radius:12px;
+    background:var(--tab-soft) !important; color:var(--tab-color) !important;
+    transition:background .15s ease,box-shadow .15s ease; }
+[data-baseweb="tab"]:nth-child(2) { --tab-color:#175b91; --tab-soft:#eaf2fa; --tab-border:#ccdeef; }
+[data-baseweb="tab"]:nth-child(3) { --tab-color:#654393; --tab-soft:#f1ecf8; --tab-border:#ded2ee; }
+[data-baseweb="tab"] p { color:inherit !important; font-weight:700; }
+[data-baseweb="tab"]:hover { box-shadow:0 3px 9px #15303b16; }
+[data-baseweb="tab"][aria-selected="true"] { background:var(--tab-color) !important;
+    border-color:var(--tab-color) !important; color:#fff !important; box-shadow:0 3px 9px #15303b20; }
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"] { display:none; }
 .ds-update-heading { display:flex; align-items:center; gap:.8rem; padding:.15rem 0; }
 .ds-update-icon { width:40px; height:40px; flex:0 0 40px; display:grid; place-items:center; background:#e7f3ef;
     color:#087568; border-radius:10px; font-size:1.1rem; }
@@ -191,7 +203,7 @@ button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; ou
     .ds-update-item { grid-template-columns:1fr; gap:.25rem; }
     .ds-update-date { white-space:normal; }
     [data-baseweb="tab-list"] { gap:.65rem; }
-    [data-baseweb="tab"] { font-size:.8rem; }
+    [data-baseweb="tab"] { font-size:.8rem; padding:.6rem .8rem; }
 }
 </style>
 """
