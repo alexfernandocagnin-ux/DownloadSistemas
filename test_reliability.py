@@ -258,8 +258,8 @@ class PortalTests(unittest.TestCase):
 
     def test_manual_check_forces_every_catalog_without_cache(self):
         fetchers = [
-            (apac_portal, "fetch_apac_catalog"), (ciha_portal, "fetch_ciha01_catalog"),
-            (ciha_portal, "fetch_ciha02_catalog"), (ciha_portal, "fetch_ciha01_installer_catalog"),
+            (apac_portal, "fetch_apac_catalog"),
+            (ciha_portal, "fetch_ciha02_catalog"),
             (ciha_portal, "fetch_ciha02_installer_catalog"),
             (bpa_portal, "fetch_bpa_catalog"), (sia_portal, "fetch_sia_catalog"),
             (fpo_portal, "fetch_fpo_installer_catalog"), (fpo_portal, "fetch_fpo_update_catalog"),

@@ -36,20 +36,10 @@ SINGLE_VERSION_SYSTEMS = {
         "fetch": apac_portal.fetch_apac_catalog, "download": apac_portal.download_release,
         "tag": "apac-latest",
     },
-    "ciha01": {
-        "label": "CIHA01 · atualização", "official_page": ciha_portal.PAGES["01"],
-        "fetch": ciha_portal.fetch_ciha01_catalog, "download": ciha_portal.download_release,
-        "tag": "ciha01-latest",
-    },
     "ciha02": {
         "label": "CIHA02 · atualização", "official_page": ciha_portal.PAGES["02"],
         "fetch": ciha_portal.fetch_ciha02_catalog, "download": ciha_portal.download_release,
         "tag": "ciha02-latest",
-    },
-    "ciha01_installer": {
-        "label": "CIHA01 · instalação inicial", "official_page": ciha_portal.PAGES["01"],
-        "fetch": ciha_portal.fetch_ciha01_installer_catalog, "download": ciha_portal.download_release,
-        "tag": "ciha01-installer-latest",
     },
     "ciha02_installer": {
         "label": "CIHA02 · instalação inicial", "official_page": ciha_portal.PAGES["02"],

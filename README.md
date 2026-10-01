@@ -24,7 +24,7 @@ sites estão fora do ar, o que acontece com frequência.
 |---|---|---|
 | BPA Magnético | `sia.datasus.gov.br/versao/listar_ftp_bpa.php` | instalador, versão única |
 | APAC Magnético | `sia.datasus.gov.br/versao/listar_ftp_apac.php` | instalador, versão única |
-| CIHA01 e CIHA02 | `ciha.saude.gov.br/versao/versao_ciha1.php` e `versao_ciha2.php` | atualização e instalação inicial separadas |
+| CIHA02 | `ciha.saude.gov.br/versao/versao_ciha2.php` | atualização e instalação inicial separadas |
 | SIA | `sia.datasus.gov.br/versao/listar_ftp_sia.php` | instalador, versão única |
 | FPO Magnético | `sia.datasus.gov.br/versao/listar_ftp_fpo.php` | instalador inicial e atualização mais recente |
 | SIHD2 | `sihd.datasus.gov.br/versao/versao_sihd2.php` | instalador, versão única |

@@ -4449,21 +4449,6 @@
       "official_reachable": true,
       "pending_download": true
     },
-    "ciha01": {
-      "label": "CIHA01 · atualização",
-      "official_page": "http://ciha.saude.gov.br/versao/versao_ciha1.php",
-      "latest": {
-        "name": "CIHA01_VER2033.exe",
-        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA01_VER2033.exe",
-        "size": null,
-        "version": "2033",
-        "release_date": null
-      },
-      "catalog_checked_at": "2026-10-01T12:40:37+00:00",
-      "checked_at": "2026-10-01T12:40:37+00:00",
-      "official_reachable": true,
-      "pending_download": true
-    },
     "ciha02": {
       "label": "CIHA02 · atualização",
       "official_page": "http://ciha.saude.gov.br/versao/versao_ciha2.php",
@@ -4472,21 +4457,6 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
         "size": null,
         "version": "2034",
-        "release_date": null
-      },
-      "catalog_checked_at": "2026-10-01T12:40:37+00:00",
-      "checked_at": "2026-10-01T12:40:37+00:00",
-      "official_reachable": true,
-      "pending_download": true
-    },
-    "ciha01_installer": {
-      "label": "CIHA01 · instalação inicial",
-      "official_page": "http://ciha.saude.gov.br/versao/versao_ciha1.php",
-      "latest": {
-        "name": "CIHA01_SETUP_20.00.exe",
-        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA01_SETUP_20.00.exe",
-        "size": null,
-        "version": "2000",
         "release_date": null
       },
       "catalog_checked_at": "2026-10-01T12:40:37+00:00",

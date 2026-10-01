@@ -21,7 +21,7 @@ from catalogs.updates import make_update_event, merge_updates
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
-SINGLE_VERSION_SYSTEMS = ("bpa", "apac", "sia", "fpo_update", "sihd2", "ciha01", "ciha02", "cnes_complete", "cnes_app")
+SINGLE_VERSION_SYSTEMS = ("bpa", "apac", "sia", "fpo_update", "sihd2", "ciha02", "cnes_complete", "cnes_app")
 COMPETENCE_SYSTEMS = ("bdsia", "sigtap", "cnes_base")
 DIRECT_DOWNLOAD_LIMIT = 50_000_000
 
@@ -31,20 +31,10 @@ SYSTEM_META: dict[str, dict[str, object]] = {
         "fetch": apac_portal.fetch_apac_catalog, "download": apac_portal.download_release,
         "official_page": apac_portal.INDEX_URL,
     },
-    "ciha01": {
-        "label": "CIHA01 · atualização", "icon": "🏥",
-        "fetch": ciha_portal.fetch_ciha01_catalog, "download": ciha_portal.download_release,
-        "official_page": ciha_portal.PAGES["01"],
-    },
     "ciha02": {
         "label": "CIHA02 · atualização", "icon": "🏛️",
         "fetch": ciha_portal.fetch_ciha02_catalog, "download": ciha_portal.download_release,
         "official_page": ciha_portal.PAGES["02"],
-    },
-    "ciha01_installer": {
-        "label": "CIHA01 · instalação inicial", "icon": "📦",
-        "fetch": ciha_portal.fetch_ciha01_installer_catalog, "download": ciha_portal.download_release,
-        "official_page": ciha_portal.PAGES["01"],
     },
     "ciha02_installer": {
         "label": "CIHA02 · instalação inicial", "icon": "📦",
@@ -444,9 +434,9 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
                 st.caption("Use na primeira instalação e, em seguida, aplique a atualização atual no cartão principal.")
             elif system_key == "fpo_update":
                 st.caption("Este é o arquivo de atualização atual. Use com o FPO já instalado.")
-            elif system_key in {"ciha01", "ciha02"}:
+            elif system_key == "ciha02":
                 st.caption("Atualização para o sistema já instalado. A primeira instalação fica na seção abaixo.")
-            elif system_key in {"ciha01_installer", "ciha02_installer"}:
+            elif system_key == "ciha02_installer":
                 st.caption("Primeira instalação: inclui banco de dados vazio. Não substitua o banco de uma instalação existente.")
             if system_key == "sihd2" and not matching_mirror(name, info.get("mirror")):
                 st.warning("Versão identificada na página oficial, mas o arquivo ainda não pôde ser baixado do servidor DATASUS. Download indisponível até a cópia ser confirmada.")
@@ -459,7 +449,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
         if system_key == "fpo_update":
             with st.expander("Primeira instalação? Abra o instalador base do FPO"):
                 render_single_version_card("fpo_installer", snapshot_systems)
-        if system_key in {"ciha01", "ciha02"}:
+        if system_key == "ciha02":
             with st.expander(f"Primeira instalação do {system_key.upper()}"):
                 render_single_version_card(system_key + "_installer", snapshot_systems)
 
@@ -544,7 +534,7 @@ def latest_release_rows(snapshot_systems):
     live_catalogs = st.session_state.get("forced_live_catalogs", {})
     rows = []
     for system_key, meta in SYSTEM_META.items():
-        if system_key in {"fpo_installer", "ciha01_installer", "ciha02_installer"}:
+        if system_key in {"fpo_installer", "ciha02_installer"}:
             continue
         saved = snapshot_systems.get(system_key, {})
         releases, _error = live_catalogs.get(system_key, (None, None))
