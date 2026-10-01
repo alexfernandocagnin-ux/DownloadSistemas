@@ -1,6 +1,7 @@
 """Helpers for the persistent feed of newly discovered system releases."""
 
 from __future__ import annotations
+from datetime import datetime, timedelta, timezone
 
 
 def make_update_event(system_key, system, name, found_at, competence=None, catalog_source=None):
@@ -19,7 +20,7 @@ def make_update_event(system_key, system, name, found_at, competence=None, catal
     return event
 
 
-def merge_updates(*collections, limit=24):
+def merge_updates(*collections, limit=None):
     """Deduplicate events by release and keep the newest announcements first."""
     events = {}
     for collection in collections:
@@ -30,3 +31,18 @@ def merge_updates(*collections, limit=24):
                 continue
             events.setdefault(str(item["id"]), dict(item))
     return sorted(events.values(), key=lambda item: str(item.get("found_at", "")), reverse=True)[:limit]
+
+
+def recent_updates(events, *, now=None, days=7):
+    now = now or datetime.now(timezone.utc)
+    result = []
+    for event in events:
+        try:
+            found = datetime.fromisoformat(str(event.get("found_at", "")).replace("Z", "+00:00"))
+            if found.tzinfo is None:
+                found = found.replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+        if now - timedelta(days=days) <= found <= now:
+            result.append(event)
+    return result

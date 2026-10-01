@@ -17,7 +17,7 @@ import streamlit as st
 
 from catalogs.mirrors import download_mirror, matching_mirror, probe_mirror
 from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
-from catalogs.updates import make_update_event, merge_updates
+from catalogs.updates import make_update_event, merge_updates, recent_updates
 from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
@@ -368,11 +368,11 @@ def force_check_all_systems(snapshot_systems):
 def render_download_button(system_key, name, url, mirror):
     mirror = matching_mirror(name, mirror)
     if mirror and mirror.get("verified_at"):
-        badge("ok", "Espelho publicado · disponível sem o DATASUS")
+        badge("ok", "Download disponível · cópia verificada")
     elif mirror:
-        badge("warn", "Espelho antigo · será verificado ao preparar")
+        badge("warn", "Cópia disponível · validação ao preparar")
     else:
-        badge("warn", "Ainda depende da fonte oficial")
+        badge("warn", "Download pelo servidor DATASUS")
     if not mirror and system_key.removesuffix("_backup") in {"cnes_base", "cnes_complete"}:
         st.info("A cópia deste pacote grande está sendo incluída no espelho. Enquanto isso, o download direto depende da disponibilidade do CNES.")
         if cnes_portal.safe_url(url, name):
@@ -464,10 +464,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
                 st.caption("Atualização para o sistema já instalado. A primeira instalação fica na seção abaixo.")
             elif system_key == "ciha02_installer":
                 st.caption("Primeira instalação: inclui banco de dados vazio. Não substitua o banco de uma instalação existente.")
-            if system_key == "sihd2" and not matching_mirror(name, info.get("mirror")):
-                st.warning("Versão identificada na página oficial, mas o arquivo ainda não pôde ser baixado do servidor DATASUS. Download indisponível até a cópia ser confirmada.")
-            else:
-                render_download_button(system_key, str(name), str(url), info.get("mirror"))
+            render_download_button(system_key, str(name), str(url), info.get("mirror"))
             if current and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
                 with st.expander("Versão anterior preservada no espelho"):
                     render_download_button(system_key + "_backup", current["name"], current["url"], info["mirror"])
@@ -601,7 +598,7 @@ def latest_release_rows(snapshot_systems):
             "Sistema": str(meta["label"]),
             "Última versão": version,
             "Data do lançamento": release_date_value((release or {}).get("release_date")),
-            "Download": "Disponível no espelho" if has_mirror else "Cópia ainda indisponível",
+            "Download": "Disponível no espelho" if has_mirror else "Download pelo DATASUS",
         })
     return rows
 
@@ -638,7 +635,7 @@ def render_updates_panel(snapshot):
         st.markdown(
             '<div class="ds-update-heading"><div class="ds-update-icon">✦</div>'
             '<div><strong>Novidades dos sistemas</strong>'
-            '<span>Novas versões encontradas, organizadas pela data em que foram descobertas.</span></div></div>',
+            '<span>Atualizações identificadas nos últimos 7 dias.</span></div></div>',
             unsafe_allow_html=True,
         )
     with action:
@@ -652,10 +649,10 @@ def render_updates_panel(snapshot):
 
     stored = snapshot.get("updates", [])
     live = st.session_state.get("forced_live_updates", [])
-    updates = merge_updates(stored, live)
+    updates = recent_updates(merge_updates(stored, live))
     if updates:
         items = []
-        for event in updates[:6]:
+        for event in updates:
             source_note = " · catálogo comunitário" if event.get("catalog_source") == "community" else ""
             items.append(
                 '<div class="ds-update-item">'
@@ -664,14 +661,14 @@ def render_updates_panel(snapshot):
                 f'<span class="ds-update-date">Encontrada em {escape(update_day(event.get("found_at")))}</span>'
                 '</div>'
             )
-        extra = f"<p>Exibindo as 6 novidades mais recentes de {len(updates)} registradas.</p>" if len(updates) > 6 else ""
+        extra = ""
         content = f'<div class="ds-update-list">{"".join(items)}</div>{extra}'
     else:
         checked_at = st.session_state.get("forced_live_checked_at")
         if checked_at:
             message = f"Nenhuma versão nova encontrada na última verificação de {update_day(checked_at)}."
         else:
-            message = "Ainda não há uma versão nova registrada desde o início do histórico. A verificação automática confere os sistemas ao longo do dia."
+            message = "Nenhuma atualização identificada nos últimos 7 dias. A consulta automática é realizada a cada duas horas."
         content = f'<div class="ds-update-empty">{escape(message)}</div>'
 
     st.markdown(
@@ -694,8 +691,8 @@ st.markdown(
         <div class="ds-hero-copy">
             <div class="ds-eyebrow">DATASUS &nbsp;·&nbsp; CENTRAL DE ARQUIVOS</div>
             <h1>Downloads Sistemas</h1>
-            <p>Instaladores e tabelas oficiais do SUS em um só lugar. Quando o portal do Ministério
-            oscila, os arquivos já espelhados continuam disponíveis para baixar.</p>
+            <p>Acesso centralizado a instaladores, atualizações e tabelas dos sistemas de informação do SUS.
+            Apoio às atividades de gestão, processamento e envio de dados em saúde.</p>
         </div>
         <div class="ds-hero-meta">
             <strong>Catálogo conferido</strong>

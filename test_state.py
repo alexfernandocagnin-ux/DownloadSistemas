@@ -45,3 +45,15 @@ class CatalogStateTests(unittest.TestCase):
             with ThreadPoolExecutor(max_workers=4) as pool:
                 list(pool.map(update, range(20)))
             self.assertEqual(len(json.loads(path.read_text(encoding="utf-8"))["systems"]), 20)
+
+
+class UpdateVisibilityTests(unittest.TestCase):
+    def test_updates_remain_visible_for_seven_days(self):
+        from datetime import datetime, timedelta, timezone
+        from catalogs.updates import recent_updates
+        now = datetime(2026, 10, 8, 12, tzinfo=timezone.utc)
+        events = [{"name": "recent", "found_at": (now - timedelta(days=6)).isoformat()},
+                  {"name": "boundary", "found_at": (now - timedelta(days=7)).isoformat()},
+                  {"name": "expired", "found_at": (now - timedelta(days=7, seconds=1)).isoformat()},
+                  {"name": "invalid", "found_at": "unknown"}]
+        self.assertEqual([e["name"] for e in recent_updates(events, now=now)], ["recent", "boundary"])

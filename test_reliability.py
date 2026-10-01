@@ -313,6 +313,13 @@ class PortalTests(unittest.TestCase):
         finally:
             path.write_bytes(original)
 
+    def test_sihd_can_prepare_from_official_source_without_a_mirror(self):
+        with patch.object(sihd_portal, "download_release", return_value=PACKAGE):
+            app = self.app().run()
+            next(b for b in app.button if str(b.key).startswith("prep_sihd2_")).click().run()
+            self.assertFalse(app.exception)
+            self.assertTrue(any("SIHD2" in b.proto.label for b in app.get("download_button")))
+
     def test_manual_check_forces_every_catalog_without_cache(self):
         fetchers = [
             (apac_portal, "fetch_apac_catalog"),
