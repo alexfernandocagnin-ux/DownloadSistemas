@@ -41,8 +41,8 @@ def merge_catalogs(remote, local):
                         entries[month] = dict(entry)
             info["competences"] = entries
         else:
-            withdrawn = (info.get("latest") or {}).get("withdrawn_names", [])
-            copies = [entry for entry in [old, new] if (entry.get("current") or {}).get("name") and entry["current"]["name"] not in withdrawn]
+            withdrawn = {str(name).lower() for name in (info.get("latest") or {}).get("withdrawn_names", [])}
+            copies = [entry for entry in [old, new] if (entry.get("current") or {}).get("name") and str(entry["current"]["name"]).lower() not in withdrawn]
             if copies:
                 copy = max(copies, key=lambda entry: (release_rank(entry["current"])[1:], bool(matching_mirror(entry["current"]["name"], entry.get("mirror"))), str((entry.get("mirror") or {}).get("verified_at", ""))))
                 info["current"], info["mirror"] = copy["current"], copy.get("mirror")

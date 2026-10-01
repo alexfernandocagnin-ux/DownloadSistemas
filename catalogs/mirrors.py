@@ -1,6 +1,7 @@
 """Downloads do espelho publicado, com limites e verificação de integridade."""
 
 import hashlib
+import re
 from urllib.parse import unquote, urlsplit
 from urllib.request import Request, urlopen
 from catalogs._common import USER_AGENT
@@ -15,7 +16,12 @@ def matching_mirror(name, mirror):
     if not isinstance(mirror, dict) or mirror.get("asset_name") != name:
         return None
     url = mirror.get("asset_url", "")
-    parsed = urlsplit(url)
+    if not isinstance(url, str):
+        return None
+    try:
+        parsed = urlsplit(url)
+    except ValueError:
+        return None
     prefix = f"/{REPOSITORY}/releases/download/"
     if (parsed.scheme != "https" or parsed.hostname != "github.com"
             or not parsed.path.startswith(prefix)
@@ -57,13 +63,16 @@ def probe_mirror(name, mirror):
     with urlopen(request, timeout=20) as response:
         signature = response.read(2)
         content_range = response.headers.get("Content-Range", "")
+        if content_range and not re.fullmatch(r"bytes 0-1/\d+", content_range):
+            raise ValueError("O espelho respondeu com um intervalo de bytes inesperado.")
         total = content_range.rsplit("/", 1)[-1] if "/" in content_range else response.headers.get("Content-Length")
     if signature != _expected_signature(name):
         raise ValueError("O espelho não entregou um instalador ou ZIP válido.")
-    if total and total.isdigit():
-        size = int(total)
-        if size < 100_000 or size > MAX_PACKAGE_SIZE:
-            raise ValueError("Tamanho de arquivo inesperado.")
-        if mirror.get("size") and size != mirror["size"]:
-            raise ValueError("O tamanho do arquivo diverge do catálogo.")
+    if not isinstance(total, str) or not total.isdigit():
+        raise ValueError("O espelho não informou o tamanho total do arquivo.")
+    size = int(total)
+    if size < 100_000 or size > MAX_PACKAGE_SIZE:
+        raise ValueError("Tamanho de arquivo inesperado.")
+    if mirror.get("size") and size != mirror["size"]:
+        raise ValueError("O tamanho do arquivo diverge do catálogo.")
     return mirror["asset_url"]

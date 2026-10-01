@@ -495,7 +495,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
             elif system_key == "ciha02_installer":
                 st.caption("Primeira instalação: inclui banco de dados vazio. Não substitua o banco de uma instalação existente.")
             render_download_button(system_key, str(name), str(url), info.get("mirror"))
-            if current and current.get("name") not in (latest or {}).get("withdrawn_names", []) and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
+            if current and str(current.get("name", "")).lower() not in {str(item).lower() for item in (latest or {}).get("withdrawn_names", [])} and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
                 with st.expander("Versão anterior preservada no espelho"):
                     render_download_button(system_key + "_backup", current["name"], current["url"], info["mirror"])
         st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")

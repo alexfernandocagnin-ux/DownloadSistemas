@@ -1,4 +1,17 @@
-# Revisão de confiabilidade — 01/10/2026
+# Revisão de confiabilidade - 01/10/2026
+
+## Revisão complementar
+
+A revisão complementar reproduziu cinco falhas antes das correções e acrescentou dez testes de regressão. A suíte completa passou com **95 testes, sem testes ignorados**, em Python 3.12 com Streamlit 1.64.0, incluindo os testes da interface.
+
+- Cancelamentos agora sobrevivem à combinação com catálogos antigos e a novas versões. Comparações de nomes retirados ignoram maiúsculas/minúsculas, inclusive na oferta de cópias anteriores.
+- ZIPs têm o CRC de todos os membros conferido, além do diretório. Arquivos com diretório válido e conteúdo corrompido são rejeitados, sem extração nem execução.
+- URLs malformadas ou de tipo incorreto são rejeitadas pelo validador de espelhos e de fontes oficiais/CNES.
+- A consulta parcial de um espelho exige tamanho total e intervalo de bytes coerentes. Uma assinatura isolada não confirma o arquivo.
+- Chamadas do GitHub têm prazo máximo de 120 segundos; uploads, 600 segundos. Falhas de prazo preservam os dados anteriores nos fluxos de sincronização.
+- Um hash remoto diferente do anteriormente registrado exige novo download da fonte. A recuperação de uploads interrompidos verifica a entrega antes de confirmar o espelho. Quando o GitHub informa SHA-256 após o upload, ele precisa corresponder ao pacote baixado.
+
+Limites: uma consulta parcial de arquivos grandes verifica assinatura e tamanho, não o hash de todo o conteúdo. A validação completa pode ser executada com `scripts/audit_downloads.py --full`. Dependências externas continuam sujeitas a indisponibilidade e mudanças de formato. Assinatura/CRC/hash não certificam que o instalador oficial está livre de problemas nem que suas regras de faturamento estão corretas.
 
 Revisados: aplicação Streamlit, módulos de catálogo, comparação e persistência de versões, downloads, espelhos, avisos de sete dias, sincronização, publicação, auditoria de arquivos, acordador, configurações e testes. Diretórios gerados, ambiente virtual e executáveis não fazem parte da revisão de código.
 

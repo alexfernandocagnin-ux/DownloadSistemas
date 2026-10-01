@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 import io
 import zipfile
+import zlib
 import ssl
 import unicodedata
 from datetime import date
@@ -181,6 +182,8 @@ def safe_official_url(
     ftp_path_prefix: str = "",
 ) -> bool:
     """Confere se um link aponta mesmo para o arquivo esperado, num host oficial conhecido."""
+    if not isinstance(url, str) or not isinstance(name, str):
+        return False
     try:
         parsed = urlsplit(url)
     except ValueError:
@@ -263,7 +266,13 @@ def looks_like_windows_executable(package: bytes, *, min_size: int = 1_000_000) 
 
 
 def looks_like_zip(package: bytes, *, min_size: int = 1_000_000) -> bool:
-    return len(package) >= min_size and package[:2] == b"PK" and zipfile.is_zipfile(io.BytesIO(package))
+    if len(package) < min_size or package[:2] != b"PK":
+        return False
+    try:
+        with zipfile.ZipFile(io.BytesIO(package)) as archive:
+            return archive.testzip() is None
+    except (zipfile.BadZipFile, RuntimeError, NotImplementedError, OSError, EOFError, zlib.error):
+        return False
 
 
 def download_release(

@@ -37,7 +37,12 @@ def _download_url(name: str) -> str:
 
 
 def safe_url(url: str, name: str) -> bool:
-    parsed = urlsplit(url)
+    if not isinstance(url, str) or not isinstance(name, str):
+        return False
+    try:
+        parsed = urlsplit(url)
+    except ValueError:
+        return False
     if parsed.scheme != "https" or parsed.hostname != HOST or parsed.path != DOWNLOAD_PATH:
         return False
     query_path = parse_qs(parsed.query).get("path", [None])[0]

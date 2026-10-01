@@ -25,6 +25,7 @@ sys.path.insert(0, str(ROOT))
 
 from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
 from catalogs.state import atomic_write, normalize_catalog  # noqa: E402
+from catalogs.mirrors import probe_mirror  # noqa: E402
 from catalogs.updates import make_update_event, merge_updates  # noqa: E402
 
 CATALOG_PATH = ROOT / "data" / "catalog.json"
@@ -127,7 +128,8 @@ def now():
 
 
 def gh(*args):
-    return subprocess.run(["gh", *args], check=True, capture_output=True, text=True).stdout
+    timeout = 600 if args[:2] == ("release", "upload") else 120
+    return subprocess.run(["gh", *args], check=True, capture_output=True, text=True, timeout=timeout).stdout
 
 
 def remote_asset(tag, name):
@@ -152,23 +154,32 @@ def confirmed_previous(entry):
         return None
     if mirror.get("size") and mirror["size"] != asset["size"]:
         return None
+    digest = asset.get("digest") or ""
+    if mirror.get("sha256") and digest.startswith("sha256:") and mirror["sha256"] != digest.removeprefix("sha256:"):
+        return None
     return {**mirror, "size": asset["size"], "verified_at": now()}
 
 
-def store_package(key, release, config, tag):
+def store_package(key, release, config, tag, expected_sha256=None):
     name = str(release["name"])
     if Path(name).name != name or "/" in name or "\\" in name:
         raise ValueError("Nome de arquivo inválido.")
     if PUBLISH:
         existing = remote_asset(tag, name)
-        if existing and (not release.get("size") or existing["size"] == release["size"]):
+        digest = (existing or {}).get("digest") or ""
+        if (existing and (not release.get("size") or existing["size"] == release["size"])
+                and (not expected_sha256 or digest == "sha256:" + expected_sha256)):
             # Recupera uploads concluídos antes de uma interrupção do workflow.
             mirror = {"tag": tag, "asset_name": name, "asset_url": existing["url"],
                       "size": existing["size"], "verified_at": now()}
-            digest = existing.get("digest") or ""
             if digest.startswith("sha256:"):
                 mirror["sha256"] = digest.removeprefix("sha256:")
-            return mirror
+            try:
+                probe_mirror(name, mirror)
+            except (OSError, ValueError):
+                pass  # A stale asset must be replaced from the source, not republished as verified.
+            else:
+                return mirror
     package = config["download"](release)
     target = DIST_DIR / key / name
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -186,6 +197,9 @@ def store_package(key, release, config, tag):
     asset = remote_asset(tag, name)
     if not asset or asset["size"] != len(package):
         raise ValueError(f"A publicação de {name} não foi confirmada.")
+    digest = asset.get("digest") or ""
+    if digest.startswith("sha256:") and digest.removeprefix("sha256:") != hashlib.sha256(package).hexdigest():
+        raise ValueError(f"O hash publicado de {name} diverge do arquivo baixado.")
     return {"tag": tag, "asset_name": name, "asset_url": asset["url"],
             "size": len(package), "sha256": hashlib.sha256(package).hexdigest(), "verified_at": now()}
 
@@ -230,7 +244,7 @@ def sync_single_version_system(key, config, previous):
         result = {**old, "label": config["label"], "official_page": config["official_page"],
                   "latest": latest, "catalog_checked_at": checked_at, "official_reachable": True,
                   "pending_download": old_current.get("name") != name or not old.get("mirror")}
-        if old_current.get("name") in latest.get("withdrawn_names", []):
+        if str(old_current.get("name", "")).lower() in {str(name).lower() for name in latest.get("withdrawn_names", [])}:
             result.pop("current", None)
             result.pop("mirror", None)
         if announcements:
@@ -240,9 +254,10 @@ def sync_single_version_system(key, config, previous):
         previous_entry = {**(old.get("current") or {}), "mirror": old.get("mirror")}
         mirror = confirmed_previous(previous_entry) if previous_entry.get("name") == name else None
         if not mirror:
-            mirror = store_package(key, latest, config, config["tag"])
+            mirror = store_package(key, latest, config, config["tag"],
+                                   expected_sha256=(old.get("mirror") or {}).get("sha256") if old_current.get("name") == name else None)
         print(f'[{key}] {name}: {"espelho confirmado" if mirror else "somente arquivo local"}')
-    except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+    except (OSError, ValueError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
         result = failed(old, config, checked_at, exc)
         result.update(latest=latest, official_reachable=True, catalog_checked_at=checked_at,
                       pending_download=True, download_error=type(exc).__name__)
@@ -328,7 +343,8 @@ def sync_competence_system(key, config, previous, on_progress=None):
                 if attempts >= package_budget:
                     continue
                 attempts += 1
-                mirror = store_package(key, release, config, f"{key.replace('_', '-')}-{month}")
+                mirror = store_package(key, release, config, f"{key.replace('_', '-')}-{month}",
+                                       expected_sha256=(entry.get("mirror") or {}).get("sha256") if entry.get("name") == release["name"] else None)
             release_date = release.get("release_date")
             if not release_date and entry.get("name") == release["name"]:
                 release_date = entry.get("release_date")
@@ -338,7 +354,7 @@ def sync_competence_system(key, config, previous, on_progress=None):
                               "release_date": release_date}
             if on_progress:
                 on_progress(key, result())
-        except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+        except (OSError, ValueError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
             errors.append(month)
             print(f'::warning::{key} {month}: {type(exc).__name__}; cópia anterior preservada.')
     return result()

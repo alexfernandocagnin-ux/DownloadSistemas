@@ -207,7 +207,7 @@ class SynchronizationTests(unittest.TestCase):
     def test_completed_upload_is_recovered_after_interrupted_run(self):
         asset = {"name": NAME, "url": MIRROR["asset_url"], "size": len(PACKAGE), "digest": "sha256:" + "a" * 64}
         config = {**self.config, "download": lambda release: (_ for _ in ()).throw(AssertionError("unnecessary download"))}
-        with patch.object(sync, "PUBLISH", True), patch.object(sync, "remote_asset", return_value=asset):
+        with patch.object(sync, "PUBLISH", True), patch.object(sync, "remote_asset", return_value=asset), patch.object(sync, "probe_mirror", return_value=MIRROR["asset_url"]):
             mirror = sync.store_package("bpa", {"name": NAME, "url": URL}, config, "bpa-latest")
         self.assertEqual(mirror["sha256"], "a" * 64)
         self.assertEqual(mirror["asset_url"], MIRROR["asset_url"])
