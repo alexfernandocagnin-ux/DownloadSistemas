@@ -712,7 +712,17 @@ def render_updates_panel(snapshot):
         st.caption(f"Última verificação manual, sem cache: {readable_date(checked_at)}")
 
 
+@st.fragment(run_every="60s")
+def refresh_catalog_when_changed(rendered_version):
+    # Recarrega a página aberta apenas quando há um catálogo novo no servidor.
+    # A consulta às fontes continua sendo executada pela automação, não por visitante.
+    current = load_snapshot()
+    if current.get("updated_at") != rendered_version:
+        st.rerun()
+
+
 snapshot = load_snapshot()
+refresh_catalog_when_changed(snapshot.get("updated_at"))
 systems = snapshot.get("systems", {}) if isinstance(snapshot.get("systems"), dict) else {}
 updated_at = snapshot.get("updated_at", "ainda não sincronizado")
 readable_updated_at = readable_date(updated_at)
@@ -729,7 +739,7 @@ st.markdown(
         <div class="ds-hero-meta">
             <strong>Catálogo conferido</strong>
             <span>{escape(readable_updated_at)}</span>
-            <small>Consulta automática a cada duas horas</small>
+            <small>Consulta programada a cada duas horas</small>
         </div>
     </div>
     """,
