@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-02T10:05:30+00:00",
+  "updated_at": "2026-10-02T16:51:06+00:00",
   "systems": {
     "apac": {
       "label": "APAC Magnético",
@@ -10,7 +10,7 @@
         "version": "0402",
         "release_date": "2026-09-24"
       },
-      "catalog_checked_at": "2026-10-02T10:05:08+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:00+00:00",
       "pending_download": false,
       "current": {
         "name": "APACMAG_0402.exe",
@@ -38,7 +38,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
         "version": "2034"
       },
-      "catalog_checked_at": "2026-10-02T10:05:08+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:00+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_VER2034.exe",
@@ -66,7 +66,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
         "version": "2000"
       },
-      "catalog_checked_at": "2026-10-02T10:05:08+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:00+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_SETUP_20.00.exe",
@@ -95,7 +95,7 @@
         "version": "0500",
         "release_date": "2026-07-09"
       },
-      "catalog_checked_at": "2026-10-02T10:05:08+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:00+00:00",
       "pending_download": false,
       "current": {
         "name": "BPAMAG0500.exe",
@@ -125,7 +125,7 @@
         "version": "0605",
         "release_date": "1969-12-31"
       },
-      "catalog_checked_at": "2026-10-02T10:05:10+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:02+00:00",
       "pending_download": false,
       "current": {
         "name": "SIA0605.exe",
@@ -154,7 +154,7 @@
         "version": "0100",
         "release_date": "2008-06-10"
       },
-      "catalog_checked_at": "2026-10-02T10:05:11+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:02+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Instalador_0100.exe",
@@ -183,7 +183,7 @@
         "version": "0303",
         "release_date": "2026-09-29"
       },
-      "catalog_checked_at": "2026-10-02T10:05:11+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:03+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Atualiza_0303.exe",
@@ -226,7 +226,7 @@
           "sihd2_2272.exe"
         ]
       },
-      "catalog_checked_at": "2026-10-02T10:05:13+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:04+00:00",
       "pending_download": false,
       "current": {
         "name": "SIHD2_2340.exe",
@@ -254,7 +254,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-02T10:05:13+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:04+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-ATUALIZACAO.ZIP",
@@ -282,7 +282,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-COMPLETA.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-02T10:05:14+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:05+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
@@ -321,7 +321,7 @@
           "integrity_verified_at": "2026-09-29T13:30:13+00:00"
         }
       },
-      "catalog_checked_at": "2026-10-02T10:05:20+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:05+00:00",
       "available_releases": [
         {
           "name": "BDSIA202609a.exe",
@@ -2102,9 +2102,6 @@
         {
           "name": "BDSIA201611b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201611b.exe",
-          "competence": "201611",
-          "revision": "b",
-          "release_date": "2016-12-05",
           "mirror": {
             "tag": "bdsia-201611",
             "asset_name": "BDSIA201611b.exe",
@@ -2112,14 +2109,14 @@
             "size": 6600466,
             "sha256": "4efed4a6c51b6030b97b388155e0bd8992b8a160736ec15cf229324ce5dddfe1",
             "verified_at": "2026-10-02T10:06:32+00:00"
-          }
+          },
+          "release_date": "2016-12-05",
+          "competence": "201611",
+          "revision": "b"
         },
         {
           "name": "BDSIA201610b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201610b.exe",
-          "competence": "201610",
-          "revision": "b",
-          "release_date": "2016-11-03",
           "mirror": {
             "tag": "bdsia-201610",
             "asset_name": "BDSIA201610b.exe",
@@ -2127,14 +2124,14 @@
             "size": 6684609,
             "sha256": "566a88f7458e959f25391d0a2f631f9515b13dc9d187a2edeeab1153578a1fc9",
             "verified_at": "2026-10-02T10:06:40+00:00"
-          }
+          },
+          "release_date": "2016-11-03",
+          "competence": "201610",
+          "revision": "b"
         },
         {
           "name": "BDSIA201609c.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201609c.exe",
-          "competence": "201609",
-          "revision": "c",
-          "release_date": "2016-10-06",
           "mirror": {
             "tag": "bdsia-201609",
             "asset_name": "BDSIA201609c.exe",
@@ -2142,14 +2139,14 @@
             "size": 6604411,
             "sha256": "7a04794e700256ef5537d5293ac8084d312eb659edca885a8dcffe84acc0ad4a",
             "verified_at": "2026-10-02T10:07:32+00:00"
-          }
+          },
+          "release_date": "2016-10-06",
+          "competence": "201609",
+          "revision": "c"
         },
         {
           "name": "BDSIA201608b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201608b.exe",
-          "competence": "201608",
-          "revision": "b",
-          "release_date": "2016-09-12",
           "mirror": {
             "tag": "bdsia-201608",
             "asset_name": "BDSIA201608b.exe",
@@ -2157,14 +2154,14 @@
             "size": 6741110,
             "sha256": "702987c324239079c1e120b6730b1d0d8d388c48696d7af418ee0bef082bb206",
             "verified_at": "2026-10-02T10:08:24+00:00"
-          }
+          },
+          "release_date": "2016-09-12",
+          "competence": "201608",
+          "revision": "b"
         },
         {
           "name": "BDSIA201607b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201607b.exe",
-          "competence": "201607",
-          "revision": "b",
-          "release_date": "2016-08-09",
           "mirror": {
             "tag": "bdsia-201607",
             "asset_name": "BDSIA201607b.exe",
@@ -2172,14 +2169,14 @@
             "size": 6523416,
             "sha256": "65ca426d543f6d5f4f9d5b3efe95485655470f5b003c0e2e3441917517f0c85d",
             "verified_at": "2026-10-02T10:09:22+00:00"
-          }
+          },
+          "release_date": "2016-08-09",
+          "competence": "201607",
+          "revision": "b"
         },
         {
           "name": "BDSIA201606b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201606b.exe",
-          "competence": "201606",
-          "revision": "b",
-          "release_date": "2016-07-06",
           "mirror": {
             "tag": "bdsia-201606",
             "asset_name": "BDSIA201606b.exe",
@@ -2187,14 +2184,14 @@
             "size": 6597228,
             "sha256": "d60ca613915f1ca9c7aa5267954da26fa7a840ab2900c9c6e8c63e0885122fba",
             "verified_at": "2026-10-02T10:10:18+00:00"
-          }
+          },
+          "release_date": "2016-07-06",
+          "competence": "201606",
+          "revision": "b"
         },
         {
           "name": "BDSIA201605b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201605b.exe",
-          "competence": "201605",
-          "revision": "b",
-          "release_date": "2016-06-07",
           "mirror": {
             "tag": "bdsia-201605",
             "asset_name": "BDSIA201605b.exe",
@@ -2202,14 +2199,14 @@
             "size": 6570405,
             "sha256": "972906c4fe66c75eb3ba656337bb0695216c8932b3cc5574c66207b269ce6fc2",
             "verified_at": "2026-10-02T10:11:10+00:00"
-          }
+          },
+          "release_date": "2016-06-07",
+          "competence": "201605",
+          "revision": "b"
         },
         {
           "name": "BDSIA201604d.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201604d.exe",
-          "competence": "201604",
-          "revision": "d",
-          "release_date": "2016-05-18",
           "mirror": {
             "tag": "bdsia-201604",
             "asset_name": "BDSIA201604d.exe",
@@ -2217,14 +2214,14 @@
             "size": 6653206,
             "sha256": "4f3a0847997543c74c64c5a70cd6be6be83c4ac6c63255ae45870b041ee8e069",
             "verified_at": "2026-10-02T10:11:46+00:00"
-          }
+          },
+          "release_date": "2016-05-18",
+          "competence": "201604",
+          "revision": "d"
         },
         {
           "name": "BDSIA201603b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201603b.exe",
-          "competence": "201603",
-          "revision": "b",
-          "release_date": "2016-04-06",
           "mirror": {
             "tag": "bdsia-201603",
             "asset_name": "BDSIA201603b.exe",
@@ -2232,14 +2229,14 @@
             "size": 6535805,
             "sha256": "7b42c4477159b8ac8bdd50041d779fd2db0f09c86377cbac5b1a1575af6fa244",
             "verified_at": "2026-10-02T10:12:27+00:00"
-          }
+          },
+          "release_date": "2016-04-06",
+          "competence": "201603",
+          "revision": "b"
         },
         {
           "name": "BDSIA201602b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201602b.exe",
-          "competence": "201602",
-          "revision": "b",
-          "release_date": "2016-03-07",
           "mirror": {
             "tag": "bdsia-201602",
             "asset_name": "BDSIA201602b.exe",
@@ -2247,14 +2244,14 @@
             "size": 6557334,
             "sha256": "6f0fad7853f15b9e64d581dbf29549c0b3a10dc887f80ee62fb2fdce6dbf28b5",
             "verified_at": "2026-10-02T10:13:18+00:00"
-          }
+          },
+          "release_date": "2016-03-07",
+          "competence": "201602",
+          "revision": "b"
         },
         {
           "name": "BDSIA201601b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201601b.exe",
-          "competence": "201601",
-          "revision": "b",
-          "release_date": "2016-02-05",
           "mirror": {
             "tag": "bdsia-201601",
             "asset_name": "BDSIA201601b.exe",
@@ -2262,14 +2259,14 @@
             "size": 6353096,
             "sha256": "b2c5a91b66f1c3a10db6c4b74bbfc1445e0ef4ec8a191c9411a0b33df2181aed",
             "verified_at": "2026-10-02T10:14:09+00:00"
-          }
+          },
+          "release_date": "2016-02-05",
+          "competence": "201601",
+          "revision": "b"
         },
         {
           "name": "BDSIA201512b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201512b.exe",
-          "competence": "201512",
-          "revision": "b",
-          "release_date": "2016-01-08",
           "mirror": {
             "tag": "bdsia-201512",
             "asset_name": "BDSIA201512b.exe",
@@ -2277,14 +2274,14 @@
             "size": 4769116,
             "sha256": "9a3bb858cdf1efbe935798a6f0bc9803907836de48833eec82eb40a2dcb0c99e",
             "verified_at": "2026-10-02T10:14:50+00:00"
-          }
+          },
+          "release_date": "2016-01-08",
+          "competence": "201512",
+          "revision": "b"
         },
         {
           "name": "BDSIA201511b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201511b.exe",
-          "competence": "201511",
-          "revision": "b",
-          "release_date": "2015-12-07",
           "mirror": {
             "tag": "bdsia-201511",
             "asset_name": "BDSIA201511b.exe",
@@ -2292,14 +2289,14 @@
             "size": 4850520,
             "sha256": "04ce34eefb8536adb2192246e069c0351532f7257775043969915fc890f5fa50",
             "verified_at": "2026-10-02T10:15:36+00:00"
-          }
+          },
+          "release_date": "2015-12-07",
+          "competence": "201511",
+          "revision": "b"
         },
         {
           "name": "BDSIA201510b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201510b.exe",
-          "competence": "201510",
-          "revision": "b",
-          "release_date": "2015-11-06",
           "mirror": {
             "tag": "bdsia-201510",
             "asset_name": "BDSIA201510b.exe",
@@ -2307,14 +2304,14 @@
             "size": 4927316,
             "sha256": "2acc83a37261da1bf5fd54e67e956c412cf61a16dc4a80f728fd39652c16ec85",
             "verified_at": "2026-10-02T10:16:19+00:00"
-          }
+          },
+          "release_date": "2015-11-06",
+          "competence": "201510",
+          "revision": "b"
         },
         {
           "name": "BDSIA201509d.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201509d.exe",
-          "competence": "201509",
-          "revision": "d",
-          "release_date": "2015-10-08",
           "mirror": {
             "tag": "bdsia-201509",
             "asset_name": "BDSIA201509d.exe",
@@ -2322,14 +2319,14 @@
             "size": 4875894,
             "sha256": "d57e6479e57344a00b88a8f1e2b5b524c84787ad298b1f81c82e549f1cd675c1",
             "verified_at": "2026-10-02T10:17:01+00:00"
-          }
+          },
+          "release_date": "2015-10-08",
+          "competence": "201509",
+          "revision": "d"
         },
         {
           "name": "BDSIA201508b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201508b.exe",
-          "competence": "201508",
-          "revision": "b",
-          "release_date": "2015-09-04",
           "mirror": {
             "tag": "bdsia-201508",
             "asset_name": "BDSIA201508b.exe",
@@ -2337,7 +2334,10 @@
             "size": 4917561,
             "sha256": "08646c39731e4d6c3c37421626aad71b93ed37c5115be35833dcfe490ae0de5e",
             "verified_at": "2026-10-02T10:17:12+00:00"
-          }
+          },
+          "release_date": "2015-09-04",
+          "competence": "201508",
+          "revision": "b"
         },
         {
           "name": "BDSIA201507b.exe",
@@ -4995,8 +4995,8 @@
           "release_date": "2015-09-04"
         }
       },
-      "checked_at": "2026-10-02T10:05:20+00:00",
-      "last_success_at": "2026-10-02T10:05:20+00:00",
+      "checked_at": "2026-10-02T16:51:05+00:00",
+      "last_success_at": "2026-10-02T16:51:05+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
@@ -5016,7 +5016,7 @@
         },
         "competence": "202609"
       },
-      "catalog_checked_at": "2026-10-02T10:05:26+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:05+00:00",
       "available_releases": [
         {
           "name": "TabelaUnificada_202609_v2609171117.zip",
@@ -6736,8 +6736,6 @@
         {
           "name": "TabelaUnificada_201511_v1512151444.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201511_v1512151444.zip",
-          "competence": "201511",
-          "revision": "1512151444",
           "mirror": {
             "tag": "sigtap-201511",
             "asset_name": "TabelaUnificada_201511_v1512151444.zip",
@@ -6745,7 +6743,9 @@
             "size": 1714131,
             "sha256": "6c6fa8867882ce997cdf01fbf85c020688730a7994f1b9125049c79d18deadb0",
             "verified_at": "2026-10-02T10:16:22+00:00"
-          }
+          },
+          "competence": "201511",
+          "revision": "1512151444"
         },
         {
           "name": "TabelaUnificada_201510_v1511111440.zip",
@@ -8988,26 +8988,10 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-02T10:05:26+00:00",
-      "last_success_at": "2026-10-02T10:05:26+00:00",
+      "checked_at": "2026-10-02T16:51:05+00:00",
+      "last_success_at": "2026-10-02T16:51:05+00:00",
       "official_reachable": true,
-      "pending_competences": [
-        "201612",
-        "201611",
-        "201610",
-        "201609",
-        "201608",
-        "201607",
-        "201606",
-        "201605",
-        "201604",
-        "201603",
-        "201602",
-        "201601",
-        "201512",
-        "201510",
-        "201509"
-      ]
+      "pending_competences": []
     },
     "cnes_base": {
       "label": "CNES · Base de dados mensal",
@@ -9025,7 +9009,7 @@
           "sha256": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a"
         }
       },
-      "catalog_checked_at": "2026-10-02T10:05:30+00:00",
+      "catalog_checked_at": "2026-10-02T16:51:06+00:00",
       "available_releases": [
         {
           "name": "BASE_DE_DADOS_CNES_202608.ZIP",
@@ -9212,7 +9196,6 @@
         {
           "name": "BASE_DE_DADOS_CNES_202506.ZIP",
           "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202506.ZIP",
-          "competence": "202506",
           "mirror": {
             "tag": "cnes-base-202506",
             "asset_name": "BASE_DE_DADOS_CNES_202506.ZIP",
@@ -9220,12 +9203,12 @@
             "size": 639832653,
             "sha256": "b43d12780a1d2ad47ab244272912262fd3b3b59e08c5f2ae715abf2a318e95ba",
             "verified_at": "2026-10-02T10:27:22+00:00"
-          }
+          },
+          "competence": "202506"
         },
         {
           "name": "BASE_DE_DADOS_CNES_202505.ZIP",
           "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202505.ZIP",
-          "competence": "202505",
           "mirror": {
             "tag": "cnes-base-202505",
             "asset_name": "BASE_DE_DADOS_CNES_202505.ZIP",
@@ -9233,7 +9216,8 @@
             "size": 636150644,
             "sha256": "bbde78626c06ec4070c02d51c44ff8ea14b3436943c23726a45a3c76b9b23f51",
             "verified_at": "2026-10-02T10:34:04+00:00"
-          }
+          },
+          "competence": "202505"
         },
         {
           "name": "BASE_DE_DADOS_CNES_202504.ZIP",
@@ -9976,8 +9960,8 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-02T10:05:30+00:00",
-      "last_success_at": "2026-10-02T10:05:30+00:00",
+      "checked_at": "2026-10-02T16:51:06+00:00",
+      "last_success_at": "2026-10-02T16:51:06+00:00",
       "official_reachable": true,
       "pending_competences": []
     }
