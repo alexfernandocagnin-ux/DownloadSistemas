@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-02T21:27:58+00:00",
+  "updated_at": "2026-10-03T00:46:26+00:00",
   "systems": {
     "apac": {
       "label": "APAC Magnético",
@@ -10,7 +10,7 @@
         "version": "0402",
         "release_date": "2026-09-24"
       },
-      "catalog_checked_at": "2026-10-02T21:27:52+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:19+00:00",
       "pending_download": false,
       "current": {
         "name": "APACMAG_0402.exe",
@@ -38,7 +38,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
         "version": "2034"
       },
-      "catalog_checked_at": "2026-10-02T21:27:52+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:19+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_VER2034.exe",
@@ -66,7 +66,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
         "version": "2000"
       },
-      "catalog_checked_at": "2026-10-02T21:27:52+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:19+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_SETUP_20.00.exe",
@@ -95,7 +95,7 @@
         "version": "0500",
         "release_date": "2026-07-09"
       },
-      "catalog_checked_at": "2026-10-02T21:27:52+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:19+00:00",
       "pending_download": false,
       "current": {
         "name": "BPAMAG0500.exe",
@@ -125,7 +125,7 @@
         "version": "0605",
         "release_date": "2026-10-02"
       },
-      "catalog_checked_at": "2026-10-02T21:27:54+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:22+00:00",
       "pending_download": false,
       "current": {
         "name": "SIA0605.exe",
@@ -154,7 +154,7 @@
         "version": "0100",
         "release_date": "2008-06-10"
       },
-      "catalog_checked_at": "2026-10-02T21:27:55+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:22+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Instalador_0100.exe",
@@ -183,7 +183,7 @@
         "version": "0303",
         "release_date": "2026-09-29"
       },
-      "catalog_checked_at": "2026-10-02T21:27:55+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:23+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Atualiza_0303.exe",
@@ -226,7 +226,7 @@
           "sihd2_2272.exe"
         ]
       },
-      "catalog_checked_at": "2026-10-02T21:27:55+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:23+00:00",
       "pending_download": false,
       "current": {
         "name": "SIHD2_2340.exe",
@@ -254,7 +254,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-02T21:27:57+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:24+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-ATUALIZACAO.ZIP",
@@ -282,7 +282,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-COMPLETA.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-02T21:27:57+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:24+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
@@ -321,7 +321,7 @@
           "integrity_verified_at": "2026-09-29T13:30:13+00:00"
         }
       },
-      "catalog_checked_at": "2026-10-02T21:27:57+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:25+00:00",
       "available_releases": [
         {
           "name": "BDSIA202609a.exe",
@@ -4995,27 +4995,10 @@
           "release_date": "2015-09-04"
         }
       },
-      "checked_at": "2026-10-02T21:27:57+00:00",
-      "last_success_at": "2026-10-02T21:27:57+00:00",
+      "checked_at": "2026-10-03T00:46:25+00:00",
+      "last_success_at": "2026-10-03T00:46:25+00:00",
       "official_reachable": true,
-      "pending_competences": [
-        "201507",
-        "201506",
-        "201505",
-        "201504",
-        "201503",
-        "201502",
-        "201501",
-        "201412",
-        "201411",
-        "201410",
-        "201409",
-        "201408",
-        "201407",
-        "201406",
-        "201405",
-        "201404"
-      ]
+      "pending_competences": []
     },
     "sigtap": {
       "label": "SIGTAP · Tabela Unificada",
@@ -5033,7 +5016,7 @@
         },
         "competence": "202609"
       },
-      "catalog_checked_at": "2026-10-02T21:27:58+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:26+00:00",
       "available_releases": [
         {
           "name": "TabelaUnificada_202609_v2609171117.zip",
@@ -9005,27 +8988,10 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-02T21:27:58+00:00",
-      "last_success_at": "2026-10-02T21:27:58+00:00",
+      "checked_at": "2026-10-03T00:46:26+00:00",
+      "last_success_at": "2026-10-03T00:46:26+00:00",
       "official_reachable": true,
-      "pending_competences": [
-        "201612",
-        "201611",
-        "201610",
-        "201609",
-        "201608",
-        "201607",
-        "201606",
-        "201605",
-        "201604",
-        "201603",
-        "201602",
-        "201601",
-        "201512",
-        "201510",
-        "201509",
-        "201508"
-      ]
+      "pending_competences": []
     },
     "cnes_base": {
       "label": "CNES · Base de dados mensal",
@@ -9043,7 +9009,7 @@
           "sha256": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a"
         }
       },
-      "catalog_checked_at": "2026-10-02T21:27:58+00:00",
+      "catalog_checked_at": "2026-10-03T00:46:26+00:00",
       "available_releases": [
         {
           "name": "BASE_DE_DADOS_CNES_202608.ZIP",
@@ -9282,7 +9248,6 @@
         {
           "name": "BASE_DE_DADOS_CNES_202502.ZIP",
           "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202502.ZIP",
-          "competence": "202502",
           "mirror": {
             "tag": "cnes-base-202502",
             "asset_name": "BASE_DE_DADOS_CNES_202502.ZIP",
@@ -9290,12 +9255,12 @@
             "size": 623284782,
             "sha256": "318aaae2caf2c820aebb5cd84ca1e536bfccfb68d85380784cae400cb981c747",
             "verified_at": "2026-10-02T21:41:45+00:00"
-          }
+          },
+          "competence": "202502"
         },
         {
           "name": "BASE_DE_DADOS_CNES_202501.ZIP",
           "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202501.ZIP",
-          "competence": "202501",
           "mirror": {
             "tag": "cnes-base-202501",
             "asset_name": "BASE_DE_DADOS_CNES_202501.ZIP",
@@ -9303,7 +9268,8 @@
             "size": 620062933,
             "sha256": "fb8dddb8f0b4abe3a7d24c91ccb00af6c0869f3f06939874ab0dfaa4ff2ec59a",
             "verified_at": "2026-10-02T21:55:27+00:00"
-          }
+          },
+          "competence": "202501"
         },
         {
           "name": "BASE_DE_DADOS_CNES_202412.ZIP",
@@ -10086,8 +10052,8 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-02T21:27:58+00:00",
-      "last_success_at": "2026-10-02T21:27:58+00:00",
+      "checked_at": "2026-10-03T00:46:26+00:00",
+      "last_success_at": "2026-10-03T00:46:26+00:00",
       "official_reachable": true,
       "pending_competences": []
     }
