@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-05T17:12:32+00:00",
+  "updated_at": "2026-10-05T19:46:38+00:00",
   "systems": {
     "apac": {
       "label": "APAC Magnético",
@@ -10,7 +10,7 @@
         "version": "0402",
         "release_date": "2026-09-24"
       },
-      "catalog_checked_at": "2026-10-05T17:12:00+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:32+00:00",
       "pending_download": false,
       "current": {
         "name": "APACMAG_0402.exe",
@@ -38,7 +38,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
         "version": "2034"
       },
-      "catalog_checked_at": "2026-10-05T17:12:00+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:32+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_VER2034.exe",
@@ -66,7 +66,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
         "version": "2000"
       },
-      "catalog_checked_at": "2026-10-05T17:12:00+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:32+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_SETUP_20.00.exe",
@@ -95,7 +95,7 @@
         "version": "0500",
         "release_date": "2026-07-09"
       },
-      "catalog_checked_at": "2026-10-05T17:12:00+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:32+00:00",
       "pending_download": false,
       "current": {
         "name": "BPAMAG0500.exe",
@@ -125,7 +125,7 @@
         "version": "0605",
         "release_date": "2026-10-02"
       },
-      "catalog_checked_at": "2026-10-05T17:12:01+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:34+00:00",
       "pending_download": false,
       "current": {
         "name": "SIA0605.exe",
@@ -154,7 +154,7 @@
         "version": "0100",
         "release_date": "2008-06-10"
       },
-      "catalog_checked_at": "2026-10-05T17:12:01+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:34+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Instalador_0100.exe",
@@ -183,7 +183,7 @@
         "version": "0303",
         "release_date": "2026-09-29"
       },
-      "catalog_checked_at": "2026-10-05T17:12:03+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:35+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Atualiza_0303.exe",
@@ -226,7 +226,7 @@
           "sihd2_2272.exe"
         ]
       },
-      "catalog_checked_at": "2026-10-05T17:12:03+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:35+00:00",
       "pending_download": false,
       "current": {
         "name": "SIHD2_2340.exe",
@@ -254,7 +254,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-05T17:12:03+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:36+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-ATUALIZACAO.ZIP",
@@ -282,7 +282,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-COMPLETA.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-05T17:12:04+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:36+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
@@ -321,7 +321,7 @@
           "integrity_verified_at": "2026-09-29T13:30:13+00:00"
         }
       },
-      "catalog_checked_at": "2026-10-05T17:12:05+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:36+00:00",
       "available_releases": [
         {
           "name": "BDSIA202609a.exe",
@@ -2342,9 +2342,6 @@
         {
           "name": "BDSIA201507b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201507b.exe",
-          "competence": "201507",
-          "revision": "b",
-          "release_date": "2015-08-03",
           "mirror": {
             "tag": "bdsia-201507",
             "asset_name": "BDSIA201507b.exe",
@@ -2352,14 +2349,14 @@
             "size": 4984266,
             "sha256": "e2357678f132cbacee325242d2cfb945e27b500f577e5b6be1dc20c0b936cd7f",
             "verified_at": "2026-10-05T17:12:55+00:00"
-          }
+          },
+          "release_date": "2015-08-03",
+          "competence": "201507",
+          "revision": "b"
         },
         {
           "name": "BDSIA201506b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201506b.exe",
-          "competence": "201506",
-          "revision": "b",
-          "release_date": "2015-07-06",
           "mirror": {
             "tag": "bdsia-201506",
             "asset_name": "BDSIA201506b.exe",
@@ -2367,14 +2364,14 @@
             "size": 5033717,
             "sha256": "5c4e481ad1477a08660e40e2e61d1bcf5ddf63b2f7035293e672ab22e5190e83",
             "verified_at": "2026-10-05T17:13:08+00:00"
-          }
+          },
+          "release_date": "2015-07-06",
+          "competence": "201506",
+          "revision": "b"
         },
         {
           "name": "BDSIA201505b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201505b.exe",
-          "competence": "201505",
-          "revision": "b",
-          "release_date": "2015-06-05",
           "mirror": {
             "tag": "bdsia-201505",
             "asset_name": "BDSIA201505b.exe",
@@ -2382,14 +2379,14 @@
             "size": 5086747,
             "sha256": "a24d136d3aa2be98a79d5cfba687596beb4f69c7b02173c71285ec7e8e1f9a08",
             "verified_at": "2026-10-05T17:13:27+00:00"
-          }
+          },
+          "release_date": "2015-06-05",
+          "competence": "201505",
+          "revision": "b"
         },
         {
           "name": "BDSIA201504b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201504b.exe",
-          "competence": "201504",
-          "revision": "b",
-          "release_date": "2015-05-08",
           "mirror": {
             "tag": "bdsia-201504",
             "asset_name": "BDSIA201504b.exe",
@@ -2397,14 +2394,14 @@
             "size": 5084345,
             "sha256": "b64a461ad4b4344539efeb5e5c1ab314a594285a84d849429d49e9d13b928594",
             "verified_at": "2026-10-05T17:13:42+00:00"
-          }
+          },
+          "release_date": "2015-05-08",
+          "competence": "201504",
+          "revision": "b"
         },
         {
           "name": "BDSIA201503b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201503b.exe",
-          "competence": "201503",
-          "revision": "b",
-          "release_date": "2015-04-06",
           "mirror": {
             "tag": "bdsia-201503",
             "asset_name": "BDSIA201503b.exe",
@@ -2412,14 +2409,14 @@
             "size": 5060087,
             "sha256": "6431ae7538cbf541e5935f04abb7ca60dce48cef735bd2ab7bca10f6348239fd",
             "verified_at": "2026-10-05T17:13:54+00:00"
-          }
+          },
+          "release_date": "2015-04-06",
+          "competence": "201503",
+          "revision": "b"
         },
         {
           "name": "BDSIA201502b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201502b.exe",
-          "competence": "201502",
-          "revision": "b",
-          "release_date": "2015-03-05",
           "mirror": {
             "tag": "bdsia-201502",
             "asset_name": "BDSIA201502b.exe",
@@ -2427,14 +2424,14 @@
             "size": 4799098,
             "sha256": "78104faaa03c4e0caaafad42e7caada8bcadfd956cc838845262eff1a2f44428",
             "verified_at": "2026-10-05T17:14:07+00:00"
-          }
+          },
+          "release_date": "2015-03-05",
+          "competence": "201502",
+          "revision": "b"
         },
         {
           "name": "BDSIA201501b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201501b.exe",
-          "competence": "201501",
-          "revision": "b",
-          "release_date": "2015-02-02",
           "mirror": {
             "tag": "bdsia-201501",
             "asset_name": "BDSIA201501b.exe",
@@ -2442,14 +2439,14 @@
             "size": 4572917,
             "sha256": "34430e4030935ba4e8c094dea7a24f7140b0fc6ea833f46ff5f48917659a79ef",
             "verified_at": "2026-10-05T17:14:19+00:00"
-          }
+          },
+          "release_date": "2015-02-02",
+          "competence": "201501",
+          "revision": "b"
         },
         {
           "name": "BDSIA201412b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201412b.exe",
-          "competence": "201412",
-          "revision": "b",
-          "release_date": "2015-01-06",
           "mirror": {
             "tag": "bdsia-201412",
             "asset_name": "BDSIA201412b.exe",
@@ -2457,14 +2454,14 @@
             "size": 4376469,
             "sha256": "8c181aa676f3241ac19dd334c428442090b8a98764afdd3b2a1b433191cafebf",
             "verified_at": "2026-10-05T17:14:31+00:00"
-          }
+          },
+          "release_date": "2015-01-06",
+          "competence": "201412",
+          "revision": "b"
         },
         {
           "name": "BDSIA201411b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201411b.exe",
-          "competence": "201411",
-          "revision": "b",
-          "release_date": "2014-12-03",
           "mirror": {
             "tag": "bdsia-201411",
             "asset_name": "BDSIA201411b.exe",
@@ -2472,14 +2469,14 @@
             "size": 4439831,
             "sha256": "a8f99372ffef7e0e1e789716d02578397c247a3ac59a9dff71073996971d7a88",
             "verified_at": "2026-10-05T17:14:43+00:00"
-          }
+          },
+          "release_date": "2014-12-03",
+          "competence": "201411",
+          "revision": "b"
         },
         {
           "name": "BDSIA201410b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201410b.exe",
-          "competence": "201410",
-          "revision": "b",
-          "release_date": "2014-11-05",
           "mirror": {
             "tag": "bdsia-201410",
             "asset_name": "BDSIA201410b.exe",
@@ -2487,14 +2484,14 @@
             "size": 4295949,
             "sha256": "195485c420f3243179d85f207e9e0db76a40f5062c2993944fcf29cf81e8b57c",
             "verified_at": "2026-10-05T17:14:56+00:00"
-          }
+          },
+          "release_date": "2014-11-05",
+          "competence": "201410",
+          "revision": "b"
         },
         {
           "name": "BDSIA201409d.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201409d.exe",
-          "competence": "201409",
-          "revision": "d",
-          "release_date": "2014-10-17",
           "mirror": {
             "tag": "bdsia-201409",
             "asset_name": "BDSIA201409d.exe",
@@ -2502,14 +2499,14 @@
             "size": 4118274,
             "sha256": "62408fc3471c30258a109c45bc9aa9ce725f403e10171d641ba57d132972099d",
             "verified_at": "2026-10-05T17:15:08+00:00"
-          }
+          },
+          "release_date": "2014-10-17",
+          "competence": "201409",
+          "revision": "d"
         },
         {
           "name": "BDSIA201408b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201408b.exe",
-          "competence": "201408",
-          "revision": "b",
-          "release_date": "2014-09-05",
           "mirror": {
             "tag": "bdsia-201408",
             "asset_name": "BDSIA201408b.exe",
@@ -2517,14 +2514,14 @@
             "size": 4050842,
             "sha256": "04d4dffd12d6c32b72b7c0ccb532c3c82e9db93553bddeb320f2a2afe8cae767",
             "verified_at": "2026-10-05T17:15:24+00:00"
-          }
+          },
+          "release_date": "2014-09-05",
+          "competence": "201408",
+          "revision": "b"
         },
         {
           "name": "BDSIA201407b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201407b.exe",
-          "competence": "201407",
-          "revision": "b",
-          "release_date": "2014-08-01",
           "mirror": {
             "tag": "bdsia-201407",
             "asset_name": "BDSIA201407b.exe",
@@ -2532,14 +2529,14 @@
             "size": 4035450,
             "sha256": "1d1aece7255e329ac9fc9c8ac6c0bda343f7549eb72a6f3ee2054c98f09b2bda",
             "verified_at": "2026-10-05T17:15:35+00:00"
-          }
+          },
+          "release_date": "2014-08-01",
+          "competence": "201407",
+          "revision": "b"
         },
         {
           "name": "BDSIA201406c.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201406c.exe",
-          "competence": "201406",
-          "revision": "c",
-          "release_date": "2014-07-09",
           "mirror": {
             "tag": "bdsia-201406",
             "asset_name": "BDSIA201406c.exe",
@@ -2547,14 +2544,14 @@
             "size": 4069978,
             "sha256": "fdda9335f9db5341eed162efafb6280260d79c4d4148c6f0d51261814816b926",
             "verified_at": "2026-10-05T17:15:46+00:00"
-          }
+          },
+          "release_date": "2014-07-09",
+          "competence": "201406",
+          "revision": "c"
         },
         {
           "name": "BDSIA201405b.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201405b.exe",
-          "competence": "201405",
-          "revision": "b",
-          "release_date": "2014-05-28",
           "mirror": {
             "tag": "bdsia-201405",
             "asset_name": "BDSIA201405b.exe",
@@ -2562,14 +2559,14 @@
             "size": 4185277,
             "sha256": "9f3598bcb5f8bab405512a455b349d0222ecfc7d0464acf94644c5a5cb0d762f",
             "verified_at": "2026-10-05T17:15:57+00:00"
-          }
+          },
+          "release_date": "2014-05-28",
+          "competence": "201405",
+          "revision": "b"
         },
         {
           "name": "BDSIA201404f.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA201404f.exe",
-          "competence": "201404",
-          "revision": "f",
-          "release_date": "2014-04-30",
           "mirror": {
             "tag": "bdsia-201404",
             "asset_name": "BDSIA201404f.exe",
@@ -2577,7 +2574,10 @@
             "size": 4276628,
             "sha256": "f40cb6be48cfb82d1db515ed6c30fafa85b330aa935c15d367779df3020919b6",
             "verified_at": "2026-10-05T17:16:09+00:00"
-          }
+          },
+          "release_date": "2014-04-30",
+          "competence": "201404",
+          "revision": "f"
         },
         {
           "name": "BDSIA201403e.exe",
@@ -5363,8 +5363,8 @@
           "release_date": "2014-04-30"
         }
       },
-      "checked_at": "2026-10-05T17:12:05+00:00",
-      "last_success_at": "2026-10-05T17:12:05+00:00",
+      "checked_at": "2026-10-05T19:46:36+00:00",
+      "last_success_at": "2026-10-05T19:46:36+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
@@ -5385,7 +5385,7 @@
         "competence": "202609",
         "revision": "2610050950"
       },
-      "catalog_checked_at": "2026-10-05T17:12:12+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:37+00:00",
       "available_releases": [
         {
           "name": "TabelaUnificada_202609_v2610050950.zip",
@@ -7028,8 +7028,6 @@
         {
           "name": "TabelaUnificada_201612_v1612071619.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201612_v1612071619.zip",
-          "competence": "201612",
-          "revision": "1612071619",
           "mirror": {
             "tag": "sigtap-201612",
             "asset_name": "TabelaUnificada_201612_v1612071619.zip",
@@ -7037,13 +7035,13 @@
             "size": 1734434,
             "sha256": "64412302a0dd76a514a807bc2c9584d4ab65c18d37eaafe75459b0e0530f1d2c",
             "verified_at": "2026-10-05T17:12:29+00:00"
-          }
+          },
+          "competence": "201612",
+          "revision": "1612071619"
         },
         {
           "name": "TabelaUnificada_201611_v1611031724.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201611_v1611031724.zip",
-          "competence": "201611",
-          "revision": "1611031724",
           "mirror": {
             "tag": "sigtap-201611",
             "asset_name": "TabelaUnificada_201611_v1611031724.zip",
@@ -7051,13 +7049,13 @@
             "size": 1743461,
             "sha256": "dfa8fab3a4a1b5a5d026655efc85672c2a1c54669a7cbaa7ba2c78d91940154f",
             "verified_at": "2026-10-05T17:12:38+00:00"
-          }
+          },
+          "competence": "201611",
+          "revision": "1611031724"
         },
         {
           "name": "TabelaUnificada_201610_v1611031723.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201610_v1611031723.zip",
-          "competence": "201610",
-          "revision": "1611031723",
           "mirror": {
             "tag": "sigtap-201610",
             "asset_name": "TabelaUnificada_201610_v1611031723.zip",
@@ -7065,13 +7063,13 @@
             "size": 1743102,
             "sha256": "a822a33b490c8a5146080afbb3be5746ab28c7e803b5c8d8186309bdc28f4b42",
             "verified_at": "2026-10-05T17:12:47+00:00"
-          }
+          },
+          "competence": "201610",
+          "revision": "1611031723"
         },
         {
           "name": "TabelaUnificada_201609_v1610031604.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201609_v1610031604.zip",
-          "competence": "201609",
-          "revision": "1610031604",
           "mirror": {
             "tag": "sigtap-201609",
             "asset_name": "TabelaUnificada_201609_v1610031604.zip",
@@ -7079,13 +7077,13 @@
             "size": 1743023,
             "sha256": "877a9f13b540f1064c2894d0a6e6a16aa2f7d236f0734445877b7d201f439c4f",
             "verified_at": "2026-10-05T17:12:55+00:00"
-          }
+          },
+          "competence": "201609",
+          "revision": "1610031604"
         },
         {
           "name": "TabelaUnificada_201608_v1608091118.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201608_v1608091118.zip",
-          "competence": "201608",
-          "revision": "1608091118",
           "mirror": {
             "tag": "sigtap-201608",
             "asset_name": "TabelaUnificada_201608_v1608091118.zip",
@@ -7093,13 +7091,13 @@
             "size": 1733575,
             "sha256": "a196b33ee575d16f56b6edfcb780a196ba7e7993be6ca2a6b301b6989ea2505e",
             "verified_at": "2026-10-05T17:13:06+00:00"
-          }
+          },
+          "competence": "201608",
+          "revision": "1608091118"
         },
         {
           "name": "TabelaUnificada_201607_v1608091118.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201607_v1608091118.zip",
-          "competence": "201607",
-          "revision": "1608091118",
           "mirror": {
             "tag": "sigtap-201607",
             "asset_name": "TabelaUnificada_201607_v1608091118.zip",
@@ -7107,13 +7105,13 @@
             "size": 1730364,
             "sha256": "456056bd3217d81de6db27854c69d9fef38399b6f73a9b0818e9b4adcd063973",
             "verified_at": "2026-10-05T17:13:14+00:00"
-          }
+          },
+          "competence": "201607",
+          "revision": "1608091118"
         },
         {
           "name": "TabelaUnificada_201606_v1606101035.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201606_v1606101035.zip",
-          "competence": "201606",
-          "revision": "1606101035",
           "mirror": {
             "tag": "sigtap-201606",
             "asset_name": "TabelaUnificada_201606_v1606101035.zip",
@@ -7121,13 +7119,13 @@
             "size": 1725166,
             "sha256": "8ff0e0538d4dbb293fba45f21ae520c5065561278a23f2a2a5db955fa698d8af",
             "verified_at": "2026-10-05T17:13:23+00:00"
-          }
+          },
+          "competence": "201606",
+          "revision": "1606101035"
         },
         {
           "name": "TabelaUnificada_201605_v1605180923.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201605_v1605180923.zip",
-          "competence": "201605",
-          "revision": "1605180923",
           "mirror": {
             "tag": "sigtap-201605",
             "asset_name": "TabelaUnificada_201605_v1605180923.zip",
@@ -7135,13 +7133,13 @@
             "size": 1724714,
             "sha256": "fb1880dad60347aa67475f3bf89df980dbf888dd0ca78cee599ed0feb34fcd73",
             "verified_at": "2026-10-05T17:13:31+00:00"
-          }
+          },
+          "competence": "201605",
+          "revision": "1605180923"
         },
         {
           "name": "TabelaUnificada_201604_v1605180922.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201604_v1605180922.zip",
-          "competence": "201604",
-          "revision": "1605180922",
           "mirror": {
             "tag": "sigtap-201604",
             "asset_name": "TabelaUnificada_201604_v1605180922.zip",
@@ -7149,13 +7147,13 @@
             "size": 1721231,
             "sha256": "32c7c0e9e2d23f1de180546484d24a5239c4ded84719d2c35af5c080ea0514a8",
             "verified_at": "2026-10-05T17:13:40+00:00"
-          }
+          },
+          "competence": "201604",
+          "revision": "1605180922"
         },
         {
           "name": "TabelaUnificada_201603_v1603070927.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201603_v1603070927.zip",
-          "competence": "201603",
-          "revision": "1603070927",
           "mirror": {
             "tag": "sigtap-201603",
             "asset_name": "TabelaUnificada_201603_v1603070927.zip",
@@ -7163,13 +7161,13 @@
             "size": 1720883,
             "sha256": "cc9e01ccda4de084dd2a84b986746404a51211b6c80cf73873c56174ef153da0",
             "verified_at": "2026-10-05T17:13:48+00:00"
-          }
+          },
+          "competence": "201603",
+          "revision": "1603070927"
         },
         {
           "name": "TabelaUnificada_201602_v1603021717.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201602_v1603021717.zip",
-          "competence": "201602",
-          "revision": "1603021717",
           "mirror": {
             "tag": "sigtap-201602",
             "asset_name": "TabelaUnificada_201602_v1603021717.zip",
@@ -7177,13 +7175,13 @@
             "size": 1721324,
             "sha256": "2fa8bd3989a5017a9dcd42daea4464745c6aeff538dbd603c79a120cb7de431f",
             "verified_at": "2026-10-05T17:13:57+00:00"
-          }
+          },
+          "competence": "201602",
+          "revision": "1603021717"
         },
         {
           "name": "TabelaUnificada_201601_v1601061734.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201601_v1601061734.zip",
-          "competence": "201601",
-          "revision": "1601061734",
           "mirror": {
             "tag": "sigtap-201601",
             "asset_name": "TabelaUnificada_201601_v1601061734.zip",
@@ -7191,13 +7189,13 @@
             "size": 1720553,
             "sha256": "0a3d1f14af4a06b1f0882386371a5ab6384e4cf7d25869ec05a5d9363c6b7c3b",
             "verified_at": "2026-10-05T17:14:11+00:00"
-          }
+          },
+          "competence": "201601",
+          "revision": "1601061734"
         },
         {
           "name": "TabelaUnificada_201512_v1512151448.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201512_v1512151448.zip",
-          "competence": "201512",
-          "revision": "1512151448",
           "mirror": {
             "tag": "sigtap-201512",
             "asset_name": "TabelaUnificada_201512_v1512151448.zip",
@@ -7205,7 +7203,9 @@
             "size": 1714544,
             "sha256": "1446491251f4cdfe612ffe5af58d04da5d3d14ad4481f68c1bdb085662749551",
             "verified_at": "2026-10-05T17:14:20+00:00"
-          }
+          },
+          "competence": "201512",
+          "revision": "1512151448"
         },
         {
           "name": "TabelaUnificada_201511_v1512151444.zip",
@@ -7224,8 +7224,6 @@
         {
           "name": "TabelaUnificada_201510_v1511111440.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201510_v1511111440.zip",
-          "competence": "201510",
-          "revision": "1511111440",
           "mirror": {
             "tag": "sigtap-201510",
             "asset_name": "TabelaUnificada_201510_v1511111440.zip",
@@ -7233,13 +7231,13 @@
             "size": 1713420,
             "sha256": "271cad1e1524125ee7a8d06e0c5ded19fdb53caacf97ddcf13e88a3f28f5c956",
             "verified_at": "2026-10-05T17:14:29+00:00"
-          }
+          },
+          "competence": "201510",
+          "revision": "1511111440"
         },
         {
           "name": "TabelaUnificada_201509_v1510011702.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_201509_v1510011702.zip",
-          "competence": "201509",
-          "revision": "1510011702",
           "mirror": {
             "tag": "sigtap-201509",
             "asset_name": "TabelaUnificada_201509_v1510011702.zip",
@@ -7247,7 +7245,9 @@
             "size": 1711634,
             "sha256": "97c55373d4708e464796d6453d3e57514397871e43ec36fd76af9e77fdce2581",
             "verified_at": "2026-10-05T17:14:38+00:00"
-          }
+          },
+          "competence": "201509",
+          "revision": "1510011702"
         },
         {
           "name": "TabelaUnificada_201508_v1509281140.zip",
@@ -9703,8 +9703,8 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-05T17:12:12+00:00",
-      "last_success_at": "2026-10-05T17:12:12+00:00",
+      "checked_at": "2026-10-05T19:46:37+00:00",
+      "last_success_at": "2026-10-05T19:46:37+00:00",
       "official_reachable": true,
       "pending_competences": []
     },
@@ -9724,7 +9724,7 @@
           "sha256": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a"
         }
       },
-      "catalog_checked_at": "2026-10-05T17:12:32+00:00",
+      "catalog_checked_at": "2026-10-05T19:46:38+00:00",
       "available_releases": [
         {
           "name": "BASE_DE_DADOS_CNES_202608.ZIP",
@@ -10223,7 +10223,6 @@
         {
           "name": "BASE_DE_DADOS_CNES_202306.ZIP",
           "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202306.ZIP",
-          "competence": "202306",
           "mirror": {
             "tag": "cnes-base-202306",
             "asset_name": "BASE_DE_DADOS_CNES_202306.ZIP",
@@ -10231,7 +10230,8 @@
             "size": 557270298,
             "sha256": "dfd281dc98e3f81f70f2ce8363d44bdee1fbbb540b7bae2a1a4c67ecfab9f255",
             "verified_at": "2026-10-05T17:33:53+00:00"
-          }
+          },
+          "competence": "202306"
         },
         {
           "name": "BASE_DE_DADOS_CNES_202305.ZIP",
@@ -11204,8 +11204,8 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-05T17:12:32+00:00",
-      "last_success_at": "2026-10-05T17:12:32+00:00",
+      "checked_at": "2026-10-05T19:46:38+00:00",
+      "last_success_at": "2026-10-05T19:46:38+00:00",
       "official_reachable": true,
       "pending_competences": []
     }
