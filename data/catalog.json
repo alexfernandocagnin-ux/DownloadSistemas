@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-06T13:56:45+00:00",
+  "updated_at": "2026-10-06T16:18:29+00:00",
   "systems": {
     "apac": {
       "label": "APAC Magnético",
@@ -10,7 +10,7 @@
         "version": "0402",
         "release_date": "2026-09-24"
       },
-      "catalog_checked_at": "2026-10-06T13:56:39+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:25+00:00",
       "pending_download": false,
       "current": {
         "name": "APACMAG_0402.exe",
@@ -38,7 +38,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
         "version": "2034"
       },
-      "catalog_checked_at": "2026-10-06T13:56:39+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:25+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_VER2034.exe",
@@ -66,7 +66,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
         "version": "2000"
       },
-      "catalog_checked_at": "2026-10-06T13:56:39+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:25+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_SETUP_20.00.exe",
@@ -95,7 +95,7 @@
         "version": "0500",
         "release_date": "2026-07-09"
       },
-      "catalog_checked_at": "2026-10-06T13:56:39+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:25+00:00",
       "pending_download": false,
       "current": {
         "name": "BPAMAG0500.exe",
@@ -125,7 +125,7 @@
         "version": "0605",
         "release_date": "2026-10-02"
       },
-      "catalog_checked_at": "2026-10-06T13:56:42+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:27+00:00",
       "pending_download": false,
       "current": {
         "name": "SIA0605.exe",
@@ -154,7 +154,7 @@
         "version": "0100",
         "release_date": "2008-06-10"
       },
-      "catalog_checked_at": "2026-10-06T13:56:42+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:27+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Instalador_0100.exe",
@@ -183,7 +183,7 @@
         "version": "0303",
         "release_date": "2026-09-29"
       },
-      "catalog_checked_at": "2026-10-06T13:56:42+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:28+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Atualiza_0303.exe",
@@ -226,7 +226,7 @@
           "sihd2_2272.exe"
         ]
       },
-      "catalog_checked_at": "2026-10-06T13:56:43+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:28+00:00",
       "pending_download": false,
       "current": {
         "name": "SIHD2_2340.exe",
@@ -254,7 +254,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-06T13:56:44+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:28+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-ATUALIZACAO.ZIP",
@@ -282,7 +282,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-COMPLETA.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-06T13:56:44+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:28+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
@@ -321,7 +321,7 @@
           "integrity_verified_at": "2026-09-29T13:30:13+00:00"
         }
       },
-      "catalog_checked_at": "2026-10-06T13:56:44+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:29+00:00",
       "available_releases": [
         {
           "name": "BDSIA202609a.exe",
@@ -3542,9 +3542,6 @@
         {
           "name": "BDSIA200811c.EXE",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200811c.EXE",
-          "competence": "200811",
-          "revision": "c",
-          "release_date": "2008-12-12",
           "mirror": {
             "tag": "bdsia-200811",
             "asset_name": "BDSIA200811c.EXE",
@@ -3552,14 +3549,14 @@
             "size": 2917394,
             "sha256": "dd16ef6c8215504d2dbff1346d66149fd47dd0f6902a3e0e59a19db877190749",
             "verified_at": "2026-10-06T13:57:09+00:00"
-          }
+          },
+          "release_date": "2008-12-12",
+          "competence": "200811",
+          "revision": "c"
         },
         {
           "name": "BDSIA200810b.EXE",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200810b.EXE",
-          "competence": "200810",
-          "revision": "b",
-          "release_date": "2008-11-05",
           "mirror": {
             "tag": "bdsia-200810",
             "asset_name": "BDSIA200810b.EXE",
@@ -3567,14 +3564,14 @@
             "size": 2789279,
             "sha256": "b8c0186ff913c461d829eed1e0512e441924a836f395e588454fa7e282f6338c",
             "verified_at": "2026-10-06T13:57:19+00:00"
-          }
+          },
+          "release_date": "2008-11-05",
+          "competence": "200810",
+          "revision": "b"
         },
         {
           "name": "BDSIA200809d.EXE",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200809d.EXE",
-          "competence": "200809",
-          "revision": "d",
-          "release_date": "2008-10-20",
           "mirror": {
             "tag": "bdsia-200809",
             "asset_name": "BDSIA200809d.EXE",
@@ -3582,14 +3579,14 @@
             "size": 2669602,
             "sha256": "8f86a2fde4208a1157efe5cc57050bbf3043679c425e48fd29c939b99b7595ad",
             "verified_at": "2026-10-06T13:57:30+00:00"
-          }
+          },
+          "release_date": "2008-10-20",
+          "competence": "200809",
+          "revision": "d"
         },
         {
           "name": "BDSIA200808b.EXE",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200808b.EXE",
-          "competence": "200808",
-          "revision": "b",
-          "release_date": "2008-09-01",
           "mirror": {
             "tag": "bdsia-200808",
             "asset_name": "BDSIA200808b.EXE",
@@ -3597,14 +3594,14 @@
             "size": 1736062,
             "sha256": "2af131eabca8ab5338fd45ee93401a975f7633c79bbd9adb2da9ba6e187d0e9d",
             "verified_at": "2026-10-06T13:57:39+00:00"
-          }
+          },
+          "release_date": "2008-09-01",
+          "competence": "200808",
+          "revision": "b"
         },
         {
           "name": "BDSIA200807c.EXE",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200807c.EXE",
-          "competence": "200807",
-          "revision": "c",
-          "release_date": "2008-08-08",
           "mirror": {
             "tag": "bdsia-200807",
             "asset_name": "BDSIA200807c.EXE",
@@ -3612,14 +3609,14 @@
             "size": 1726823,
             "sha256": "12d6980923fbd2255450faa2d484f8f344194bcd8dad94eaa9fb73b2bb9b6345",
             "verified_at": "2026-10-06T13:57:48+00:00"
-          }
+          },
+          "release_date": "2008-08-08",
+          "competence": "200807",
+          "revision": "c"
         },
         {
           "name": "BDSIA200806d.exe",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200806d.exe",
-          "competence": "200806",
-          "revision": "d",
-          "release_date": "2008-08-13",
           "mirror": {
             "tag": "bdsia-200806",
             "asset_name": "BDSIA200806d.exe",
@@ -3627,14 +3624,14 @@
             "size": 1694335,
             "sha256": "eb10fb7d73d5a4bcaac0397af0327aea983167cc58133affd89da13174a659c1",
             "verified_at": "2026-10-06T13:57:57+00:00"
-          }
+          },
+          "release_date": "2008-08-13",
+          "competence": "200806",
+          "revision": "d"
         },
         {
           "name": "BDSIA200805a.EXE",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200805a.EXE",
-          "competence": "200805",
-          "revision": "a",
-          "release_date": "2008-05-26",
           "mirror": {
             "tag": "bdsia-200805",
             "asset_name": "BDSIA200805a.EXE",
@@ -3642,14 +3639,14 @@
             "size": 1475635,
             "sha256": "f3f5456031e99c87cc4d6746262505d997d5799bad074d72de3a9e8cae7391ee",
             "verified_at": "2026-10-06T13:58:06+00:00"
-          }
+          },
+          "release_date": "2008-05-26",
+          "competence": "200805",
+          "revision": "a"
         },
         {
           "name": "BDSIA200804b.EXE",
           "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA200804b.EXE",
-          "competence": "200804",
-          "revision": "b",
-          "release_date": "2008-05-08",
           "mirror": {
             "tag": "bdsia-200804",
             "asset_name": "BDSIA200804b.EXE",
@@ -3657,7 +3654,10 @@
             "size": 1247643,
             "sha256": "0450c891e8a80174a4238faa48166154efb046b5bf2745f19500e350ea812ff5",
             "verified_at": "2026-10-06T13:58:14+00:00"
-          }
+          },
+          "release_date": "2008-05-08",
+          "competence": "200804",
+          "revision": "b"
         },
         {
           "name": "BDSIA200803b.EXE",
@@ -7019,14 +7019,10 @@
           "release_date": "2008-05-08"
         }
       },
-      "checked_at": "2026-10-06T13:56:44+00:00",
-      "last_success_at": "2026-10-06T13:56:44+00:00",
+      "checked_at": "2026-10-06T16:18:29+00:00",
+      "last_success_at": "2026-10-06T16:18:29+00:00",
       "official_reachable": true,
-      "pending_competences": [
-        "200803",
-        "200802",
-        "200801"
-      ]
+      "pending_competences": []
     },
     "sigtap": {
       "label": "SIGTAP · Tabela Unificada",
@@ -7045,7 +7041,7 @@
         "competence": "202609",
         "revision": "2610050950"
       },
-      "catalog_checked_at": "2026-10-06T13:56:45+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:29+00:00",
       "available_releases": [
         {
           "name": "TabelaUnificada_202609_v2610050950.zip",
@@ -12651,27 +12647,10 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-06T13:56:45+00:00",
-      "last_success_at": "2026-10-06T13:56:45+00:00",
+      "checked_at": "2026-10-06T16:18:29+00:00",
+      "last_success_at": "2026-10-06T16:18:29+00:00",
       "official_reachable": true,
-      "pending_competences": [
-        "201106",
-        "201011",
-        "201010",
-        "201009",
-        "201008",
-        "201007",
-        "201006",
-        "201005",
-        "201004",
-        "201003",
-        "201002",
-        "201001",
-        "200912",
-        "200911",
-        "200910",
-        "200909"
-      ]
+      "pending_competences": []
     },
     "cnes_base": {
       "label": "CNES · Base de dados mensal",
@@ -12689,7 +12668,7 @@
           "sha256": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a"
         }
       },
-      "catalog_checked_at": "2026-10-06T13:56:45+00:00",
+      "catalog_checked_at": "2026-10-06T16:18:29+00:00",
       "available_releases": [
         {
           "name": "BASE_DE_DADOS_CNES_202608.ZIP",
@@ -13253,7 +13232,6 @@
         {
           "name": "BASE_DE_DADOS_CNES_202301.ZIP",
           "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202301.ZIP",
-          "competence": "202301",
           "mirror": {
             "tag": "cnes-base-202301",
             "asset_name": "BASE_DE_DADOS_CNES_202301.ZIP",
@@ -13261,7 +13239,8 @@
             "size": 540375997,
             "sha256": "5c5cea3193cb1ca46d62b861e4ee7393f4aec5347cd9236c422a71af94c68809",
             "verified_at": "2026-10-06T14:26:07+00:00"
-          }
+          },
+          "competence": "202301"
         },
         {
           "name": "BASE_DE_DADOS_CNES_202212.ZIP",
@@ -14284,8 +14263,8 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-06T13:56:45+00:00",
-      "last_success_at": "2026-10-06T13:56:45+00:00",
+      "checked_at": "2026-10-06T16:18:29+00:00",
+      "last_success_at": "2026-10-06T16:18:29+00:00",
       "official_reachable": true,
       "pending_competences": []
     }
