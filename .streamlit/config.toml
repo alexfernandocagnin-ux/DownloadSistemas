@@ -1,13 +1,12 @@
 [theme]
-primaryColor = "#006B57"
-backgroundColor = "#F8FAF8"
-secondaryBackgroundColor = "#EEF5F1"
-textColor = "#192B35"
+primaryColor = "#08776A"
+backgroundColor = "#F3F6F8"
+secondaryBackgroundColor = "#EDF3F5"
+textColor = "#172F3D"
 font = "sans serif"
 
 [server]
 headless = true
-enableStaticServing = true
 
 [client]
 toolbarMode = "minimal"
