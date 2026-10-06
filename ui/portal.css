@@ -10,7 +10,7 @@
 .stApp, .stApp p, .stApp label, .stApp summary, .stApp input, .stApp button, .stApp a, .stApp select {
     font-family: 'Manrope', 'Segoe UI', sans-serif;
 }
-.block-container { max-width: 1400px; padding: 1.5rem 2.5rem 3rem; }
+.block-container { max-width: 1400px; padding: 4rem 2.5rem 3rem; }
 .ds-masthead { display: flex; align-items: center; justify-content: space-between;
     gap: 1rem; padding: 0 0 1.1rem; border-bottom: 1px solid var(--ds-line); }
 .ds-brand { display: flex; align-items: center; gap: .75rem; }
@@ -160,7 +160,7 @@ button:focus-visible, a:focus-visible, [role='tab']:focus-visible {
     [class*='st-key-system_card_'] { padding: 1rem !important; }
 }
 @media (max-width: 760px) {
-    .block-container { padding: 1rem 1rem 2rem; }
+    .block-container { padding: 3.5rem 1rem 2rem; }
     .ds-masthead-note { display: none; }
     .ds-masthead { padding-bottom: .85rem; }
     .ds-hero { grid-template-columns: 1fr; padding-top: 1rem; gap: 1rem; }
