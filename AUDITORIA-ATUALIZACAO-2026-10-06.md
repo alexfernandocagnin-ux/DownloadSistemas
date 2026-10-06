@@ -25,7 +25,10 @@
 
 - Suíte existente: 95 testes aprovados.
 - Regressões adicionais: falha total e parcial das fontes, primeira coleta sem resposta, preservação de datas no job de cópias, base CNES desativada, prazos HTTP/FTP, pausa de arquivos históricos, prioridade do mês atual, preservação do índice completo, gravação de tentativas, catálogo remoto indisponível/malformado, publicação sem reinício, combinações concorrentes e funcionamento do botão.
-- A execução real após a publicação é conferida no GitHub Actions e no portal.
+- Suíte final: **118 testes aprovados**.
+- [Execução real 37508831930](https://github.com/alexfernandocagnin-ux/DownloadSistemas/actions/runs/37508831930): sucesso nos dois jobs. A consulta durou 36 segundos; o job de cópias durou 83 segundos; a execução completa terminou em aproximadamente dois minutos.
+- Catálogo publicado: 12 de 12 fontes responderam. `last_check.completed_at` ficou em `2026-10-06T18:07:47+00:00` (15:07 em Brasília) e não foi alterado pela preparação de cópias, concluída às 18:09 UTC.
+- Portal online conferido com o novo horário e o botão de verificação presente. O clique real no botão concluiu e atualizou o cabeçalho para 15:10, sem repetir os avisos de novidades já conhecidos.
 
 ## Limites mantidos explícitos
 
