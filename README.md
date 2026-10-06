@@ -148,3 +148,10 @@ O portal consulta o catálogo público do GitHub com cache compartilhado de 60 s
 Downloads HTTP/FTP agora têm um limite total de cinco minutos por servidor, além do limite de espera da conexão. O agendamento permanece a cada duas horas, incluindo 06:50 em Brasília. Atrasos do agendador do GitHub continuam possíveis; o portal avisa quando a última verificação tem mais de três horas ou quando alguma fonte não respondeu.
 
 Evidências e validação em `AUDITORIA-ATUALIZACAO-2026-10-06.md`.
+
+
+## Interface - modernização de 06/10/2026
+
+A aparência segue a referência visual criada com o Lovable em https://lovable.dev/projects/7c2369ba-b776-4a48-8dbf-45c28db4c77e, adaptada ao portal Streamlit existente. O CSS fica em `ui/portal.css`; a fonte Manrope Latin é servida pelo próprio Streamlit a partir de `static/fonts/`, com licença OFL incluída. Os seletores de componentes usam chaves do portal e os atributos do Streamlit, sem classes geradas do Emotion.
+
+A aparência anterior está salva em `backups/interface-2026-10-06-modernizacao/`, com instruções em `RESTAURAR.md` e a tag `backup/interface-antes-redesign-2026-10-06`. O backup contém a revisão do aplicativo com as correções de atualização automática já aplicadas. O visual novo preserva as três categorias, o histórico completo, os dois pacotes SCNES, as instalações iniciais FPO/CIHA02 e as verificações manual e programada.

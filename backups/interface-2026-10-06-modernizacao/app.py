@@ -93,7 +93,145 @@ SYSTEM_META: dict[str, dict[str, object]] = {
 
 st.set_page_config(page_title="Downloads Sistemas", page_icon="📦", layout="wide")
 
-CUSTOM_CSS = "<style>" + (Path(__file__).parent / "ui" / "portal.css").read_text(encoding="utf-8") + "</style>"
+CUSTOM_CSS = """
+<style>
+:root { --ds-ink:#172f3d; --ds-muted:#243b48; --ds-green:#087568; --ds-line:#dce5e9; }
+.stApp { background:#f3f6f8; color:var(--ds-ink); }
+.block-container { max-width:1440px; padding-top:1.6rem; padding-bottom:3rem; }
+.ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:2rem;
+    position:relative; overflow:hidden; padding:1.9rem 2.1rem; margin-bottom:1rem;
+    background:#132f3b; border:1px solid #234550; border-radius:22px; color:#fff;
+    box-shadow:0 8px 24px #132f3b10; }
+.ds-hero:after { content:''; position:absolute; width:260px; height:100%; right:0; top:0;
+    background:repeating-linear-gradient(90deg,transparent,transparent 51px,#547781 52px,transparent 53px);
+    opacity:.12; pointer-events:none; }
+.ds-hero-copy,.ds-hero-meta { position:relative; z-index:1; }
+.ds-brandline { display:flex; align-items:center; gap:.6rem; margin-bottom:.8rem; }
+.ds-brand-mark { width:30px; height:30px; display:grid; place-items:center;
+    border:1px solid #527d83; border-radius:9px; background:#244550; color:#b7f1dd; flex:0 0 30px; }
+.ds-brand-mark svg { width:18px; height:18px; }
+.ds-eyebrow { color:#b7e9dc; font-size:.72rem; font-weight:750; letter-spacing:.12em; text-transform:uppercase; margin:0; }
+.ds-hero h1 { font-family:'Trebuchet MS','Segoe UI',sans-serif; font-size:clamp(2rem,3vw,2.75rem);
+    font-weight:700; letter-spacing:-.04em; line-height:1.12; margin:0 0 .8rem; color:#fff; padding:0; }
+.ds-hero [data-testid="stHeaderActionElements"] { display:none; }
+.ds-hero p { color:#e2edf1; font-size:1rem; line-height:1.6; max-width:650px; margin:0; }
+.ds-hero-meta { align-self:center; padding:1.15rem 1.25rem; border:1px solid #d1e6df;
+    border-radius:14px; background:#edf8f3; color:#173a36; box-shadow:0 4px 12px #081d2420; }
+.ds-hero-meta strong { display:flex; align-items:center; gap:.45rem; color:#175c4e; font-size:.72rem;
+    text-transform:uppercase; letter-spacing:.07em; margin-bottom:.7rem; }
+.ds-hero-meta strong svg { width:16px; height:16px; flex:0 0 16px; }
+.ds-hero-meta span { display:block; color:#173a36; font-size:.97rem; font-weight:700; line-height:1.5;
+    font-variant-numeric:tabular-nums; }
+.ds-meta-zone { display:block; margin-top:.15rem; font-size:.79rem; font-style:normal; color:#243b48; }
+.ds-hero-meta small { display:block; margin-top:.7rem; padding-top:.65rem; border-top:1px solid #cfe3da;
+    color:#243b48; font-size:.8rem; line-height:1.5; }
+.ds-overview { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin:0 0 1rem; }
+.ds-overview-item { background:#fff; padding:.95rem 1.1rem; display:flex; align-items:center; gap:.8rem;
+    border:1px solid var(--ds-line); border-radius:12px; }
+.ds-overview-number { display:grid; place-items:center; min-width:44px; height:44px;
+    font-family:'Trebuchet MS','Segoe UI',sans-serif; color:#096456; background:#eaf5ef;
+    border-radius:10px; font-size:1.35rem; font-weight:700; line-height:1; }
+.ds-overview-item:nth-child(2) .ds-overview-number { color:#175b91; background:#eaf2fa; }
+.ds-overview-item:nth-child(3) .ds-overview-number { color:#654393; background:#f1ecf8; }
+.ds-overview-item strong { display:block; font-size:.9rem; color:#172f3d; }
+.ds-overview-item span { display:block; font-size:.8rem; color:var(--ds-muted); margin-top:.2rem; line-height:1.45; }
+.ds-section { margin:.7rem 0 .8rem; }
+.ds-section .ds-eyebrow { color:#243b48; font-size:.67rem; }
+.ds-section h2 { font-family:'Trebuchet MS','Segoe UI',sans-serif; color:#183a49; font-size:1.65rem; letter-spacing:-.025em; margin:.45rem 0 0; padding:0; line-height:1.25; }
+.ds-section p { color:var(--ds-muted); font-size:.89rem; margin:.3rem 0 0; }
+.ds-card-title { display:flex; align-items:center; gap:.7rem; min-height:44px; font-size:1rem;
+    font-weight:750; color:#173849; line-height:1.35; margin:.1rem 0 .7rem; }
+.ds-card-icon { display:grid; place-items:center; width:38px; height:38px; flex:0 0 38px;
+    background:#edf4f5; border:1px solid #e0ebef; border-radius:10px; font-size:1.1rem; }
+.ds-badge { display:inline-block; padding:.26rem .65rem; border-radius:6px; font-size:.72rem; font-weight:700;
+    line-height:1.35; margin:0 0 .55rem; }
+.ds-badge-ok { background:#e8f5ef; color:#116144; border:1px solid #d3eade; }
+.ds-badge-warn { background:#fff4df; color:#775114; border:1px solid #efdcb2; }
+.ds-badge-error { background:#fbecea; color:#933c35; border:1px solid #f1d3ce; }
+[class*="st-key-system_card_"], .st-key-updates_panel {
+    background:#fff; border:1px solid var(--ds-line) !important; border-radius:16px !important;
+    box-shadow:0 4px 14px #15303b06; padding:1.15rem !important; }
+[class*="st-key-system_card_"] { height:100%; }
+[class*="st-key-system_card_"] [data-testid="stCaptionContainer"] p { overflow-wrap:anywhere; }
+.ds-download-tip { display:flex; gap:.75rem; align-items:center; padding:.8rem 1rem;
+    background:#eaf1f5; border:1px solid #d9e5eb; border-radius:10px; color:#172f3d; }
+.ds-download-tip svg { width:22px; height:22px; color:#175b91; flex:0 0 22px; }
+.ds-download-tip p { margin:0; font-size:.88rem; line-height:1.5; }
+.ds-download-tip strong { font-weight:700; }
+div[data-testid="stButton"] button, div[data-testid="stDownloadButton"] button, div[data-testid="stLinkButton"] a {
+    border-radius:9px; min-height:42px; font-weight:650; transition:background .15s ease,border-color .15s ease; }
+div[data-testid="stButton"] button[kind="primary"], div[data-testid="stLinkButton"] a[kind="primary"] {
+    background:#087568; border-color:#087568; color:#fff; }
+div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLinkButton"] a[kind="primary"]:hover {
+    background:#075e54; border-color:#075e54; }
+/* A mesma cor para arquivos prontos, servidos pelo app ou por link direto. */
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a {
+    background:#175b91 !important; border-color:#175b91 !important; color:#fff !important;
+    box-shadow:0 3px 8px #175b9120; }
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button:hover,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a:hover {
+    background:#104570 !important; border-color:#104570 !important; color:#fff !important; }
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button p,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a p { color:#fff !important; }
+div[data-testid="stCaptionContainer"], div[data-testid="stCaptionContainer"] p {
+    color:#172f3d !important; font-size:.9rem !important; font-weight:600 !important; opacity:1 !important; }
+[data-testid="stWidgetLabel"] p { color:#243b48 !important; }
+button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
+[role="tablist"] { gap:.7rem; background:transparent; border-bottom:0;
+    padding:.3rem .2rem .65rem; }
+[role="tab"] { --tab-color:#087568; --tab-soft:#e8f5ef; --tab-border:#c9e5da;
+    min-height:46px; padding:.65rem 1.15rem; font-size:.94rem; font-weight:700;
+    border:1px solid var(--tab-border) !important; border-radius:12px;
+    background:var(--tab-soft) !important; color:var(--tab-color) !important;
+    transition:background .15s ease,box-shadow .15s ease; }
+[role="tab"]:nth-child(2) { --tab-color:#175b91; --tab-soft:#eaf2fa; --tab-border:#ccdeef; }
+[role="tab"]:nth-child(3) { --tab-color:#654393; --tab-soft:#f1ecf8; --tab-border:#ded2ee; }
+[role="tab"] p { color:inherit !important; font-weight:700; }
+[role="tab"]:hover { box-shadow:0 3px 9px #15303b16; }
+[role="tab"][aria-selected="true"] { background:var(--tab-color) !important;
+    border-color:var(--tab-color) !important; color:#fff !important; box-shadow:0 3px 9px #15303b20; }
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"],
+[role="tablist"]::after, [role="tab"] .react-aria-SelectionIndicator { display:none !important; }
+.ds-update-heading { display:flex; align-items:center; gap:.8rem; padding:.15rem 0; }
+.ds-update-icon { width:40px; height:40px; flex:0 0 40px; display:grid; place-items:center; background:#e7f3ef;
+    color:#087568; border-radius:10px; font-size:1.1rem; }
+.ds-update-heading strong { display:block; font-size:.99rem; color:#173a48; }
+.ds-update-heading span { display:block; font-size:.8rem; color:var(--ds-muted); margin-top:.2rem; }
+.ds-update-panel { margin:.4rem 0 .2rem; }
+.ds-update-list { display:grid; gap:.55rem; }
+.ds-update-item { display:grid; grid-template-columns:minmax(140px,1fr) minmax(160px,1.2fr) auto; align-items:center;
+    gap:.8rem; background:#f6fbf9; padding:.8rem 1rem; border:1px solid #e0ece6; border-left:3px solid #4b9b83; border-radius:8px; }
+.ds-update-system { color:#1f463d; font-size:.84rem; font-weight:750; }
+.ds-update-file { color:#243b48; font-size:.86rem; font-weight:500; overflow-wrap:anywhere; }
+.ds-update-date { color:#243b48; font-size:.82rem; font-weight:500; white-space:nowrap; }
+.ds-update-empty { background:#f5f8fa; color:#243b48; padding:.85rem 1rem; border-radius:9px; font-size:.86rem; }
+.ds-loading-card { background:#f1f8f5; border:1px solid #d5e9df; border-radius:10px; padding:.85rem 1rem; margin:.5rem 0; }
+.ds-loading-copy { display:flex; align-items:center; gap:.7rem; color:#173849; }
+.ds-loading-copy strong { display:block; font-size:.88rem; }
+.ds-loading-copy span { display:block; color:#243b48; font-size:.8rem; margin-top:.2rem; }
+.ds-loading-dot { width:12px; height:12px; flex:0 0 auto; border:2px solid #bbdacf; border-top-color:#087568;
+    border-radius:50%; animation:ds-spin .85s linear infinite; }
+.ds-progress-track { height:4px; overflow:hidden; background:#daeae2; border-radius:9px; margin-top:.8rem; }
+.ds-progress-track span { display:block; width:34%; height:100%; background:#087568; animation:ds-slide 1.3s ease-in-out infinite; }
+.ds-footer { border-top:1px solid var(--ds-line); margin-top:2rem; padding-top:1rem; color:#243b48; font-size:.77rem; }
+@keyframes ds-spin { to { transform:rotate(360deg); } }
+@keyframes ds-slide { from { transform:translateX(-120%); } to { transform:translateX(330%); } }
+@media (prefers-reduced-motion:reduce) { .ds-loading-dot,.ds-progress-track span { animation:none; } }
+@media (max-width:760px) {
+    .block-container { padding-top:1rem; padding-left:1rem; padding-right:1rem; }
+    .ds-hero { grid-template-columns:1fr; padding:1.5rem; gap:1.2rem; }
+    .ds-overview { grid-template-columns:1fr; }
+    .ds-overview-item { padding:.8rem 1rem; }
+    .ds-hero-meta { width:100%; box-sizing:border-box; }
+    [class*="st-key-system_card_"], .st-key-updates_panel { padding:1rem !important; }
+    .ds-update-item { grid-template-columns:1fr; gap:.25rem; }
+    .ds-update-date { white-space:normal; }
+    [role="tablist"] { gap:.65rem; }
+    [role="tab"] { font-size:.8rem; padding:.6rem .8rem; }
+}
+</style>
+"""
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 
@@ -323,8 +461,7 @@ def render_download_button(system_key, name, url, mirror):
         st.session_state.pop(state_key, None)
         cached = None
     action = {"fpo_update": "atualização FPO", "fpo_installer": "instalador base FPO"}.get(system_key.removesuffix("_backup"), "arquivo")
-    prepare_action = st.empty()
-    if not cached and prepare_action.button(f"Preparar {action} para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary", icon=":material/download:"):
+    if not cached and st.button(f"Preparar {action} para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary"):
         loading = st.empty()
         render_loading_card(loading, "Iniciando a verificação do arquivo.")
         try:
@@ -339,7 +476,6 @@ def render_download_button(system_key, name, url, mirror):
                     st.session_state.pop(other_key, None)
             cached = {"identity": identity, **data, "source": source}
             st.session_state[state_key] = cached
-            prepare_action.empty()
             if fallback:
                 st.warning("O espelho não respondeu. Recuperamos este arquivo da fonte oficial.")
         except (OSError, ValueError):
@@ -351,11 +487,11 @@ def render_download_button(system_key, name, url, mirror):
         st.caption(f'Arquivo pronto · {cached["source"]}')
         with st.container(key=f"ready_download_{system_key}"):
             if cached.get("url"):
-                st.link_button(f"Baixar {action}: {name}", cached["url"], width="stretch", type="primary", icon=":material/download:")
+                st.link_button(f"⬇️ Baixar {action}: {name}", cached["url"], width="stretch", type="primary")
             else:
-                st.download_button(f"Baixar {action}: {name}", data=cached["data"], file_name=name,
+                st.download_button(f"⬇️ Baixar {action}: {name}", data=cached["data"], file_name=name,
                                    mime="application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
-                                   width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore", type="primary", icon=":material/download:")
+                                   width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore", type="primary")
 
 
 def render_status(releases, error, checked_at):
@@ -364,7 +500,7 @@ def render_status(releases, error, checked_at):
     elif error:
         badge("warn", "Fonte oficial indisponível · usando catálogo salvo")
     elif checked_at:
-        st.caption(f"Última confirmação: {readable_date(checked_at).removesuffix(' (horário de Brasília)')}")
+        st.caption(f"Última confirmação: {readable_date(checked_at)}")
     else:
         st.caption("Nenhuma versão salva. Use o botão de verificação para consultar a fonte oficial.")
 
@@ -376,42 +512,11 @@ def card_catalog(system_key, saved):
     return releases, error
 
 
-
-def system_icon(system_key):
-    paths = {
-        "bpa": '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v4H9zM9 11h6M9 15h6"/>',
-        "apac": '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6m-11 6 2 2 4-4"/>',
-        "sia": '<path d="M4 21V9h6v12m0 0V3h10v18M3 21h18M14 7h2m-2 4h2m-2 4h2M6 13h1m-1 4h1"/>',
-        "fpo": '<path d="M4 19v-4m5 4v-7m5 7V9m5 10V5M3 11l6-4 5 1 6-5"/>',
-        "sihd2": '<rect x="4" y="8" width="16" height="13" rx="2"/><path d="M9 8V3h6v5M12 11v6m-3-3h6M9 21v-2h6v2"/>',
-        "ciha02": '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8zM4 12h4l2-4 3 8 2-4h5"/>',
-        "cnes": '<rect x="8" y="2" width="8" height="6" rx="1"/><rect x="2" y="16" width="8" height="6" rx="1"/><rect x="14" y="16" width="8" height="6" rx="1"/><path d="M12 8v4m-6 4v-4h12v4"/>',
-        "table": '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/>',
-    }
-    group = ("fpo" if system_key.startswith("fpo") else "cnes" if system_key.startswith("cnes")
-             else "ciha02" if system_key.startswith("ciha") else "table" if system_key in COMPETENCE_SYSTEMS else system_key)
-    return ('<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
-            'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + paths.get(group, paths['apac']) + '</svg>')
-
-
-def render_card_heading(system_key, meta):
-    category = ("Tabela mensal" if system_key in COMPETENCE_SYSTEMS else
-                "Instalação completa" if system_key == "cnes_complete" else
-                "Atualização do sistema" if system_key in {"fpo_update", "ciha02", "cnes_app"} else "Instalador do sistema")
-    st.markdown(f'<div class="ds-card-title"><span class="ds-card-icon">{system_icon(system_key)}</span>'
-                f'<span>{escape(str(meta["label"]))}<small>{category}</small></span></div>', unsafe_allow_html=True)
-
-
-def render_official_link(system_key, url):
-    with st.container(key=f"official_portal_{system_key}"):
-        st.link_button("Conferir no portal oficial", url, icon=":material/open_in_new:", width="stretch")
-
-
 def render_single_version_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
     meta = SYSTEM_META[system_key]
     info = snapshot_systems.get(system_key, {})
     with st.container(border=True, key=f"system_card_{system_key}"):
-        render_card_heading(system_key, meta)
+        st.markdown(f'<div class="ds-card-title"><span class="ds-card-icon" aria-hidden="true">{meta["icon"]}</span><span>{meta["label"]}</span></div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key, info)
         if not releases and info.get("official_reachable") is False:
             error = error or info.get("error") or "SourceUnavailable"
@@ -425,8 +530,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
         else:
             name = url = None
         if name:
-            with st.container(key=f"file_name_{system_key}"):
-                st.caption(name)
+            st.caption(name)
             if system_key == "cnes_complete":
                 st.caption("Instalação nova do SCNES")
             elif system_key == "cnes_app":
@@ -443,7 +547,7 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
             if current and str(current.get("name", "")).lower() not in {str(item).lower() for item in (latest or {}).get("withdrawn_names", [])} and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
                 with st.expander("Versão anterior preservada no espelho"):
                     render_download_button(system_key + "_backup", current["name"], current["url"], info["mirror"])
-        render_official_link(system_key, meta["official_page"])
+        st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
         if system_key == "fpo_update":
             with st.expander("Primeira instalação? Abra o instalador base do FPO"):
                 render_single_version_card("fpo_installer", snapshot_systems)
@@ -459,7 +563,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
     saved_latest = info.get("latest") or {}
     stored_releases = info.get("available_releases") or []
     with st.container(border=True, key=f"system_card_{system_key}"):
-        render_card_heading(system_key, meta)
+        st.markdown(f'<div class="ds-card-title"><span class="ds-card-icon" aria-hidden="true">{meta["icon"]}</span><span>{meta["label"]}</span></div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key, info)
         source = (releases[0] if releases else saved_latest).get("catalog_source") if releases or saved_latest else None
         if system_key == "sigtap" and source == "community":
@@ -473,7 +577,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
 
         if not available:
             st.info("Nenhuma competência disponível ainda. Consulte o catálogo oficial ou tente novamente mais tarde.")
-            render_official_link(system_key, meta["official_page"])
+            st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
             return
 
         def release_for(month: str) -> dict[str, object] | None:
@@ -506,7 +610,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
                     render_download_button(system_key + "_backup", saved_entry["name"], saved_entry["url"], saved_entry["mirror"])
         else:
             st.caption("Ainda não há pacote espelhado para esta competência.")
-        render_official_link(system_key, meta["official_page"])
+        st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
 
 
 def render_grid(keys, snapshot_systems, renderer):
@@ -609,14 +713,14 @@ def render_updates_panel(snapshot):
     left, action = st.columns([2.4, 1], vertical_alignment="center")
     with left:
         st.markdown(
-            '<div class="ds-update-heading"><div class="ds-update-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></div>'
+            '<div class="ds-update-heading"><div class="ds-update-icon">✦</div>'
             '<div><strong>Novidades dos sistemas</strong>'
             '<span>Atualizações identificadas nos últimos 7 dias.</span></div></div>',
             unsafe_allow_html=True,
         )
     with action:
         check_now = st.button(
-            "Verificar todos os sistemas", key="force_catalog_check", icon=":material/refresh:",
+            "🔄 Verificar todos os sistemas", key="force_catalog_check",
             type="primary", width="stretch",
             help="Consulta agora, sem cache, os catálogos oficiais de todos os sistemas.",
         )
@@ -681,29 +785,21 @@ readable_updated_at = readable_date(updated_at)
 
 st.markdown(
     f"""
-    <div class="ds-masthead">
-        <div class="ds-brand">
-            <span class="ds-brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg></span>
-            <div><strong>Central de arquivos</strong><small>Sistemas de informação do SUS</small></div>
-        </div>
-        <div class="ds-masthead-note"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Tecnologia a serviço da saúde pública</div>
-    </div>
     <div class="ds-hero">
         <div class="ds-hero-copy">
-            <div class="ds-eyebrow">APOIO À GESTÃO E AO PROCESSAMENTO DE DADOS</div>
-            <h1>Downloads Sistemas</h1>
-            <p>Acesso centralizado a instaladores, atualizações e tabelas dos sistemas do SUS.
-            Consulte as versões disponíveis e encontre o arquivo que sua equipe precisa.</p>
-            <div class="ds-highlights">
-                <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5zm-9 9 9 5 9-5m-18 5 9 5 9-5"/></svg><b>{len(SYSTEM_META)}</b> pacotes acompanhados</span>
-                <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>Histórico completo de competências</span>
+            <div class="ds-brandline">
+                <span class="ds-brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg></span>
+                <div class="ds-eyebrow">SISTEMAS DE INFORMAÇÃO DO SUS</div>
             </div>
+            <h1>Downloads Sistemas</h1>
+            <p>Instaladores, atualizações e tabelas para a rotina dos sistemas do SUS.
+            Encontre o arquivo que precisa e acompanhe os últimos lançamentos.</p>
         </div>
         <div class="ds-hero-meta">
-            <strong><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Última verificação</strong>
+            <strong><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Última verificação</strong>
             <span>{escape(readable_updated_at.removesuffix(" (horário de Brasília)"))}</span>
             <em class="ds-meta-zone">Horário de Brasília</em>
-            <small>Consulta programada a cada 2 horas<br>Inclui a verificação das 06:50</small>
+            <small>Verificação programada a cada 2 horas</small>
         </div>
     </div>
     """,
@@ -713,6 +809,14 @@ st.markdown(
 notice = verification_notice(snapshot)
 if notice:
     st.warning(notice)
+
+st.markdown(
+    f'<div class="ds-overview">'
+    f'<div class="ds-overview-item"><div class="ds-overview-number">{len(SYSTEM_META)}</div><div><strong>Pacotes acompanhados</strong><span>Instaladores, atualizações e tabelas</span></div></div>'
+    '<div class="ds-overview-item"><div class="ds-overview-number">2h</div><div><strong>Consulta automática</strong><span>Inclui 06:50, no horário de Brasília</span></div></div>'
+    '<div class="ds-overview-item"><div class="ds-overview-number">7d</div><div><strong>Novidades em destaque</strong><span>Avisos disponíveis por sete dias</span></div></div>'
+    '</div>', unsafe_allow_html=True,
+)
 
 with st.container(border=True, key="updates_panel"):
     render_updates_panel(snapshot)
@@ -727,17 +831,16 @@ programs_tab, tables_tab, releases_tab = st.tabs(["Programas e instaladores", "T
 
 with programs_tab:
     st.markdown(
-        '<div class="ds-section">'
-        '<h2>Programas e instaladores</h2><p>Programas e atualizações para processamento das informações do SUS.</p></div>',
+        '<div class="ds-section"><div class="ds-eyebrow">01 &nbsp;·&nbsp; APLICATIVOS</div>'
+        '<h2>Instaladores</h2><p>Programas e atualizações para processamento das informações do SUS.</p></div>',
         unsafe_allow_html=True,
     )
+    st.info("**SCNES:** use **completo** para uma nova instalação ou **atualização** se já tiver o sistema; o Firebird é necessário. **FPO:** faça a instalação inicial e depois aplique a atualização mais recente.", icon="ℹ️")
     render_grid(SINGLE_VERSION_SYSTEMS, systems, render_single_version_card)
-    with st.expander("Orientações para instalar SCNES e FPO"):
-        st.info("**SCNES:** use **completo** para uma nova instalação ou **atualização** se já tiver o sistema; o Firebird é necessário. **FPO:** faça a instalação inicial e depois aplique a atualização mais recente.", icon="ℹ️")
 
 with tables_tab:
     st.markdown(
-        '<div class="ds-section">'
+        '<div class="ds-section"><div class="ds-eyebrow">02 &nbsp;·&nbsp; COMPETÊNCIAS</div>'
         '<h2>Tabelas e bases</h2><p>Selecione o mês que você precisa e baixe o pacote correspondente.</p></div>',
         unsafe_allow_html=True,
     )
@@ -746,4 +849,4 @@ with tables_tab:
 with releases_tab:
     render_latest_releases_table(systems)
 
-st.markdown('<div class="ds-footer"><div><strong>Downloads Sistemas</strong>Central de acesso a arquivos dos sistemas de informação do SUS</div><span>Instaladores &nbsp;·&nbsp; Atualizações &nbsp;·&nbsp; Tabelas</span></div>', unsafe_allow_html=True)
+st.markdown('<div class="ds-footer">Downloads Sistemas · Central de acesso a arquivos dos sistemas de informação do SUS</div>', unsafe_allow_html=True)
