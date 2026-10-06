@@ -5,6 +5,9 @@ import tempfile
 from pathlib import Path
 from threading import RLock
 
+from catalogs.mirrors import matching_mirror
+from catalogs.updates import merge_updates
+
 CATALOG_LOCK = RLock()
 
 
@@ -50,3 +53,64 @@ def atomic_write(path, snapshot):
     finally:
         if temporary is not None:
             temporary.unlink(missing_ok=True)
+
+
+def merge_catalogs(remote, local):
+    """Combine source discoveries and verified copies without rolling back releases."""
+    systems = {}
+    remote_systems = remote.get("systems") or {}
+    local_systems = local.get("systems") or {}
+    for key in dict.fromkeys([*remote_systems, *local_systems]):
+        old, new = remote_systems.get(key, {}), local_systems.get(key, {})
+        if not old and not new:
+            continue
+        monthly = key in {"bdsia", "sigtap", "cnes_base"}
+        by_attempt = lambda info: (str(info.get("catalog_attempt_at") or info.get("catalog_checked_at") or info.get("checked_at") or ""), str(info.get("checked_at") or ""))
+        earlier, newer = sorted([old, new], key=by_attempt)
+        info = dict(newer)
+        successful_dates = [str(item.get("catalog_checked_at") or "") for item in [old, new]]
+        if any(successful_dates):
+            info["catalog_checked_at"] = max(successful_dates)
+        releases = normalize_catalog(earlier, normalize_catalog(newer, [], monthly), monthly)
+        if releases:
+            info["latest"] = releases[0]
+        if monthly:
+            info["available_releases"] = releases
+            entries = {}
+            for collection in [old.get("competences") or {}, new.get("competences") or {}]:
+                for month, entry in collection.items():
+                    previous = entries.get(month)
+                    rank = lambda value: (release_rank(value)[1:], bool(matching_mirror(value.get("name"), value.get("mirror"))), str((value.get("mirror") or {}).get("verified_at", "")))
+                    if previous is None or rank(entry) >= rank(previous):
+                        entries[month] = dict(entry)
+            info["competences"] = entries
+            failures = {}
+            for collection in [old.get("download_failures") or {}, new.get("download_failures") or {}]:
+                for month, failure in collection.items():
+                    if str(failure.get("attempted_at", "")) >= str(failures.get(month, {}).get("attempted_at", "")):
+                        failures[month] = dict(failure)
+            for month, entry in entries.items():
+                failure = failures.get(month)
+                mirror = matching_mirror(entry.get("name"), entry.get("mirror")) or {}
+                if failure and failure.get("name") == entry.get("name") and str(mirror.get("verified_at", "")) >= str(failure.get("attempted_at", "")):
+                    failures.pop(month)
+            if failures or "download_failures" in old or "download_failures" in new:
+                info["download_failures"] = failures
+        else:
+            withdrawn = {str(name).lower() for name in (info.get("latest") or {}).get("withdrawn_names", [])}
+            copies = [entry for entry in [old, new] if (entry.get("current") or {}).get("name") and str(entry["current"]["name"]).lower() not in withdrawn]
+            if copies:
+                copy = max(copies, key=lambda entry: (release_rank(entry["current"])[1:], bool(matching_mirror(entry["current"]["name"], entry.get("mirror"))), str((entry.get("mirror") or {}).get("verified_at", ""))))
+                info["current"], info["mirror"] = copy["current"], copy.get("mirror")
+            else:
+                info.pop("current", None)
+                info.pop("mirror", None)
+            latest = info.get("latest") or {}
+            info["pending_download"] = not matching_mirror(latest.get("name"), info.get("mirror"))
+        systems[key] = info
+    result = {"updated_at": max(str(remote.get("updated_at") or ""), str(local.get("updated_at") or "")),
+              "systems": systems, "updates": merge_updates(remote.get("updates", []), local.get("updates", []))}
+    checks = [check for check in [remote.get("last_check"), local.get("last_check")] if check]
+    if checks:
+        result["last_check"] = max(checks, key=lambda check: str(check.get("completed_at") or ""))
+    return result

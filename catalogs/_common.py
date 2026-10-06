@@ -7,6 +7,7 @@ import io
 import zipfile
 import zlib
 import ssl
+from time import monotonic
 import unicodedata
 from datetime import date
 from ftplib import FTP, Error as FTPError
@@ -206,7 +207,8 @@ def fetch_ftp_names(host: str, directory: str, *, timeout: int = 15) -> list[str
         raise OSError("Não foi possível listar o diretório FTP oficial.") from exc
 
 
-def download_via_http(url: str, name: str, *, max_size: int, timeout: int = 45) -> bytes:
+def download_via_http(url: str, name: str, *, max_size: int, timeout: int = 45, max_seconds: int = 300) -> bytes:
+    deadline = monotonic() + max_seconds
     request = Request(url, headers={"User-Agent": USER_AGENT})
     with urlopen(request, timeout=timeout) as response:
         declared = response.headers.get("Content-Length")
@@ -215,7 +217,11 @@ def download_via_http(url: str, name: str, *, max_size: int, timeout: int = 45) 
             raise ValueError(f"O download de {name} excedeu o limite de tamanho.")
         chunks: list[bytes] = []
         total = 0
-        while block := response.read(1024 * 1024):
+        # read1 returns after one socket read, so a slow continuous transfer
+        # cannot keep resetting the socket timeout indefinitely.
+        while block := response.read1(1024 * 1024):
+            if monotonic() >= deadline:
+                raise TimeoutError(f"O download de {name} excedeu o tempo permitido.")
             total += len(block)
             if total > max_size:
                 raise ValueError(f"O download de {name} excedeu o limite de tamanho.")
@@ -225,12 +231,15 @@ def download_via_http(url: str, name: str, *, max_size: int, timeout: int = 45) 
     return b"".join(chunks)
 
 
-def download_via_ftp(host: str, directory: str, name: str, *, max_size: int, timeout: int = 45) -> bytes:
+def download_via_ftp(host: str, directory: str, name: str, *, max_size: int, timeout: int = 45, max_seconds: int = 300) -> bytes:
     chunks: list[bytes] = []
     total = 0
+    deadline = monotonic() + max_seconds
 
     def collect(block: bytes) -> None:
         nonlocal total
+        if monotonic() >= deadline:
+            raise TimeoutError(f"O download de {name} excedeu o tempo permitido.")
         total += len(block)
         if total > max_size:
             raise ValueError(f"O download de {name} excedeu o limite de tamanho.")

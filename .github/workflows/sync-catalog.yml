@@ -2,8 +2,7 @@ name: Sincronizar catálogo de downloads
 
 on:
   schedule:
-    # Horário de Brasília (UTC-3): 00:50, 02:50, 04:50, 06:50, ...
-    # Inclui a consulta diária das 06:50 e repete a cada duas horas.
+    # Brasília (UTC-3): 00:50, 02:50, 04:50, 06:50 e a cada duas horas.
     - cron: '50 1-23/2 * * *'
   workflow_dispatch:
   push:
@@ -17,16 +16,18 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: sync-catalog
-  cancel-in-progress: false
-
 jobs:
-  sync:
+  discover:
+    name: Consultar e salvar versões
     runs-on: ubuntu-24.04
-    timeout-minutes: 55
+    timeout-minutes: 12
+    concurrency:
+      group: sync-catalog-discovery
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: master
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -35,20 +36,42 @@ jobs:
       - name: Testar recuperação e publicação
         run: python -m unittest discover -v
       - name: Descobrir versões sem aguardar os downloads
+        id: discovery
         timeout-minutes: 8
         run: python -u scripts/sync_catalog.py --catalog-only
-      - name: Publicar versões encontradas
-        if: ${{ always() }}
+      - name: Publicar versões e resultado da consulta
+        if: ${{ always() && (steps.discovery.outcome == 'success' || steps.discovery.outcome == 'failure') }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: python -u scripts/publish_catalog.py
+
+  mirrors:
+    name: Preparar cópias para download
+    needs: discover
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    concurrency:
+      # A slow copy cannot hold up the next source-discovery job.
+      group: sync-catalog-mirrors
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Fetch the catalog already persisted by discovery.
+          ref: master
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Instalar dependências do portal
+        run: python -m pip install -r requirements.txt
       - name: Baixar, publicar e confirmar cada espelho
+        id: copies
         env:
           GH_TOKEN: ${{ github.token }}
         timeout-minutes: 35
-        run: python -u scripts/sync_catalog.py --publish
-      - name: Salvar catálogo confirmado
-        if: ${{ always() }}
+        run: python -u scripts/sync_catalog.py --publish --mirror-only
+      - name: Salvar cópias confirmadas
+        if: ${{ always() && (steps.copies.outcome == 'success' || steps.copies.outcome == 'failure') }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: python -u scripts/publish_catalog.py

@@ -10,50 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from catalogs.state import normalize_catalog, release_rank
-from catalogs.updates import merge_updates
-from catalogs.mirrors import matching_mirror
-from scripts.sync_catalog import SINGLE_VERSION_SYSTEMS, COMPETENCE_SYSTEMS
-
-
-def merge_catalogs(remote, local):
-    systems = {}
-    remote_systems = remote.get("systems") or {}
-    local_systems = local.get("systems") or {}
-    for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS):
-        old, new = remote_systems.get(key, {}), local_systems.get(key, {})
-        if not old and not new:
-            continue
-        monthly = key in COMPETENCE_SYSTEMS
-        newer = max([old, new], key=lambda info: str(info.get("catalog_checked_at", info.get("checked_at", ""))))
-        info = dict(newer)
-        releases = normalize_catalog(old, normalize_catalog(new, [], monthly), monthly)
-        if releases:
-            info["latest"] = releases[0]
-        if monthly:
-            info["available_releases"] = releases
-            entries = {}
-            for collection in [old.get("competences") or {}, new.get("competences") or {}]:
-                for month, entry in collection.items():
-                    previous = entries.get(month)
-                    rank = lambda value: (release_rank(value)[1:], bool(matching_mirror(value.get("name"), value.get("mirror"))), str((value.get("mirror") or {}).get("verified_at", "")))
-                    if previous is None or rank(entry) >= rank(previous):
-                        entries[month] = dict(entry)
-            info["competences"] = entries
-        else:
-            withdrawn = {str(name).lower() for name in (info.get("latest") or {}).get("withdrawn_names", [])}
-            copies = [entry for entry in [old, new] if (entry.get("current") or {}).get("name") and str(entry["current"]["name"]).lower() not in withdrawn]
-            if copies:
-                copy = max(copies, key=lambda entry: (release_rank(entry["current"])[1:], bool(matching_mirror(entry["current"]["name"], entry.get("mirror"))), str((entry.get("mirror") or {}).get("verified_at", ""))))
-                info["current"], info["mirror"] = copy["current"], copy.get("mirror")
-            else:
-                info.pop("current", None)
-                info.pop("mirror", None)
-            latest = info.get("latest") or {}
-            info["pending_download"] = not matching_mirror(latest.get("name"), info.get("mirror"))
-        systems[key] = info
-    return {"updated_at": max(str(remote.get("updated_at", "")), str(local.get("updated_at", ""))),
-            "systems": systems, "updates": merge_updates(remote.get("updates", []), local.get("updates", []))}
+from catalogs.state import merge_catalogs
 
 
 def gh_api(endpoint, body=None):

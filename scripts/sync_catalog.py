@@ -15,7 +15,8 @@ import subprocess
 import json
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from time import monotonic
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 from pathlib import Path
@@ -32,6 +33,7 @@ CATALOG_PATH = ROOT / "data" / "catalog.json"
 DIST_DIR = ROOT / "dist"
 PUBLISH = False
 CATALOG_ONLY = False
+MIRROR_ONLY = False
 
 SINGLE_VERSION_SYSTEMS = {
     "apac": {
@@ -119,6 +121,8 @@ COMPETENCE_SYSTEMS = {
         "fetch": cnes_portal.fetch_cnes_base_catalog,
         "download": cnes_portal.download_base_release,
         "new_packages_per_run": 2,
+        # Removed from the public portal: retain existing copies, stop backfilling.
+        "enabled": False,
     },
 }
 
@@ -216,8 +220,16 @@ def failed(previous, config, checked_at, exc):
     # checked_at é a tentativa; last_success_at conserva a idade real da cópia.
     if previous and "last_success_at" not in result:
         result["last_success_at"] = previous.get("checked_at") if previous.get("official_reachable") else None
-    result.update(official_reachable=False, checked_at=checked_at, error=type(exc).__name__)
+    result.update(official_reachable=False, checked_at=checked_at, catalog_attempt_at=checked_at,
+                  catalog_check_error=type(exc).__name__, error=type(exc).__name__)
     print(f'::warning::{config["label"]}: falha na consulta, download ou publicação ({type(exc).__name__}); cópia anterior preservada.')
+    return result
+
+
+def mirror_failed(previous, config, checked_at, exc):
+    result = {"label": config["label"], "official_page": config["official_page"], **(previous or {})}
+    result.update(checked_at=checked_at, download_error=type(exc).__name__)
+    print(f'::warning::{config["label"]}: falha ao preparar cópia ({type(exc).__name__}); catálogo preservado.')
     return result
 
 
@@ -226,27 +238,32 @@ def sync_single_version_system(key, config, previous):
     old = previous.get("systems", {}).get(key, {})
     announcements = []
     try:
-        releases = config["fetch"]()
+        releases = normalize_catalog(old, [], key in COMPETENCE_SYSTEMS) if MIRROR_ONLY else config["fetch"]()
         if not releases:
             raise ValueError("Nenhuma versão encontrada.")
     except (OSError, ValueError) as exc:
-        return failed(old, config, checked_at, exc)
+        return mirror_failed(old, config, checked_at, exc) if MIRROR_ONLY else failed(old, config, checked_at, exc)
     releases = normalize_catalog(old, releases)
+    catalog_checked_at = old.get("catalog_checked_at") if MIRROR_ONLY else checked_at
+    catalog_attempt_at = old.get("catalog_attempt_at", catalog_checked_at) if MIRROR_ONLY else checked_at
     latest = dict(releases[0])
     name = latest["name"]
     old_current = old.get("current") or {}
     old_latest = old.get("latest") or old_current
     if not latest.get("release_date") and old_latest.get("name") == name:
         latest["release_date"] = old_latest.get("release_date")
-    if old_latest.get("name") and old_latest["name"] != name:
+    if not MIRROR_ONLY and old_latest.get("name") and old_latest["name"] != name:
         announcements.append(make_update_event(key, config["label"], name, checked_at))
     if CATALOG_ONLY:
         result = {**old, "label": config["label"], "official_page": config["official_page"],
-                  "latest": latest, "catalog_checked_at": checked_at, "official_reachable": True,
+                  "latest": latest, "catalog_checked_at": catalog_checked_at,
+                  "catalog_attempt_at": catalog_attempt_at, "catalog_check_error": None,
+                  "checked_at": checked_at, "official_reachable": True,
                   "pending_download": old_current.get("name") != name or not old.get("mirror")}
         if str(old_current.get("name", "")).lower() in {str(name).lower() for name in latest.get("withdrawn_names", [])}:
             result.pop("current", None)
             result.pop("mirror", None)
+        result.pop("error", None)
         if announcements:
             result["_announcements"] = announcements
         return result
@@ -258,9 +275,13 @@ def sync_single_version_system(key, config, previous):
                                    expected_sha256=(old.get("mirror") or {}).get("sha256") if old_current.get("name") == name else None)
         print(f'[{key}] {name}: {"espelho confirmado" if mirror else "somente arquivo local"}')
     except (OSError, ValueError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
-        result = failed(old, config, checked_at, exc)
-        result.update(latest=latest, official_reachable=True, catalog_checked_at=checked_at,
-                      pending_download=True, download_error=type(exc).__name__)
+        # A mirror failure is not a failure to query the source catalog.
+        result = {**old, "label": config["label"], "official_page": config["official_page"]}
+        result.update(latest=latest, official_reachable=old.get("official_reachable", True) if MIRROR_ONLY else True,
+                      catalog_checked_at=catalog_checked_at, catalog_attempt_at=catalog_attempt_at,
+                      catalog_check_error=old.get("catalog_check_error") if MIRROR_ONLY else None,
+                      checked_at=checked_at, pending_download=True, download_error=type(exc).__name__)
+        print(f'::warning::{key}: {type(exc).__name__}; cópia anterior preservada.')
         if announcements:
             result["_announcements"] = announcements
         return result
@@ -268,10 +289,13 @@ def sync_single_version_system(key, config, previous):
     if not release_date and old_current.get("name") == name:
         release_date = old_current.get("release_date")
     result = {"label": config["label"], "official_page": config["official_page"],
-              "latest": latest, "catalog_checked_at": checked_at, "pending_download": False,
+              "latest": latest, "catalog_checked_at": catalog_checked_at,
+              "catalog_attempt_at": catalog_attempt_at,
+              "catalog_check_error": old.get("catalog_check_error") if MIRROR_ONLY else None, "pending_download": False,
               "current": {"name": name, "size": latest.get("size"), "url": latest["url"],
                           "release_date": release_date},
-              "mirror": mirror, "checked_at": checked_at, "last_success_at": checked_at, "official_reachable": True}
+              "mirror": mirror, "checked_at": checked_at, "last_success_at": checked_at,
+              "official_reachable": old.get("official_reachable", True) if MIRROR_ONLY else True}
     if announcements:
         result["_announcements"] = announcements
     return result
@@ -281,12 +305,14 @@ def sync_competence_system(key, config, previous, on_progress=None):
     checked_at = now()
     old = previous.get("systems", {}).get(key, {})
     try:
-        releases = config["fetch"]()
+        releases = normalize_catalog(old, [], key in COMPETENCE_SYSTEMS) if MIRROR_ONLY else config["fetch"]()
         if not releases:
             raise ValueError("Nenhuma competência encontrada.")
     except (OSError, ValueError) as exc:
-        return failed(old, config, checked_at, exc)
+        return mirror_failed(old, config, checked_at, exc) if MIRROR_ONLY else failed(old, config, checked_at, exc)
     releases = normalize_catalog(old, releases, monthly=True)
+    catalog_checked_at = old.get("catalog_checked_at") if MIRROR_ONLY else checked_at
+    catalog_attempt_at = old.get("catalog_attempt_at", catalog_checked_at) if MIRROR_ONLY else checked_at
     updated = dict(old.get("competences") or {})
     announcements = []
     known_latest = old.get("latest") or {}
@@ -294,7 +320,7 @@ def sync_competence_system(key, config, previous, on_progress=None):
     latest_release = max(releases, key=lambda item: str(item.get("competence", "")))
     latest_release = dict(latest_release)
     latest_month = str(latest_release["competence"])
-    if old_latest_month:
+    if old_latest_month and not MIRROR_ONLY:
         old_latest = known_latest if str(known_latest.get("competence", "")) == old_latest_month else updated[old_latest_month]
         if latest_month > old_latest_month or (
             latest_month == old_latest_month and old_latest.get("name") != latest_release["name"]
@@ -311,15 +337,20 @@ def sync_competence_system(key, config, previous, on_progress=None):
     months = sorted(by_month, reverse=True)
     available_releases = [by_month[month] for month in months]
     package_budget = int(config.get("new_packages_per_run", 16))
+    deadline = monotonic() + int(config.get("download_seconds_per_run", 480))
     attempts = 0
     errors = []
+    failures = dict(old.get("download_failures") or {})
 
     def result():
         data = {"label": config["label"], "official_page": config["official_page"],
-                "latest": latest_release, "catalog_checked_at": checked_at,
+                "latest": latest_release, "catalog_checked_at": catalog_checked_at,
+                "catalog_attempt_at": catalog_attempt_at,
+                "catalog_check_error": old.get("catalog_check_error") if MIRROR_ONLY else None,
                 "available_releases": available_releases,
                 "competences": dict(updated), "checked_at": checked_at, "last_success_at": checked_at,
-                "official_reachable": latest_release.get("catalog_source") != "community", "pending_competences": list(errors)}
+                "official_reachable": old.get("official_reachable", latest_release.get("catalog_source") != "community") if MIRROR_ONLY else latest_release.get("catalog_source") != "community",
+                "pending_competences": list(errors), "download_failures": dict(failures)}
         if announcements:
             data["_announcements"] = announcements
         return data
@@ -340,8 +371,13 @@ def sync_competence_system(key, config, previous, on_progress=None):
                 # ao GitHub a cada execução. A competência atual é reconferida.
                 mirror = entry.get("mirror") if month != latest_month else confirmed_previous(entry)
             if not mirror:
-                if attempts >= package_budget:
+                failure = failures.get(month) or {}
+                # Latest versions retry every run. Missing historical files get a
+                # cooldown so they cannot consume the same batch indefinitely.
+                if month != latest_month and failure.get("name") == release["name"] and str(failure.get("retry_after", "")) > checked_at:
                     continue
+                if attempts >= package_budget or monotonic() >= deadline:
+                    break
                 attempts += 1
                 mirror = store_package(key, release, config, f"{key.replace('_', '-')}-{month}",
                                        expected_sha256=(entry.get("mirror") or {}).get("sha256") if entry.get("name") == release["name"] else None)
@@ -352,37 +388,51 @@ def sync_competence_system(key, config, previous, on_progress=None):
                               "url": release["url"], "mirror": mirror,
                               "catalog_source": release.get("catalog_source"),
                               "release_date": release_date}
+            failures.pop(month, None)
             if on_progress:
                 on_progress(key, result())
         except (OSError, ValueError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
             errors.append(month)
+            failures[month] = {"name": release["name"], "error": type(exc).__name__, "attempted_at": now(),
+                               "retry_after": (datetime.now(timezone.utc) + timedelta(hours=24)).isoformat(timespec="seconds")}
+            if on_progress:
+                on_progress(key, result())
             print(f'::warning::{key} {month}: {type(exc).__name__}; cópia anterior preservada.')
     return result()
 
 
-def save_catalog(systems, updates=None):
+def save_catalog(systems, updates=None, last_check=None, previous_updated_at=""):
     ordered = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS) if key in systems}
-    confirmed_at = max((str(info.get("catalog_checked_at") or info.get("last_success_at") or "") for info in ordered.values()), default="")
-    catalog = {"updated_at": confirmed_at or now(), "systems": ordered, "updates": merge_updates(updates or [])}
+    confirmed_at = max((str(info.get("catalog_checked_at") or "") for key, info in ordered.items()
+                        if (SINGLE_VERSION_SYSTEMS.get(key) or COMPETENCE_SYSTEMS[key]).get("enabled", True)), default="")
+    catalog = {"updated_at": max(confirmed_at, str(previous_updated_at or "")), "systems": ordered, "updates": merge_updates(updates or [])}
+    if last_check:
+        catalog["last_check"] = last_check
     atomic_write(CATALOG_PATH, catalog)
 
 
 def main():
-    global PUBLISH, CATALOG_ONLY
+    global PUBLISH, CATALOG_ONLY, MIRROR_ONLY
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--publish", action="store_true", help="Publicar e verificar cada arquivo antes de atualizar o catálogo")
     parser.add_argument("--catalog-only", action="store_true", help="Salvar versões encontradas sem aguardar downloads")
+    parser.add_argument("--mirror-only", action="store_true", help="Publicar cópias do catálogo salvo sem alterar o horário da consulta")
     args = parser.parse_args()
+    if args.mirror_only and (not args.publish or args.catalog_only):
+        parser.error("--mirror-only requer --publish e não aceita --catalog-only")
     PUBLISH = args.publish
     CATALOG_ONLY = args.catalog_only
+    MIRROR_ONLY = args.mirror_only
     if PUBLISH:
         if not os.environ.get("GITHUB_REPOSITORY"):
             parser.error("--publish requer GITHUB_REPOSITORY")
         gh("auth", "status")
+    started_at = now()
     previous = _load_previous()
     systems = dict(previous.get("systems", {}))
     updates = list(previous.get("updates", []))
     catalog_lock = Lock()
+    active = {key: config for key, config in {**SINGLE_VERSION_SYSTEMS, **COMPETENCE_SYSTEMS}.items() if config.get("enabled", True)}
 
     def record(key, info):
         info = dict(info)
@@ -390,31 +440,43 @@ def main():
         with catalog_lock:
             systems[key] = info
             updates[:] = merge_updates(updates, announcements)
-            save_catalog(systems, updates)
+            save_catalog(systems, updates, previous.get("last_check"), previous.get("updated_at"))
 
     # Uma fonte lenta não impede os demais sistemas de publicar seus arquivos.
     with ThreadPoolExecutor(max_workers=4) as executor:
         tasks = {executor.submit(sync_single_version_system, key, config, previous): key
-                 for key, config in SINGLE_VERSION_SYSTEMS.items()}
+                 for key, config in SINGLE_VERSION_SYSTEMS.items() if key in active}
         tasks.update({executor.submit(sync_competence_system, key, config, previous, record): key
-                      for key, config in COMPETENCE_SYSTEMS.items()})
+                      for key, config in COMPETENCE_SYSTEMS.items() if key in active})
         for task in as_completed(tasks):
             key = tasks[task]
             try:
                 info = task.result()
             except Exception as exc:
                 config = SINGLE_VERSION_SYSTEMS.get(key) or COMPETENCE_SYSTEMS[key]
-                info = failed(previous.get("systems", {}).get(key, {}), config, now(), exc)
+                failure_handler = mirror_failed if MIRROR_ONLY else failed
+                info = failure_handler(previous.get("systems", {}).get(key, {}), config, now(), exc)
             record(key, info)
-    systems = {key: systems[key] for key in (*SINGLE_VERSION_SYSTEMS, *COMPETENCE_SYSTEMS)}
-    save_catalog(systems, updates)
+    last_check = previous.get("last_check")
+    if not MIRROR_ONLY:
+        failed_sources = [key for key in active if systems[key].get("catalog_check_error")]
+        last_check = {"started_at": started_at, "completed_at": now(), "source": "automatic",
+                      "total": len(active), "succeeded": len(active) - len(failed_sources),
+                      "failed_systems": failed_sources}
+    save_catalog(systems, updates, last_check, previous.get("updated_at"))
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
             summary.write("## Espelhos DATASUS\n\n")
-            for key, info in systems.items():
+            if last_check:
+                summary.write(f"Consulta concluída em {last_check['completed_at']}: {last_check['succeeded']} de {last_check['total']} fontes responderam.\n\n")
+            for key in active:
+                info = systems[key]
                 entries = list(info.get("competences", {}).values()) if key in COMPETENCE_SYSTEMS else [{"mirror": info.get("mirror")}]
                 count = sum(bool((e.get("mirror") or {}).get("verified_at")) for e in entries)
                 summary.write(f"- {info['label']}: {count} arquivo(s) com publicação confirmada nesta versão do catálogo.\n")
+
+    if not MIRROR_ONLY and active and not last_check["succeeded"]:
+        raise SystemExit("Nenhuma fonte respondeu; catálogo anterior preservado e tentativa registrada.")
 
 
 if __name__ == "__main__":

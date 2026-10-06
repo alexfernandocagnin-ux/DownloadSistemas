@@ -13,7 +13,7 @@ sites estão fora do ar, o que acontece com frequência.
 - A cada 2 horas, às 00:50, 02:50, 04:50, **06:50** e assim por diante no horário de Brasília, o GitHub Actions consulta as versões e tenta publicar os arquivos. O agendamento usa UTC e pode atrasar conforme a disponibilidade do GitHub. A descoberta é publicada em uma etapa própria, antes dos downloads grandes. A última versão encontrada é salva mesmo se o download falhar. O link do espelho só muda após a confirmação do asset; falhas preservam a cópia anterior.
 - Quando uma versão muda em relação a uma já conhecida, essa sincronização registra sistema, arquivo e data em um histórico persistente que aparece no quadro **Novidades dos sistemas** para todos os visitantes durante sete dias após a descoberta. O histórico permanece salvo após esse prazo. A primeira coleta de um sistema serve como referência e não é anunciada como novidade.
 - A tabela **Últimos lançamentos** mostra a versão mais recente de cada sistema e se existe uma cópia disponível. A data só aparece quando o catálogo oficial informa a publicação do arquivo; quando a fonte não oferece esse dado, a célula fica vazia. Na FPO, a atualização atual fica no cartão principal e o instalador base está no expansor de primeira instalação.
-- Não há corte de seis meses: todas as competências encontradas ficam no seletor ao abrir o site, mesmo que sua cópia ainda não esteja no espelho. Arquivos pequenos podem ser preparados na fonte oficial. O espelho amplia o histórico a cada execução, priorizando os meses recentes e publicando até 16 novos pacotes por tabela, ou 2 bases grandes CNES. Esse lote limita o trabalho da execução, não as competências disponíveis. Cópias já salvas permanecem disponíveis.
+- Não há corte de seis meses: todas as competências encontradas ficam no seletor ao abrir o site, mesmo que sua cópia ainda não esteja no espelho. Arquivos pequenos podem ser preparados na fonte oficial. O espelho amplia o histórico a cada execução, priorizando os meses recentes e tentando até 16 novos pacotes por tabela dentro de um orçamento de oito minutos. Arquivos históricos com falha são tentados novamente após 24 horas; a competência mais recente é tentada em toda execução. Esse lote limita o trabalho da execução, não as competências disponíveis. Cópias já salvas permanecem disponíveis.
 - Ao preparar um arquivo de até 50 MB, o servidor baixa a cópia completa e verifica assinatura, tamanho e SHA-256 registrado, antes de oferecer o download dentro do portal. Pacotes maiores têm assinatura e tamanho conferidos por uma leitura parcial e são entregues diretamente pelo espelho. Se o espelho falhar, tenta a fonte oficial. Uma página de erro nunca é oferecida como instalador.
 - As versões e revisões anteriores continuam acessíveis quando uma versão oficial nova ainda não foi espelhada.
 - Nenhum instalador é executado. Arquivos ainda sem espelho dependem da fonte oficial. O GitHub e o Streamlit também podem sofrer indisponibilidades; o serviço não promete disponibilidade absoluta.
@@ -31,7 +31,7 @@ sites estão fora do ar, o que acontece com frequência.
 | CNES · SCNES (atualização) | API JSON por trás de `cnes.datasus.gov.br/pages/downloads/aplicativos.jsp` | instalador, versão única |
 | BDSIA (tabela mensal do SIA) | mesma página do SIA | por competência (seletor de mês) |
 | SIGTAP · Tabela Unificada | RSS de `sigtap.datasus.gov.br/tabela-unificada/competencias.rss` | por competência (seletor de mês) |
-| CNES · Base de dados mensal | API JSON por trás de `cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp` | por competência (seletor de mês) |
+| CNES · SCNES completo | mesma API de aplicativos CNES | instalação completa, versão única |
 
 Se a listagem HTTPS da FPO não responder, o sincronizador consulta o diretório
 FTP oficial `/siasus/FPO` e continua validando os nomes e os arquivos antes de
@@ -127,7 +127,7 @@ Links legados são novamente conferidos na sincronização. Assets ausentes são
 
 Os downloads CNES usam os diretórios oficiais `/cnes/Versoes-Fces-Nacional` e `/cnes` nos servidores `arpoador.datasus.gov.br` e `ftp.datasus.gov.br`, contornando o servlet de estatísticas quando indisponível. O catálogo também consulta esses diretórios se a API cair.
 
-Bases CNES atuais ultrapassam 700 MB. O espelho aceita pacotes CNES até 1 GB e entrega arquivos grandes diretamente pelo GitHub. Bases ainda sem espelho não são carregadas na memória do Streamlit; aguardam sincronização ou podem ser obtidas pelo portal oficial.
+A base de dados mensal CNES foi retirada do portal e não é mais consultada ou baixada pela automação. Seu histórico já salvo é preservado no catálogo. Os instaladores SCNES completo e atualização continuam sendo consultados e espelhados normalmente.
 
 
 ## Revisão de confiabilidade — 01/10/2026
@@ -135,3 +135,16 @@ Bases CNES atuais ultrapassam 700 MB. O espelho aceita pacotes CNES até 1 GB e 
 A publicação do catálogo usa `scripts/publish_catalog.py`: lê a revisão atual do GitHub, combina versões e cópias confirmadas e atualiza apenas `data/catalog.json`. Conflitos de gravação são repetidos com a nova revisão, sem rebase dos arquivos de código. Os downloads HTTP/FTP conferem o tamanho anunciado; ZIPs também precisam apresentar uma estrutura de arquivo válida. Fontes vazias tentam as alternativas oficiais disponíveis.
 
 Detalhes da revisão, evidências e limites em `AUDITORIA-2026-10-01.md`.
+
+
+## Atualização automática — revisão de 06/10/2026
+
+A consulta e a preparação dos espelhos executam em jobs independentes, com filas separadas. Uma cópia lenta não bloqueia a próxima consulta programada. A consulta salva as versões e o resultado no GitHub antes de iniciar os espelhos; a preparação lê esse catálogo com `--publish --mirror-only`, sem alterar o horário da consulta nem refazer a descoberta.
+
+`last_check.completed_at` registra quando a última consulta terminou, incluindo a consulta pelo botão. `last_check.succeeded`, `total` e `failed_systems` distinguem sucesso, resposta parcial e falha total. `updated_at` e `catalog_checked_at` só avançam após uma consulta bem-sucedida; a falha de um download não indica falha na consulta. Se todas as fontes falharem, a execução sinaliza erro e ainda publica o resultado e preserva os arquivos anteriores.
+
+O portal consulta o catálogo público do GitHub com cache compartilhado de 60 segundos e preserva o arquivo local como alternativa. Páginas abertas conferem a revisão completa a cada minuto, incluindo novos espelhos que tenham o mesmo horário de descoberta. Isso evita depender de um reinício do Streamlit para receber dados publicados. Falhas na leitura remota mantêm o catálogo local; consultas locais pelo botão preservam versões mais recentes durante a combinação com o catálogo publicado. A persistência externa das consultas automáticas continua sendo responsabilidade do GitHub Actions; o botão grava o resultado no servidor Streamlit.
+
+Downloads HTTP/FTP agora têm um limite total de cinco minutos por servidor, além do limite de espera da conexão. O agendamento permanece a cada duas horas, incluindo 06:50 em Brasília. Atrasos do agendador do GitHub continuam possíveis; o portal avisa quando a última verificação tem mais de três horas ou quando alguma fonte não respondeu.
+
+Evidências e validação em `AUDITORIA-ATUALIZACAO-2026-10-06.md`.

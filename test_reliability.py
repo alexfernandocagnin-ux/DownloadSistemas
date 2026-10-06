@@ -274,6 +274,9 @@ class PortalTests(unittest.TestCase):
     def setUp(self):
         import streamlit as st
         st.cache_data.clear()
+        remote = patch("catalogs.snapshot.read_published_catalog", return_value=None)
+        remote.start()
+        self.addCleanup(remote.stop)
 
     def app(self):
         from streamlit.testing.v1 import AppTest
@@ -321,6 +324,33 @@ class PortalTests(unittest.TestCase):
         finally:
             path.write_bytes(original)
 
+    def test_published_catalog_reaches_the_portal_without_official_query_or_redeploy(self):
+        latest = {"name": "BPAMAG9999.exe", "url": URL.replace(NAME, "BPAMAG9999.exe")}
+        published = {"updated_at": "2026-10-06T23:50:00+00:00",
+                     "last_check": {"completed_at": "2026-10-06T23:50:00+00:00", "total": 12, "succeeded": 12},
+                     "systems": {"bpa": {"latest": latest, "catalog_checked_at": "2026-10-06T23:50:00+00:00"}}}
+        with patch("catalogs.snapshot.read_published_catalog", return_value=published), patch("catalogs.state.atomic_write") as write, patch.object(bpa_portal, "fetch_bpa_catalog", side_effect=AssertionError("official query")):
+            app = self.app().run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any(c.value == latest["name"] for c in app.caption))
+        self.assertIn("20:50", "\n".join(item.value for item in app.markdown))
+        self.assertEqual(write.call_args.args[1]["last_check"], published["last_check"])
+
+    def test_manual_query_with_no_answer_preserves_success_time_and_shows_attempt(self):
+        path = Path(__file__).parent / "data" / "catalog.json"
+        original = path.read_bytes()
+        try:
+            with patch.object(apac_portal, "fetch_apac_catalog", return_value=[]), patch.object(ciha_portal, "fetch_ciha02_catalog", return_value=[]), patch.object(ciha_portal, "fetch_ciha02_installer_catalog", return_value=[]), patch.object(bpa_portal, "fetch_bpa_catalog", return_value=[]), patch.object(sia_portal, "fetch_sia_catalog", return_value=[]), patch.object(sia_portal, "fetch_bdsia_catalog", return_value=[]), patch.object(fpo_portal, "fetch_fpo_installer_catalog", return_value=[]), patch.object(fpo_portal, "fetch_fpo_update_catalog", return_value=[]), patch.object(sihd_portal, "fetch_sihd2_catalog", return_value=[]), patch.object(cnes_portal, "fetch_cnes_complete_catalog", return_value=[]), patch.object(cnes_portal, "fetch_cnes_app_catalog", return_value=[]), patch.object(sigtap_portal, "fetch_sigtap_catalog", return_value=[]):
+                app = self.app().run()
+                next(b for b in app.button if b.key == "force_catalog_check").click().run()
+            self.assertFalse(app.exception)
+            saved = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(saved["updated_at"], json.loads(original)["updated_at"])
+            self.assertEqual(saved["last_check"]["succeeded"], 0)
+            self.assertTrue(any("0 de 12" in warning.value for warning in app.warning))
+        finally:
+            path.write_bytes(original)
+
     def test_sihd_can_prepare_from_official_source_without_a_mirror(self):
         with patch.object(sihd_portal, "download_release", return_value=PACKAGE), patch("catalogs.mirrors.matching_mirror", return_value=None):
             app = self.app().run()
@@ -340,6 +370,7 @@ class PortalTests(unittest.TestCase):
             (sigtap_portal, "fetch_sigtap_catalog"),
         ]
         with ExitStack() as stack:
+            stack.enter_context(patch("catalogs.state.atomic_write"))
             mocks = [stack.enter_context(patch.object(module, name, return_value=[])) for module, name in fetchers]
             app = self.app().run()
             next(button for button in app.button if button.key == "force_catalog_check").click().run()

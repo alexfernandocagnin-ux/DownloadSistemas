@@ -18,7 +18,8 @@ import streamlit as st
 from catalogs.mirrors import download_mirror, matching_mirror, probe_mirror
 from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
 from catalogs.updates import make_update_event, merge_updates, recent_updates
-from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog
+from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog, merge_catalogs
+from catalogs.snapshot import read_published_catalog, catalog_revision, verification_notice
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
@@ -234,15 +235,32 @@ button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; ou
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 
+@st.cache_data(ttl=60, show_spinner=False)
+def cached_published_catalog():
+    return read_published_catalog()
+
+
 def load_snapshot() -> dict[str, object]:
-    if not CATALOG_PATH.is_file():
-        return {"systems": {}}
-    try:
-        data = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        st.warning("O catálogo salvo não pôde ser lido. Consulte as fontes oficiais abaixo.")
-        return {"systems": {}}
-    return data if isinstance(data, dict) else {"systems": {}}
+    published = cached_published_catalog()
+    with CATALOG_LOCK:
+        try:
+            data = json.loads(CATALOG_PATH.read_text(encoding="utf-8")) if CATALOG_PATH.is_file() else {"systems": {}}
+        except (OSError, ValueError):
+            data = {"systems": {}}
+            if not published:
+                st.warning("O catálogo salvo não pôde ser lido. Consulte as fontes oficiais abaixo.")
+        snapshot = data if isinstance(data, dict) and isinstance(data.get("systems", {}), dict) else {"systems": {}}
+        if published:
+            # Preserve newer local discoveries while importing the automation's
+            # persisted versions and mirrors, without waiting for a redeploy.
+            merged = merge_catalogs(published, snapshot)
+            if merged != snapshot:
+                try:
+                    atomic_write(CATALOG_PATH, merged)
+                except OSError:
+                    pass  # Still render the published catalog if the disk is read-only.
+            return merged
+        return snapshot
 
 
 @st.cache_data(ttl=5 * 60, max_entries=64, show_spinner=False)
@@ -380,9 +398,12 @@ def force_check_all_systems(snapshot_systems):
                     if releases else (releases, error) for key, (releases, error) in catalogs.items()}
         events = find_live_updates(saved_systems, catalogs, checked_at)
         for key, (releases, error) in catalogs.items():
-            if not releases:
-                continue
             info = saved_systems.setdefault(key, {})
+            info["catalog_attempt_at"] = checked_at
+            info["catalog_check_error"] = error
+            if not releases:
+                info.update(official_reachable=False, error=error)
+                continue
             info.update(latest=dict(releases[0]), catalog_checked_at=checked_at,
                         official_reachable=releases[0].get("catalog_source") != "community")
             info.pop("error", None)
@@ -391,11 +412,13 @@ def force_check_all_systems(snapshot_systems):
             if key in COMPETENCE_SYSTEMS:
                 info["available_releases"] = releases
         snapshot["updates"] = merge_updates(snapshot.get("updates", []), events)
+        failed_sources = [key for key, (releases, error) in catalogs.items() if not releases]
+        snapshot["last_check"] = {"completed_at": checked_at, "source": "manual", "total": total,
+                                  "succeeded": total - len(failed_sources), "failed_systems": failed_sources}
         if any(releases for releases, _ in catalogs.values()):
             snapshot["updated_at"] = checked_at
         try:
-            if any(releases for releases, _ in catalogs.values()):
-                atomic_write(CATALOG_PATH, snapshot)
+            atomic_write(CATALOG_PATH, snapshot)
         except OSError:
             st.warning("A consulta foi concluída, mas não foi possível salvar o catálogo neste servidor.")
     st.session_state["forced_live_catalogs"] = catalogs
@@ -741,18 +764,23 @@ def render_updates_panel(snapshot):
 
 
 @st.fragment(run_every="60s")
-def refresh_catalog_when_changed(rendered_version):
+def refresh_catalog_when_changed(rendered_version, rendered_notice):
     # Recarrega a página aberta apenas quando há um catálogo novo no servidor.
     # A consulta às fontes continua sendo executada pela automação, não por visitante.
     current = load_snapshot()
-    if current.get("updated_at") != rendered_version:
+    if catalog_revision(current) != rendered_version or verification_notice(current) != rendered_notice:
         st.rerun()
 
 
 snapshot = load_snapshot()
-refresh_catalog_when_changed(snapshot.get("updated_at"))
+forced_at = st.session_state.get("forced_live_checked_at")
+automatic_check = snapshot.get("last_check") or {}
+if forced_at and automatic_check.get("source") == "automatic" and str(automatic_check.get("completed_at", "")) > forced_at:
+    for field in ["forced_live_catalogs", "forced_live_checked_at", "forced_live_updates"]:
+        st.session_state.pop(field, None)
+refresh_catalog_when_changed(catalog_revision(snapshot), verification_notice(snapshot))
 systems = snapshot.get("systems", {}) if isinstance(snapshot.get("systems"), dict) else {}
-updated_at = snapshot.get("updated_at", "ainda não sincronizado")
+updated_at = (snapshot.get("last_check") or {}).get("completed_at") or snapshot.get("updated_at", "ainda não sincronizado")
 readable_updated_at = readable_date(updated_at)
 
 st.markdown(
@@ -777,6 +805,10 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+notice = verification_notice(snapshot)
+if notice:
+    st.warning(notice)
 
 st.markdown(
     f'<div class="ds-overview">'
