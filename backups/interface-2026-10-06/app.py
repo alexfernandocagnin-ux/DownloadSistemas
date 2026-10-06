@@ -97,46 +97,30 @@ CUSTOM_CSS = """
 :root { --ds-ink:#172f3d; --ds-muted:#243b48; --ds-green:#087568; --ds-line:#dce5e9; }
 .stApp { background:#f3f6f8; color:var(--ds-ink); }
 .block-container { max-width:1440px; padding-top:1.6rem; padding-bottom:3rem; }
-.ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:2rem;
-    position:relative; overflow:hidden; padding:1.9rem 2.1rem; margin-bottom:1rem;
-    background:#132f3b; border:1px solid #234550; border-radius:22px; color:#fff;
-    box-shadow:0 8px 24px #132f3b10; }
-.ds-hero:after { content:''; position:absolute; width:260px; height:100%; right:0; top:0;
-    background:repeating-linear-gradient(90deg,transparent,transparent 51px,#547781 52px,transparent 53px);
-    opacity:.12; pointer-events:none; }
+.ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:2rem;
+    position:relative; overflow:hidden; padding:2.15rem 2.4rem; margin-bottom:1.2rem;
+    background:#132f3b; border:1px solid #234550; border-radius:20px; color:#fff; }
+.ds-hero:after { content:''; position:absolute; width:360px; height:360px; right:180px; top:-250px;
+    border:1px solid #41606a; border-radius:50%; box-shadow:0 0 0 45px #1b3945,0 0 0 90px #183440;
+    pointer-events:none; }
 .ds-hero-copy,.ds-hero-meta { position:relative; z-index:1; }
-.ds-brandline { display:flex; align-items:center; gap:.6rem; margin-bottom:.8rem; }
-.ds-brand-mark { width:30px; height:30px; display:grid; place-items:center;
-    border:1px solid #527d83; border-radius:9px; background:#244550; color:#b7f1dd; flex:0 0 30px; }
-.ds-brand-mark svg { width:18px; height:18px; }
-.ds-eyebrow { color:#b7e9dc; font-size:.72rem; font-weight:750; letter-spacing:.12em; text-transform:uppercase; margin:0; }
-.ds-hero h1 { font-family:'Trebuchet MS','Segoe UI',sans-serif; font-size:clamp(2rem,3vw,2.75rem);
-    font-weight:700; letter-spacing:-.04em; line-height:1.12; margin:0 0 .8rem; color:#fff; padding:0; }
-.ds-hero [data-testid="stHeaderActionElements"] { display:none; }
-.ds-hero p { color:#e2edf1; font-size:1rem; line-height:1.6; max-width:650px; margin:0; }
-.ds-hero-meta { align-self:center; padding:1.15rem 1.25rem; border:1px solid #d1e6df;
-    border-radius:14px; background:#edf8f3; color:#173a36; box-shadow:0 4px 12px #081d2420; }
-.ds-hero-meta strong { display:flex; align-items:center; gap:.45rem; color:#175c4e; font-size:.72rem;
-    text-transform:uppercase; letter-spacing:.07em; margin-bottom:.7rem; }
-.ds-hero-meta strong svg { width:16px; height:16px; flex:0 0 16px; }
-.ds-hero-meta span { display:block; color:#173a36; font-size:.97rem; font-weight:700; line-height:1.5;
-    font-variant-numeric:tabular-nums; }
-.ds-meta-zone { display:block; margin-top:.15rem; font-size:.79rem; font-style:normal; color:#243b48; }
-.ds-hero-meta small { display:block; margin-top:.7rem; padding-top:.65rem; border-top:1px solid #cfe3da;
-    color:#243b48; font-size:.8rem; line-height:1.5; }
-.ds-overview { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin:0 0 1rem; }
-.ds-overview-item { background:#fff; padding:.95rem 1.1rem; display:flex; align-items:center; gap:.8rem;
-    border:1px solid var(--ds-line); border-radius:12px; }
-.ds-overview-number { display:grid; place-items:center; min-width:44px; height:44px;
-    font-family:'Trebuchet MS','Segoe UI',sans-serif; color:#096456; background:#eaf5ef;
-    border-radius:10px; font-size:1.35rem; font-weight:700; line-height:1; }
-.ds-overview-item:nth-child(2) .ds-overview-number { color:#175b91; background:#eaf2fa; }
-.ds-overview-item:nth-child(3) .ds-overview-number { color:#654393; background:#f1ecf8; }
-.ds-overview-item strong { display:block; font-size:.9rem; color:#172f3d; }
-.ds-overview-item span { display:block; font-size:.8rem; color:var(--ds-muted); margin-top:.2rem; line-height:1.45; }
-.ds-section { margin:.7rem 0 .8rem; }
+.ds-eyebrow { color:#a8dbce; font-size:.7rem; font-weight:750; letter-spacing:.16em; text-transform:uppercase; margin:0 0 .65rem; }
+.ds-hero h1 { font-family:Georgia,'Times New Roman',serif; font-size:clamp(2rem,3.3vw,3rem);
+    font-weight:700; letter-spacing:-.045em; line-height:1.12; margin:0 0 .7rem; }
+.ds-hero p { color:#d5e3e9; font-size:.96rem; line-height:1.6; max-width:680px; margin:0; }
+.ds-hero-meta { align-self:center; padding:1.1rem 1.2rem; border:1px solid #46616b; border-radius:12px; background:#1c3b46; }
+.ds-hero-meta strong { display:block; color:#b8e8d8; font-size:.69rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.55rem; }
+.ds-hero-meta span { display:block; color:#f7fafb; font-size:.85rem; line-height:1.5; }
+.ds-hero-meta small { display:block; margin-top:.55rem; color:#c4d9df; font-size:.73rem; }
+.ds-overview { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; margin:0 0 1.25rem;
+    border:1px solid var(--ds-line); border-radius:12px; overflow:hidden; background:var(--ds-line); }
+.ds-overview-item { background:#fff; padding:1rem 1.3rem; display:flex; align-items:center; gap:.9rem; }
+.ds-overview-number { font-family:Georgia,serif; color:#096c61; font-size:1.65rem; font-weight:700; line-height:1; }
+.ds-overview-item strong { display:block; font-size:.84rem; color:#193b49; }
+.ds-overview-item span { display:block; font-size:.74rem; color:var(--ds-muted); margin-top:.15rem; }
+.ds-section { margin:1.3rem 0 1rem; }
 .ds-section .ds-eyebrow { color:#243b48; font-size:.67rem; }
-.ds-section h2 { font-family:'Trebuchet MS','Segoe UI',sans-serif; color:#183a49; font-size:1.65rem; letter-spacing:-.025em; margin:.45rem 0 0; padding:0; line-height:1.25; }
+.ds-section h2 { font-family:Georgia,serif; color:#183a49; font-size:1.7rem; letter-spacing:-.025em; margin:0; }
 .ds-section p { color:var(--ds-muted); font-size:.89rem; margin:.3rem 0 0; }
 .ds-card-title { display:flex; align-items:center; gap:.7rem; min-height:44px; font-size:1rem;
     font-weight:750; color:#173849; line-height:1.35; margin:.1rem 0 .7rem; }
@@ -147,16 +131,8 @@ CUSTOM_CSS = """
 .ds-badge-ok { background:#e8f5ef; color:#116144; border:1px solid #d3eade; }
 .ds-badge-warn { background:#fff4df; color:#775114; border:1px solid #efdcb2; }
 .ds-badge-error { background:#fbecea; color:#933c35; border:1px solid #f1d3ce; }
-[class*="st-key-system_card_"], .st-key-updates_panel {
-    background:#fff; border:1px solid var(--ds-line) !important; border-radius:16px !important;
-    box-shadow:0 4px 14px #15303b06; padding:1.15rem !important; }
-[class*="st-key-system_card_"] { height:100%; }
-[class*="st-key-system_card_"] [data-testid="stCaptionContainer"] p { overflow-wrap:anywhere; }
-.ds-download-tip { display:flex; gap:.75rem; align-items:center; padding:.8rem 1rem;
-    background:#eaf1f5; border:1px solid #d9e5eb; border-radius:10px; color:#172f3d; }
-.ds-download-tip svg { width:22px; height:22px; color:#175b91; flex:0 0 22px; }
-.ds-download-tip p { margin:0; font-size:.88rem; line-height:1.5; }
-.ds-download-tip strong { font-weight:700; }
+div[data-testid="stVerticalBlockBorderWrapper"] { background:#fff; border-color:var(--ds-line) !important;
+    border-radius:14px !important; box-shadow:0 3px 10px #15303b06; }
 div[data-testid="stButton"] button, div[data-testid="stDownloadButton"] button, div[data-testid="stLinkButton"] a {
     border-radius:9px; min-height:42px; font-weight:650; transition:background .15s ease,border-color .15s ease; }
 div[data-testid="stButton"] button[kind="primary"], div[data-testid="stLinkButton"] a[kind="primary"] {
@@ -174,7 +150,7 @@ div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLin
 [class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button p,
 [class*="st-key-ready_download_"] [data-testid="stLinkButton"] a p { color:#fff !important; }
 div[data-testid="stCaptionContainer"], div[data-testid="stCaptionContainer"] p {
-    color:#172f3d !important; font-size:.9rem !important; font-weight:600 !important; opacity:1 !important; }
+    color:#172f3d !important; font-size:.9rem !important; font-weight:600 !important; }
 [data-testid="stWidgetLabel"] p { color:#243b48 !important; }
 button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
 [role="tablist"] { gap:.7rem; background:transparent; border-bottom:0;
@@ -222,8 +198,6 @@ button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; ou
     .ds-hero { grid-template-columns:1fr; padding:1.5rem; gap:1.2rem; }
     .ds-overview { grid-template-columns:1fr; }
     .ds-overview-item { padding:.8rem 1rem; }
-    .ds-hero-meta { width:100%; box-sizing:border-box; }
-    [class*="st-key-system_card_"], .st-key-updates_panel { padding:1rem !important; }
     .ds-update-item { grid-template-columns:1fr; gap:.25rem; }
     .ds-update-date { white-space:normal; }
     [role="tablist"] { gap:.65rem; }
@@ -492,7 +466,7 @@ def card_catalog(system_key, saved):
 def render_single_version_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
     meta = SYSTEM_META[system_key]
     info = snapshot_systems.get(system_key, {})
-    with st.container(border=True, key=f"system_card_{system_key}"):
+    with st.container(border=True):
         st.markdown(f'<div class="ds-card-title"><span class="ds-card-icon" aria-hidden="true">{meta["icon"]}</span><span>{meta["label"]}</span></div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key, info)
         if not releases and info.get("official_reachable") is False:
@@ -539,7 +513,7 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
     saved_competences = info.get("competences", {}) if isinstance(info.get("competences"), dict) else {}
     saved_latest = info.get("latest") or {}
     stored_releases = info.get("available_releases") or []
-    with st.container(border=True, key=f"system_card_{system_key}"):
+    with st.container(border=True):
         st.markdown(f'<div class="ds-card-title"><span class="ds-card-icon" aria-hidden="true">{meta["icon"]}</span><span>{meta["label"]}</span></div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key, info)
         source = (releases[0] if releases else saved_latest).get("catalog_source") if releases or saved_latest else None
@@ -759,19 +733,15 @@ st.markdown(
     f"""
     <div class="ds-hero">
         <div class="ds-hero-copy">
-            <div class="ds-brandline">
-                <span class="ds-brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg></span>
-                <div class="ds-eyebrow">SISTEMAS DE INFORMAÇÃO DO SUS</div>
-            </div>
+            <div class="ds-eyebrow">SISTEMAS DE INFORMAÇÃO DO SUS</div>
             <h1>Downloads Sistemas</h1>
-            <p>Instaladores, atualizações e tabelas para a rotina dos sistemas do SUS.
-            Encontre o arquivo que precisa e acompanhe os últimos lançamentos.</p>
+            <p>Acesso centralizado a instaladores, atualizações e tabelas dos sistemas de informação do SUS.
+            Apoio às atividades de gestão, processamento e envio de dados em saúde.</p>
         </div>
         <div class="ds-hero-meta">
-            <strong><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Última verificação</strong>
-            <span>{escape(readable_updated_at.removesuffix(" (horário de Brasília)"))}</span>
-            <em class="ds-meta-zone">Horário de Brasília</em>
-            <small>Verificação programada a cada 2 horas</small>
+            <strong>Catálogo conferido</strong>
+            <span>{escape(readable_updated_at)}</span>
+            <small>Consulta programada a cada duas horas</small>
         </div>
     </div>
     """,
@@ -786,14 +756,17 @@ st.markdown(
     '</div>', unsafe_allow_html=True,
 )
 
-with st.container(border=True, key="updates_panel"):
+with st.container(border=True):
     render_updates_panel(snapshot)
 
-st.markdown(
-    '<div class="ds-download-tip"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>'
-    '<p><strong>Arquivos com cópia verificada</strong> continuam disponíveis para download mesmo quando o portal de origem está indisponível.</p></div>',
-    unsafe_allow_html=True,
-)
+with st.container(border=True):
+    note, control = st.columns([1.6, 1])
+    with note:
+        st.markdown("**Baixe pelo arquivo confirmado**")
+        st.caption("Os downloads espelhados continuam disponíveis mesmo durante falhas nos portais oficiais.")
+    with control:
+        st.caption("Consulta automática a cada duas horas, incluindo 06:50 (horário de Brasília). O botão permite antecipar a consulta.")
+
 
 programs_tab, tables_tab, releases_tab = st.tabs(["Programas e instaladores", "Tabelas e bases", "Últimos lançamentos"])
 
