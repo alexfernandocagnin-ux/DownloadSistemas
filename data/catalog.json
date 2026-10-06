@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-06T16:18:48+00:00",
+  "updated_at": "2026-10-06T18:07:37+00:00",
   "systems": {
     "apac": {
       "label": "APAC Magnético",
@@ -10,7 +10,7 @@
         "version": "0402",
         "release_date": "2026-09-24"
       },
-      "catalog_checked_at": "2026-10-06T16:18:42+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:34+00:00",
       "pending_download": false,
       "current": {
         "name": "APACMAG_0402.exe",
@@ -26,9 +26,11 @@
         "verified_at": "2026-10-06T16:18:44+00:00",
         "sha256": "63f8dd542bef6ef4bff26e590ce4dbf1287f5113132ec2c6b801e80d9db4db3b"
       },
-      "checked_at": "2026-10-06T16:18:42+00:00",
+      "checked_at": "2026-10-06T18:07:34+00:00",
       "last_success_at": "2026-10-06T16:18:42+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:34+00:00",
+      "catalog_check_error": null
     },
     "ciha02": {
       "label": "CIHA02 · atualização",
@@ -38,7 +40,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
         "version": "2034"
       },
-      "catalog_checked_at": "2026-10-06T16:18:42+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:34+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_VER2034.exe",
@@ -54,9 +56,11 @@
         "verified_at": "2026-10-06T16:18:45+00:00",
         "sha256": "8d762dd16670530ee31cb28a5cdb35a14a66f828eee874da33305f97dc8ec2be"
       },
-      "checked_at": "2026-10-06T16:18:42+00:00",
+      "checked_at": "2026-10-06T18:07:34+00:00",
       "last_success_at": "2026-10-06T16:18:42+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:34+00:00",
+      "catalog_check_error": null
     },
     "ciha02_installer": {
       "label": "CIHA02 · instalação inicial",
@@ -66,7 +70,7 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
         "version": "2000"
       },
-      "catalog_checked_at": "2026-10-06T16:18:42+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:34+00:00",
       "pending_download": false,
       "current": {
         "name": "CIHA02_SETUP_20.00.exe",
@@ -82,9 +86,11 @@
         "verified_at": "2026-10-06T16:18:45+00:00",
         "sha256": "6b738c05d560d7e55cbd46c047c022a62465b817f4ca9408bea94f4f4b81d32b"
       },
-      "checked_at": "2026-10-06T16:18:42+00:00",
+      "checked_at": "2026-10-06T18:07:34+00:00",
       "last_success_at": "2026-10-06T16:18:42+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:34+00:00",
+      "catalog_check_error": null
     },
     "bpa": {
       "label": "BPA Magnético",
@@ -95,7 +101,7 @@
         "version": "0500",
         "release_date": "2026-07-09"
       },
-      "catalog_checked_at": "2026-10-06T16:18:42+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:34+00:00",
       "pending_download": false,
       "current": {
         "name": "BPAMAG0500.exe",
@@ -112,9 +118,11 @@
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-10-06T16:18:42+00:00",
+      "checked_at": "2026-10-06T18:07:34+00:00",
       "last_success_at": "2026-10-06T16:18:42+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:34+00:00",
+      "catalog_check_error": null
     },
     "sia": {
       "label": "SIA (instalador)",
@@ -125,7 +133,7 @@
         "version": "0605",
         "release_date": "2026-10-02"
       },
-      "catalog_checked_at": "2026-10-06T16:18:44+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:35+00:00",
       "pending_download": false,
       "current": {
         "name": "SIA0605.exe",
@@ -141,9 +149,11 @@
         "verified_at": "2026-10-06T16:18:54+00:00",
         "sha256": "c271905e73a12c4a9a69976657990043489fb1cec575b271a298450bd2188c3e"
       },
-      "checked_at": "2026-10-06T16:18:44+00:00",
+      "checked_at": "2026-10-06T18:07:35+00:00",
       "last_success_at": "2026-10-06T16:18:44+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:35+00:00",
+      "catalog_check_error": null
     },
     "fpo_installer": {
       "label": "FPO Magnético (instalador)",
@@ -154,7 +164,7 @@
         "version": "0100",
         "release_date": "2008-06-10"
       },
-      "catalog_checked_at": "2026-10-06T16:18:44+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:35+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Instalador_0100.exe",
@@ -170,9 +180,11 @@
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
         "verified_at": "2026-10-06T16:18:46+00:00"
       },
-      "checked_at": "2026-10-06T16:18:44+00:00",
+      "checked_at": "2026-10-06T18:07:35+00:00",
       "last_success_at": "2026-10-06T16:18:44+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:35+00:00",
+      "catalog_check_error": null
     },
     "fpo_update": {
       "label": "FPO Magnético (atualização)",
@@ -183,7 +195,7 @@
         "version": "0303",
         "release_date": "2026-09-29"
       },
-      "catalog_checked_at": "2026-10-06T16:18:45+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:36+00:00",
       "pending_download": false,
       "current": {
         "name": "FPOMAG_Atualiza_0303.exe",
@@ -199,9 +211,11 @@
         "sha256": "23aba8c8348b305e6ac5fd18eaaeeb1061ab69ee0a469b4897e09c31d717a586",
         "verified_at": "2026-10-06T16:18:46+00:00"
       },
-      "checked_at": "2026-10-06T16:18:45+00:00",
+      "checked_at": "2026-10-06T18:07:36+00:00",
       "last_success_at": "2026-10-06T16:18:45+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:36+00:00",
+      "catalog_check_error": null
     },
     "sihd2": {
       "label": "SIHD2 (instalador)",
@@ -226,7 +240,7 @@
           "sihd2_2272.exe"
         ]
       },
-      "catalog_checked_at": "2026-10-06T16:18:45+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:36+00:00",
       "pending_download": false,
       "current": {
         "name": "SIHD2_2340.exe",
@@ -242,9 +256,11 @@
         "sha256": "e801a1b7eb2770dc7da59e67974af92b4833483fef234c7c819abf2e68955698",
         "verified_at": "2026-10-06T16:18:46+00:00"
       },
-      "checked_at": "2026-10-06T16:18:45+00:00",
+      "checked_at": "2026-10-06T18:07:36+00:00",
       "last_success_at": "2026-10-06T16:18:45+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:36+00:00",
+      "catalog_check_error": null
     },
     "cnes_app": {
       "label": "CNES · SCNES (atualização)",
@@ -254,7 +270,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-ATUALIZACAO.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-06T16:18:46+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:36+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-ATUALIZACAO.ZIP",
@@ -270,9 +286,11 @@
         "sha256": "56898c285edf2c3e434c8039369342eeb2e5d040a340dc642527b5325c478647",
         "verified_at": "2026-10-06T16:18:47+00:00"
       },
-      "checked_at": "2026-10-06T16:18:46+00:00",
+      "checked_at": "2026-10-06T18:07:36+00:00",
       "last_success_at": "2026-10-06T16:18:46+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:36+00:00",
+      "catalog_check_error": null
     },
     "cnes_complete": {
       "label": "CNES · SCNES completo",
@@ -282,7 +300,7 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4850-COMPLETA.ZIP",
         "version": "4850"
       },
-      "catalog_checked_at": "2026-10-06T16:18:46+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:37+00:00",
       "pending_download": false,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
@@ -298,9 +316,11 @@
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
         "verified_at": "2026-10-06T16:18:48+00:00"
       },
-      "checked_at": "2026-10-06T16:18:46+00:00",
+      "checked_at": "2026-10-06T18:07:37+00:00",
       "last_success_at": "2026-10-06T16:18:46+00:00",
-      "official_reachable": true
+      "official_reachable": true,
+      "catalog_attempt_at": "2026-10-06T18:07:37+00:00",
+      "catalog_check_error": null
     },
     "bdsia": {
       "label": "Tabela mensal do SIA (BDSIA)",
@@ -321,7 +341,9 @@
           "integrity_verified_at": "2026-09-29T13:30:13+00:00"
         }
       },
-      "catalog_checked_at": "2026-10-06T16:18:46+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:37+00:00",
+      "catalog_attempt_at": "2026-10-06T18:07:37+00:00",
+      "catalog_check_error": null,
       "available_releases": [
         {
           "name": "BDSIA202609a.exe",
@@ -7019,14 +7041,11 @@
           "release_date": "2008-05-08"
         }
       },
-      "checked_at": "2026-10-06T16:18:46+00:00",
-      "last_success_at": "2026-10-06T16:18:46+00:00",
+      "checked_at": "2026-10-06T18:07:37+00:00",
+      "last_success_at": "2026-10-06T18:07:37+00:00",
       "official_reachable": true,
-      "pending_competences": [
-        "200803",
-        "200802",
-        "200801"
-      ]
+      "pending_competences": [],
+      "download_failures": {}
     },
     "sigtap": {
       "label": "SIGTAP · Tabela Unificada",
@@ -7045,7 +7064,9 @@
         "competence": "202609",
         "revision": "2610050950"
       },
-      "catalog_checked_at": "2026-10-06T16:18:47+00:00",
+      "catalog_checked_at": "2026-10-06T18:07:37+00:00",
+      "catalog_attempt_at": "2026-10-06T18:07:37+00:00",
+      "catalog_check_error": null,
       "available_releases": [
         {
           "name": "TabelaUnificada_202609_v2610050950.zip",
@@ -12651,27 +12672,11 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-06T16:18:47+00:00",
-      "last_success_at": "2026-10-06T16:18:47+00:00",
+      "checked_at": "2026-10-06T18:07:37+00:00",
+      "last_success_at": "2026-10-06T18:07:37+00:00",
       "official_reachable": true,
-      "pending_competences": [
-        "201106",
-        "201011",
-        "201010",
-        "201009",
-        "201008",
-        "201007",
-        "201006",
-        "201005",
-        "201004",
-        "201003",
-        "201002",
-        "201001",
-        "200912",
-        "200911",
-        "200910",
-        "200909"
-      ]
+      "pending_competences": [],
+      "download_failures": {}
     },
     "cnes_base": {
       "label": "CNES · Base de dados mensal",
@@ -13266,7 +13271,6 @@
         {
           "name": "BASE_DE_DADOS_CNES_202212.ZIP",
           "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202212.ZIP",
-          "competence": "202212",
           "mirror": {
             "tag": "cnes-base-202212",
             "asset_name": "BASE_DE_DADOS_CNES_202212.ZIP",
@@ -13274,7 +13278,8 @@
             "size": 533251103,
             "sha256": "da33e231accaf2348c74804e551fdcdf73520a9f618844c33402e503e3bc60d3",
             "verified_at": "2026-10-06T16:41:53+00:00"
-          }
+          },
+          "competence": "202212"
         },
         {
           "name": "BASE_DE_DADOS_CNES_202211.ZIP",
@@ -14336,5 +14341,13 @@
       "name": "FPOMAG_Atualiza_0303.exe",
       "found_at": "2026-09-29T22:11:41+00:00"
     }
-  ]
+  ],
+  "last_check": {
+    "started_at": "2026-10-06T18:07:34+00:00",
+    "completed_at": "2026-10-06T18:07:47+00:00",
+    "source": "automatic",
+    "total": 12,
+    "succeeded": 12,
+    "failed_systems": []
+  }
 }
