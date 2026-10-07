@@ -98,7 +98,7 @@ CUSTOM_CSS = """
 <style>
 :root { --ds-ink:#172f3d; --ds-muted:#243b48; --ds-green:#087568; --ds-line:#dce5e9; }
 .stApp { background:#f3f6f8; color:var(--ds-ink); }
-.block-container { max-width:none; width:100%; padding:1.6rem 2rem 3rem; }
+.block-container { max-width:1800px; width:100%; padding:1.6rem 2rem 3rem; }
 .ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:2rem;
     position:relative; overflow:hidden; padding:1.9rem 2.1rem; margin-bottom:1rem;
     background:#132f3b; border:1px solid #234550; border-radius:22px; color:#fff;
@@ -179,6 +179,11 @@ CUSTOM_CSS = """
     background:#fff; border:1px solid var(--ds-line) !important; border-radius:16px !important;
     box-shadow:0 4px 14px #15303b06; padding:1.15rem !important; }
 [class*="st-key-system_card_"] { height:100%; }
+[class*="st-key-system_download_grid_"] > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:1.25rem; }
+[class*="st-key-system_download_grid_"] > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+    width:100%; min-width:0; }
+
 [class*="st-key-system_card_"] [data-testid="stCaptionContainer"] p { overflow-wrap:anywhere; }
 .ds-download-tip { display:flex; gap:.75rem; align-items:center; padding:.8rem 1rem;
     background:#eaf1f5; border:1px solid #d9e5eb; border-radius:10px; color:#172f3d; }
@@ -653,9 +658,8 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
 
 
 def render_grid(keys, snapshot_systems, renderer):
-    for start in range(0, len(keys), 3):
-        columns = st.columns(3, gap="medium")
-        for column, key in zip(columns, keys[start:start + 3]):
+    with st.container(key=f"system_download_grid_{renderer.__name__}"):
+        for column, key in zip(st.columns(len(keys), gap="medium"), keys):
             with column:
                 renderer(key, snapshot_systems)
 
