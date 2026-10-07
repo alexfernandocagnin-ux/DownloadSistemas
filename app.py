@@ -617,6 +617,8 @@ def render_system_picker(scope, choices, snapshot_systems, default, state_key=No
                 if scope == "manual":
                     count = sum(item["system"] == key or not key for item in load_manuals())
                     subtitle = f"{count} documentos"
+                elif not key:
+                    subtitle = f"{len(choices) - 1} sistemas"
                 suffix = "_selected" if selected else ""
                 with st.container(key=f"nav_item_{scope}_{key or 'all'}{suffix}"):
                     st.markdown(f'<span class="ds-nav-icon ds-tone-{group.get("tone", "blue")}">'
@@ -628,10 +630,10 @@ def render_system_picker(scope, choices, snapshot_systems, default, state_key=No
     return st.session_state[state_key]
 
 
-def render_system_heading(group):
+def render_system_heading(group, eyebrow="SISTEMA SELECIONADO"):
     st.markdown(
         f'<div class="ds-detail-heading"><span class="ds-detail-icon ds-tone-{group.get("tone", "blue")}">'
-        f'{ui_icon(group.get("icon", "file"))}</span><div><span class="ds-detail-eyebrow">SISTEMA SELECIONADO</span>'
+        f'{ui_icon(group.get("icon", "file"))}</span><div><span class="ds-detail-eyebrow">{escape(eyebrow)}</span>'
         f'<h2>{escape(group["label"])}</h2></div></div>'
         f'<p class="ds-detail-description">{escape(group["description"])}</p>',
         unsafe_allow_html=True,
@@ -640,29 +642,39 @@ def render_system_heading(group):
 
 @st.fragment
 def render_programs(snapshot_systems):
+    choices = {"": {"label": "Todos os programas e instaladores", "icon": "monitor", "tone": "blue"},
+               **PROGRAM_GROUPS}
     navigation, details = st.columns([1, 2.8], gap="medium")
     with navigation:
-        selected = render_system_picker("program", PROGRAM_GROUPS, snapshot_systems, "cnes")
-    group = PROGRAM_GROUPS[selected]
+        selected = render_system_picker("program", choices, snapshot_systems, "cnes")
     with details, st.container(key="focus_detail_programs"):
-        render_system_heading(group)
-        note = group.get("note", "Feche o aplicativo antes de instalar ou atualizar. Recomendamos fazer uma cópia de segurança da base de dados.")
-        st.markdown(f'<div class="ds-install-note">{ui_icon("info")}<div><strong>Antes de instalar</strong>'
-                    f'<p>{escape(note)}</p></div></div>', unsafe_allow_html=True)
-        packages = group["packages"]
-        for column, key in zip(st.columns(len(packages), gap="medium"), packages):
-            with column:
-                render_single_version_card(key, snapshot_systems)
+        for index, system_key in enumerate((selected,) if selected else PROGRAM_GROUPS):
+            if index:
+                st.divider()
+            group = PROGRAM_GROUPS[system_key]
+            render_system_heading(group, "SISTEMA SELECIONADO" if selected else "SISTEMA DISPONÍVEL")
+            note = group.get("note", "Feche o aplicativo antes de instalar ou atualizar. Recomendamos fazer uma cópia de segurança da base de dados.")
+            st.markdown(f'<div class="ds-install-note">{ui_icon("info")}<div><strong>Antes de instalar</strong>'
+                        f'<p>{escape(note)}</p></div></div>', unsafe_allow_html=True)
+            packages = group["packages"]
+            for column, key in zip(st.columns(len(packages), gap="medium"), packages):
+                with column:
+                    render_single_version_card(key, snapshot_systems)
 
 
 @st.fragment
 def render_tables(snapshot_systems):
+    choices = {"": {"label": "Todas as tabelas e bases", "icon": "database", "tone": "blue"},
+               **TABLE_GROUPS}
     navigation, details = st.columns([1, 2.8], gap="medium")
     with navigation:
-        selected = render_system_picker("tables", TABLE_GROUPS, snapshot_systems, "bdsia")
+        selected = render_system_picker("tables", choices, snapshot_systems, "bdsia")
     with details, st.container(key="focus_detail_tables"):
-        render_system_heading(TABLE_GROUPS[selected])
-        render_competence_card(selected, snapshot_systems)
+        for index, system_key in enumerate((selected,) if selected else TABLE_GROUPS):
+            if index:
+                st.divider()
+            render_system_heading(TABLE_GROUPS[system_key], "SISTEMA SELECIONADO" if selected else "SISTEMA DISPONÍVEL")
+            render_competence_card(system_key, snapshot_systems)
 
 
 @st.fragment
