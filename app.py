@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 from html import escape
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import date, datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone
 
 import streamlit as st
 
@@ -20,6 +20,7 @@ from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_port
 from catalogs.updates import make_update_event, merge_updates, recent_updates
 from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog, merge_catalogs
 from catalogs.snapshot import read_published_catalog, catalog_revision, verification_notice
+from catalogs.manuals import MANUALS, SYSTEMS as MANUAL_SYSTEMS, download_manual, filter_manuals
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
@@ -148,6 +149,28 @@ CUSTOM_CSS = """
 .ds-badge-ok { background:#e8f5ef; color:#116144; border:1px solid #d3eade; }
 .ds-badge-warn { background:#fff4df; color:#775114; border:1px solid #efdcb2; }
 .ds-badge-error { background:#fbecea; color:#933c35; border:1px solid #f1d3ce; }
+.ds-manual-intro { display:flex; align-items:center; gap:1.1rem; margin:.7rem 0 1.3rem;
+    padding:1.4rem 1.6rem; border:1px solid #ded2ee; border-radius:16px; background:linear-gradient(120deg,#f1ecf8,#fff); }
+.ds-manual-intro .ds-eyebrow { color:#654393; }
+.ds-manual-intro h2 { font-family:'Trebuchet MS','Segoe UI',sans-serif; font-size:1.8rem;
+    color:#183a49; margin:.35rem 0; padding:0; }
+.ds-manual-intro p { color:#243b48; margin:0; font-size:.92rem; line-height:1.6; }
+.ds-manual-book { display:grid; place-items:center; width:60px; height:60px; flex:0 0 60px;
+    color:#654393; background:#e7dff2; border-radius:15px; }
+.ds-manual-book svg { width:32px; height:32px; }
+.ds-manual-group { display:flex; align-items:center; gap:.7rem; margin:1.5rem 0 .7rem;
+    padding-bottom:.6rem; border-bottom:1px solid #dce5e9; }
+.ds-manual-group h3 { color:#173849; font-size:1.1rem; padding:0; margin:0; }
+.ds-manual-group > span { color:#654393; background:#f1ecf8; padding:.2rem .6rem;
+    border-radius:20px; font-size:.75rem; font-weight:650; }
+.ds-manual-group [data-testid="stHeaderActionElements"],
+.ds-manual-intro [data-testid="stHeaderActionElements"] { display:none; }
+.ds-manual-type { display:flex; align-items:center; gap:.45rem; color:#654393;
+    font-size:.72rem; font-weight:750; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.8rem; }
+.ds-manual-type span { color:#175b91; background:#eaf2fa; border-radius:5px; padding:.2rem .4rem; }
+.ds-manual-title { color:#173849; font-size:1.02rem; line-height:1.4; font-weight:750;
+    min-height:2.85rem; margin:0 0 .6rem; }
+.ds-manual-description { color:#243b48; font-size:.87rem; line-height:1.55; min-height:4.1rem; margin:0 0 .9rem; }
 [class*="st-key-system_card_"], .st-key-updates_panel {
     background:#fff; border:1px solid var(--ds-line) !important; border-radius:16px !important;
     box-shadow:0 4px 14px #15303b06; padding:1.15rem !important; }
@@ -219,6 +242,10 @@ button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; ou
 @keyframes ds-slide { from { transform:translateX(-120%); } to { transform:translateX(330%); } }
 @media (prefers-reduced-motion:reduce) { .ds-loading-dot,.ds-progress-track span { animation:none; } }
 @media (max-width:760px) {
+    .ds-manual-intro { padding:1rem; align-items:flex-start; }
+    .ds-manual-book { width:42px; height:42px; flex-basis:42px; }
+    .ds-manual-book svg { width:24px; height:24px; }
+    .ds-manual-title,.ds-manual-description { min-height:0; }
     .block-container { padding-top:1rem; padding-left:1rem; padding-right:1rem; }
     .ds-hero { grid-template-columns:1fr; padding:1.5rem; gap:1.2rem; }
     .ds-overview { grid-template-columns:1fr; }
@@ -227,8 +254,9 @@ button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; ou
     [class*="st-key-system_card_"], .st-key-updates_panel { padding:1rem !important; }
     .ds-update-item { grid-template-columns:1fr; gap:.25rem; }
     .ds-update-date { white-space:normal; }
-    [role="tablist"] { gap:.65rem; }
-    [role="tab"] { font-size:.8rem; padding:.6rem .8rem; }
+    [role="tablist"] { gap:.35rem; }
+    [role="tab"] { font-size:.76rem; padding:.6rem .55rem !important; }
+    [role="tab"] p { font-size:.76rem !important; }
 }
 </style>
 """
@@ -621,92 +649,90 @@ def render_grid(keys, snapshot_systems, renderer):
                 renderer(key, snapshot_systems)
 
 
-def release_date_value(value):
-    if not value:
-        return None
-    if isinstance(value, datetime):
-        return value.date()
-    try:
-        return date.fromisoformat(str(value)[:10])
-    except ValueError:
-        return None
+@st.cache_data(ttl=3600, max_entries=8, show_spinner=False)
+def cached_manual_download(manual_id):
+    return download_manual(manual_id)
 
 
-def latest_release_rows(snapshot_systems):
-    live_catalogs = st.session_state.get("forced_live_catalogs", {})
-    rows = []
-    for system_key, meta in SYSTEM_META.items():
-        if system_key in {"fpo_installer", "ciha02_installer"}:
-            continue
-        saved = snapshot_systems.get(system_key, {})
-        releases, _error = live_catalogs.get(system_key, (None, None))
-        releases = normalize_catalog(saved, releases or [], system_key in COMPETENCE_SYSTEMS)
-        release = None
-        version = "—"
-        if system_key in COMPETENCE_SYSTEMS:
-            competences = saved.get("competences", {})
-            competences = competences if isinstance(competences, dict) else {}
-            saved_month = max(competences, default=None)
-            saved_release = competences.get(saved_month, {}) if saved_month else {}
-            live_release = max(
-                releases or [], key=lambda item: str(item.get("competence", "")), default=None,
-            )
-            live_release = live_release or saved.get("latest")
-            if live_release and (not saved_month or str(live_release.get("competence", "")) >= saved_month):
-                release = dict(live_release)
-                month = str(live_release.get("competence", ""))
-                if not release.get("release_date") and saved_release.get("name") == release.get("name"):
-                    release["release_date"] = saved_release.get("release_date")
-            elif saved_release:
-                release = saved_release
-                month = str(saved_month)
-            else:
-                month = ""
-            if release:
-                period = f"{month[4:6]}/{month[:4]} · " if len(month) == 6 else ""
-                version = f"{period}{release.get('name', '—')}"
-        else:
-            current = saved.get("latest") or saved.get("current") or {}
-            release = dict(releases[0]) if releases else current
-            if releases and not release.get("release_date") and current.get("name") == release.get("name"):
-                release["release_date"] = current.get("release_date")
-            if release:
-                version = str(release.get("name", "-"))
-        mirror_entry = saved_release if system_key in COMPETENCE_SYSTEMS else saved
-        has_mirror = matching_mirror(str((release or {}).get("name", "")), mirror_entry.get("mirror"))
-        rows.append({
-            "Sistema": str(meta["label"]),
-            "Última versão": version,
-            "Data do lançamento": release_date_value((release or {}).get("release_date")),
-            "Download": "Disponível no espelho" if has_mirror else "Download pelo DATASUS",
-        })
-    return rows
+def render_manual_card(manual):
+    manual_id = manual["id"]
+    with st.container(border=True, key=f"system_card_manual_{manual_id}"):
+        st.markdown(
+            f'<div class="ds-manual-type"><span>{escape(manual["format"])}</span> {escape(manual["category"])}</div>'
+            f'<h4 class="ds-manual-title">{escape(manual["title"])}</h4>'
+            f'<p class="ds-manual-description">{escape(manual["description"])}</p>',
+            unsafe_allow_html=True,
+        )
+        if manual["format"] == "Online":
+            st.link_button("Ler manual online ↗", manual["url"], type="primary", width="stretch")
+            st.caption("Documentação oficial · leitura no navegador")
+            return
+        publication_date = manual.get("publication_date")
+        st.caption(f"Data na fonte: {update_day(publication_date)}" if publication_date else "Data não informada na fonte")
+        ready = st.session_state.setdefault("prepared_manual_ids", set())
+        action = st.empty()
+        if manual_id in ready or action.button(
+            f"Preparar {manual['format']} ↓", key=f"prepare_manual_{manual_id}",
+            type="primary", width="stretch",
+        ):
+            try:
+                if manual_id in ready:
+                    data = cached_manual_download(manual_id)
+                else:
+                    with st.spinner("Buscando o documento oficial…"):
+                        data = cached_manual_download(manual_id)
+                ready.add(manual_id)
+                action.download_button(
+                    f"Baixar {manual['format']} ↓", data, file_name=manual["name"],
+                    mime="application/pdf" if manual["format"] == "PDF" else "application/zip",
+                    key=f"download_manual_{manual_id}", type="primary", width="stretch", on_click="ignore",
+                )
+            except (OSError, ValueError):
+                ready.discard(manual_id)
+                st.warning("Não foi possível preparar o documento. Tente novamente ou consulte a fonte abaixo.")
+        st.link_button("Consultar fonte oficial ↗", manual["source_page"], width="stretch")
 
 
-def render_latest_releases_table(snapshot_systems):
+@st.fragment
+def render_manuals():
     st.markdown(
-        '<div class="ds-section"><div class="ds-eyebrow">ACOMPANHAMENTO</div>'
-        '<h2>Últimos lançamentos</h2>'
-        '<p>A versão mais recente identificada em cada catálogo e a data publicada pela fonte oficial.</p></div>',
+        '<div class="ds-manual-intro"><div class="ds-manual-book" aria-hidden="true">'
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
+        'stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16M3 3h5a4 4 0 0 1 4 4'
+        ' 4 4 0 0 1 4-4h5v16h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3z"/></svg></div>'
+        '<div><div class="ds-eyebrow">03 &nbsp;·&nbsp; BIBLIOTECA OFICIAL</div>'
+        '<h2>Manuais</h2><p>Da primeira instalação à rotina de trabalho. '
+        'Encontre os manuais e as orientações de cada sistema em um só lugar.</p></div></div>',
         unsafe_allow_html=True,
     )
-    st.dataframe(
-        latest_release_rows(snapshot_systems),
-        hide_index=True,
-        width="stretch",
-        height=410,
-        column_config={
-            "Sistema": st.column_config.TextColumn("Sistema"),
-            "Última versão": st.column_config.TextColumn("Última versão"),
-            "Download": st.column_config.TextColumn("Download"),
-            "Data do lançamento": st.column_config.DateColumn(
-                "Data do lançamento", format="DD/MM/YYYY",
-                help="Data indicada na listagem oficial. Quando ela não é publicada, o campo fica em branco.",
-            ),
-        },
-        key="latest_releases_table",
-    )
-    st.caption("Data em branco significa que a fonte oficial consultada não informou quando o arquivo foi publicado.")
+    search, system_filter, category_filter = st.columns([2, 1, 1], gap="medium")
+    with search:
+        query = st.text_input("Buscar manual", placeholder="Ex.: instalação, BPA, equipes…", key="manual_search")
+    with system_filter:
+        system = st.selectbox("Sistema", ["", *MANUAL_SYSTEMS], key="manual_system",
+                              format_func=lambda key: MANUAL_SYSTEMS[key][0] if key else "Todos os sistemas")
+    with category_filter:
+        category = st.selectbox("Assunto", ["", "Instalação", "Operação", "Orientações", "Layouts"],
+                                key="manual_category", format_func=lambda value: value or "Todos os assuntos")
+    manuals = filter_manuals(query, system, category)
+    st.caption(f"{len(manuals)} de {len(MANUALS)} documentos · {len(MANUAL_SYSTEMS)} sistemas · fontes oficiais")
+    if not manuals:
+        st.info("Nenhum manual encontrado. Experimente outra palavra ou amplie os filtros.", icon="🔎")
+        return
+    for system_key, (label, icon) in MANUAL_SYSTEMS.items():
+        group = [manual for manual in manuals if manual["system"] == system_key]
+        if not group:
+            continue
+        st.markdown(
+            f'<div class="ds-manual-group"><h3>{icon} {escape(label)}</h3>'
+            f'<span>{len(group)} documento{"s" if len(group) != 1 else ""}</span></div>', unsafe_allow_html=True,
+        )
+        for start in range(0, len(group), 3):
+            for column, manual in zip(st.columns(3, gap="medium"), group[start:start + 3]):
+                with column:
+                    render_manual_card(manual)
+    st.caption("As datas são as informadas pelas fontes. Os PDFs e ZIPs são obtidos ao preparar o download; "
+               "a disponibilidade depende do portal oficial. Para orientações complementares, consulte também as Wikis Saúde.")
 
 
 def render_updates_panel(snapshot):
@@ -827,7 +853,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-programs_tab, tables_tab, releases_tab = st.tabs(["Programas e instaladores", "Tabelas e bases", "Últimos lançamentos"])
+programs_tab, tables_tab, manuals_tab = st.tabs(["Programas e instaladores", "Tabelas e bases", "MANUAIS"])
 
 with programs_tab:
     st.markdown(
@@ -846,7 +872,7 @@ with tables_tab:
     )
     render_grid(COMPETENCE_SYSTEMS, systems, render_competence_card)
 
-with releases_tab:
-    render_latest_releases_table(systems)
+with manuals_tab:
+    render_manuals()
 
 st.markdown('<div class="ds-footer">Downloads Sistemas · Central de acesso a arquivos dos sistemas de informação do SUS</div>', unsafe_allow_html=True)

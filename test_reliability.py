@@ -287,16 +287,40 @@ class PortalTests(unittest.TestCase):
             app = self.app().run()
         self.assertFalse(app.exception)
         self.assertTrue(app.button)
-        self.assertTrue(app.dataframe)
+        self.assertEqual([tab.label for tab in app.tabs], ["Programas e instaladores", "Tabelas e bases", "MANUAIS"])
         rendered = "\n".join(element.value for element in app.markdown)
         self.assertIn("Downloads Sistemas", rendered)
         self.assertNotIn("Downloads sem rodeios", rendered)
         self.assertIn("Novidades dos sistemas", rendered)
-        self.assertIn("Últimos lançamentos", rendered)
-        self.assertIn("Data em branco significa", "\n".join(element.value for element in app.caption))
+        self.assertIn("Biblioteca".upper(), rendered)
+        self.assertNotIn("Últimos lançamentos", rendered)
+        self.assertTrue(any(box.key == "manual_system" for box in app.selectbox))
         self.assertTrue(any(button.key == "force_catalog_check" for button in app.button))
         self.assertIn("FPO · instalador base", rendered)
         self.assertIn("FPO Magnético · atualização atual", rendered)
+
+    def test_manual_filters_download_and_source_failure(self):
+        pdf = b"%PDF-1.4\nverified manual\n%%EOF"
+        with patch("catalogs.manuals.download_manual", return_value=pdf) as download:
+            app = self.app().run()
+            download.assert_not_called()
+            app.selectbox(key="manual_system").select("bpa").run()
+            app.text_input(key="manual_search").input("exportacao").run()
+            rendered = "\n".join(element.value for element in app.markdown)
+            self.assertIn("Layout de exportação do BPA", rendered)
+            self.assertNotIn("Manual operacional do BPA", rendered)
+            self.assertNotIn("Manual operacional da APAC", rendered)
+            app.button(key="prepare_manual_bpa-layout").click().run()
+            self.assertFalse(app.exception)
+            download.assert_called_once_with("bpa-layout")
+            self.assertTrue(any(button.proto.label == "Baixar PDF ↓" for button in app.get("download_button")))
+            app.text_input(key="manual_search").input("nada-encontrado").run()
+            self.assertTrue(any("Nenhum manual encontrado" in item.value for item in app.info))
+        app = self.app().run()
+        with patch("catalogs.manuals.download_manual", side_effect=OSError("offline")):
+            app.button(key="prepare_manual_bpa-operacao").click().run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any("Não foi possível preparar o documento" in item.value for item in app.warning))
 
     def test_manual_discovery_survives_a_new_session_and_is_not_announced_twice(self):
         path = Path(__file__).parent / "data" / "catalog.json"
