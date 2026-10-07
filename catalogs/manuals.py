@@ -9,7 +9,7 @@ from pathlib import Path
 
 from catalogs._common import looks_like_zip
 
-MANUALS = json.loads((Path(__file__).parent.parent / "data" / "manuals.json").read_text(encoding="utf-8"))
+MANUALS_PATH = Path(__file__).parent.parent / "data" / "manuals.json"
 SYSTEMS = {
     "bpa": ("BPA Magnético", "🧾"),
     "apac": ("APAC Magnético", "📝"),
@@ -24,6 +24,10 @@ MAX_MANUAL_SIZE = 50_000_000
 MANUALS_DIR = Path(__file__).parent.parent / "static" / "manuals"
 
 
+def load_manuals():
+    return json.loads(MANUALS_PATH.read_text(encoding="utf-8"))
+
+
 def search_text(value: str) -> str:
     return "".join(char for char in unicodedata.normalize("NFKD", value.casefold())
                    if not unicodedata.combining(char))
@@ -31,7 +35,7 @@ def search_text(value: str) -> str:
 
 def filter_manuals(query="", system="", category=""):
     words = search_text(query).split()
-    return [manual for manual in MANUALS
+    return [manual for manual in load_manuals()
             if (not system or manual["system"] == system)
             and (not category or manual["category"] == category)
             and all(word in search_text(" ".join((manual["title"], manual["description"],
@@ -40,7 +44,7 @@ def filter_manuals(query="", system="", category=""):
 
 
 def download_manual(manual_id: str) -> bytes:
-    manual = next((item for item in MANUALS if item["id"] == manual_id), None)
+    manual = next((item for item in load_manuals() if item["id"] == manual_id), None)
     if not manual:
         raise ValueError("Manual não encontrado.")
     filename = manual.get("file", "")

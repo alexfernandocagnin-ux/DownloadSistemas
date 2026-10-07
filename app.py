@@ -20,7 +20,7 @@ from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_port
 from catalogs.updates import make_update_event, merge_updates, recent_updates
 from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog, merge_catalogs
 from catalogs.snapshot import read_published_catalog, catalog_revision, verification_notice
-from catalogs.manuals import MANUALS, SYSTEMS as MANUAL_SYSTEMS, download_manual, filter_manuals
+from catalogs.manuals import load_manuals, SYSTEMS as MANUAL_SYSTEMS, download_manual, filter_manuals
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
@@ -702,7 +702,7 @@ def render_manuals():
         category = st.selectbox("Assunto", ["", "Instalação", "Operação", "Orientações", "Layouts"],
                                 key="manual_category", format_func=lambda value: value or "Todos os assuntos")
     manuals = filter_manuals(query, system, category)
-    st.caption(f"{len(manuals)} de {len(MANUALS)} documentos · {len(MANUAL_SYSTEMS)} sistemas · fontes oficiais")
+    st.caption(f"{len(manuals)} de {len(load_manuals())} documentos · {len(MANUAL_SYSTEMS)} sistemas · fontes oficiais")
     if not manuals:
         st.info("Nenhum manual encontrado. Experimente outra palavra ou amplie os filtros.", icon="🔎")
         return
