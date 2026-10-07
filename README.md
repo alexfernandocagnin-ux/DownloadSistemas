@@ -158,8 +158,10 @@ O backup contém as instruções em `RESTAURAR.md` e corresponde à tag `backup/
 
 ## Biblioteca de manuais — 06/10/2026
 
-A aba **MANUAIS** substitui **Últimos lançamentos** e reúne 26 documentos de BPA, APAC, SIA/BDSIA, FPO, SIHD2, CNES/SCNES, CIHA02 e SIGTAP. Os cartões são agrupados por sistema e identificam instalação, operação, orientações e layouts, distinguindo PDF, ZIP e documentação online. As datas exibidas são as publicadas pelas fontes; não representam uma consulta automática nem a versão do aplicativo.
+A aba **MANUAIS** substitui **Últimos lançamentos** e reúne 27 documentos de BPA, APAC, SIA/BDSIA, FPO, SIHD2, CNES/SCNES, CIHA02 e SIGTAP. Os cartões são agrupados por sistema e identificam instalação, operação, orientações e layouts, distinguindo PDF, ZIP e documentação online. As datas exibidas são as publicadas pelas fontes; não representam uma consulta automática nem a versão do aplicativo.
 
-Todos os 26 documentos têm cópias permanentes em `static/manuals/`, com tamanho e SHA-256 registrados no catálogo. Os botões reutilizam o fluxo dos sistemas: **Preparar manual para baixar** confere a cópia e libera **Baixar manual**, servido pelo próprio portal. Apenas um arquivo fica preparado por sessão. Os downloads não consultam o DATASUS nem precisam que as fontes oficiais estejam disponíveis.
+Todos os 27 documentos têm cópias permanentes em `static/manuals/`, com tamanho e SHA-256 registrados no catálogo. Os botões reutilizam o fluxo dos sistemas: **Preparar manual para baixar** confere a cópia e libera **Baixar manual**, servido pelo próprio portal. Apenas um arquivo fica preparado por sessão. Os downloads não consultam o DATASUS nem precisam que as fontes oficiais estejam disponíveis.
 
 O CNES distribui seus manuais compactados; os ZIPs são entregues no formato original. Os oito manuais da Wiki Saúde também têm cópias em PDF com o conteúdo, imagens, endereço da fonte e data de captura. O acesso às páginas originais continua disponível. A biblioteca é curada em `data/manuals.json`; não é atualizada pela automação dos programas. Para atualizar uma cópia, substitua o arquivo e registre seu novo tamanho, SHA-256 e data no catálogo.
+
+O grupo BPA inclui o **BPA passo a passo — Prefeitura de São Paulo**, no manual de faturamento do HMEC/SMS-SP, edição de dezembro de 2016, disponibilizado pela BVS. O capítulo 8 está nas páginas impressas 101–111 (páginas 110–120 do PDF). O documento completo é preservado; o cartão identifica as telas e orientações de instalação antigas.

@@ -16,6 +16,22 @@
     "copied_at": "2026-10-07T00:18:38.994003+00:00"
   },
   {
+    "id": "bpa-passo-a-passo-sp",
+    "system": "bpa",
+    "title": "BPA passo a passo — Prefeitura de São Paulo",
+    "category": "Operação",
+    "description": "Manual de faturamento do HMEC/SMS-SP. Capítulo 8, a partir da página 110 do PDF: BPA-C e BPA-I, competência, tabelas, digitação, relatórios de erros e exportação. Edição de 2016; telas e instalação antigas.",
+    "format": "PDF",
+    "name": "BPA_Passo_a_Passo_Manual_Faturamento_HMEC_SP_2016.pdf",
+    "url": "https://docs.bvsalud.org/biblioref/sms-sp/2016/sms-12546/sms-12546-9419.pdf",
+    "source_page": "https://docs.bvsalud.org/biblioref/sms-sp/2016/sms-12546/sms-12546-9419.pdf",
+    "publication_date": "Dezembro de 2016",
+    "file": "bpa-passo-a-passo-sp.pdf",
+    "size": 16310004,
+    "sha256": "225a598a3f96745d37b964b4c5a481d9f6da71439cfd22abd199af7df49149e8",
+    "copied_at": "2026-10-07T00:38:28.616023+00:00"
+  },
+  {
     "id": "bpa-layout",
     "system": "bpa",
     "title": "Layout de exportação do BPA",
