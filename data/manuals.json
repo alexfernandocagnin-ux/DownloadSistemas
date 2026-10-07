@@ -13,7 +13,9 @@
     "file": "bpa-operacao.pdf",
     "size": 1106049,
     "sha256": "48fc2c96abf1c217e69f62f93ddf00483e8e6ba620e81da2b814cf589855e3cd",
-    "copied_at": "2026-10-07T00:18:38.994003+00:00"
+    "copied_at": "2026-10-07T00:18:38.994003+00:00",
+    "role": "original",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "bpa-passo-a-passo-sp",
@@ -29,7 +31,10 @@
     "file": "bpa-passo-a-passo-sp.pdf",
     "size": 16310004,
     "sha256": "225a598a3f96745d37b964b4c5a481d9f6da71439cfd22abd199af7df49149e8",
-    "copied_at": "2026-10-07T00:38:28.616023+00:00"
+    "copied_at": "2026-10-07T00:38:28.616023+00:00",
+    "role": "guide",
+    "publisher": "Prefeitura de São Paulo / HMEC",
+    "guide_label": "COMPLETO / PASSO A PASSO"
   },
   {
     "id": "bpa-layout",
@@ -45,7 +50,9 @@
     "file": "bpa-layout.pdf",
     "size": 313580,
     "sha256": "f318bc0359b378e8455280f87dec0ad8c016bcf853d640f2f83353e5648f9f1f",
-    "copied_at": "2026-10-07T00:18:38.814884+00:00"
+    "copied_at": "2026-10-07T00:18:38.814884+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "apac-operacao",
@@ -61,7 +68,9 @@
     "file": "apac-operacao.pdf",
     "size": 797097,
     "sha256": "f49fee80ba642f6d661af50a72ed252e3f2f07be12254874886e8ae52f1c6b5e",
-    "copied_at": "2026-10-07T00:18:38.931001+00:00"
+    "copied_at": "2026-10-07T00:18:38.931001+00:00",
+    "role": "original",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "apac-layout",
@@ -77,7 +86,9 @@
     "file": "apac-layout.pdf",
     "size": 425951,
     "sha256": "8eaca4f9bd360ee930ef49ea92aa10a7a2dae174d0c26abb969408f3ccfdead4",
-    "copied_at": "2026-10-07T00:18:39.471849+00:00"
+    "copied_at": "2026-10-07T00:18:39.471849+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "sia-operacao",
@@ -93,7 +104,9 @@
     "file": "sia-operacao.pdf",
     "size": 1905149,
     "sha256": "4509471370275aeba6bd0310cf91107e4d7c9e9a8e5e151e605c2adc0d6b9c0b",
-    "copied_at": "2026-10-07T00:18:40.278715+00:00"
+    "copied_at": "2026-10-07T00:18:40.278715+00:00",
+    "role": "original",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "sia-instalacao",
@@ -109,7 +122,9 @@
     "file": "sia-instalacao.pdf",
     "size": 3660602,
     "sha256": "d0856d71d0abddee10beee34ad57487694537bb7f66a04c9df1c013d54c01761",
-    "copied_at": "2026-10-07T00:18:41.601541+00:00"
+    "copied_at": "2026-10-07T00:18:41.601541+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "sia-passo-a-passo",
@@ -125,7 +140,9 @@
     "file": "sia-passo-a-passo.pdf",
     "size": 390857,
     "sha256": "66dc99e9d8d0a256f2369ced6fadf98918e5440ddefb04338edb5ebceaf996cf",
-    "copied_at": "2026-10-07T00:18:40.475165+00:00"
+    "copied_at": "2026-10-07T00:18:40.475165+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "sia-wiki",
@@ -141,7 +158,9 @@
     "file": "sia-wiki.pdf",
     "size": 244249,
     "sha256": "7f0a039b87a2dc1352bd05b4ccdc99b6cfb159c093e016f4dd528ee78f818474",
-    "copied_at": "2026-10-07T00:21:59.766Z"
+    "copied_at": "2026-10-07T00:21:59.766Z",
+    "role": "support",
+    "publisher": "Ministério da Saúde / Wiki Saúde"
   },
   {
     "id": "fpo-operacao",
@@ -157,7 +176,9 @@
     "file": "fpo-operacao.pdf",
     "size": 9450683,
     "sha256": "d88ea565f3629460ed85382162980a9cb516f75c879717a22f59e201c1f4adcf",
-    "copied_at": "2026-10-07T00:18:42.914328+00:00"
+    "copied_at": "2026-10-07T00:18:42.914328+00:00",
+    "role": "original",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "fpo-wiki",
@@ -173,7 +194,10 @@
     "file": "fpo-wiki.pdf",
     "size": 3032482,
     "sha256": "9302183901ea42139c8a994f98a72a0c0a468b25564352224800b4889bb95792",
-    "copied_at": "2026-10-07T00:22:04.715Z"
+    "copied_at": "2026-10-07T00:22:04.715Z",
+    "role": "guide",
+    "publisher": "Ministério da Saúde / Wiki Saúde",
+    "guide_label": "COMPLETO / PASSO A PASSO"
   },
   {
     "id": "fpo-layout",
@@ -189,7 +213,9 @@
     "file": "fpo-layout.pdf",
     "size": 29402,
     "sha256": "fd69e8c4804f7a5cd28cdd5b9aebcb10fb771ffdb0d2f203ed812e3d118c6add",
-    "copied_at": "2026-10-07T00:18:40.851914+00:00"
+    "copied_at": "2026-10-07T00:18:40.851914+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "sihd2-operacao",
@@ -204,7 +230,9 @@
     "file": "sihd2-operacao.pdf",
     "size": 12898826,
     "sha256": "0e6bb434e7f2312e4a67a8ce287dc430a3f44a57b2477a7c4d1ffbda466b0c2f",
-    "copied_at": "2026-10-07T00:18:43.020642+00:00"
+    "copied_at": "2026-10-07T00:18:43.020642+00:00",
+    "role": "original",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "sihd2-instalacao",
@@ -219,7 +247,9 @@
     "file": "sihd2-instalacao.pdf",
     "size": 3290624,
     "sha256": "64ca1213fee28c9d08a488888a72f3553974ab4fa8415299963e4dc1a247ffce",
-    "copied_at": "2026-10-07T00:18:42.680339+00:00"
+    "copied_at": "2026-10-07T00:18:42.680339+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "sihd2-tecnico",
@@ -234,7 +264,9 @@
     "file": "sihd2-tecnico.pdf",
     "size": 1658142,
     "sha256": "b51eb51dde1de7ff8b9d0079dffb4f7a48a0361051649d362419bf8f3ee690d1",
-    "copied_at": "2026-10-07T00:18:43.626387+00:00"
+    "copied_at": "2026-10-07T00:18:43.626387+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "sihd2-duvidas",
@@ -249,7 +281,9 @@
     "file": "sihd2-duvidas.pdf",
     "size": 35036,
     "sha256": "10c7a7b48f50c0566dbd1bf379725a85e4a3c8450d510b2ab83285d643514e72",
-    "copied_at": "2026-10-07T00:18:43.289840+00:00"
+    "copied_at": "2026-10-07T00:18:43.289840+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "cnes-instalacao",
@@ -265,7 +299,9 @@
     "file": "cnes-instalacao.zip",
     "size": 5263786,
     "sha256": "4cce44bbe5b98c55952c69cb49d055b274085dcd34ad6ca8aeb43cc9fb3391fa",
-    "copied_at": "2026-10-07T00:18:44.047372+00:00"
+    "copied_at": "2026-10-07T00:18:44.047372+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "cnes-administracao",
@@ -281,7 +317,9 @@
     "file": "cnes-administracao.zip",
     "size": 2272402,
     "sha256": "8fb11ad3384aac060f6e943fb23d81319f84108c98c0bb2ee9d76f40f13fdcbe",
-    "copied_at": "2026-10-07T00:18:43.851859+00:00"
+    "copied_at": "2026-10-07T00:18:43.851859+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "cnes-operacao",
@@ -297,7 +335,9 @@
     "file": "cnes-operacao.zip",
     "size": 21097985,
     "sha256": "27b6794ca9dcd1e903c6ba5d4806483899a8ee705cb5cbe7426a7ad26acdc319",
-    "copied_at": "2026-10-07T00:18:47.165823+00:00"
+    "copied_at": "2026-10-07T00:18:47.165823+00:00",
+    "role": "original",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "cnes-preenchimento",
@@ -313,7 +353,9 @@
     "file": "cnes-preenchimento.zip",
     "size": 1314229,
     "sha256": "2ff67680b3efa37e57ac270c0fe766d20e3ced39663df113d98eba939ccd26d6",
-    "copied_at": "2026-10-07T00:18:44.281612+00:00"
+    "copied_at": "2026-10-07T00:18:44.281612+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "cnes-equipes",
@@ -329,7 +371,9 @@
     "file": "cnes-equipes.zip",
     "size": 6449236,
     "sha256": "f153a86e0e578c11ecb81b6a74c6c96d29e7be10a19fb57cd9914634237f092a",
-    "copied_at": "2026-10-07T00:18:45.274915+00:00"
+    "copied_at": "2026-10-07T00:18:45.274915+00:00",
+    "role": "support",
+    "publisher": "Ministério da Saúde / DATASUS"
   },
   {
     "id": "cnes-guia",
@@ -345,7 +389,9 @@
     "file": "cnes-guia.pdf",
     "size": 401392,
     "sha256": "6dfe59960bcca0d717bce7e3e82db1ed5d4cfb0e3ef28f05722f315ab68622d1",
-    "copied_at": "2026-10-07T00:22:06.535Z"
+    "copied_at": "2026-10-07T00:22:06.535Z",
+    "role": "support",
+    "publisher": "Ministério da Saúde / Wiki Saúde"
   },
   {
     "id": "cnes-wiki",
@@ -361,7 +407,9 @@
     "file": "cnes-wiki.pdf",
     "size": 362302,
     "sha256": "2fd51b667d9fb8eb0fa3c4f0493283c441eca535a47c9fc075a3f8d49c98a4a7",
-    "copied_at": "2026-10-07T00:22:08.647Z"
+    "copied_at": "2026-10-07T00:22:08.647Z",
+    "role": "support",
+    "publisher": "Ministério da Saúde / Wiki Saúde"
   },
   {
     "id": "ciha02-operacao",
@@ -377,14 +425,16 @@
     "file": "ciha02-operacao.pdf",
     "size": 1850776,
     "sha256": "ce050ceae93ec57bcf0ea3a9f6c3f5a039af3d3fbe44b8515aefdbfb492a84a7",
-    "copied_at": "2026-10-07T00:22:13.076Z"
+    "copied_at": "2026-10-07T00:22:13.076Z",
+    "role": "original",
+    "publisher": "Ministério da Saúde / Wiki Saúde"
   },
   {
     "id": "sigtap-wiki",
     "system": "sigtap",
     "title": "Manual e orientações do SIGTAP",
     "category": "Orientações",
-    "description": "Central oficial sobre a tabela de procedimentos, atributos e competências.",
+    "description": "Índice oficial dos módulos e orientações do SIGTAP. A cópia reúne a página de apresentação; o guia ao lado traz as telas de uso.",
     "format": "PDF",
     "url": "https://wiki.saude.gov.br/sigtap/index.php/P%C3%A1gina_principal",
     "source_format": "Online",
@@ -393,7 +443,9 @@
     "file": "sigtap-wiki.pdf",
     "size": 313647,
     "sha256": "ad1c6349afa60691e92334e9e6b5fc73dc64a418f4208fa5996b776ec81a3d67",
-    "copied_at": "2026-10-07T00:22:15.090Z"
+    "copied_at": "2026-10-07T00:22:15.090Z",
+    "role": "original",
+    "publisher": "Ministério da Saúde / Wiki Saúde"
   },
   {
     "id": "sigtap-pesquisa",
@@ -409,7 +461,9 @@
     "file": "sigtap-pesquisa.pdf",
     "size": 2460528,
     "sha256": "539936401b2b87dd3ef8d844be07e01cff8401ac9d7ef118dbb823092ada62b0",
-    "copied_at": "2026-10-07T00:22:19.072Z"
+    "copied_at": "2026-10-07T00:22:19.072Z",
+    "role": "support",
+    "publisher": "Ministério da Saúde / Wiki Saúde"
   },
   {
     "id": "sigtap-desktop",
@@ -425,6 +479,123 @@
     "file": "sigtap-desktop.pdf",
     "size": 1867631,
     "sha256": "027f92dd45b858d0ac888081d07168feb32dea93bc50af694e5778104cc96185",
-    "copied_at": "2026-10-07T00:22:22.240Z"
+    "copied_at": "2026-10-07T00:22:22.240Z",
+    "role": "support",
+    "publisher": "Ministério da Saúde / Wiki Saúde"
+  },
+  {
+    "id": "apac-guia-ampliado",
+    "system": "apac",
+    "title": "APAC — guia ampliado com telas",
+    "category": "Operação",
+    "description": "Manual técnico do SIA/SUS, com fluxo de autorização, configuração, digitação e exportação da APAC nas páginas 14 e 24–29. Edição de março de 2010: telas e regras históricas.",
+    "format": "PDF",
+    "name": "apac-guia-ampliado.pdf",
+    "url": "https://www.cosemssc.org.br/wp-content/uploads/2022/01/Manual_Operacional_SIA.pdf",
+    "source_page": "https://www.cosemssc.org.br/wp-content/uploads/2022/01/Manual_Operacional_SIA.pdf",
+    "publication_date": "2010-03-01",
+    "file": "apac-guia-ampliado.pdf",
+    "role": "guide",
+    "publisher": "Ministério da Saúde / CGSI · cópia COSEMS-SC",
+    "guide_label": "COMPLETO / PASSO A PASSO",
+    "copied_at": "2026-10-07T00:46:28.681213+00:00",
+    "size": 2374705,
+    "sha256": "a3882cd8265b61d7b0c86be8f009944dae1276fec1f2702d768ad89846461798"
+  },
+  {
+    "id": "sia-guia-processamento-df",
+    "system": "sia",
+    "title": "SIA — passo a passo do processamento",
+    "category": "Operação",
+    "description": "Capítulo da rotina da SES-DF: importação, críticas, orçamento, fechamento, transmissão e relatórios. Publicado em 2022, com exemplos de competência de 2020; caminhos e orientações locais podem ser antigos.",
+    "format": "PDF",
+    "name": "sia-guia-processamento-df.pdf",
+    "url": "https://info.saude.df.gov.br/wp-content/uploads/2022/02/Manual.DICS_VF.pdf",
+    "source_page": "https://info.saude.df.gov.br/wp-content/uploads/2022/02/Manual.DICS_VF.pdf",
+    "publication_date": null,
+    "file": "sia-guia-processamento-df.pdf",
+    "role": "guide",
+    "publisher": "Secretaria de Saúde do Distrito Federal / DICS",
+    "guide_label": "PASSO A PASSO · PROCESSAMENTO",
+    "copied_at": "2026-10-07T00:46:28.685116+00:00",
+    "size": 906632,
+    "sha256": "395b0afae02e478b6361d9ada698a7f1ac1cf2bcdf6ae00f4a896868c3ca16f9"
+  },
+  {
+    "id": "sihd2-rotina-huab",
+    "system": "sihd2",
+    "title": "SIHD2 — rotina prática de faturamento",
+    "category": "Operação",
+    "description": "POP versão 3, de dezembro de 2025: atualização, importação de AIH, conferência de pendências e encerramento. Rotina do HUAB/RN, complementar ao manual completo do DATASUS.",
+    "format": "PDF",
+    "name": "sihd2-rotina-huab.pdf",
+    "url": "https://www.gov.br/hubrasil/pt-br/hospitais-universitarios/regiao-nordeste/huab-ufrn/documentos-institucionais/arquivos-documentos-institucionais-geral/pop-stcor-003-utilizacao-do-sihd2-pelo-processamento-da-informacao-assistencial-faturamento-datasus.pdf",
+    "source_page": "https://www.gov.br/hubrasil/pt-br/hospitais-universitarios/regiao-nordeste/huab-ufrn/documentos-institucionais/arquivos-documentos-institucionais-geral/pop-stcor-003-utilizacao-do-sihd2-pelo-processamento-da-informacao-assistencial-faturamento-datasus.pdf",
+    "publication_date": "2025-12-09",
+    "file": "sihd2-rotina-huab.pdf",
+    "role": "guide",
+    "publisher": "HUAB-UFRN / EBSERH",
+    "guide_label": "PASSO A PASSO · ROTINA",
+    "copied_at": "2026-10-07T00:46:28.685116+00:00",
+    "size": 1093467,
+    "sha256": "4324bdca2ed8dccd1971252eebe153c07097004f40c33d7b5e5383de7bddc088"
+  },
+  {
+    "id": "cnes-guia-preenchimento-wiki",
+    "system": "cnes",
+    "title": "SCNES — guia completo de preenchimento",
+    "category": "Operação",
+    "description": "Telas e campos de estabelecimentos, profissionais e equipes; consistência, exportação, configurações e SCNES Simplificado. Conteúdo oficial da Wiki Saúde salvo em PDF.",
+    "format": "PDF",
+    "name": "cnes-guia-preenchimento-wiki.pdf",
+    "url": "https://wiki.saude.gov.br/cnes/index.php/SCNES_-_Guia_de_Preenchimento",
+    "source_page": "https://wiki.saude.gov.br/cnes/index.php/SCNES_-_Guia_de_Preenchimento",
+    "publication_date": null,
+    "file": "cnes-guia-preenchimento-wiki.pdf",
+    "role": "guide",
+    "publisher": "Ministério da Saúde / Wiki Saúde",
+    "guide_label": "COMPLETO / PASSO A PASSO",
+    "copied_at": "2026-10-07T00:46:47.539Z",
+    "source_format": "Online",
+    "size": 5014804,
+    "sha256": "49e20a0af9df8e1fd00be634822b9f4354ee31f768817b9aa419d1087f480411"
+  },
+  {
+    "id": "ciha02-guia-processamento-df",
+    "system": "ciha02",
+    "title": "CIHA02 — passo a passo do processamento",
+    "category": "Operação",
+    "description": "Capítulo completo da rotina da SES-DF: atualização de tabelas, importação, erros, compactação e transmissão. Trecho das páginas 182–190 do manual publicado em 2022; caminhos e orientações locais podem ser antigos.",
+    "format": "PDF",
+    "name": "ciha02-guia-processamento-df.pdf",
+    "url": "https://info.saude.df.gov.br/wp-content/uploads/2022/02/Manual.DICS_VF.pdf",
+    "source_page": "https://info.saude.df.gov.br/wp-content/uploads/2022/02/Manual.DICS_VF.pdf",
+    "publication_date": null,
+    "file": "ciha02-guia-processamento-df.pdf",
+    "role": "guide",
+    "publisher": "Secretaria de Saúde do Distrito Federal / DICS",
+    "guide_label": "PASSO A PASSO · PROCESSAMENTO",
+    "copied_at": "2026-10-07T00:46:28.687628+00:00",
+    "size": 844864,
+    "sha256": "19e16c7bf09163f60612b8f9ab66655e872fe0cacfec5b541ac1325858c734a1"
+  },
+  {
+    "id": "sigtap-passo-a-passo-sp",
+    "system": "sigtap",
+    "title": "SIGTAP — guia ilustrado de São Paulo",
+    "category": "Operação",
+    "description": "Manual completo de faturamento do HMEC, com o capítulo 5 dedicado ao SIGTAP nas páginas 16–43 do PDF: pesquisa, atributos, compatibilidades, relatórios e downloads. Edição de 2016; telas antigas.",
+    "format": "PDF",
+    "name": "sigtap-passo-a-passo-sp.pdf",
+    "url": "https://docs.bvsalud.org/biblioref/sms-sp/2016/sms-12546/sms-12546-9419.pdf",
+    "source_page": "https://docs.bvsalud.org/biblioref/sms-sp/2016/sms-12546/sms-12546-9419.pdf",
+    "publication_date": "2016-12-01",
+    "file": "bpa-passo-a-passo-sp.pdf",
+    "role": "guide",
+    "publisher": "Prefeitura de São Paulo / HMEC",
+    "guide_label": "COMPLETO / PASSO A PASSO",
+    "copied_at": "2026-10-07T00:46:28.687628+00:00",
+    "size": 16310004,
+    "sha256": "225a598a3f96745d37b964b4c5a481d9f6da71439cfd22abd199af7df49149e8"
   }
 ]

@@ -39,7 +39,9 @@ def filter_manuals(query="", system="", category=""):
             if (not system or manual["system"] == system)
             and (not category or manual["category"] == category)
             and all(word in search_text(" ".join((manual["title"], manual["description"],
-                                                 SYSTEMS[manual["system"]][0], manual["category"])))
+                                                 SYSTEMS[manual["system"]][0], manual["category"],
+                                                 manual.get("publisher", ""), manual.get("guide_label", ""),
+                                                 "original oficial" if manual.get("role") == "original" else "")))
                     for word in words)]
 
 

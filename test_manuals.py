@@ -18,6 +18,21 @@ class ManualTests(unittest.TestCase):
         self.assertTrue(all(item["system"] == "cnes" and item["category"] == "Instalação" for item in result))
         self.assertEqual(manuals.filter_manuals("inexistente"), [])
 
+    def test_each_system_distinguishes_its_original_and_practical_guide(self):
+        entries = manuals.load_manuals()
+        for system in manuals.SYSTEMS:
+            group = [entry for entry in entries if entry["system"] == system]
+            self.assertEqual(sum(entry["role"] == "original" for entry in group), 1)
+            self.assertTrue(any(entry["role"] == "guide" for entry in group))
+            for entry in group:
+                self.assertTrue(entry["publisher"])
+                self.assertIn(entry["role"], ("original", "guide", "support"))
+                if entry["role"] == "guide":
+                    self.assertTrue(entry["guide_label"])
+        self.assertEqual(len(manuals.filter_manuals("original oficial")), len(manuals.SYSTEMS))
+        self.assertTrue(manuals.filter_manuals("completo", "cnes"))
+        self.assertTrue(manuals.filter_manuals("HMEC", "bpa"))
+
     def test_manifest_changes_take_effect_without_restarting(self):
         entry = manuals.load_manuals()[0]
         with tempfile.TemporaryDirectory() as directory:

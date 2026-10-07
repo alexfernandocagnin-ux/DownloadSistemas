@@ -165,6 +165,10 @@ CUSTOM_CSS = """
     border-radius:20px; font-size:.75rem; font-weight:650; }
 .ds-manual-group [data-testid="stHeaderActionElements"],
 .ds-manual-intro [data-testid="stHeaderActionElements"] { display:none; }
+.ds-manual-role { display:inline-block; border-radius:7px; padding:.35rem .55rem; margin-bottom:.65rem; font-size:.72rem; font-weight:800; letter-spacing:.035em; }
+.ds-manual-role-original { color:#154d7a; background:#e6f0fb; border:1px solid #bdd7ee; }
+.ds-manual-role-guide { color:#125940; background:#e5f6ed; border:1px solid #b4deca; }
+.ds-manual-role-support { color:#566372; background:#edf0f4; border:1px solid #d7dfe6; }
 .ds-manual-type { display:flex; align-items:center; gap:.45rem; color:#654393;
     font-size:.72rem; font-weight:750; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.8rem; }
 .ds-manual-type span { color:#175b91; background:#eaf2fa; border-radius:5px; padding:.2rem .4rem; }
@@ -663,13 +667,17 @@ def cached_manual_download(manual_id):
 
 def render_manual_card(manual):
     manual_id = manual["id"]
+    role = manual["role"]
+    label = "ORIGINAL / OFICIAL" if role == "original" else manual["guide_label"] if role == "guide" else "DOCUMENTO COMPLEMENTAR"
     with st.container(border=True, key=f"system_card_manual_{manual_id}"):
         st.markdown(
+            f'<div class="ds-manual-role ds-manual-role-{role}">{escape(label)}</div>'
             f'<div class="ds-manual-type"><span>{escape(manual["format"])}</span> {escape(manual["category"])}</div>'
             f'<h4 class="ds-manual-title">{escape(manual["title"])}</h4>'
             f'<p class="ds-manual-description">{escape(manual["description"])}</p>',
             unsafe_allow_html=True,
         )
+        st.caption(f"Publicado por: {manual['publisher']}")
         publication_date = manual.get("publication_date")
         if manual.get("source_format") == "Online":
             st.caption(f"Wiki Saúde · cópia em PDF de {update_day(manual['copied_at'])}")
@@ -687,11 +695,14 @@ def render_manuals():
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
         'stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16M3 3h5a4 4 0 0 1 4 4'
         ' 4 4 0 0 1 4-4h5v16h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3z"/></svg></div>'
-        '<div><div class="ds-eyebrow">03 &nbsp;·&nbsp; BIBLIOTECA OFICIAL</div>'
+        '<div><div class="ds-eyebrow">03 &nbsp;·&nbsp; BIBLIOTECA DE MANUAIS</div>'
         '<h2>Manuais</h2><p>Da primeira instalação à rotina de trabalho. '
         'Encontre os manuais e as orientações de cada sistema em um só lugar.</p></div></div>',
         unsafe_allow_html=True,
     )
+    st.markdown("**🔵 ORIGINAL / OFICIAL** — documento de referência do Ministério da Saúde.  \n"
+                "**🟢 COMPLETO / PASSO A PASSO** — guia detalhado para acompanhar o uso. "
+                "Guias de rotina ou processamento indicam seu alcance no cartão; alguns também são publicados pelo Ministério.")
     search, system_filter, category_filter = st.columns([2, 1, 1], gap="medium")
     with search:
         query = st.text_input("Buscar manual", placeholder="Ex.: instalação, BPA, equipes…", key="manual_search")
@@ -714,10 +725,19 @@ def render_manuals():
             f'<div class="ds-manual-group"><h3>{icon} {escape(label)}</h3>'
             f'<span>{len(group)} documento{"s" if len(group) != 1 else ""}</span></div>', unsafe_allow_html=True,
         )
-        for start in range(0, len(group), 3):
-            for column, manual in zip(st.columns(3, gap="medium"), group[start:start + 3]):
+        featured = sorted((manual for manual in group if manual["role"] != "support"),
+                          key=lambda manual: manual["role"] != "original")
+        for start in range(0, len(featured), 2):
+            for column, manual in zip(st.columns(2, gap="medium"), featured[start:start + 2]):
                 with column:
                     render_manual_card(manual)
+        supporting = [manual for manual in group if manual["role"] == "support"]
+        if supporting:
+            st.caption("Outros documentos: instalação, orientações e layouts")
+            for start in range(0, len(supporting), 3):
+                for column, manual in zip(st.columns(3, gap="medium"), supporting[start:start + 3]):
+                    with column:
+                        render_manual_card(manual)
     st.caption("Todos os manuais têm cópia verificada no portal. PDFs e ZIPs podem ser baixados mesmo quando a fonte oficial está fora do ar. "
                "Os manuais da Wiki Saúde também têm uma cópia em PDF, com a data em que o conteúdo foi salvo.")
 
