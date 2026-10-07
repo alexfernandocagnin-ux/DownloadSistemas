@@ -278,16 +278,18 @@ class PortalTests(unittest.TestCase):
         remote.start()
         self.addCleanup(remote.stop)
 
-    def app(self):
+    def app(self, program="bpa"):
         from streamlit.testing.v1 import AppTest
-        return AppTest.from_file(str(Path(__file__).parent / "app.py"), default_timeout=20)
+        app = AppTest.from_file(str(Path(__file__).parent / "app.py"), default_timeout=20)
+        app.session_state["program_system"] = program
+        return app
 
     def test_home_opens_without_any_official_request(self):
         with patch("catalogs.bpa_portal.fetch_bpa_catalog", side_effect=AssertionError("official request")):
-            app = self.app().run()
+            app = self.app(program="cnes").run()
         self.assertFalse(app.exception)
         self.assertTrue(app.button)
-        self.assertEqual([tab.label for tab in app.tabs], ["Programas e instaladores", "Tabelas e bases", "MANUAIS"])
+        self.assertEqual([tab.label for tab in app.tabs], ["Programas e instaladores", "Tabelas e bases", "Manuais"])
         rendered = "\n".join(element.value for element in app.markdown)
         self.assertIn("Downloads Sistemas", rendered)
         self.assertNotIn("Downloads sem rodeios", rendered)
@@ -296,8 +298,48 @@ class PortalTests(unittest.TestCase):
         self.assertNotIn("Últimos lançamentos", rendered)
         self.assertTrue(any(box.key == "manual_system" for box in app.selectbox))
         self.assertTrue(any(button.key == "force_catalog_check" for button in app.button))
-        self.assertIn("FPO · instalador base", rendered)
-        self.assertIn("FPO Magnético · atualização atual", rendered)
+        self.assertTrue(any(str(button.key).startswith("prep_cnes_complete_") for button in app.button))
+        self.assertTrue(any(str(button.key).startswith("prep_cnes_app_") for button in app.button))
+        self.assertIn("Instalação completa", rendered)
+        self.assertIn("Atualização", rendered)
+
+    def test_system_navigation_keeps_the_download_selection_and_cnes_packages_separate(self):
+        app = self.app(program="cnes").run()
+        self.assertFalse(app.exception)
+        app.button(key="choose_program_fpo").click().run()
+        self.assertEqual(app.session_state["program_system"], "fpo")
+        self.assertTrue(any(str(button.key).startswith("prep_fpo_update_") for button in app.button))
+        self.assertTrue(any(str(button.key).startswith("prep_fpo_installer_") for button in app.button))
+        self.assertFalse(any(str(button.key).startswith("prep_cnes_") for button in app.button))
+        app.selectbox(key="program_system").select("ciha02").run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any(str(button.key).startswith("prep_ciha02_installer_") for button in app.button))
+        self.assertTrue(any(str(button.key).startswith("prep_ciha02_") for button in app.button))
+        app.button(key="choose_program_cnes").click().run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any(str(button.key).startswith("prep_cnes_complete_") for button in app.button))
+        self.assertTrue(any(str(button.key).startswith("prep_cnes_app_") for button in app.button))
+        app.run()
+        self.assertEqual(app.session_state["program_system"], "cnes")
+
+    def test_updated_manual_with_same_id_delivers_current_verified_bytes(self):
+        from catalogs import manuals
+        item = next(item for item in manuals.load_manuals() if item["id"] == "bpa-layout")
+        old_pdf = b"%PDF-1.4\nold edition\n%%EOF"
+        new_pdf = b"%PDF-1.4\nnew edition\n%%EOF"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = root / "manuals.json"
+            document = root / item["file"]
+            with patch.object(manuals, "MANUALS_PATH", manifest), patch.object(manuals, "MANUALS_DIR", root):
+                for package in [old_pdf, new_pdf]:
+                    document.write_bytes(package)
+                    item = {**item, "size": len(package), "sha256": hashlib.sha256(package).hexdigest()}
+                    manifest.write_text(json.dumps([item]), encoding="utf-8")
+                    app = self.app().run()
+                    app.button(key="prep_manual_bpa-layout_Layout_Exportacao_BPA.pdf").click().run()
+                    self.assertFalse(app.exception)
+                    self.assertEqual(app.session_state["official_download_manual_bpa-layout"]["data"], package)
 
     def test_manual_filters_and_shared_system_download_flow(self):
         pdf = b"%PDF-1.4\nverified manual\n%%EOF"
@@ -342,7 +384,7 @@ class PortalTests(unittest.TestCase):
                 self.assertFalse(app.exception)
                 self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["systems"]["bpa"]["latest"]["name"], new["name"])
                 fresh = self.app().run()
-                self.assertTrue(any(c.value == new["name"] for c in fresh.caption))
+                self.assertIn(f'<dd>{new["name"]}</dd>', "\n".join(item.value for item in fresh.markdown))
                 next(b for b in fresh.button if b.key == "force_catalog_check").click().run()
                 self.assertFalse(fresh.exception)
                 self.assertEqual(fresh.session_state["forced_live_updates"], [])
@@ -354,10 +396,20 @@ class PortalTests(unittest.TestCase):
         published = {"updated_at": "2026-10-06T23:50:00+00:00",
                      "last_check": {"completed_at": "2026-10-06T23:50:00+00:00", "total": 12, "succeeded": 12},
                      "systems": {"bpa": {"latest": latest, "catalog_checked_at": "2026-10-06T23:50:00+00:00"}}}
-        with patch("catalogs.snapshot.read_published_catalog", return_value=published), patch("catalogs.state.atomic_write") as write, patch.object(bpa_portal, "fetch_bpa_catalog", side_effect=AssertionError("official query")):
+        catalog_path = Path(__file__).parent / "data" / "catalog.json"
+        local = {"updated_at": "2026-10-06T22:00:00+00:00",
+                 "last_check": {"completed_at": "2026-10-06T22:00:00+00:00", "total": 12, "succeeded": 12},
+                 "systems": {"bpa": {"latest": {"name": NAME, "url": URL},
+                                      "catalog_checked_at": "2026-10-06T22:00:00+00:00"}}}
+        original_read = Path.read_text
+
+        def read(path, *args, **kwargs):
+            return json.dumps(local) if path == catalog_path else original_read(path, *args, **kwargs)
+
+        with patch.object(Path, "read_text", read), patch("catalogs.snapshot.read_published_catalog", return_value=published), patch("catalogs.state.atomic_write") as write, patch.object(bpa_portal, "fetch_bpa_catalog", side_effect=AssertionError("official query")):
             app = self.app().run()
         self.assertFalse(app.exception)
-        self.assertTrue(any(c.value == latest["name"] for c in app.caption))
+        self.assertIn(f'<dd>{latest["name"]}</dd>', "\n".join(item.value for item in app.markdown))
         self.assertIn("20:50", "\n".join(item.value for item in app.markdown))
         self.assertEqual(write.call_args.args[1]["last_check"], published["last_check"])
 
@@ -378,7 +430,7 @@ class PortalTests(unittest.TestCase):
 
     def test_sihd_can_prepare_from_official_source_without_a_mirror(self):
         with patch.object(sihd_portal, "download_release", return_value=PACKAGE), patch("catalogs.mirrors.matching_mirror", return_value=None):
-            app = self.app().run()
+            app = self.app(program="sihd2").run()
             next(b for b in app.button if str(b.key).startswith("prep_sihd2_")).click().run()
             self.assertFalse(app.exception)
             self.assertTrue(any("SIHD2" in b.proto.label for b in app.get("download_button")))
@@ -441,7 +493,7 @@ class PortalTests(unittest.TestCase):
 
     def test_both_sources_offline_show_error_without_crashing(self):
         with patch("catalogs.mirrors.download_mirror", side_effect=OSError("404")), patch("catalogs.sia_portal.download_release", side_effect=OSError("offline")) as official:
-            app = self.app().run()
+            app = self.app(program="sia").run()
             next(button for button in app.button if str(button.key).startswith("prep_sia_")).click().run()
         self.assertFalse(app.exception)
         official.assert_called_once()
@@ -459,7 +511,7 @@ class PortalTests(unittest.TestCase):
             return PACKAGE + name.encode()
 
         with patch("catalogs.mirrors.download_mirror", side_effect=download):
-            app = self.app().run()
+            app = self.app(program="fpo").run()
             next(button for button in app.button if str(button.key).startswith("prep_fpo_update_")).click().run()
             self.assertFalse(app.exception)
             self.assertEqual(app.session_state["official_download_fpo_update"]["data"], PACKAGE + update_name.encode())

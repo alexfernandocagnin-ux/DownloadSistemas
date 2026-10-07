@@ -1,0 +1,4 @@
+Interface anterior à opção 09, preservada em 07/10/2026.
+Commit completo: a1f0f5daabc4055dd137275d1d47b799281489b3
+Tag: backup/interface-antes-download-em-foco-2026-10-07
+Para recuperar somente a aparência anterior, restaure app.py e .streamlit/config.toml dessa tag. Preserve o catálogo e os arquivos mais recentes. A tag também guarda a versão completa do projeto.

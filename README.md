@@ -12,7 +12,7 @@ sites estão fora do ar, o que acontece com frequência.
 - O portal abre pelo catálogo salvo e pelo histórico completo. A consulta de versões é automática, sem intervenção dos visitantes. O botão **Verificar todos os sistemas** permite antecipar uma consulta a qualquer momento. As descobertas são registradas no GitHub antes dos downloads grandes.
 - A cada 2 horas, às 00:50, 02:50, 04:50, **06:50** e assim por diante no horário de Brasília, o GitHub Actions consulta as versões e tenta publicar os arquivos. O agendamento usa UTC e pode atrasar conforme a disponibilidade do GitHub. A descoberta é publicada em uma etapa própria, antes dos downloads grandes. A última versão encontrada é salva mesmo se o download falhar. O link do espelho só muda após a confirmação do asset; falhas preservam a cópia anterior.
 - Quando uma versão muda em relação a uma já conhecida, essa sincronização registra sistema, arquivo e data em um histórico persistente que aparece no quadro **Novidades dos sistemas** para todos os visitantes durante sete dias após a descoberta. O histórico permanece salvo após esse prazo. A primeira coleta de um sistema serve como referência e não é anunciada como novidade.
-- A aba **MANUAIS** reúne documentação oficial por sistema, com busca sem distinção de acentos e filtros por sistema e assunto. Na FPO, a atualização atual fica no cartão principal de programas e o instalador base está no expansor de primeira instalação.
+- A aba **Manuais** reúne documentação por sistema, com busca sem distinção de acentos e filtro por assunto. A navegação lateral seleciona o sistema; no celular, ela vira um seletor compacto. CNES, FPO e CIHA02 mostram instalação e atualização em cartões separados.
 - Não há corte de seis meses: todas as competências encontradas ficam no seletor ao abrir o site, mesmo que sua cópia ainda não esteja no espelho. Arquivos pequenos podem ser preparados na fonte oficial. O espelho amplia o histórico a cada execução, priorizando os meses recentes e tentando até 16 novos pacotes por tabela dentro de um orçamento de oito minutos. Arquivos históricos com falha são tentados novamente após 24 horas; a competência mais recente é tentada em toda execução. Esse lote limita o trabalho da execução, não as competências disponíveis. Cópias já salvas permanecem disponíveis.
 - Ao preparar um arquivo de até 50 MB, o servidor baixa a cópia completa e verifica assinatura, tamanho e SHA-256 registrado, antes de oferecer o download dentro do portal. Pacotes maiores têm assinatura e tamanho conferidos por uma leitura parcial e são entregues diretamente pelo espelho. Se o espelho falhar, tenta a fonte oficial. Uma página de erro nunca é oferecida como instalador.
 - As versões e revisões anteriores continuam acessíveis quando uma versão oficial nova ainda não foi espelhada.
@@ -56,7 +56,9 @@ cartão de cada sistema.
   `fpo-update-latest`, `sihd2-latest`, `cnes-app-latest`, `cnes-complete-latest`,
   `bdsia-<competência>`, `sigtap-<competência>`,
   `cnes-base-<competência>`) e só comita o catálogo quando algo muda.
-- `app.py` - a tela do portal.
+- `app.py` - navegação e tela do portal.
+- `ui/download-focus.css` - aparência da interface Download em foco; fonte Manrope local.
+- `backups/interface-2026-10-07-download-em-foco/` - interface anterior e instruções de restauração. A tag `backup/interface-antes-download-em-foco-2026-10-07` preserva o commit completo anterior.
 - `data/manuals.json` e `catalogs/manuals.py` - biblioteca de manuais oficiais e preparação dos downloads.
 - `catalogs/updates.py` - deduplicação e retenção do histórico de novidades exibido no portal.
 

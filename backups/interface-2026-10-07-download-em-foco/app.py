@@ -8,7 +8,6 @@ quando o servidor de origem está indisponível.
 from __future__ import annotations
 
 import json
-import base64
 from pathlib import Path
 from html import escape
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -25,6 +24,7 @@ from catalogs.manuals import load_manuals, SYSTEMS as MANUAL_SYSTEMS, download_m
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
 
+SINGLE_VERSION_SYSTEMS = ("bpa", "apac", "sia", "fpo_update", "sihd2", "ciha02", "cnes_complete", "cnes_app")
 COMPETENCE_SYSTEMS = ("bdsia", "sigtap")
 DIRECT_DOWNLOAD_LIMIT = 50_000_000
 
@@ -94,17 +94,182 @@ SYSTEM_META: dict[str, dict[str, object]] = {
 
 st.set_page_config(page_title="Downloads Sistemas", page_icon="📦", layout="wide")
 
-UI_DIR = Path(__file__).parent / "ui"
-font = Path(__file__).parent / "static" / "fonts" / "Manrope-Latin.woff2"
-font_css = ""
-if font.is_file():
-    encoded_font = base64.b64encode(font.read_bytes()).decode("ascii")
-    font_css = (
-        "@font-face{font-family:Manrope;src:url(data:font/woff2;base64,"
-        + encoded_font + ") format('woff2');font-weight:200 800;font-display:swap;}"
-    )
-st.markdown("<style>" + font_css + (UI_DIR / "download-focus.css").read_text(encoding="utf-8") + "</style>",
-            unsafe_allow_html=True)
+CUSTOM_CSS = """
+<style>
+:root { --ds-ink:#172f3d; --ds-muted:#243b48; --ds-green:#087568; --ds-line:#dce5e9; }
+.stApp { background:#f3f6f8; color:var(--ds-ink); }
+.block-container { max-width:1800px; width:100%; padding:1.6rem 2rem 3rem; }
+.ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:2rem;
+    position:relative; overflow:hidden; padding:1.9rem 2.1rem; margin-bottom:1rem;
+    background:#132f3b; border:1px solid #234550; border-radius:22px; color:#fff;
+    box-shadow:0 8px 24px #132f3b10; }
+.ds-hero:after { content:''; position:absolute; width:260px; height:100%; right:0; top:0;
+    background:repeating-linear-gradient(90deg,transparent,transparent 51px,#547781 52px,transparent 53px);
+    opacity:.12; pointer-events:none; }
+.ds-hero-copy,.ds-hero-meta { position:relative; z-index:1; }
+.ds-brandline { display:flex; align-items:center; gap:.6rem; margin-bottom:.8rem; }
+.ds-brand-mark { width:30px; height:30px; display:grid; place-items:center;
+    border:1px solid #527d83; border-radius:9px; background:#244550; color:#b7f1dd; flex:0 0 30px; }
+.ds-brand-mark svg { width:18px; height:18px; }
+.ds-eyebrow { color:#b7e9dc; font-size:.72rem; font-weight:750; letter-spacing:.12em; text-transform:uppercase; margin:0; }
+.ds-hero h1 { font-family:'Trebuchet MS','Segoe UI',sans-serif; font-size:clamp(2rem,3vw,2.75rem);
+    font-weight:700; letter-spacing:-.04em; line-height:1.12; margin:0 0 .8rem; color:#fff; padding:0; }
+.ds-hero [data-testid="stHeaderActionElements"] { display:none; }
+.ds-hero p { color:#e2edf1; font-size:1rem; line-height:1.6; max-width:650px; margin:0; }
+.ds-hero-meta { align-self:center; padding:1.15rem 1.25rem; border:1px solid #d1e6df;
+    border-radius:14px; background:#edf8f3; color:#173a36; box-shadow:0 4px 12px #081d2420; }
+.ds-hero-meta strong { display:flex; align-items:center; gap:.45rem; color:#175c4e; font-size:.72rem;
+    text-transform:uppercase; letter-spacing:.07em; margin-bottom:.7rem; }
+.ds-hero-meta strong svg { width:16px; height:16px; flex:0 0 16px; }
+.ds-hero-meta span { display:block; color:#173a36; font-size:.97rem; font-weight:700; line-height:1.5;
+    font-variant-numeric:tabular-nums; }
+.ds-meta-zone { display:block; margin-top:.15rem; font-size:.79rem; font-style:normal; color:#243b48; }
+.ds-hero-meta small { display:block; margin-top:.7rem; padding-top:.65rem; border-top:1px solid #cfe3da;
+    color:#243b48; font-size:.8rem; line-height:1.5; }
+.ds-overview { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin:0 0 1rem; }
+.ds-overview-item { background:#fff; padding:.95rem 1.1rem; display:flex; align-items:center; gap:.8rem;
+    border:1px solid var(--ds-line); border-radius:12px; }
+.ds-overview-number { display:grid; place-items:center; min-width:44px; height:44px;
+    font-family:'Trebuchet MS','Segoe UI',sans-serif; color:#096456; background:#eaf5ef;
+    border-radius:10px; font-size:1.35rem; font-weight:700; line-height:1; }
+.ds-overview-item:nth-child(2) .ds-overview-number { color:#175b91; background:#eaf2fa; }
+.ds-overview-item:nth-child(3) .ds-overview-number { color:#654393; background:#f1ecf8; }
+.ds-overview-item strong { display:block; font-size:.9rem; color:#172f3d; }
+.ds-overview-item span { display:block; font-size:.8rem; color:var(--ds-muted); margin-top:.2rem; line-height:1.45; }
+.ds-section { margin:.7rem 0 .8rem; }
+.ds-section .ds-eyebrow { color:#243b48; font-size:.67rem; }
+.ds-section h2 { font-family:'Trebuchet MS','Segoe UI',sans-serif; color:#183a49; font-size:1.65rem; letter-spacing:-.025em; margin:.45rem 0 0; padding:0; line-height:1.25; }
+.ds-section p { color:var(--ds-muted); font-size:.89rem; margin:.3rem 0 0; }
+.ds-card-title { display:flex; align-items:center; gap:.7rem; min-height:44px; font-size:1rem;
+    font-weight:750; color:#173849; line-height:1.35; margin:.1rem 0 .7rem; }
+.ds-card-icon { display:grid; place-items:center; width:38px; height:38px; flex:0 0 38px;
+    background:#edf4f5; border:1px solid #e0ebef; border-radius:10px; font-size:1.1rem; }
+.ds-badge { display:inline-block; padding:.26rem .65rem; border-radius:6px; font-size:.72rem; font-weight:700;
+    line-height:1.35; margin:0 0 .55rem; }
+.ds-badge-ok { background:#e8f5ef; color:#116144; border:1px solid #d3eade; }
+.ds-badge-warn { background:#fff4df; color:#775114; border:1px solid #efdcb2; }
+.ds-badge-error { background:#fbecea; color:#933c35; border:1px solid #f1d3ce; }
+.ds-manual-intro { display:flex; align-items:center; gap:1.1rem; margin:.7rem 0 1.3rem;
+    padding:1.4rem 1.6rem; border:1px solid #ded2ee; border-radius:16px; background:linear-gradient(120deg,#f1ecf8,#fff); }
+.ds-manual-intro .ds-eyebrow { color:#654393; }
+.ds-manual-intro h2 { font-family:'Trebuchet MS','Segoe UI',sans-serif; font-size:1.8rem;
+    color:#183a49; margin:.35rem 0; padding:0; }
+.ds-manual-intro p { color:#243b48; margin:0; font-size:.92rem; line-height:1.6; }
+.ds-manual-book { display:grid; place-items:center; width:60px; height:60px; flex:0 0 60px;
+    color:#654393; background:#e7dff2; border-radius:15px; }
+.ds-manual-book svg { width:32px; height:32px; }
+.ds-manual-group { display:flex; align-items:center; gap:.7rem; margin:1.5rem 0 .7rem;
+    padding-bottom:.6rem; border-bottom:1px solid #dce5e9; }
+.ds-manual-group h3 { color:#173849; font-size:1.1rem; padding:0; margin:0; }
+.ds-manual-group > span { color:#654393; background:#f1ecf8; padding:.2rem .6rem;
+    border-radius:20px; font-size:.75rem; font-weight:650; }
+.ds-manual-group [data-testid="stHeaderActionElements"],
+.ds-manual-intro [data-testid="stHeaderActionElements"] { display:none; }
+.ds-manual-role { display:inline-block; border-radius:7px; padding:.35rem .55rem; margin-bottom:.65rem; font-size:.72rem; font-weight:800; letter-spacing:.035em; }
+.ds-manual-role-original { color:#154d7a; background:#e6f0fb; border:1px solid #bdd7ee; }
+.ds-manual-role-guide { color:#125940; background:#e5f6ed; border:1px solid #b4deca; }
+.ds-manual-role-support { color:#566372; background:#edf0f4; border:1px solid #d7dfe6; }
+.ds-manual-type { display:flex; align-items:center; gap:.45rem; color:#654393;
+    font-size:.72rem; font-weight:750; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.8rem; }
+.ds-manual-type span { color:#175b91; background:#eaf2fa; border-radius:5px; padding:.2rem .4rem; }
+.ds-manual-title { color:#173849; font-size:1.02rem; line-height:1.4; font-weight:750;
+    min-height:2.85rem; margin:0 0 .6rem; }
+.ds-manual-description { color:#243b48; font-size:.87rem; line-height:1.55; min-height:4.1rem; margin:0 0 .9rem; }
+[class*="st-key-system_card_"], .st-key-updates_panel {
+    background:#fff; border:1px solid var(--ds-line) !important; border-radius:16px !important;
+    box-shadow:0 4px 14px #15303b06; padding:1.15rem !important; }
+[class*="st-key-system_card_"] { height:100%; }
+[class*="st-key-system_download_grid_"] > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:1.25rem; }
+[class*="st-key-system_download_grid_"] > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+    width:100%; min-width:0; }
+
+[class*="st-key-system_card_"] [data-testid="stCaptionContainer"] p { overflow-wrap:anywhere; }
+.ds-download-tip { display:flex; gap:.75rem; align-items:center; padding:.8rem 1rem;
+    background:#eaf1f5; border:1px solid #d9e5eb; border-radius:10px; color:#172f3d; }
+.ds-download-tip svg { width:22px; height:22px; color:#175b91; flex:0 0 22px; }
+.ds-download-tip p { margin:0; font-size:.88rem; line-height:1.5; }
+.ds-download-tip strong { font-weight:700; }
+div[data-testid="stButton"] button, div[data-testid="stDownloadButton"] button, div[data-testid="stLinkButton"] a {
+    border-radius:9px; min-height:42px; font-weight:650; transition:background .15s ease,border-color .15s ease; }
+div[data-testid="stButton"] button[kind="primary"], div[data-testid="stLinkButton"] a[kind="primary"] {
+    background:#087568; border-color:#087568; color:#fff; }
+div[data-testid="stButton"] button[kind="primary"]:hover, div[data-testid="stLinkButton"] a[kind="primary"]:hover {
+    background:#075e54; border-color:#075e54; }
+/* A mesma cor para arquivos prontos, servidos pelo app ou por link direto. */
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a {
+    background:#175b91 !important; border-color:#175b91 !important; color:#fff !important;
+    box-shadow:0 3px 8px #175b9120; }
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button:hover,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a:hover {
+    background:#104570 !important; border-color:#104570 !important; color:#fff !important; }
+[class*="st-key-ready_download_"] [data-testid="stDownloadButton"] button p,
+[class*="st-key-ready_download_"] [data-testid="stLinkButton"] a p { color:#fff !important; }
+div[data-testid="stCaptionContainer"], div[data-testid="stCaptionContainer"] p {
+    color:#172f3d !important; font-size:.9rem !important; font-weight:600 !important; opacity:1 !important; }
+[data-testid="stWidgetLabel"] p { color:#243b48 !important; }
+button:focus-visible, a:focus-visible { outline:3px solid #46a996 !important; outline-offset:3px; }
+[role="tablist"] { gap:.7rem; background:transparent; border-bottom:0;
+    padding:.3rem .2rem .65rem; }
+[role="tab"] { --tab-color:#087568; --tab-soft:#e8f5ef; --tab-border:#c9e5da;
+    min-height:46px; padding:.65rem 1.15rem; font-size:.94rem; font-weight:700;
+    border:1px solid var(--tab-border) !important; border-radius:12px;
+    background:var(--tab-soft) !important; color:var(--tab-color) !important;
+    transition:background .15s ease,box-shadow .15s ease; }
+[role="tab"]:nth-child(2) { --tab-color:#175b91; --tab-soft:#eaf2fa; --tab-border:#ccdeef; }
+[role="tab"]:nth-child(3) { --tab-color:#654393; --tab-soft:#f1ecf8; --tab-border:#ded2ee; }
+[role="tab"] p { color:inherit !important; font-weight:700; }
+[role="tab"]:hover { box-shadow:0 3px 9px #15303b16; }
+[role="tab"][aria-selected="true"] { background:var(--tab-color) !important;
+    border-color:var(--tab-color) !important; color:#fff !important; box-shadow:0 3px 9px #15303b20; }
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"],
+[role="tablist"]::after, [role="tab"] .react-aria-SelectionIndicator { display:none !important; }
+.ds-update-heading { display:flex; align-items:center; gap:.8rem; padding:.15rem 0; }
+.ds-update-icon { width:40px; height:40px; flex:0 0 40px; display:grid; place-items:center; background:#e7f3ef;
+    color:#087568; border-radius:10px; font-size:1.1rem; }
+.ds-update-heading strong { display:block; font-size:.99rem; color:#173a48; }
+.ds-update-heading span { display:block; font-size:.8rem; color:var(--ds-muted); margin-top:.2rem; }
+.ds-update-panel { margin:.4rem 0 .2rem; }
+.ds-update-list { display:grid; gap:.55rem; }
+.ds-update-item { display:grid; grid-template-columns:minmax(140px,1fr) minmax(160px,1.2fr) auto; align-items:center;
+    gap:.8rem; background:#f6fbf9; padding:.8rem 1rem; border:1px solid #e0ece6; border-left:3px solid #4b9b83; border-radius:8px; }
+.ds-update-system { color:#1f463d; font-size:.84rem; font-weight:750; }
+.ds-update-file { color:#243b48; font-size:.86rem; font-weight:500; overflow-wrap:anywhere; }
+.ds-update-date { color:#243b48; font-size:.82rem; font-weight:500; white-space:nowrap; }
+.ds-update-empty { background:#f5f8fa; color:#243b48; padding:.85rem 1rem; border-radius:9px; font-size:.86rem; }
+.ds-loading-card { background:#f1f8f5; border:1px solid #d5e9df; border-radius:10px; padding:.85rem 1rem; margin:.5rem 0; }
+.ds-loading-copy { display:flex; align-items:center; gap:.7rem; color:#173849; }
+.ds-loading-copy strong { display:block; font-size:.88rem; }
+.ds-loading-copy span { display:block; color:#243b48; font-size:.8rem; margin-top:.2rem; }
+.ds-loading-dot { width:12px; height:12px; flex:0 0 auto; border:2px solid #bbdacf; border-top-color:#087568;
+    border-radius:50%; animation:ds-spin .85s linear infinite; }
+.ds-progress-track { height:4px; overflow:hidden; background:#daeae2; border-radius:9px; margin-top:.8rem; }
+.ds-progress-track span { display:block; width:34%; height:100%; background:#087568; animation:ds-slide 1.3s ease-in-out infinite; }
+.ds-footer { border-top:1px solid var(--ds-line); margin-top:2rem; padding-top:1rem; color:#243b48; font-size:.77rem; }
+@keyframes ds-spin { to { transform:rotate(360deg); } }
+@keyframes ds-slide { from { transform:translateX(-120%); } to { transform:translateX(330%); } }
+@media (prefers-reduced-motion:reduce) { .ds-loading-dot,.ds-progress-track span { animation:none; } }
+@media (max-width:760px) {
+    .ds-manual-intro { padding:1rem; align-items:flex-start; }
+    .ds-manual-book { width:42px; height:42px; flex-basis:42px; }
+    .ds-manual-book svg { width:24px; height:24px; }
+    .ds-manual-title,.ds-manual-description { min-height:0; }
+    .block-container { padding-top:1rem; padding-left:1rem; padding-right:1rem; }
+    .ds-hero { grid-template-columns:1fr; padding:1.5rem; gap:1.2rem; }
+    .ds-overview { grid-template-columns:1fr; }
+    .ds-overview-item { padding:.8rem 1rem; }
+    .ds-hero-meta { width:100%; box-sizing:border-box; }
+    [class*="st-key-system_card_"], .st-key-updates_panel { padding:1rem !important; }
+    .ds-update-item { grid-template-columns:1fr; gap:.25rem; }
+    .ds-update-date { white-space:normal; }
+    [role="tablist"] { gap:.35rem; }
+    [role="tab"] { font-size:.76rem; padding:.6rem .55rem !important; }
+    [role="tab"] p { font-size:.76rem !important; }
+}
+</style>
+"""
+st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 
 @st.cache_data(ttl=60, show_spinner=False)
@@ -144,7 +309,7 @@ def prepare_download(system_key, name, url, mirror, on_progress=None, manual_id=
     if manual_id:
         if on_progress:
             on_progress("Conferindo a cópia do manual salva no portal.")
-        return {"data": download_manual(manual_id)}, "Cópia do manual verificada no portal", False
+        return {"data": cached_manual_download(manual_id)}, "Cópia do manual verificada no portal", False
     mirror_error = False
     if matching_mirror(name, mirror):
         if on_progress:
@@ -329,7 +494,7 @@ def render_download_button(system_key, name, url, mirror, manual=None):
         return
     if manual:
         st.caption(f'{manual["size"] / 1_000_000:.1f} MB · arquivo conferido')
-    elif system_key in COMPETENCE_SYSTEMS and mirror and mirror.get("size"):
+    elif mirror and mirror.get("size"):
         st.caption(f'{mirror["size"] / 1_000_000:.1f} MB · arquivo conferido')
 
     state_key = f"official_download_{system_key}"
@@ -391,60 +556,16 @@ def card_catalog(system_key, saved):
     return releases, error
 
 
-PACKAGE_COPY = {
-    "cnes_complete": ("Instalação completa", "Para uma nova instalação do SCNES."),
-    "cnes_app": ("Atualização", "Para quem já possui o SCNES instalado."),
-    "fpo_installer": ("Instalação inicial", "Instale a base do FPO e depois aplique a atualização atual."),
-    "fpo_update": ("Atualização", "Para o FPO Magnético já instalado."),
-    "ciha02_installer": ("Instalação inicial", "Inclui banco de dados vazio. Preserve a base de uma instalação existente."),
-    "ciha02": ("Atualização", "Para quem já possui o CIHA02 instalado."),
-}
-
-
-def latest_release(system_key, snapshot_systems):
-    saved = snapshot_systems.get(system_key, {})
-    releases, _ = card_catalog(system_key, saved)
-    return releases[0] if releases else saved.get("latest") or saved.get("current") or {}
-
-
-def release_version(release):
-    # Use the catalog's version codes rather than invent versions from filenames.
-    version = str(release.get("version") or "")
-    return "Versão " + version if version else ""
-
-
-def render_file_details(release, mirror=None):
-    name = str(release.get("name") or "")
-    mirror = matching_mirror(name, mirror)
-    size = (mirror or {}).get("size") or release.get("size")
-    size_text = f"{size / 1_000_000:.1f} MB" if isinstance(size, (int, float)) and size > 0 else "Não informado"
-    date = release.get("release_date")
-    date_text = update_day(date) if date else "Não informada pela fonte"
-    st.markdown(
-        '<dl class="ds-file-details">'
-        f'<div><dt>{ui_icon("file")}Arquivo</dt><dd>{escape(name)}</dd></div>'
-        f'<div><dt>{ui_icon("drive")}Tamanho</dt><dd>{escape(size_text)}</dd></div>'
-        f'<div><dt>{ui_icon("calendar")}Data na fonte</dt><dd>{escape(date_text)}</dd></div>'
-        '</dl>', unsafe_allow_html=True,
-    )
-
-
 def render_single_version_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
     meta = SYSTEM_META[system_key]
     info = snapshot_systems.get(system_key, {})
     with st.container(border=True, key=f"system_card_{system_key}"):
-        latest = latest_release(system_key, snapshot_systems)
-        title, description = PACKAGE_COPY.get(system_key, ("Arquivo para instalação", "Baixe o instalador disponível no catálogo."))
-        st.markdown(
-            f'<div class="ds-package-heading"><h3>{escape(title)}</h3>'
-            f'<span class="ds-version">{escape(release_version(latest))}</span></div>'
-            f'<p class="ds-package-description">{escape(description)}</p>',
-            unsafe_allow_html=True,
-        )
+        st.markdown(f'<div class="ds-card-title"><span class="ds-card-icon" aria-hidden="true">{meta["icon"]}</span><span>{meta["label"]}</span></div>', unsafe_allow_html=True)
         releases, error = card_catalog(system_key, info)
         if not releases and info.get("official_reachable") is False:
             error = error or info.get("error") or "SourceUnavailable"
         current = info.get("current")
+        latest = info.get("latest") or current
         render_status(releases, error, info.get("catalog_checked_at", info.get("last_success_at", info.get("checked_at"))) if latest and not releases else None)
         if releases:
             name, url = releases[0]["name"], releases[0]["url"]
@@ -453,12 +574,30 @@ def render_single_version_card(system_key: str, snapshot_systems: dict[str, obje
         else:
             name = url = None
         if name:
-            render_file_details(latest, info.get("mirror"))
+            st.caption(name)
+            if system_key == "cnes_complete":
+                st.caption("Instalação nova do SCNES")
+            elif system_key == "cnes_app":
+                st.caption("Atualização para o SCNES já instalado")
+            elif system_key == "fpo_installer":
+                st.caption("Use na primeira instalação e, em seguida, aplique a atualização atual no cartão principal.")
+            elif system_key == "fpo_update":
+                st.caption("Este é o arquivo de atualização atual. Use com o FPO já instalado.")
+            elif system_key == "ciha02":
+                st.caption("Atualização para o sistema já instalado. A primeira instalação fica na seção abaixo.")
+            elif system_key == "ciha02_installer":
+                st.caption("Primeira instalação: inclui banco de dados vazio. Não substitua o banco de uma instalação existente.")
             render_download_button(system_key, str(name), str(url), info.get("mirror"))
             if current and str(current.get("name", "")).lower() not in {str(item).lower() for item in (latest or {}).get("withdrawn_names", [])} and current.get("name") != name and matching_mirror(current["name"], info.get("mirror")):
                 with st.expander("Versão anterior preservada no espelho"):
                     render_download_button(system_key + "_backup", current["name"], current["url"], info["mirror"])
         st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
+        if system_key == "fpo_update":
+            with st.expander("Primeira instalação? Abra o instalador base do FPO"):
+                render_single_version_card("fpo_installer", snapshot_systems)
+        if system_key == "ciha02":
+            with st.expander(f"Primeira instalação do {system_key.upper()}"):
+                render_single_version_card(system_key + "_installer", snapshot_systems)
 
 
 def render_competence_card(system_key: str, snapshot_systems: dict[str, object]) -> None:
@@ -509,7 +648,6 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
         else:
             name, url, mirror = saved_entry.get("name"), saved_entry.get("url"), saved_entry.get("mirror")
         if name and url:
-            render_file_details(release or saved_entry, mirror)
             render_download_button(system_key, str(name), str(url), mirror)
             if saved_entry.get("name") and saved_entry["name"] != name and matching_mirror(saved_entry["name"], saved_entry.get("mirror")):
                 with st.expander("Revisão anterior preservada no espelho"):
@@ -517,6 +655,18 @@ def render_competence_card(system_key: str, snapshot_systems: dict[str, object])
         else:
             st.caption("Ainda não há pacote espelhado para esta competência.")
         st.link_button("Conferir no portal oficial", meta["official_page"], width="stretch")
+
+
+def render_grid(keys, snapshot_systems, renderer):
+    with st.container(key=f"system_download_grid_{renderer.__name__}"):
+        for column, key in zip(st.columns(len(keys), gap="medium"), keys):
+            with column:
+                renderer(key, snapshot_systems)
+
+
+@st.cache_data(ttl=3600, max_entries=8, show_spinner=False)
+def cached_manual_download(manual_id):
+    return download_manual(manual_id)
 
 
 def render_manual_card(manual):
@@ -542,214 +692,112 @@ def render_manual_card(manual):
                        manual["source_page"], width="stretch")
 
 
-def ui_icon(name):
-    paths = {
-        "monitor": '<rect x="3" y="3" width="18" height="13" rx="1"/><path d="M8 21h8m-4-5v5"/>',
-        "file": '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8m-8 4h5"/>',
-        "chart": '<path d="M4 20V12m5 8V4m6 16V8m5 12V2"/>',
-        "hospital": '<path d="M4 22V7h6V2h10v20M2 22h20M8 11h.01M8 15h.01M14 6h.01M14 10h.01M14 14h.01M18 6h.01M18 10h.01M18 14h.01M12 22v-4h4v4"/>',
-        "grid": '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 10h18M10 3v18"/>',
-        "database": '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 4 18 4 18 0V5M3 12c0 4 18 4 18 0"/>',
-        "book": '<path d="M12 5v16M3 3h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5v16h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3z"/>',
-        "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-        "megaphone": '<path d="m3 10 13-6v16L3 14zM3 10v4M7 16l1 6h3l-2-5M20 7v10"/>',
-        "calendar": '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>',
-        "drive": '<path d="m4 3-2 9v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-7l-2-9zM2 12h20M6 16h.01M10 16h.01"/>',
-        "info": '<circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/>',
-    }
-    return f'<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{paths.get(name, paths["file"])}</svg>'
-
-
-PROGRAM_GROUPS = {
-    "bpa": {"label": "BPA Magnético", "icon": "file", "tone": "green", "packages": ("bpa",),
-            "description": "Boletim de Produção Ambulatorial. Arquivo do aplicativo utilizado no registro da produção ambulatorial do SUS."},
-    "apac": {"label": "APAC Magnético", "icon": "file", "tone": "orange", "packages": ("apac",),
-             "description": "Aplicativo para registro das Autorizações de Procedimentos Ambulatoriais de Alta Complexidade."},
-    "sia": {"label": "SIA", "icon": "chart", "tone": "purple", "packages": ("sia",),
-            "description": "Sistema de Informações Ambulatoriais do SUS. Instalador para o processamento da produção ambulatorial."},
-    "fpo": {"label": "FPO Magnético", "icon": "file", "tone": "red", "packages": ("fpo_installer", "fpo_update"),
-            "description": "Aplicativo de programação físico-orçamentária. Escolha a instalação inicial ou a atualização para o sistema em uso.",
-            "note": "Na primeira instalação, instale a base e depois aplique a atualização mais recente."},
-    "sihd2": {"label": "SIHD2", "icon": "hospital", "tone": "blue", "packages": ("sihd2",),
-              "description": "Sistema de Informações Hospitalares Descentralizado. Instalador disponível no catálogo do SIHD2."},
-    "ciha02": {"label": "CIHA02", "icon": "grid", "tone": "amber", "packages": ("ciha02_installer", "ciha02"),
-               "description": "Comunicação de Informação Hospitalar e Ambulatorial. Arquivos de instalação e atualização do módulo CIHA02.",
-               "note": "Use o instalador inicial apenas em uma nova instalação. Ao atualizar, preserve o banco de dados existente."},
-    "cnes": {"label": "CNES / SCNES", "icon": "hospital", "tone": "blue", "packages": ("cnes_complete", "cnes_app"),
-             "description": "Cadastro Nacional de Estabelecimentos de Saúde. Aplicativo para cadastramento e manutenção das informações dos estabelecimentos.",
-             "note": "Escolha instalação completa para começar ou atualização para o sistema já instalado. O Firebird é necessário para o funcionamento do SCNES."},
-}
-TABLE_GROUPS = {
-    "bdsia": {"label": "SIA · Tabela mensal", "icon": "database", "tone": "blue",
-              "description": "Tabelas do SIA organizadas por competência. Selecione o mês correspondente ao processamento."},
-    "sigtap": {"label": "SIGTAP", "icon": "database", "tone": "purple",
-               "description": "Tabela Unificada de Procedimentos, Medicamentos e OPM do SUS. Consulte a competência e a revisão que precisa."},
-}
-
-
-def choose_system(state_key, value):
-    st.session_state[state_key] = value
-
-
-def render_system_picker(scope, choices, snapshot_systems, default, state_key=None):
-    state_key = state_key or f"{scope}_system"
-    if st.session_state.get(state_key) not in choices:
-        st.session_state[state_key] = default
-    with st.container(key=f"focus_picker_{scope}"):
-        st.markdown('<div class="ds-picker-heading"><h2>Sistemas disponíveis</h2>'
-                    '<p>Selecione um sistema para ver os arquivos</p></div>', unsafe_allow_html=True)
-        with st.container(key=f"mobile_picker_{scope}"):
-            st.selectbox("Selecione um sistema", list(choices), key=state_key,
-                         format_func=lambda key: choices[key]["label"])
-        with st.container(key=f"desktop_picker_{scope}"):
-            for key, group in choices.items():
-                selected = st.session_state[state_key] == key
-                package = group.get("packages", (key,))[-1]
-                release = latest_release(package, snapshot_systems)
-                subtitle = release_version(release)
-                if scope == "tables" and release.get("competence"):
-                    month = str(release["competence"])
-                    subtitle = f"Competência {month[4:6]}/{month[:4]}"
-                if scope == "manual":
-                    count = sum(item["system"] == key or not key for item in load_manuals())
-                    subtitle = f"{count} documentos"
-                suffix = "_selected" if selected else ""
-                with st.container(key=f"nav_item_{scope}_{key or 'all'}{suffix}"):
-                    st.markdown(f'<span class="ds-nav-icon ds-tone-{group.get("tone", "blue")}">'
-                                f'{ui_icon(group.get("icon", "file"))}</span>', unsafe_allow_html=True)
-                    st.button(group["label"], key=f"choose_{scope}_{key or 'all'}", width="stretch",
-                              on_click=choose_system, args=(state_key, key))
-                    if subtitle:
-                        st.caption(subtitle)
-    return st.session_state[state_key]
-
-
-def render_system_heading(group):
-    st.markdown(
-        f'<div class="ds-detail-heading"><span class="ds-detail-icon ds-tone-{group.get("tone", "blue")}">'
-        f'{ui_icon(group.get("icon", "file"))}</span><div><span class="ds-detail-eyebrow">SISTEMA SELECIONADO</span>'
-        f'<h2>{escape(group["label"])}</h2></div></div>'
-        f'<p class="ds-detail-description">{escape(group["description"])}</p>',
-        unsafe_allow_html=True,
-    )
-
-
-@st.fragment
-def render_programs(snapshot_systems):
-    navigation, details = st.columns([1, 2.8], gap="medium")
-    with navigation:
-        selected = render_system_picker("program", PROGRAM_GROUPS, snapshot_systems, "cnes")
-    group = PROGRAM_GROUPS[selected]
-    with details, st.container(key="focus_detail_programs"):
-        render_system_heading(group)
-        note = group.get("note", "Feche o aplicativo antes de instalar ou atualizar. Recomendamos fazer uma cópia de segurança da base de dados.")
-        st.markdown(f'<div class="ds-install-note">{ui_icon("info")}<div><strong>Antes de instalar</strong>'
-                    f'<p>{escape(note)}</p></div></div>', unsafe_allow_html=True)
-        packages = group["packages"]
-        for column, key in zip(st.columns(len(packages), gap="medium"), packages):
-            with column:
-                render_single_version_card(key, snapshot_systems)
-
-
-@st.fragment
-def render_tables(snapshot_systems):
-    navigation, details = st.columns([1, 2.8], gap="medium")
-    with navigation:
-        selected = render_system_picker("tables", TABLE_GROUPS, snapshot_systems, "bdsia")
-    with details, st.container(key="focus_detail_tables"):
-        render_system_heading(TABLE_GROUPS[selected])
-        render_competence_card(selected, snapshot_systems)
-
-
 @st.fragment
 def render_manuals():
-    choices = {"": {"label": "Todos os manuais", "icon": "book", "tone": "blue"}}
-    for key, (label, _) in MANUAL_SYSTEMS.items():
-        group = PROGRAM_GROUPS.get(key) or TABLE_GROUPS.get(key) or {}
-        choices[key] = {"label": label, "icon": group.get("icon", "book"), "tone": group.get("tone", "blue")}
-    navigation, details = st.columns([1, 2.8], gap="medium")
-    with navigation:
-        system = render_system_picker("manual", choices, {}, "", state_key="manual_system")
-    with details, st.container(key="focus_detail_manuals"):
-        render_system_heading({"label": "Manuais", "icon": "book",
-                               "description": "Documentação e orientações para a rotina de trabalho. Encontre os arquivos por sistema ou assunto."})
-        st.markdown('<div class="ds-library-label">BIBLIOTECA DE MANUAIS</div>'
-                    '<p class="ds-manual-legend"><strong>Original / oficial:</strong> documento de referência. '
-                    '<strong>Guia:</strong> orientações práticas, com o alcance indicado em cada cartão.</p>',
-                    unsafe_allow_html=True)
-        search, category_filter = st.columns([2, 1], gap="medium")
-        with search:
-            query = st.text_input("Buscar manual", placeholder="Ex.: instalação, BPA, equipes…", key="manual_search")
-        with category_filter:
-            category = st.selectbox("Assunto", ["", "Instalação", "Operação", "Orientações", "Layouts"],
-                                    key="manual_category", format_func=lambda value: value or "Todos os assuntos")
-        manuals = filter_manuals(query, system, category)
-        st.caption(f"{len(manuals)} de {len(load_manuals())} documentos · {len(MANUAL_SYSTEMS)} sistemas")
-        if not manuals:
-            st.info("Nenhum manual encontrado. Experimente outra palavra ou amplie os filtros.", icon=":material/search:")
-            return
-        for system_key, (label, _) in MANUAL_SYSTEMS.items():
-            group = [manual for manual in manuals if manual["system"] == system_key]
-            if not group:
-                continue
-            st.markdown(f'<div class="ds-manual-group"><h3>{escape(label)}</h3>'
-                        f'<span>{len(group)} documento{"s" if len(group) != 1 else ""}</span></div>',
-                        unsafe_allow_html=True)
-            ordered = sorted(group, key=lambda manual: {"original": 0, "guide": 1, "support": 2}.get(manual["role"], 3))
-            for start in range(0, len(ordered), 2):
-                for column, manual in zip(st.columns(2, gap="medium"), ordered[start:start + 2]):
+    st.markdown(
+        '<div class="ds-manual-intro"><div class="ds-manual-book" aria-hidden="true">'
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
+        'stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16M3 3h5a4 4 0 0 1 4 4'
+        ' 4 4 0 0 1 4-4h5v16h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3z"/></svg></div>'
+        '<div><div class="ds-eyebrow">03 &nbsp;·&nbsp; BIBLIOTECA DE MANUAIS</div>'
+        '<h2>Manuais</h2><p>Da primeira instalação à rotina de trabalho. '
+        'Encontre os manuais e as orientações de cada sistema em um só lugar.</p></div></div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown("**🔵 ORIGINAL / OFICIAL** — documento de referência do Ministério da Saúde.  \n"
+                "**🟢 COMPLETO / PASSO A PASSO** — guia detalhado para acompanhar o uso. "
+                "Guias de rotina ou processamento indicam seu alcance no cartão; alguns também são publicados pelo Ministério.")
+    search, system_filter, category_filter = st.columns([2, 1, 1], gap="medium")
+    with search:
+        query = st.text_input("Buscar manual", placeholder="Ex.: instalação, BPA, equipes…", key="manual_search")
+    with system_filter:
+        system = st.selectbox("Sistema", ["", *MANUAL_SYSTEMS], key="manual_system",
+                              format_func=lambda key: MANUAL_SYSTEMS[key][0] if key else "Todos os sistemas")
+    with category_filter:
+        category = st.selectbox("Assunto", ["", "Instalação", "Operação", "Orientações", "Layouts"],
+                                key="manual_category", format_func=lambda value: value or "Todos os assuntos")
+    manuals = filter_manuals(query, system, category)
+    st.caption(f"{len(manuals)} de {len(load_manuals())} documentos · {len(MANUAL_SYSTEMS)} sistemas · fontes oficiais")
+    if not manuals:
+        st.info("Nenhum manual encontrado. Experimente outra palavra ou amplie os filtros.", icon="🔎")
+        return
+    for system_key, (label, icon) in MANUAL_SYSTEMS.items():
+        group = [manual for manual in manuals if manual["system"] == system_key]
+        if not group:
+            continue
+        st.markdown(
+            f'<div class="ds-manual-group"><h3>{icon} {escape(label)}</h3>'
+            f'<span>{len(group)} documento{"s" if len(group) != 1 else ""}</span></div>', unsafe_allow_html=True,
+        )
+        featured = sorted((manual for manual in group if manual["role"] != "support"),
+                          key=lambda manual: manual["role"] != "original")
+        for start in range(0, len(featured), 2):
+            for column, manual in zip(st.columns(2, gap="medium"), featured[start:start + 2]):
+                with column:
+                    render_manual_card(manual)
+        supporting = [manual for manual in group if manual["role"] == "support"]
+        if supporting:
+            st.caption("Outros documentos: instalação, orientações e layouts")
+            for start in range(0, len(supporting), 3):
+                for column, manual in zip(st.columns(3, gap="medium"), supporting[start:start + 3]):
                     with column:
                         render_manual_card(manual)
-        st.caption("Os documentos têm cópia verificada no portal. Os conteúdos da Wiki Saúde são identificados com a data em que a cópia em PDF foi salva.")
+    st.caption("Todos os manuais têm cópia verificada no portal. PDFs e ZIPs podem ser baixados mesmo quando a fonte oficial está fora do ar. "
+               "Os manuais da Wiki Saúde também têm uma cópia em PDF, com a data em que o conteúdo foi salvo.")
 
 
-def visible_updates(snapshot):
-    return [event for event in recent_updates(merge_updates(snapshot.get("updates", []),
-                    st.session_state.get("forced_live_updates", []))) if event.get("system_key") != "cnes_base"]
-
-
-def update_items(updates):
-    items = []
-    for event in updates:
-        source_note = " · catálogo comunitário" if event.get("catalog_source") == "community" else ""
-        items.append(
-            '<div class="ds-update-item">'
-            f'<strong>{escape(str(event.get("system", "Sistema")))}</strong>'
-            f'<span>{escape(str(event.get("name", "Nova versão")))}{source_note}</span>'
-            f'<time title="Data da descoberta">{escape(update_day(event.get("found_at")))}</time></div>'
+def render_updates_panel(snapshot):
+    left, action = st.columns([2.4, 1], vertical_alignment="center")
+    with left:
+        st.markdown(
+            '<div class="ds-update-heading"><div class="ds-update-icon">✦</div>'
+            '<div><strong>Novidades dos sistemas</strong>'
+            '<span>Atualizações identificadas nos últimos 7 dias.</span></div></div>',
+            unsafe_allow_html=True,
         )
-    return "".join(items)
+    with action:
+        check_now = st.button(
+            "🔄 Verificar todos os sistemas", key="force_catalog_check",
+            type="primary", width="stretch",
+            help="Consulta agora, sem cache, os catálogos oficiais de todos os sistemas.",
+        )
+    if check_now:
+        force_check_all_systems(snapshot.get("systems", {}))
+        # O cabeçalho foi desenhado antes da consulta; relê o horário salvo ao concluir.
+        st.rerun()
 
+    stored = snapshot.get("updates", [])
+    live = st.session_state.get("forced_live_updates", [])
+    updates = [event for event in recent_updates(merge_updates(stored, live))
+               if event.get("system_key") != "cnes_base"]
+    if updates:
+        items = []
+        for event in updates:
+            source_note = " · catálogo comunitário" if event.get("catalog_source") == "community" else ""
+            items.append(
+                '<div class="ds-update-item">'
+                f'<span class="ds-update-system">{escape(str(event.get("system", "Sistema")))}</span>'
+                f'<span class="ds-update-file">{escape(str(event.get("name", "Nova versão")))}{source_note}</span>'
+                f'<span class="ds-update-date">Encontrada em {escape(update_day(event.get("found_at")))}</span>'
+                '</div>'
+            )
+        extra = ""
+        content = f'<div class="ds-update-list">{"".join(items)}</div>{extra}'
+    else:
+        checked_at = st.session_state.get("forced_live_checked_at")
+        if checked_at:
+            message = f"Nenhuma versão nova encontrada na última verificação de {update_day(checked_at)}."
+        else:
+            message = "Nenhuma atualização identificada nos últimos 7 dias. A consulta automática é realizada a cada duas horas."
+        content = f'<div class="ds-update-empty">{escape(message)}</div>'
 
-def render_masthead(snapshot):
-    updated_at = (snapshot.get("last_check") or {}).get("completed_at") or snapshot.get("updated_at")
-    checked = readable_date(updated_at).removesuffix(" (horário de Brasília)")
-    updates = visible_updates(snapshot)
-    news = update_items(updates[:1]) if updates else '<p class="ds-news-empty">Nenhuma nova versão identificada nos últimos 7 dias.</p>'
-    more = f'<span class="ds-news-more">+ {len(updates) - 1} aviso(s) · veja os detalhes abaixo</span>' if len(updates) > 1 else ""
     st.markdown(
-        '<header class="ds-masthead"><div class="ds-masthead-brand">'
-        '<h1>Downloads Sistemas</h1><p>Instaladores, tabelas e manuais dos sistemas do SUS.</p></div>'
-        f'<div class="ds-masthead-check">{ui_icon("clock")}<div><span>Última verificação</span>'
-        f'<strong>{escape(checked)}</strong><small>Horário de Brasília · a cada 2 horas</small></div></div>'
-        f'<div class="ds-masthead-news">{ui_icon("megaphone")}<div>'
-        '<div class="ds-news-heading"><strong>Novidades dos sistemas</strong><span>Avisos por 7 dias</span></div>'
-        f'{news}{more}</div></div></header>', unsafe_allow_html=True,
+        f'<div class="ds-update-panel">{content}</div>',
+        unsafe_allow_html=True,
     )
-    if len(updates) > 1:
-        with st.expander(f"Ver todos os avisos dos últimos 7 dias · {len(updates)}", expanded=False):
-            st.markdown('<div class="ds-update-list">' + update_items(updates) + '</div>', unsafe_allow_html=True)
-
-
-def render_force_check(snapshot):
     checked_at = st.session_state.get("forced_live_checked_at")
     if checked_at:
         st.caption(f"Última verificação manual, sem cache: {readable_date(checked_at)}")
-    with st.container(key="focus_force_check"):
-        if st.button("Verificar todos os sistemas", icon=":material/sync:", key="force_catalog_check",
-                     type="primary", width="stretch", help="Consulta agora todos os catálogos. A atualização automática a cada duas horas continua ativa."):
-            force_check_all_systems(snapshot.get("systems", {}))
-            st.rerun()
 
 
 @st.fragment(run_every="60s")
@@ -769,21 +817,73 @@ if forced_at and automatic_check.get("source") == "automatic" and str(automatic_
         st.session_state.pop(field, None)
 refresh_catalog_when_changed(catalog_revision(snapshot), verification_notice(snapshot))
 systems = snapshot.get("systems", {}) if isinstance(snapshot.get("systems"), dict) else {}
-render_masthead(snapshot)
+updated_at = (snapshot.get("last_check") or {}).get("completed_at") or snapshot.get("updated_at", "ainda não sincronizado")
+readable_updated_at = readable_date(updated_at)
+
+st.markdown(
+    f"""
+    <div class="ds-hero">
+        <div class="ds-hero-copy">
+            <div class="ds-brandline">
+                <span class="ds-brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg></span>
+                <div class="ds-eyebrow">SISTEMAS DE INFORMAÇÃO DO SUS</div>
+            </div>
+            <h1>Downloads Sistemas</h1>
+            <p>Instaladores, atualizações e tabelas para a rotina dos sistemas do SUS.
+            Encontre o arquivo que precisa e acompanhe os últimos lançamentos.</p>
+        </div>
+        <div class="ds-hero-meta">
+            <strong><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Última verificação</strong>
+            <span>{escape(readable_updated_at.removesuffix(" (horário de Brasília)"))}</span>
+            <em class="ds-meta-zone">Horário de Brasília</em>
+            <small>Verificação programada a cada 2 horas</small>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
 notice = verification_notice(snapshot)
 if notice:
     st.warning(notice)
 
-render_force_check(snapshot)
-programs_tab, tables_tab, manuals_tab = st.tabs(["Programas e instaladores", "Tabelas e bases", "Manuais"])
+st.markdown(
+    f'<div class="ds-overview">'
+    f'<div class="ds-overview-item"><div class="ds-overview-number">{len(SYSTEM_META)}</div><div><strong>Pacotes acompanhados</strong><span>Instaladores, atualizações e tabelas</span></div></div>'
+    '<div class="ds-overview-item"><div class="ds-overview-number">2h</div><div><strong>Consulta automática</strong><span>Inclui 06:50, no horário de Brasília</span></div></div>'
+    '<div class="ds-overview-item"><div class="ds-overview-number">7d</div><div><strong>Novidades em destaque</strong><span>Avisos disponíveis por sete dias</span></div></div>'
+    '</div>', unsafe_allow_html=True,
+)
+
+with st.container(border=True, key="updates_panel"):
+    render_updates_panel(snapshot)
+
+st.markdown(
+    '<div class="ds-download-tip"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>'
+    '<p><strong>Arquivos com cópia verificada</strong> continuam disponíveis para download mesmo quando o portal de origem está indisponível.</p></div>',
+    unsafe_allow_html=True,
+)
+
+programs_tab, tables_tab, manuals_tab = st.tabs(["Programas e instaladores", "Tabelas e bases", "MANUAIS"])
+
 with programs_tab:
-    render_programs(systems)
+    st.markdown(
+        '<div class="ds-section"><div class="ds-eyebrow">01 &nbsp;·&nbsp; APLICATIVOS</div>'
+        '<h2>Instaladores</h2><p>Programas e atualizações para processamento das informações do SUS.</p></div>',
+        unsafe_allow_html=True,
+    )
+    st.info("**SCNES:** use **completo** para uma nova instalação ou **atualização** se já tiver o sistema; o Firebird é necessário. **FPO:** faça a instalação inicial e depois aplique a atualização mais recente.", icon="ℹ️")
+    render_grid(SINGLE_VERSION_SYSTEMS, systems, render_single_version_card)
+
 with tables_tab:
-    render_tables(systems)
+    st.markdown(
+        '<div class="ds-section"><div class="ds-eyebrow">02 &nbsp;·&nbsp; COMPETÊNCIAS</div>'
+        '<h2>Tabelas e bases</h2><p>Selecione o mês que você precisa e baixe o pacote correspondente.</p></div>',
+        unsafe_allow_html=True,
+    )
+    render_grid(COMPETENCE_SYSTEMS, systems, render_competence_card)
+
 with manuals_tab:
     render_manuals()
 
-st.markdown('<footer class="ds-footer"><strong>Downloads Sistemas</strong>'
-            '<span>Central de acesso aos arquivos dos sistemas de informação do SUS</span>'
-            '<span>Consulta programada a cada 2 horas, incluindo 06:50 · Horário de Brasília</span></footer>',
-            unsafe_allow_html=True)
+st.markdown('<div class="ds-footer">Downloads Sistemas · Central de acesso a arquivos dos sistemas de informação do SUS</div>', unsafe_allow_html=True)
