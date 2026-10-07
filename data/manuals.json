@@ -48,22 +48,6 @@
     "copied_at": "2026-10-07T00:18:38.931001+00:00"
   },
   {
-    "id": "apac-oncologia",
-    "system": "apac",
-    "title": "Manual de bases técnicas da oncologia",
-    "category": "Orientações",
-    "description": "30ª edição, agosto de 2022. Referência para os registros de procedimentos oncológicos.",
-    "format": "PDF",
-    "name": "Manual_Oncologia_30a_edicao_Agosto_2022_25_08_2022_26_08_2022.pdf",
-    "url": "ftp://arpoador.datasus.gov.br/siasus/Documentos/APAC/Manual_Oncologia_30a_edicao_Agosto_2022_25_08_2022_26_08_2022.pdf",
-    "source_page": "https://sia.datasus.gov.br/documentos/listar_ftp_apac.php",
-    "publication_date": "2022-09-13",
-    "file": "apac-oncologia.pdf",
-    "size": 1840333,
-    "sha256": "2ad5f8e94dff85803eff03cf926d0c65494b1a9247b079cf0d1b18488c9244b0",
-    "copied_at": "2026-10-07T00:18:39.702992+00:00"
-  },
-  {
     "id": "apac-layout",
     "system": "apac",
     "title": "Layout de exportação da APAC",
