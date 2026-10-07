@@ -98,7 +98,7 @@ CUSTOM_CSS = """
 <style>
 :root { --ds-ink:#172f3d; --ds-muted:#243b48; --ds-green:#087568; --ds-line:#dce5e9; }
 .stApp { background:#f3f6f8; color:var(--ds-ink); }
-.block-container { max-width:1440px; padding-top:1.6rem; padding-bottom:3rem; }
+.block-container { max-width:none; width:100%; padding:1.6rem 2rem 3rem; }
 .ds-hero { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:2rem;
     position:relative; overflow:hidden; padding:1.9rem 2.1rem; margin-bottom:1rem;
     background:#132f3b; border:1px solid #234550; border-radius:22px; color:#fff;
