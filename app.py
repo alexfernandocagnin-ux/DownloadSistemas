@@ -182,6 +182,10 @@ def badge(kind, text):
     st.markdown(f'<span class="ds-badge {css_class}">{escape(text)}</span>', unsafe_allow_html=True)
 
 
+def readable_size(size):
+    return f"{size / 1_000_000:.1f} MB" if size >= 1_000_000 else f"{size / 1_000:.1f} KB"
+
+
 def render_loading_card(placeholder, message):
     placeholder.markdown(
         f'<div class="ds-loading-card" role="status" aria-live="polite">'
@@ -328,9 +332,9 @@ def render_download_button(system_key, name, url, mirror, manual=None):
             st.link_button(f"Baixar na fonte oficial: {name}", url, width="stretch")
         return
     if manual:
-        st.caption(f'{manual["size"] / 1_000_000:.1f} MB · arquivo conferido')
+        st.caption(f'{readable_size(manual["size"])} · arquivo conferido')
     elif system_key in COMPETENCE_SYSTEMS and mirror and mirror.get("size"):
-        st.caption(f'{mirror["size"] / 1_000_000:.1f} MB · arquivo conferido')
+        st.caption(f'{readable_size(mirror["size"])} · arquivo conferido')
 
     state_key = f"official_download_{system_key}"
     cached = st.session_state.get(state_key)
@@ -417,7 +421,7 @@ def render_file_details(release, mirror=None):
     name = str(release.get("name") or "")
     mirror = matching_mirror(name, mirror)
     size = (mirror or {}).get("size") or release.get("size")
-    size_text = f"{size / 1_000_000:.1f} MB" if isinstance(size, (int, float)) and size > 0 else "Não informado"
+    size_text = readable_size(size) if isinstance(size, (int, float)) and size > 0 else "Não informado"
     date = release.get("release_date")
     date_text = update_day(date) if date else "Não informada pela fonte"
     st.markdown(
