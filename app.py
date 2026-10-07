@@ -296,7 +296,11 @@ def cached_mirror_probe(name, mirror):
     return probe_mirror(name, mirror)
 
 
-def prepare_download(system_key, name, url, mirror, on_progress=None):
+def prepare_download(system_key, name, url, mirror, on_progress=None, manual_id=None):
+    if manual_id:
+        if on_progress:
+            on_progress("Conferindo a cópia do manual salva no portal.")
+        return {"data": cached_manual_download(manual_id)}, "Cópia do manual verificada no portal", False
     mirror_error = False
     if matching_mirror(name, mirror):
         if on_progress:
@@ -466,9 +470,9 @@ def force_check_all_systems(snapshot_systems):
         st.info(f"Encontramos {len(events)} atualização(ões) desde o último catálogo. Elas já aparecem no painel de novidades abaixo.")
 
 
-def render_download_button(system_key, name, url, mirror):
+def render_download_button(system_key, name, url, mirror, manual=None):
     mirror = matching_mirror(name, mirror)
-    if mirror and mirror.get("verified_at"):
+    if manual or (mirror and mirror.get("verified_at")):
         badge("ok", "Download disponível · cópia verificada")
     elif mirror:
         badge("warn", "Cópia disponível · validação ao preparar")
@@ -479,16 +483,18 @@ def render_download_button(system_key, name, url, mirror):
         if cnes_portal.safe_url(url, name):
             st.link_button(f"Baixar na fonte oficial: {name}", url, width="stretch")
         return
-    if mirror and mirror.get("size"):
+    if manual:
+        st.caption(f'{manual["size"] / 1_000_000:.1f} MB · arquivo conferido')
+    elif mirror and mirror.get("size"):
         st.caption(f'{mirror["size"] / 1_000_000:.1f} MB · arquivo conferido')
 
     state_key = f"official_download_{system_key}"
     cached = st.session_state.get(state_key)
-    identity = (name, url, (mirror or {}).get("asset_url"), (mirror or {}).get("sha256"))
+    identity = (name, url, (mirror or {}).get("asset_url"), (manual or mirror or {}).get("sha256"))
     if cached and cached.get("identity") != identity:
         st.session_state.pop(state_key, None)
         cached = None
-    action = {"fpo_update": "atualização FPO", "fpo_installer": "instalador base FPO"}.get(system_key.removesuffix("_backup"), "arquivo")
+    action = "manual" if manual else {"fpo_update": "atualização FPO", "fpo_installer": "instalador base FPO"}.get(system_key.removesuffix("_backup"), "arquivo")
     if not cached and st.button(f"Preparar {action} para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary"):
         loading = st.empty()
         render_loading_card(loading, "Iniciando a verificação do arquivo.")
@@ -496,6 +502,7 @@ def render_download_button(system_key, name, url, mirror):
             data, source, fallback = prepare_download(
                 system_key.removesuffix("_backup"), name, url, mirror,
                 on_progress=lambda message: render_loading_card(loading, message),
+                manual_id=manual["id"] if manual else None,
             )
             loading.empty()
             # Mantém apenas um arquivo preparado por sessão.
@@ -518,7 +525,7 @@ def render_download_button(system_key, name, url, mirror):
                 st.link_button(f"⬇️ Baixar {action}: {name}", cached["url"], width="stretch", type="primary")
             else:
                 st.download_button(f"⬇️ Baixar {action}: {name}", data=cached["data"], file_name=name,
-                                   mime="application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
+                                   mime="application/pdf" if name.lower().endswith(".pdf") else "application/zip" if name.lower().endswith(".zip") else "application/octet-stream",
                                    width="stretch", key=f"dl_{system_key}_{name}", on_click="ignore", type="primary")
 
 
@@ -663,34 +670,14 @@ def render_manual_card(manual):
             f'<p class="ds-manual-description">{escape(manual["description"])}</p>',
             unsafe_allow_html=True,
         )
-        if manual["format"] == "Online":
-            st.link_button("Ler manual online ↗", manual["url"], type="primary", width="stretch")
-            st.caption("Documentação oficial · leitura no navegador")
-            return
         publication_date = manual.get("publication_date")
-        st.caption(f"Data na fonte: {update_day(publication_date)}" if publication_date else "Data não informada na fonte")
-        ready = st.session_state.setdefault("prepared_manual_ids", set())
-        action = st.empty()
-        if manual_id in ready or action.button(
-            f"Preparar {manual['format']} ↓", key=f"prepare_manual_{manual_id}",
-            type="primary", width="stretch",
-        ):
-            try:
-                if manual_id in ready:
-                    data = cached_manual_download(manual_id)
-                else:
-                    with st.spinner("Buscando o documento oficial…"):
-                        data = cached_manual_download(manual_id)
-                ready.add(manual_id)
-                action.download_button(
-                    f"Baixar {manual['format']} ↓", data, file_name=manual["name"],
-                    mime="application/pdf" if manual["format"] == "PDF" else "application/zip",
-                    key=f"download_manual_{manual_id}", type="primary", width="stretch", on_click="ignore",
-                )
-            except (OSError, ValueError):
-                ready.discard(manual_id)
-                st.warning("Não foi possível preparar o documento. Tente novamente ou consulte a fonte abaixo.")
-        st.link_button("Consultar fonte oficial ↗", manual["source_page"], width="stretch")
+        if manual.get("source_format") == "Online":
+            st.caption(f"Wiki Saúde · cópia em PDF de {update_day(manual['copied_at'])}")
+        else:
+            st.caption(f"Data na fonte: {update_day(publication_date)}" if publication_date else "Data não informada na fonte")
+        render_download_button(f"manual_{manual_id}", manual["name"], manual["url"], None, manual=manual)
+        st.link_button("Ler na Wiki Saúde ↗" if manual.get("source_format") == "Online" else "Consultar fonte oficial ↗",
+                       manual["source_page"], width="stretch")
 
 
 @st.fragment
@@ -731,8 +718,8 @@ def render_manuals():
             for column, manual in zip(st.columns(3, gap="medium"), group[start:start + 3]):
                 with column:
                     render_manual_card(manual)
-    st.caption("As datas são as informadas pelas fontes. Os PDFs e ZIPs são obtidos ao preparar o download; "
-               "a disponibilidade depende do portal oficial. Para orientações complementares, consulte também as Wikis Saúde.")
+    st.caption("Todos os manuais têm cópia verificada no portal. PDFs e ZIPs podem ser baixados mesmo quando a fonte oficial está fora do ar. "
+               "Os manuais da Wiki Saúde também têm uma cópia em PDF, com a data em que o conteúdo foi salvo.")
 
 
 def render_updates_panel(snapshot):

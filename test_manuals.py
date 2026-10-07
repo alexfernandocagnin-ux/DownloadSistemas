@@ -1,7 +1,8 @@
-"""Verificações da busca e dos downloads da biblioteca oficial."""
-import io
+"""Busca e entrega das cópias locais verificadas dos manuais."""
+import hashlib
+import tempfile
 import unittest
-import zipfile
+from pathlib import Path
 from unittest.mock import patch
 
 from catalogs import manuals
@@ -16,30 +17,34 @@ class ManualTests(unittest.TestCase):
         self.assertTrue(all(item["system"] == "cnes" and item["category"] == "Instalação" for item in result))
         self.assertEqual(manuals.filter_manuals("inexistente"), [])
 
-    def test_only_valid_pdf_or_zip_is_delivered(self):
-        pdf = b"%PDF-1.4\nmanual\n%%EOF\n"
-        with patch.object(manuals, "download_via_ftp", return_value=pdf) as download:
-            self.assertEqual(manuals.download_manual("bpa-operacao"), pdf)
-            self.assertEqual(download.call_args.args[:2], ("arpoador.datasus.gov.br", "/siasus/Documentos/BPA"))
-        for payload in (b"<html>erro</html>", b"%PDF-1.4\ntruncated"):
-            with patch.object(manuals, "download_via_ftp", return_value=payload), self.assertRaises(ValueError):
-                manuals.download_manual("bpa-operacao")
-        output = io.BytesIO()
-        with zipfile.ZipFile(output, "w") as archive:
-            archive.writestr("manual.pdf", pdf)
-        with patch.object(manuals, "download_via_http", return_value=output.getvalue()):
-            self.assertEqual(manuals.download_manual("cnes-instalacao"), output.getvalue())
-        with patch.object(manuals, "download_via_http", return_value=b"PKtruncated"), self.assertRaises(ValueError):
-            manuals.download_manual("cnes-instalacao")
+    def test_every_manual_downloads_with_the_official_servers_offline(self):
+        with patch("catalogs._common.urlopen", side_effect=AssertionError("network access")), \
+             patch("catalogs._common.FTP", side_effect=AssertionError("FTP access")):
+            for manual in manuals.MANUALS:
+                with self.subTest(manual=manual["id"]):
+                    self.assertIn(manual["format"], ("PDF", "ZIP"))
+                    package = manuals.download_manual(manual["id"])
+                    self.assertEqual(len(package), manual["size"])
+                    self.assertEqual(hashlib.sha256(package).hexdigest(), manual["sha256"])
 
-    def test_foreign_download_host_is_rejected_before_network_access(self):
-        entry = {**manuals.MANUALS[0], "url": "ftp://example.com/siasus/Documentos/BPA/Manual_Operacional_BPA.pdf"}
-        with patch.object(manuals, "MANUALS", [entry]), patch.object(manuals, "download_via_ftp") as download:
+    def test_missing_corrupt_and_unsafe_copies_are_not_delivered(self):
+        pdf = b"%PDF-1.4\nmanual\n%%EOF\n"
+        entry = {**manuals.MANUALS[0], "file": "manual.pdf", "size": len(pdf),
+                 "sha256": hashlib.sha256(pdf).hexdigest()}
+        with tempfile.TemporaryDirectory() as directory, patch.object(manuals, "MANUALS_DIR", Path(directory)), \
+             patch.object(manuals, "MANUALS", [entry]):
+            with self.assertRaises(OSError):
+                manuals.download_manual(entry["id"])
+            Path(directory, "manual.pdf").write_bytes(pdf)
+            self.assertEqual(manuals.download_manual(entry["id"]), pdf)
+            Path(directory, "manual.pdf").write_bytes(pdf.replace(b"manual", b"broken"))
             with self.assertRaises(ValueError):
                 manuals.download_manual(entry["id"])
-            download.assert_not_called()
+            entry["file"] = "../outside.pdf"
+            with self.assertRaises(ValueError):
+                manuals.download_manual(entry["id"])
         with self.assertRaises(ValueError):
-            manuals.download_manual("ciha02-operacao")
+            manuals.download_manual("missing-manual")
 
 
 if __name__ == "__main__":

@@ -1,14 +1,13 @@
-"""Biblioteca de documentação oficial; downloads são preparados sob demanda."""
+"""Biblioteca de documentação oficial com cópias locais verificadas."""
 
 from __future__ import annotations
 
 import json
+import hashlib
 import unicodedata
 from pathlib import Path
-from urllib.parse import unquote, urlsplit
 
-from catalogs._common import download_via_ftp, download_via_http, looks_like_zip, safe_official_url
-from catalogs.cnes_portal import safe_url as safe_cnes_url
+from catalogs._common import looks_like_zip
 
 MANUALS = json.loads((Path(__file__).parent.parent / "data" / "manuals.json").read_text(encoding="utf-8"))
 SYSTEMS = {
@@ -22,10 +21,7 @@ SYSTEMS = {
     "sigtap": ("SIGTAP", "💊"),
 }
 MAX_MANUAL_SIZE = 50_000_000
-FTP_DIRECTORIES = {
-    "arpoador.datasus.gov.br": "/siasus/Documentos/",
-    "ftp2.datasus.gov.br": "/public/sistemas/dsweb/SIHD/Manuais/",
-}
+MANUALS_DIR = Path(__file__).parent.parent / "static" / "manuals"
 
 
 def search_text(value: str) -> str:
@@ -44,23 +40,18 @@ def filter_manuals(query="", system="", category=""):
 
 
 def download_manual(manual_id: str) -> bytes:
-    manual = next(item for item in MANUALS if item["id"] == manual_id)
-    if manual["format"] == "Online":
-        raise ValueError("Este manual está disponível para leitura online.")
-    name, url = manual["name"], manual["url"]
-    parsed = urlsplit(url)
-    if parsed.scheme == "ftp" and safe_official_url(
-        url, name, ftp_hosts=frozenset(FTP_DIRECTORIES),
-        ftp_path_prefix=FTP_DIRECTORIES.get(parsed.hostname, ""),
-    ):
-        package = download_via_ftp(parsed.hostname, unquote(parsed.path.rsplit("/", 1)[0]), name,
-                                   max_size=MAX_MANUAL_SIZE, timeout=15, max_seconds=60)
-    elif safe_cnes_url(url, name):
-        package = download_via_http(url, name, max_size=MAX_MANUAL_SIZE, timeout=15, max_seconds=60)
-    else:
-        raise ValueError("O documento não possui um endereço oficial permitido.")
-    if len(package) > MAX_MANUAL_SIZE:
+    manual = next((item for item in MANUALS if item["id"] == manual_id), None)
+    if not manual:
+        raise ValueError("Manual não encontrado.")
+    filename = manual.get("file", "")
+    if not filename or Path(filename).name != filename or "/" in filename or "\\" in filename:
+        raise ValueError("Cópia de manual inválida.")
+    target = MANUALS_DIR / filename
+    if target.stat().st_size > MAX_MANUAL_SIZE:
         raise ValueError("O documento excedeu o limite de tamanho.")
+    package = target.read_bytes()
+    if len(package) != manual["size"] or hashlib.sha256(package).hexdigest() != manual["sha256"]:
+        raise ValueError("A integridade da cópia do manual não foi confirmada.")
     if manual["format"] == "PDF":
         valid = package.startswith(b"%PDF-") and b"%%EOF" in package[-1024:]
     else:

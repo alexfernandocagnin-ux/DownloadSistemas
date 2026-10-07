@@ -299,7 +299,7 @@ class PortalTests(unittest.TestCase):
         self.assertIn("FPO · instalador base", rendered)
         self.assertIn("FPO Magnético · atualização atual", rendered)
 
-    def test_manual_filters_download_and_source_failure(self):
+    def test_manual_filters_and_shared_system_download_flow(self):
         pdf = b"%PDF-1.4\nverified manual\n%%EOF"
         with patch("catalogs.manuals.download_manual", return_value=pdf) as download:
             app = self.app().run()
@@ -310,17 +310,18 @@ class PortalTests(unittest.TestCase):
             self.assertIn("Layout de exportação do BPA", rendered)
             self.assertNotIn("Manual operacional do BPA", rendered)
             self.assertNotIn("Manual operacional da APAC", rendered)
-            app.button(key="prepare_manual_bpa-layout").click().run()
+            app.button(key="prep_manual_bpa-layout_Layout_Exportacao_BPA.pdf").click().run()
             self.assertFalse(app.exception)
             download.assert_called_once_with("bpa-layout")
-            self.assertTrue(any(button.proto.label == "Baixar PDF ↓" for button in app.get("download_button")))
+            self.assertTrue(any("Baixar manual:" in button.proto.label for button in app.get("download_button")))
+            self.assertEqual(app.session_state["official_download_manual_bpa-layout"]["data"], pdf)
             app.text_input(key="manual_search").input("nada-encontrado").run()
             self.assertTrue(any("Nenhum manual encontrado" in item.value for item in app.info))
         app = self.app().run()
         with patch("catalogs.manuals.download_manual", side_effect=OSError("offline")):
-            app.button(key="prepare_manual_bpa-operacao").click().run()
+            app.button(key="prep_manual_bpa-operacao_Manual_Operacional_BPA.pdf").click().run()
         self.assertFalse(app.exception)
-        self.assertTrue(any("Não foi possível preparar o documento" in item.value for item in app.warning))
+        self.assertTrue(any("O arquivo não está disponível agora" in item.value for item in app.error))
 
     def test_manual_discovery_survives_a_new_session_and_is_not_announced_twice(self):
         path = Path(__file__).parent / "data" / "catalog.json"
