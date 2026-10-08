@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from ftplib import Error as FTPError
+from urllib.parse import unquote, urlsplit
 
 from catalogs._common import (
     download_release as _download_release, fetch_ftp_names, fetch_index_entries, resolve_href, safe_official_url,
@@ -30,34 +31,33 @@ def safe_url(url: str, name: str) -> bool:
 def _entries_from_index() -> list[dict[str, object]]:
     entries = []
     for item in fetch_index_entries(INDEX_URL):
-        href_url = resolve_href(INDEX_URL, str(item["url"]))
-        name = item.get("name") or href_url.rsplit("/", 1)[-1]
+        try:
+            href_url = resolve_href(INDEX_URL, str(item["url"]))
+            name = unquote(urlsplit(href_url).path.rsplit("/", 1)[-1])
+        except ValueError:
+            continue
         entries.append({"name": name, "url": href_url, "size": item.get("size"),
                         "release_date": item.get("release_date")})
     return entries
 
 
 def _entries_from_ftp() -> list[dict[str, object]]:
-    names = []
+    last_error = None
     for host in sorted(FTP_HOSTS):
         try:
             names = fetch_ftp_names(host, FTP_DIRECTORY)
-            break
-        except (OSError, FTPError):
+        except (OSError, FTPError) as exc:
+            last_error = exc
             continue
-    else:
-        raise OSError("Nenhum servidor FTP oficial do BPA respondeu.")
-    return [{"name": name, "url": f"ftp://{host}{FTP_DIRECTORY}/{name}", "size": None} for name in names]
+        entries = [{"name": name, "url": f"ftp://{host}{FTP_DIRECTORY}/{name}", "size": None} for name in names]
+        if _matching_releases(entries):
+            return entries
+    if last_error is not None:
+        raise OSError("Não foi possível obter instaladores oficiais do BPA pelos servidores FTP.") from last_error
+    return []
 
 
-def fetch_bpa_catalog() -> list[dict[str, object]]:
-    """Instalador do BPA Magnético (versão única), mais recente primeiro."""
-    try:
-        entries = _entries_from_index()
-        if not any(BPA_PATTERN.fullmatch(str(entry.get("name", ""))) for entry in entries):
-            raise ValueError("A página não entregou instaladores BPA.")
-    except (OSError, ValueError):
-        entries = _entries_from_ftp()
+def _matching_releases(entries: list[dict[str, object]]) -> list[dict[str, object]]:
     releases = []
     for entry in entries:
         name = entry.get("name")
@@ -67,6 +67,17 @@ def fetch_bpa_catalog() -> list[dict[str, object]]:
             continue
         releases.append({"name": name, "url": url, "size": entry.get("size"), "version": match.group(1),
                          "release_date": entry.get("release_date")})
+    return releases
+
+
+def fetch_bpa_catalog() -> list[dict[str, object]]:
+    """Instalador do BPA Magnético (versão única), mais recente primeiro."""
+    try:
+        releases = _matching_releases(_entries_from_index())
+    except (OSError, ValueError):
+        releases = []
+    if not releases:
+        releases = _matching_releases(_entries_from_ftp())
     if not releases:
         raise ValueError("Nenhum instalador do BPA Magnético foi encontrado.")
     return sorted(releases, key=lambda item: item["version"], reverse=True)

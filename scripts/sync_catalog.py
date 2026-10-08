@@ -222,7 +222,13 @@ def failed(previous, config, checked_at, exc):
         result["last_success_at"] = previous.get("checked_at") if previous.get("official_reachable") else None
     result.update(official_reachable=False, checked_at=checked_at, catalog_attempt_at=checked_at,
                   catalog_check_error=type(exc).__name__, error=type(exc).__name__)
-    print(f'::warning::{config["label"]}: falha na consulta, download ou publicação ({type(exc).__name__}); cópia anterior preservada.')
+    causes = []
+    cause = exc
+    while cause is not None and len(causes) < 3:
+        causes.append(f"{type(cause).__name__}: {' '.join(str(cause).split())[:180]}")
+        cause = cause.__cause__
+    detail = " <- ".join(causes).replace("%", "%25")
+    print(f'::warning::{config["label"]}: falha ao consultar a fonte oficial ({detail}); cópia anterior preservada.')
     return result
 
 

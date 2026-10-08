@@ -80,10 +80,11 @@ class CommonCatalogTests(unittest.TestCase):
         self.assertEqual(entries[0]["release_date"], "2026-07-09")
 
     def test_index_does_not_fall_back_to_http_for_timeout(self):
-        with patch("catalogs._common.urlopen", side_effect=URLError(TimeoutError("timed out"))) as urlopen:
+        with patch("catalogs._common.sleep"), patch("catalogs._common.urlopen", side_effect=URLError(TimeoutError("timed out"))) as urlopen:
             with self.assertRaises(URLError):
                 _common.fetch_index_entries("https://sia.datasus.gov.br/versao/listar_ftp_bpa.php")
-        urlopen.assert_called_once()
+        self.assertEqual(urlopen.call_count, 2)
+        self.assertTrue(all(call.args[0].full_url.startswith("https://") for call in urlopen.call_args_list))
 
 
 class SiaPortalTests(unittest.TestCase):
@@ -147,7 +148,7 @@ class FpoPortalTests(unittest.TestCase):
         ):
             updates = fpo_portal.fetch_fpo_update_catalog()
         self.assertEqual([item["name"] for item in updates], ["FPOMAG_Atualiza_0302.exe"])
-        self.assertEqual(updates[0]["url"], "ftp://arpoador.datasus.gov.br/siasus/FPO/FPOMAG_Atualiza_0302.exe")
+        self.assertEqual(updates[0]["url"], "ftp://arpoador.datasus.gov.br/siasus/fpo/FPOMAG_Atualiza_0302.exe")
 
 
 class BpaPortalTests(unittest.TestCase):

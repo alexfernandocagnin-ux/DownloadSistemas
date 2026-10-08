@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 from ftplib import Error as FTPError
+from urllib.parse import unquote, urlsplit
 
 from catalogs._common import (
     download_release as _download_release, fetch_ftp_names, fetch_index_entries, resolve_href, safe_official_url,
@@ -17,7 +18,7 @@ from catalogs._common import (
 HTTPS_HOST = "sia.datasus.gov.br"
 FTP_HOSTS = frozenset({"ftp.datasus.gov.br", "arpoador.datasus.gov.br"})
 FTP_PATH_PREFIX = "/siasus/sia/"
-FTP_DIRECTORY = "/siasus/SIA"
+FTP_DIRECTORY = "/siasus/sia"
 INDEX_URL = f"https://{HTTPS_HOST}/versao/listar_ftp_sia.php"
 
 BDSIA_PATTERN = re.compile(r"BDSIA(20\d{2})(0[1-9]|1[0-2])([a-z])\.exe", re.IGNORECASE)
@@ -35,31 +36,40 @@ def _entries_from_index() -> list[dict[str, object]]:
     """Read every filename+link on the shared SIA download index page."""
     entries = []
     for item in fetch_index_entries(INDEX_URL):
-        href_url = resolve_href(INDEX_URL, str(item["url"]))
-        name = item.get("name") or href_url.rsplit("/", 1)[-1]
+        try:
+            href_url = resolve_href(INDEX_URL, str(item["url"]))
+            name = unquote(urlsplit(href_url).path.rsplit("/", 1)[-1])
+        except ValueError:
+            continue
         entries.append({"name": name, "url": href_url, "size": item.get("size"),
                         "release_date": item.get("release_date")})
     return entries
 
 
-def _entries_from_ftp() -> list[dict[str, object]]:
-    names = []
+def _entries_from_ftp(pattern: re.Pattern[str]) -> list[dict[str, object]]:
+    last_error = None
     for host in sorted(FTP_HOSTS):
         try:
             names = fetch_ftp_names(host, FTP_DIRECTORY)
-            break
-        except (OSError, FTPError):
+        except (OSError, FTPError) as exc:
+            last_error = exc
             continue
-    else:
-        raise OSError("Nenhum servidor FTP oficial do SIA respondeu.")
-    return [{"name": name, "url": f"ftp://{host}{FTP_DIRECTORY}/{name}", "size": None} for name in names]
+        entries = [{"name": name, "url": f"ftp://{host}{FTP_DIRECTORY}/{name}", "size": None} for name in names]
+        if _filter_and_validate(entries, pattern):
+            return entries
+    if last_error is not None:
+        raise OSError("Não foi possível obter arquivos oficiais do SIA pelos servidores FTP.") from last_error
+    return []
 
 
-def _fetch_raw_entries() -> list[dict[str, object]]:
+def _fetch_raw_entries(pattern: re.Pattern[str]) -> list[dict[str, object]]:
     try:
-        return _entries_from_index()
+        entries = _entries_from_index()
+        if _filter_and_validate(entries, pattern):
+            return entries
     except (OSError, ValueError):
-        return _entries_from_ftp()
+        pass
+    return _entries_from_ftp(pattern)
 
 
 def _filter_and_validate(
@@ -79,9 +89,7 @@ def _filter_and_validate(
 
 def fetch_bdsia_catalog() -> list[dict[str, object]]:
     """Pacotes mensais BDSIA, mais recentes primeiro."""
-    releases = _filter_and_validate(_fetch_raw_entries(), BDSIA_PATTERN)
-    if not releases:
-        releases = _filter_and_validate(_entries_from_ftp(), BDSIA_PATTERN)
+    releases = _filter_and_validate(_fetch_raw_entries(BDSIA_PATTERN), BDSIA_PATTERN)
     if not releases:
         raise ValueError("Nenhum pacote BDSIA oficial foi encontrado.")
     result = [
@@ -98,9 +106,7 @@ def fetch_bdsia_catalog() -> list[dict[str, object]]:
 
 def fetch_sia_catalog() -> list[dict[str, object]]:
     """Instalador do SIA (versão única, sem competência), mais recente primeiro."""
-    releases = _filter_and_validate(_fetch_raw_entries(), SIA_PATTERN)
-    if not releases:
-        releases = _filter_and_validate(_entries_from_ftp(), SIA_PATTERN)
+    releases = _filter_and_validate(_fetch_raw_entries(SIA_PATTERN), SIA_PATTERN)
     if not releases:
         raise ValueError("Nenhum instalador do SIA foi encontrado.")
     result = [

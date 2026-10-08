@@ -1,6 +1,7 @@
 """Instalador do APAC Magnético na listagem oficial do SIA."""
 
 import re
+from urllib.parse import unquote, urlsplit
 
 from catalogs._common import (
     download_release as _download_release, fetch_ftp_names, fetch_index_entries,
@@ -18,29 +19,40 @@ def safe_url(url, name):
                              ftp_hosts=FTP_HOSTS, ftp_path_prefix=FTP_DIRECTORY + "/")
 
 
+def _matching_releases(entries):
+    releases = []
+    for entry in entries:
+        try:
+            url = resolve_href(INDEX_URL, str(entry.get("url", "")))
+            name = unquote(urlsplit(url).path.rsplit("/", 1)[-1])
+        except ValueError:
+            continue
+        match = FILE_PATTERN.fullmatch(name)
+        if match and safe_url(url, name):
+            releases.append({"name": name, "url": url, "size": entry.get("size"),
+                             "version": match.group(1), "release_date": entry.get("release_date")})
+    return releases
+
+
 def fetch_apac_catalog():
     try:
-        entries = fetch_index_entries(INDEX_URL)
-        if not any(FILE_PATTERN.fullmatch(str(entry.get("name", ""))) for entry in entries):
-            raise ValueError("A página não entregou instaladores APAC.")
+        releases = _matching_releases(fetch_index_entries(INDEX_URL))
     except (OSError, ValueError):
+        releases = []
+    if not releases:
+        last_error = None
         for host in sorted(FTP_HOSTS):
             try:
                 entries = [{"name": name, "url": f"ftp://{host}{FTP_DIRECTORY}/{name}"}
                            for name in fetch_ftp_names(host, FTP_DIRECTORY)]
-                break
-            except OSError:
+            except OSError as exc:
+                last_error = exc
                 continue
-        else:
-            raise OSError("Nenhuma fonte oficial do APAC respondeu.")
-    releases = []
-    for entry in entries:
-        name = str(entry.get("name", ""))
-        match = FILE_PATTERN.fullmatch(name)
-        url = resolve_href(INDEX_URL, str(entry["url"]))
-        if match and safe_url(url, name):
-            releases.append({"name": name, "url": url, "size": entry.get("size"),
-                             "version": match.group(1), "release_date": entry.get("release_date")})
+            releases = _matching_releases(entries)
+            if releases:
+                break
+        if not releases and last_error is not None:
+            raise OSError("Não foi possível obter instaladores oficiais do APAC pelos servidores FTP.") from last_error
     if not releases:
         raise ValueError("Nenhum instalador oficial do APAC foi encontrado.")
     return sorted(releases, key=lambda item: item["version"], reverse=True)

@@ -7,13 +7,13 @@ import io
 import zipfile
 import zlib
 import ssl
-from time import monotonic
+from time import monotonic, sleep
 import unicodedata
 from datetime import date
 from ftplib import FTP, Error as FTPError
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.parse import unquote, urljoin, urlsplit
 from urllib.request import Request, urlopen
 
@@ -139,12 +139,32 @@ def fetch_index_links(url: str, *, timeout: int = 15, max_bytes: int = 2_000_000
     return parser.links
 
 
+def _read_index_document(url: str, *, timeout: int, max_bytes: int) -> bytes:
+    """Retry a temporary index failure once, without relaxing TLS validation."""
+    request = Request(url, headers={"User-Agent": USER_AGENT})
+    for attempt in range(2):
+        try:
+            with urlopen(request, timeout=timeout) as response:
+                document = response.read(max_bytes + 1)
+            if len(document) > max_bytes:
+                raise ValueError(f"A página {url} excedeu o tamanho esperado.")
+            return document
+        except OSError as exc:
+            reason = getattr(exc, "reason", exc)
+            permanent = (
+                isinstance(reason, ssl.SSLCertVerificationError)
+                or isinstance(exc, HTTPError) and exc.code not in {408, 429, 500, 502, 503, 504}
+            )
+            if attempt or permanent:
+                raise
+            sleep(1)
+    raise AssertionError("Tentativas de leitura esgotadas.")
+
+
 def fetch_index_entries(url: str, *, timeout: int = 15, max_bytes: int = 2_000_000) -> list[dict[str, object]]:
     """Read file rows, retaining a publication date when the official page lists one."""
-    request = Request(url, headers={"User-Agent": USER_AGENT})
     try:
-        with urlopen(request, timeout=timeout) as response:
-            document = response.read(max_bytes + 1)
+        document = _read_index_document(url, timeout=timeout, max_bytes=max_bytes)
     except URLError as exc:
         parsed = urlsplit(url)
         if not (
@@ -156,11 +176,7 @@ def fetch_index_entries(url: str, *, timeout: int = 15, max_bytes: int = 2_000_0
         # The official SIA portal currently has a certificate validation problem.
         # Retry only its read-only index over HTTP; file URLs remain separately validated.
         fallback_url = parsed._replace(scheme="http").geturl()
-        fallback_request = Request(fallback_url, headers={"User-Agent": USER_AGENT})
-        with urlopen(fallback_request, timeout=timeout) as response:
-            document = response.read(max_bytes + 1)
-    if len(document) > max_bytes:
-        raise ValueError(f"A página {url} excedeu o tamanho esperado.")
+        document = _read_index_document(fallback_url, timeout=timeout, max_bytes=max_bytes)
     source = document.decode("utf-8", "replace")
     parser = CatalogTableParser()
     parser.feed(source)
