@@ -752,8 +752,10 @@ def render_masthead(snapshot):
         '<div class="ds-news-heading"><strong>Novidades dos sistemas</strong><span>Avisos por 7 dias</span></div>'
         f'{news}{more}</div></div></header>', unsafe_allow_html=True,
     )
-    if len(updates) > 1:
-        with st.expander(f"Ver todos os avisos dos últimos 7 dias · {len(updates)}", expanded=False):
+    if updates:
+        count = len(updates)
+        with st.expander(f"Últimas atualizações · {count} aviso{'s' if count != 1 else ''} nos últimos 7 dias", expanded=False):
+            st.caption("Cada aviso permanece disponível por 7 dias a partir da primeira identificação da versão.")
             st.markdown('<div class="ds-update-list">' + update_items(updates) + '</div>', unsafe_allow_html=True)
 
 
@@ -769,11 +771,13 @@ def render_force_check(snapshot):
 
 
 @st.fragment(run_every="60s")
-def refresh_catalog_when_changed(rendered_version, rendered_notice):
-    # Recarrega a página aberta apenas quando há um catálogo novo no servidor.
+def refresh_catalog_when_changed(rendered_version, rendered_notice, rendered_updates):
+    # Recarrega a página quando o catálogo, o aviso de consulta ou a janela de novidades muda.
     # A consulta às fontes continua sendo executada pela automação, não por visitante.
     current = load_snapshot()
-    if catalog_revision(current) != rendered_version or verification_notice(current) != rendered_notice:
+    current_updates = tuple(event["id"] for event in visible_updates(current))
+    if (catalog_revision(current) != rendered_version or verification_notice(current) != rendered_notice
+            or current_updates != rendered_updates):
         st.rerun()
 
 
@@ -783,7 +787,8 @@ automatic_check = snapshot.get("last_check") or {}
 if forced_at and automatic_check.get("source") == "automatic" and str(automatic_check.get("completed_at", "")) > forced_at:
     for field in ["forced_live_catalogs", "forced_live_checked_at", "forced_live_updates"]:
         st.session_state.pop(field, None)
-refresh_catalog_when_changed(catalog_revision(snapshot), verification_notice(snapshot))
+refresh_catalog_when_changed(catalog_revision(snapshot), verification_notice(snapshot),
+                             tuple(event["id"] for event in visible_updates(snapshot)))
 systems = snapshot.get("systems", {}) if isinstance(snapshot.get("systems"), dict) else {}
 render_masthead(snapshot)
 notice = verification_notice(snapshot)
