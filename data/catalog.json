@@ -25,11 +25,11 @@
         "asset_name": "APACMAG_0402.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/apac-latest/APACMAG_0402.exe",
         "size": 2110203,
-        "verified_at": "2026-10-09T17:35:07+00:00",
+        "verified_at": "2026-10-09T21:54:41+00:00",
         "sha256": "63f8dd542bef6ef4bff26e590ce4dbf1287f5113132ec2c6b801e80d9db4db3b"
       },
-      "checked_at": "2026-10-09T21:53:53+00:00",
-      "last_success_at": "2026-10-09T17:35:06+00:00",
+      "checked_at": "2026-10-09T21:54:40+00:00",
+      "last_success_at": "2026-10-09T21:54:40+00:00",
       "official_reachable": true
     },
     "ciha02": {
@@ -55,11 +55,11 @@
         "asset_name": "CIHA02_VER2034.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-latest/CIHA02_VER2034.exe",
         "size": 3330491,
-        "verified_at": "2026-10-09T17:35:07+00:00",
+        "verified_at": "2026-10-09T21:54:41+00:00",
         "sha256": "8d762dd16670530ee31cb28a5cdb35a14a66f828eee874da33305f97dc8ec2be"
       },
-      "checked_at": "2026-10-09T21:53:53+00:00",
-      "last_success_at": "2026-10-09T17:35:06+00:00",
+      "checked_at": "2026-10-09T21:54:40+00:00",
+      "last_success_at": "2026-10-09T21:54:40+00:00",
       "official_reachable": true
     },
     "ciha02_installer": {
@@ -85,11 +85,11 @@
         "asset_name": "CIHA02_SETUP_20.00.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-installer-latest/CIHA02_SETUP_20.00.exe",
         "size": 16393417,
-        "verified_at": "2026-10-09T17:35:07+00:00",
+        "verified_at": "2026-10-09T21:54:41+00:00",
         "sha256": "6b738c05d560d7e55cbd46c047c022a62465b817f4ca9408bea94f4f4b81d32b"
       },
-      "checked_at": "2026-10-09T21:53:53+00:00",
-      "last_success_at": "2026-10-09T17:35:06+00:00",
+      "checked_at": "2026-10-09T21:54:40+00:00",
+      "last_success_at": "2026-10-09T21:54:40+00:00",
       "official_reachable": true
     },
     "bpa": {
@@ -116,12 +116,12 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
         "size": 7785806,
-        "verified_at": "2026-10-09T17:35:07+00:00",
+        "verified_at": "2026-10-09T21:54:41+00:00",
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-10-09T21:53:53+00:00",
-      "last_success_at": "2026-10-09T17:35:06+00:00",
+      "checked_at": "2026-10-09T21:54:40+00:00",
+      "last_success_at": "2026-10-09T21:54:40+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -148,11 +148,11 @@
         "asset_name": "SIA0605.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0605.exe",
         "size": 7589332,
-        "verified_at": "2026-10-09T17:35:07+00:00",
+        "verified_at": "2026-10-09T21:54:41+00:00",
         "sha256": "c271905e73a12c4a9a69976657990043489fb1cec575b271a298450bd2188c3e"
       },
-      "checked_at": "2026-10-09T21:53:54+00:00",
-      "last_success_at": "2026-10-09T17:35:07+00:00",
+      "checked_at": "2026-10-09T21:54:41+00:00",
+      "last_success_at": "2026-10-09T21:54:41+00:00",
       "official_reachable": true
     },
     "fpo_installer": {
@@ -180,10 +180,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-installer-latest/FPOMAG_Instalador_0100.exe",
         "size": 6347935,
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
-        "verified_at": "2026-10-09T17:35:07+00:00"
+        "verified_at": "2026-10-09T21:54:41+00:00"
       },
-      "checked_at": "2026-10-09T21:53:54+00:00",
-      "last_success_at": "2026-10-09T17:35:07+00:00",
+      "checked_at": "2026-10-09T21:54:41+00:00",
+      "last_success_at": "2026-10-09T21:54:41+00:00",
       "official_reachable": true
     },
     "fpo_update": {
@@ -211,10 +211,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-update-latest/FPOMAG_Atualiza_0304.exe",
         "size": 3642388,
         "sha256": "c88374628e6bd5272eb45e66047e5fc67f3a960239ef1b5158e116ab95b915e9",
-        "verified_at": "2026-10-09T17:35:16+00:00"
+        "verified_at": "2026-10-09T21:54:41+00:00"
       },
-      "checked_at": "2026-10-09T21:53:55+00:00",
-      "last_success_at": "2026-10-09T17:35:07+00:00",
+      "checked_at": "2026-10-09T21:54:41+00:00",
+      "last_success_at": "2026-10-09T21:54:41+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -256,10 +256,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sihd2-latest/SIHD2_2340.exe",
         "size": 60986757,
         "sha256": "e801a1b7eb2770dc7da59e67974af92b4833483fef234c7c819abf2e68955698",
-        "verified_at": "2026-10-09T17:35:07+00:00"
+        "verified_at": "2026-10-09T21:54:41+00:00"
       },
-      "checked_at": "2026-10-09T21:53:55+00:00",
-      "last_success_at": "2026-10-09T17:35:07+00:00",
+      "checked_at": "2026-10-09T21:54:41+00:00",
+      "last_success_at": "2026-10-09T21:54:41+00:00",
       "official_reachable": true
     },
     "cnes_app": {
@@ -286,10 +286,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-app-latest/SCNES4850-ATUALIZACAO.ZIP",
         "size": 261903438,
         "sha256": "56898c285edf2c3e434c8039369342eeb2e5d040a340dc642527b5325c478647",
-        "verified_at": "2026-10-09T17:35:07+00:00"
+        "verified_at": "2026-10-09T21:54:42+00:00"
       },
-      "checked_at": "2026-10-09T21:53:56+00:00",
-      "last_success_at": "2026-10-09T17:35:07+00:00",
+      "checked_at": "2026-10-09T21:54:41+00:00",
+      "last_success_at": "2026-10-09T21:54:41+00:00",
       "official_reachable": true
     },
     "cnes_complete": {
@@ -316,10 +316,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-complete-latest/SCNES4850-COMPLETA.ZIP",
         "size": 403575891,
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
-        "verified_at": "2026-10-09T17:35:07+00:00"
+        "verified_at": "2026-10-09T21:54:42+00:00"
       },
-      "checked_at": "2026-10-09T21:53:56+00:00",
-      "last_success_at": "2026-10-09T17:35:07+00:00",
+      "checked_at": "2026-10-09T21:54:41+00:00",
+      "last_success_at": "2026-10-09T21:54:41+00:00",
       "official_reachable": true
     },
     "bdsia": {
@@ -3793,7 +3793,7 @@
             "asset_name": "BDSIA202609a.exe",
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609a.exe",
             "size": 9818678,
-            "verified_at": "2026-10-09T17:35:07+00:00",
+            "verified_at": "2026-10-09T21:54:42+00:00",
             "sha256": "d04e58a2a0f4de0eef720eae53a7882a4f36fdec2cb8803c35a818fc3f698a69",
             "integrity_verified_at": "2026-09-29T13:30:13+00:00"
           },
@@ -7041,8 +7041,8 @@
           "release_date": "2008-05-08"
         }
       },
-      "checked_at": "2026-10-09T21:53:57+00:00",
-      "last_success_at": "2026-10-09T21:53:57+00:00",
+      "checked_at": "2026-10-09T21:54:41+00:00",
+      "last_success_at": "2026-10-09T21:54:41+00:00",
       "official_reachable": true,
       "pending_competences": [],
       "download_failures": {
@@ -9865,7 +9865,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202609/TabelaUnificada_202609_v2610050950.zip",
             "size": 2156082,
             "sha256": "e2f1a210d8de4148f946e74f18b7726d4bc8145c97f48c2338874851789a03df",
-            "verified_at": "2026-10-09T17:35:08+00:00"
+            "verified_at": "2026-10-09T21:54:42+00:00"
           },
           "catalog_source": null,
           "release_date": null
@@ -12691,8 +12691,8 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-10-09T21:53:57+00:00",
-      "last_success_at": "2026-10-09T21:53:57+00:00",
+      "checked_at": "2026-10-09T21:54:41+00:00",
+      "last_success_at": "2026-10-09T21:54:41+00:00",
       "official_reachable": true,
       "pending_competences": [],
       "download_failures": {
