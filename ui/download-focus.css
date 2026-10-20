@@ -11,6 +11,8 @@ h1,h2,h3,h4,p { overflow-wrap:break-word; }
 .ds-masthead h1 { padding:.1rem 0 .25rem; margin:0; color:white; font-size:clamp(1.8rem,3.1vw,3rem);
     letter-spacing:-.045em; font-weight:800; line-height:1.15; }
 .ds-masthead-brand p { margin:.35rem 0 0; color:#f5f9ff; font-size:1rem; line-height:1.6; }
+.ds-masthead-credit { display:inline-block; margin-top:.6rem; padding:.2rem .65rem; border:1px solid #ffffff59;
+    border-radius:999px; background:#ffffff1f; color:#fff; font-size:.72rem; font-weight:700; letter-spacing:.02em; }
 .ds-masthead-check { display:flex; align-items:center; gap:.85rem; border-left:1px solid #7a9bc866;
     padding-left:1.45rem; }
 .ds-masthead-check > svg { width:30px; height:30px; flex-shrink:0; color:#e7f2ff; }
@@ -139,7 +141,6 @@ button:focus-visible,a:focus-visible { outline:3px solid #87baff !important; out
 .ds-footer { display:flex; flex-wrap:wrap; gap:.5rem 1rem; border-top:1px solid var(--ds-line); margin-top:1.8rem; padding-top:1rem; color:#344c6d; font-size:.71rem; }
 .ds-footer strong { color:#102b55; }
 .ds-footer span:last-child { margin-left:auto; }
-.ds-footer .ds-footer-credit { color:#102b55; font-weight:700; }
 @keyframes ds-spin { to { transform:rotate(360deg); } }
 @keyframes ds-slide { from { transform:translateX(-120%); } to { transform:translateX(330%); } }
 @media (prefers-reduced-motion:reduce) { .ds-loading-dot,.ds-progress-track span { animation:none; } }

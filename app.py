@@ -745,7 +745,8 @@ def render_masthead(snapshot):
     more = f'<span class="ds-news-more">+ {len(updates) - 1} aviso(s) · veja os detalhes abaixo</span>' if len(updates) > 1 else ""
     st.markdown(
         '<header class="ds-masthead"><div class="ds-masthead-brand">'
-        '<h1>Downloads Sistemas</h1><p>Instaladores, tabelas e manuais dos sistemas do SUS.</p></div>'
+        '<h1>Downloads Sistemas</h1><p>Instaladores, tabelas e manuais dos sistemas do SUS.</p>'
+        '<span class="ds-masthead-credit">Desenvolvido pelo CPD da Saúde</span></div>'
         f'<div class="ds-masthead-check">{ui_icon("clock")}<div><span>Última verificação</span>'
         f'<strong>{escape(checked)}</strong><small>Horário de Brasília · a cada 2 horas</small></div></div>'
         f'<div class="ds-masthead-news">{ui_icon("megaphone")}<div>'
@@ -806,6 +807,5 @@ with manuals_tab:
 
 st.markdown('<footer class="ds-footer"><strong>Downloads Sistemas</strong>'
             '<span>Central de acesso aos arquivos dos sistemas de informação do SUS</span>'
-            '<span>Consulta programada a cada 2 horas, incluindo 06:50 · Horário de Brasília</span>'
-            '<span class="ds-footer-credit">Desenvolvido pelo CPD da Saúde</span></footer>',
+            '<span>Consulta programada a cada 2 horas, incluindo 06:50 · Horário de Brasília</span></footer>',
             unsafe_allow_html=True)
