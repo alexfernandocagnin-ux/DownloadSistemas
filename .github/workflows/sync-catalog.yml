@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   discover:
@@ -34,6 +35,9 @@ jobs:
       - name: Instalar dependências do portal
         run: python -m pip install -r requirements.txt
       - name: Testar recuperação e publicação
+        # Os testes conferem código novo. Nas execuções agendadas só os dados
+        # mudam, e um teste afetado pelo catálogo real não pode travar a consulta.
+        if: ${{ github.event_name != 'schedule' }}
         run: python -m unittest discover -v
       - name: Descobrir versões sem aguardar os downloads
         id: discovery
@@ -75,3 +79,34 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python -u scripts/publish_catalog.py
+
+  notify:
+    name: Avisar falhas por issue
+    needs: [discover, mirrors]
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: sync-catalog-notify
+      cancel-in-progress: false
+    steps:
+      - name: Abrir ou fechar o aviso de falha
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DISCOVER: ${{ needs.discover.result }}
+          MIRRORS: ${{ needs.mirrors.result }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="Atualizador automático do catálogo falhou"
+          issue=$(gh issue list --state open --limit 100 --json number,title             --jq ".[] | select(.title == \"$title\") | .number" | head -n 1)
+          if [ "$DISCOVER" = "failure" ] || [ "$MIRRORS" = "failure" ]; then
+            body="Execução com falha: $RUN_URL (consulta: $DISCOVER, cópias: $MIRRORS)."
+            if [ -n "$issue" ]; then
+              gh issue comment "$issue" --body "$body"
+            else
+              gh issue create --title "$title" --body "$body O aviso fecha sozinho quando uma execução completa funcionar."
+            fi
+          elif [ "$DISCOVER" = "success" ] && [ "$MIRRORS" = "success" ] && [ -n "$issue" ]; then
+            gh issue close "$issue" --comment "Atualizador voltou a funcionar: $RUN_URL"
+          fi

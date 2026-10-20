@@ -15,6 +15,13 @@ from catalogs.updates import make_update_event, recent_updates
 ROOT = Path(__file__).parent
 CATALOG_PATH = ROOT / "data" / "catalog.json"
 NOW = datetime(2026, 10, 8, 16, tzinfo=timezone.utc)
+FEED_LABEL = "Últimas atualizações"
+
+
+def feed(app):
+    # Only the announcements list: the real catalog may add other expanders
+    # (e.g. a preserved previous version) and must not break these checks.
+    return [box for box in app.expander if box.label.startswith(FEED_LABEL)]
 
 
 class FeedVisibilityTests(unittest.TestCase):
@@ -55,22 +62,22 @@ class FeedVisibilityTests(unittest.TestCase):
         event = self.event()
         self.catalog["updates"] = [event]
         app = self.app()
-        self.assertEqual([box.label for box in app.expander],
+        self.assertEqual([box.label for box in feed(app)],
                          ["Últimas atualizações · 1 aviso nos últimos 7 dias"])
-        self.assertIn(event["name"], app.expander[0].markdown[0].value)
-        self.assertIn("primeira identificação", app.expander[0].caption[0].value)
+        self.assertIn(event["name"], feed(app)[0].markdown[0].value)
+        self.assertIn("primeira identificação", feed(app)[0].caption[0].value)
 
     def test_expiring_one_of_two_announcements_keeps_the_other_and_the_list(self):
         recent = self.event()
         expiring = self.event("sia", "SIA0605.exe", (NOW - timedelta(days=7) + timedelta(seconds=1)).isoformat())
         self.catalog["updates"] = [recent, expiring]
         app = self.app()
-        self.assertIn("2 avisos", app.expander[0].label)
+        self.assertIn("2 avisos", feed(app)[0].label)
         self.current_time += timedelta(seconds=2)
         app.run()
         self.assertFalse(app.exception)
-        self.assertIn("1 aviso", app.expander[0].label)
-        contents = app.expander[0].markdown[0].value
+        self.assertIn("1 aviso", feed(app)[0].label)
+        contents = feed(app)[0].markdown[0].value
         self.assertIn(recent["name"], contents)
         self.assertNotIn(expiring["name"], contents)
         self.assertEqual(self.catalog["updates"], [recent, expiring])
@@ -79,11 +86,11 @@ class FeedVisibilityTests(unittest.TestCase):
         event = self.event(found_at=(NOW - timedelta(days=7)).isoformat())
         self.catalog["updates"] = [event]
         app = self.app()
-        self.assertEqual(len(app.expander), 1)
+        self.assertEqual(len(feed(app)), 1)
         self.current_time += timedelta(seconds=1)
         app.run()
         self.assertFalse(app.exception)
-        self.assertEqual(len(app.expander), 0)
+        self.assertEqual(len(feed(app)), 0)
         self.assertTrue(any("Nenhuma nova versão identificada" in block.value for block in app.markdown))
         self.assertEqual(self.catalog["updates"], [event])
 
@@ -94,15 +101,15 @@ class FeedVisibilityTests(unittest.TestCase):
         app.session_state["forced_live_updates"] = [manual]
         app.run()
         self.assertFalse(app.exception)
-        self.assertIn("2 avisos", app.expander[0].label)
-        contents = app.expander[0].markdown[0].value
+        self.assertIn("2 avisos", feed(app)[0].label)
+        contents = feed(app)[0].markdown[0].value
         for event in [automatic, manual]:
             self.assertIn(event["name"], contents)
 
     def test_an_empty_feed_keeps_the_header_and_omits_the_expander(self):
         self.catalog["updates"] = []
         app = self.app()
-        self.assertEqual(len(app.expander), 0)
+        self.assertEqual(len(feed(app)), 0)
         self.assertTrue(any("Novidades dos sistemas" in block.value for block in app.markdown))
 
 
