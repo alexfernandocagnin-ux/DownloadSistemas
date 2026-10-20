@@ -806,5 +806,6 @@ with manuals_tab:
 
 st.markdown('<footer class="ds-footer"><strong>Downloads Sistemas</strong>'
             '<span>Central de acesso aos arquivos dos sistemas de informação do SUS</span>'
-            '<span>Consulta programada a cada 2 horas, incluindo 06:50 · Horário de Brasília</span></footer>',
+            '<span>Consulta programada a cada 2 horas, incluindo 06:50 · Horário de Brasília</span>'
+            '<span class="ds-footer-credit">Desenvolvido pelo CPD da Saúde</span></footer>',
             unsafe_allow_html=True)

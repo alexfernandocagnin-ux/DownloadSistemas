@@ -139,6 +139,7 @@ button:focus-visible,a:focus-visible { outline:3px solid #87baff !important; out
 .ds-footer { display:flex; flex-wrap:wrap; gap:.5rem 1rem; border-top:1px solid var(--ds-line); margin-top:1.8rem; padding-top:1rem; color:#344c6d; font-size:.71rem; }
 .ds-footer strong { color:#102b55; }
 .ds-footer span:last-child { margin-left:auto; }
+.ds-footer .ds-footer-credit { color:#102b55; font-weight:700; }
 @keyframes ds-spin { to { transform:rotate(360deg); } }
 @keyframes ds-slide { from { transform:translateX(-120%); } to { transform:translateX(330%); } }
 @media (prefers-reduced-motion:reduce) { .ds-loading-dot,.ds-progress-track span { animation:none; } }
