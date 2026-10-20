@@ -1,0 +1,47 @@
+name: Conferir manuais na fonte
+
+on:
+  schedule:
+    # Segunda-feira, 09:17 no horário de Brasília (UTC-3). Manuais mudam raramente.
+    - cron: '17 12 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    name: Comparar cópias com as fontes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Conferir manuais
+        id: check
+        timeout-minutes: 25
+        run: |
+          python -u scripts/check_manuals.py --report manual-report.md
+          cat manual-report.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Abrir, atualizar ou fechar o aviso
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          CHANGED: ${{ steps.check.outputs.changed }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="Manuais mudaram na fonte"
+          issue=$(gh issue list --state open --limit 100 --json number,title --jq ".[] | select(.title == \"$title\") | .number" | head -n 1)
+          printf '\nConferência: %s\n' "$RUN_URL" >> manual-report.md
+          if [ "$CHANGED" = "true" ]; then
+            if [ -n "$issue" ]; then
+              gh issue edit "$issue" --body-file manual-report.md
+            else
+              gh issue create --title "$title" --body-file manual-report.md
+            fi
+          elif [ -n "$issue" ]; then
+            gh issue close "$issue" --comment "Nenhum manual pendente na última conferência: $RUN_URL"
+          fi

@@ -519,7 +519,8 @@
     "guide_label": "PASSO A PASSO · PROCESSAMENTO",
     "copied_at": "2026-10-07T00:46:28.685116+00:00",
     "size": 906632,
-    "sha256": "395b0afae02e478b6361d9ada698a7f1ac1cf2bcdf6ae00f4a896868c3ca16f9"
+    "sha256": "395b0afae02e478b6361d9ada698a7f1ac1cf2bcdf6ae00f4a896868c3ca16f9",
+    "source_sha256": "91809d1d6686efff590ea37a7f81dfb91a34c6ae6242812ec1eb289f84c9de2b"
   },
   {
     "id": "sihd2-rotina-huab",
@@ -577,7 +578,8 @@
     "guide_label": "PASSO A PASSO · PROCESSAMENTO",
     "copied_at": "2026-10-07T00:46:28.687628+00:00",
     "size": 844864,
-    "sha256": "19e16c7bf09163f60612b8f9ab66655e872fe0cacfec5b541ac1325858c734a1"
+    "sha256": "19e16c7bf09163f60612b8f9ab66655e872fe0cacfec5b541ac1325858c734a1",
+    "source_sha256": "91809d1d6686efff590ea37a7f81dfb91a34c6ae6242812ec1eb289f84c9de2b"
   },
   {
     "id": "sigtap-passo-a-passo-sp",
