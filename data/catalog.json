@@ -26,10 +26,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/apac-latest/APACMAG_0403.exe",
         "size": 2113348,
         "sha256": "fd3f42fc4df1b524a8200c4e33d9bc048e0383d30c79220c229b30bf90287edf",
-        "verified_at": "2026-10-26T20:47:26+00:00"
+        "verified_at": "2026-10-27T00:54:49+00:00"
       },
-      "checked_at": "2026-10-27T00:54:03+00:00",
-      "last_success_at": "2026-10-26T20:47:25+00:00",
+      "checked_at": "2026-10-27T00:54:49+00:00",
+      "last_success_at": "2026-10-27T00:54:49+00:00",
       "official_reachable": true
     },
     "ciha02": {
@@ -55,11 +55,11 @@
         "asset_name": "CIHA02_VER2034.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-latest/CIHA02_VER2034.exe",
         "size": 3330491,
-        "verified_at": "2026-10-26T20:47:26+00:00",
+        "verified_at": "2026-10-27T00:54:49+00:00",
         "sha256": "8d762dd16670530ee31cb28a5cdb35a14a66f828eee874da33305f97dc8ec2be"
       },
-      "checked_at": "2026-10-27T00:54:03+00:00",
-      "last_success_at": "2026-10-26T20:47:25+00:00",
+      "checked_at": "2026-10-27T00:54:49+00:00",
+      "last_success_at": "2026-10-27T00:54:49+00:00",
       "official_reachable": true
     },
     "ciha02_installer": {
@@ -85,11 +85,11 @@
         "asset_name": "CIHA02_SETUP_20.00.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-installer-latest/CIHA02_SETUP_20.00.exe",
         "size": 16393417,
-        "verified_at": "2026-10-26T20:47:26+00:00",
+        "verified_at": "2026-10-27T00:54:49+00:00",
         "sha256": "6b738c05d560d7e55cbd46c047c022a62465b817f4ca9408bea94f4f4b81d32b"
       },
-      "checked_at": "2026-10-27T00:54:03+00:00",
-      "last_success_at": "2026-10-26T20:47:25+00:00",
+      "checked_at": "2026-10-27T00:54:49+00:00",
+      "last_success_at": "2026-10-27T00:54:49+00:00",
       "official_reachable": true
     },
     "bpa": {
@@ -116,12 +116,12 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
         "size": 7785806,
-        "verified_at": "2026-10-26T20:47:26+00:00",
+        "verified_at": "2026-10-27T00:54:49+00:00",
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-10-27T00:54:03+00:00",
-      "last_success_at": "2026-10-26T20:47:25+00:00",
+      "checked_at": "2026-10-27T00:54:49+00:00",
+      "last_success_at": "2026-10-27T00:54:49+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -149,10 +149,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0607.exe",
         "size": 7590914,
         "sha256": "371a149587728d3d7845006b71496cc1273245fdb7c0328e1365fd55b2229aaf",
-        "verified_at": "2026-10-26T20:47:26+00:00"
+        "verified_at": "2026-10-27T00:54:50+00:00"
       },
-      "checked_at": "2026-10-27T00:54:04+00:00",
-      "last_success_at": "2026-10-26T20:47:26+00:00",
+      "checked_at": "2026-10-27T00:54:49+00:00",
+      "last_success_at": "2026-10-27T00:54:49+00:00",
       "official_reachable": true
     },
     "fpo_installer": {
@@ -180,10 +180,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-installer-latest/FPOMAG_Instalador_0100.exe",
         "size": 6347935,
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
-        "verified_at": "2026-10-26T20:47:26+00:00"
+        "verified_at": "2026-10-27T00:54:50+00:00"
       },
-      "checked_at": "2026-10-27T00:54:05+00:00",
-      "last_success_at": "2026-10-26T20:47:26+00:00",
+      "checked_at": "2026-10-27T00:54:49+00:00",
+      "last_success_at": "2026-10-27T00:54:49+00:00",
       "official_reachable": true
     },
     "fpo_update": {
@@ -211,10 +211,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-update-latest/FPOMAG_Atualiza_0305.exe",
         "size": 3642326,
         "sha256": "14c8fbadbb3de81b807177f67c7465ed6e2a05e4eb2e09a3be148aa6f5bb9a4f",
-        "verified_at": "2026-10-26T20:47:26+00:00"
+        "verified_at": "2026-10-27T00:54:50+00:00"
       },
-      "checked_at": "2026-10-27T00:54:05+00:00",
-      "last_success_at": "2026-10-26T20:47:26+00:00",
+      "checked_at": "2026-10-27T00:54:49+00:00",
+      "last_success_at": "2026-10-27T00:54:49+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -256,10 +256,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sihd2-latest/SIHD2_2350.exe",
         "size": 61725687,
         "sha256": "0fadb2083c2bff6995c067ce8cce35ddf55c92f6bbcb5cc4be6fc95e91787f4f",
-        "verified_at": "2026-10-26T20:47:26+00:00"
+        "verified_at": "2026-10-27T00:54:50+00:00"
       },
-      "checked_at": "2026-10-27T00:54:05+00:00",
-      "last_success_at": "2026-10-26T20:47:26+00:00",
+      "checked_at": "2026-10-27T00:54:49+00:00",
+      "last_success_at": "2026-10-27T00:54:49+00:00",
       "official_reachable": true
     },
     "cnes_app": {
@@ -286,10 +286,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-app-latest/SCNES4860-ATUALIZACAO.ZIP",
         "size": 265801288,
         "sha256": "26eff76f967742b3e6244c8d11eda5fd141e76fc1059c6f3abb6defc396221b5",
-        "verified_at": "2026-10-26T20:47:26+00:00"
+        "verified_at": "2026-10-27T00:54:50+00:00"
       },
-      "checked_at": "2026-10-27T00:54:07+00:00",
-      "last_success_at": "2026-10-26T20:47:26+00:00",
+      "checked_at": "2026-10-27T00:54:50+00:00",
+      "last_success_at": "2026-10-27T00:54:50+00:00",
       "official_reachable": true
     },
     "cnes_complete": {
@@ -318,7 +318,7 @@
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
         "verified_at": "2026-10-19T16:40:30+00:00"
       },
-      "checked_at": "2026-10-27T00:54:07+00:00",
+      "checked_at": "2026-10-27T00:54:50+00:00",
       "last_success_at": "2026-10-19T16:40:29+00:00",
       "official_reachable": true,
       "download_error": "TimeoutError"
@@ -3795,7 +3795,7 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609b.exe",
             "size": 9961869,
             "sha256": "2ee83a95d15ce723ecb869d5779fcc6cae5ef9af7dec26ecaba4c128bc077be8",
-            "verified_at": "2026-10-26T20:47:27+00:00"
+            "verified_at": "2026-10-27T00:54:50+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-10-21"
@@ -7041,8 +7041,8 @@
           "release_date": "2008-05-08"
         }
       },
-      "checked_at": "2026-10-27T00:54:07+00:00",
-      "last_success_at": "2026-10-27T00:54:07+00:00",
+      "checked_at": "2026-10-27T00:54:50+00:00",
+      "last_success_at": "2026-10-27T00:54:50+00:00",
       "official_reachable": true,
       "pending_competences": [],
       "download_failures": {
@@ -9884,18 +9884,18 @@
       ],
       "competences": {
         "202609": {
-          "name": "TabelaUnificada_202609_v2610050950.zip",
-          "size": null,
-          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202609_v2610050950.zip",
+          "name": "TabelaUnificada_202609_v2610261311.zip",
+          "size": 2156082,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202609_v2610261311.zip",
           "mirror": {
             "tag": "sigtap-202609",
-            "asset_name": "TabelaUnificada_202609_v2610050950.zip",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202609/TabelaUnificada_202609_v2610050950.zip",
-            "size": 2156082,
-            "sha256": "e2f1a210d8de4148f946e74f18b7726d4bc8145c97f48c2338874851789a03df",
-            "verified_at": "2026-10-15T01:55:12+00:00"
+            "asset_name": "TabelaUnificada_202609_v2610261311.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202609/TabelaUnificada_202609_v2610261311.zip",
+            "size": 2156312,
+            "sha256": "429060ed8d435e1a4c1498cc5ba028ba215ee0e7d04d03e46c6b27943482588c",
+            "verified_at": "2026-10-27T00:55:05+00:00"
           },
-          "catalog_source": null,
+          "catalog_source": "community",
           "release_date": null
         },
         "202608": {
@@ -12719,23 +12719,23 @@
           "release_date": null
         },
         "202610": {
-          "name": "TabelaUnificada_202610_v2610151110.zip",
+          "name": "TabelaUnificada_202610_v2610261600.zip",
           "size": 2163617,
-          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202610_v2610151110.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202610_v2610261600.zip",
           "mirror": {
             "tag": "sigtap-202610",
-            "asset_name": "TabelaUnificada_202610_v2610151110.zip",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202610/TabelaUnificada_202610_v2610151110.zip",
-            "size": 2163617,
-            "sha256": "f497ebccc12d6563bcbadb79acf2e5ca59d8a9ac2ea5d864e9e6b3e6fc1f2606",
-            "verified_at": "2026-10-26T20:47:27+00:00"
+            "asset_name": "TabelaUnificada_202610_v2610261600.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202610/TabelaUnificada_202610_v2610261600.zip",
+            "size": 2164377,
+            "sha256": "939336aa753531e2482e0a14b76177b48f8b74e67b8cce7af11fae02ee2a8585",
+            "verified_at": "2026-10-27T00:54:58+00:00"
           },
           "catalog_source": "community",
           "release_date": null
         }
       },
-      "checked_at": "2026-10-27T00:54:08+00:00",
-      "last_success_at": "2026-10-27T00:54:08+00:00",
+      "checked_at": "2026-10-27T00:54:50+00:00",
+      "last_success_at": "2026-10-27T00:54:50+00:00",
       "official_reachable": false,
       "pending_competences": [],
       "download_failures": {
