@@ -19,6 +19,7 @@ SYSTEMS = {
     "cnes": ("CNES / SCNES", "🗂️"),
     "ciha02": ("CIHA02", "🏛️"),
     "sigtap": ("SIGTAP", "💊"),
+    "raas": ("RAAS", "🧠"),
 }
 MAX_MANUAL_SIZE = 50_000_000
 MANUALS_DIR = Path(__file__).parent.parent / "static" / "manuals"

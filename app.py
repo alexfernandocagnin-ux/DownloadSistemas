@@ -17,7 +17,7 @@ from datetime import datetime, timedelta, timezone
 import streamlit as st
 
 from catalogs.mirrors import download_mirror, matching_mirror, probe_mirror
-from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, raas_portal, sia_portal, sigtap_portal, sihd_portal
 from catalogs.updates import make_update_event, merge_updates, recent_updates
 from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog, merge_catalogs
 from catalogs.snapshot import read_published_catalog, catalog_revision, verification_notice
@@ -89,6 +89,11 @@ SYSTEM_META: dict[str, dict[str, object]] = {
         "fetch": sigtap_portal.fetch_sigtap_catalog, "download": sigtap_portal.download_release,
         "download_with_source": sigtap_portal.download_release_with_source,
         "official_page": sigtap_portal.DOWNLOAD_PAGE,
+    },
+    "raas": {
+        "label": "RAAS (instalador)", "icon": "🧠",
+        "fetch": raas_portal.fetch_raas_catalog, "download": raas_portal.download_release,
+        "official_page": raas_portal.INDEX_URL,
     },
 }
 
@@ -582,6 +587,8 @@ PROGRAM_GROUPS = {
     "cnes": {"label": "CNES / SCNES", "icon": "hospital", "tone": "blue", "packages": ("cnes_complete", "cnes_app"),
              "description": "Cadastro Nacional de Estabelecimentos de Saúde. Aplicativo para cadastramento e manutenção das informações dos estabelecimentos.",
              "note": "Escolha instalação completa para começar ou atualização para o sistema já instalado. O Firebird é necessário para o funcionamento do SCNES."},
+    "raas": {"label": "RAAS", "icon": "file", "tone": "purple", "packages": ("raas",),
+             "description": "Registro das Ações Ambulatoriais de Saúde, usado na atenção psicossocial e na atenção domiciliar. Instalador disponível na listagem oficial do SIA."},
 }
 TABLE_GROUPS = {
     "bdsia": {"label": "SIA · Tabela mensal", "icon": "database", "tone": "blue",

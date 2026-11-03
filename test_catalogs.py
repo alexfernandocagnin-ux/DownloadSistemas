@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 from urllib.error import URLError
 
-from catalogs import _common, apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import _common, apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, raas_portal, sia_portal, sigtap_portal, sihd_portal
 
 
 class AddedSystemsTests(unittest.TestCase):
@@ -18,6 +18,17 @@ class AddedSystemsTests(unittest.TestCase):
             releases = apac_portal.fetch_apac_catalog()
         self.assertEqual([r["name"] for r in releases], ["APACMAG_0402.exe", "APACMAG_0401.exe"])
         self.assertEqual(releases[0]["release_date"], "2026-09-24")
+
+    def test_raas_keeps_only_current_installer_without_trailing_space(self):
+        # A listagem oficial termina cada link com espaço e mistura versões "Mob" abandonadas.
+        names = ["RAAS_0234.exe", "RAAS_0235.exe", "RAASAD-Mob_Install.exe", "RAS_Mob_DESK_V1.2.0.exe", "lerNotas.txt"]
+        entries = [{"name": name, "url": f"ftp://arpoador.datasus.gov.br/siasus/raas/{name} ",
+                    "release_date": "2026-05-08"} for name in names]
+        with patch.object(raas_portal, "fetch_index_entries", return_value=entries):
+            releases = raas_portal.fetch_raas_catalog()
+        self.assertEqual([r["name"] for r in releases], ["RAAS_0235.exe", "RAAS_0234.exe"])
+        self.assertEqual(releases[0]["url"], "ftp://arpoador.datasus.gov.br/siasus/raas/RAAS_0235.exe")
+        self.assertEqual(releases[0]["version"], "0235")
 
     def test_ciha_separates_module_update_and_initial_installation(self):
         names = ["CIHA01_VER2033.exe", "CIHA01_SETUP_20.00.exe", "CIHA02_VER2034.exe"]

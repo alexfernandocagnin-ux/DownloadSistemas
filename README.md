@@ -32,6 +32,7 @@ sites estão fora do ar, o que acontece com frequência.
 | BDSIA (tabela mensal do SIA) | mesma página do SIA | por competência (seletor de mês) |
 | SIGTAP · Tabela Unificada | RSS de `sigtap.datasus.gov.br/tabela-unificada/competencias.rss` | por competência (seletor de mês) |
 | CNES · SCNES completo | mesma API de aplicativos CNES | instalação completa, versão única |
+| RAAS | `sia.datasus.gov.br/versao/listar_ftp_raas.php` | instalador, versão única |
 
 Se a listagem HTTPS da FPO não responder, o sincronizador consulta o diretório
 FTP oficial `/siasus/FPO` e continua validando os nomes e os arquivos antes de
@@ -54,7 +55,7 @@ cartão de cada sistema.
   O script sobe cada arquivo de `dist/` como asset de
   uma GitHub Release (`bpa-latest`, `sia-latest`, `fpo-installer-latest`,
   `fpo-update-latest`, `sihd2-latest`, `cnes-app-latest`, `cnes-complete-latest`,
-  `bdsia-<competência>`, `sigtap-<competência>`,
+  `raas-latest`, `bdsia-<competência>`, `sigtap-<competência>`,
   `cnes-base-<competência>`) e só comita o catálogo quando algo muda.
 - `app.py` - navegação e tela do portal.
 - `ui/download-focus.css` - aparência da interface Download em foco; fonte Manrope local.

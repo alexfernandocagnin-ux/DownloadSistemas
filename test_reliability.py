@@ -13,7 +13,7 @@ from contextlib import ExitStack
 from pathlib import Path
 from unittest.mock import patch
 
-from catalogs import mirrors, _common, apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal
+from catalogs import mirrors, _common, apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, raas_portal, sia_portal, sigtap_portal, sihd_portal
 from catalogs.updates import merge_updates
 from scripts import sync_catalog as sync
 
@@ -377,7 +377,8 @@ class PortalTests(unittest.TestCase):
                                      (sia_portal, "fetch_bdsia_catalog"), (fpo_portal, "fetch_fpo_installer_catalog"),
                                      (fpo_portal, "fetch_fpo_update_catalog"), (sihd_portal, "fetch_sihd2_catalog"),
                                      (cnes_portal, "fetch_cnes_complete_catalog"), (cnes_portal, "fetch_cnes_app_catalog"),
-                                     (cnes_portal, "fetch_cnes_base_catalog"), (sigtap_portal, "fetch_sigtap_catalog")]:
+                                     (cnes_portal, "fetch_cnes_base_catalog"), (sigtap_portal, "fetch_sigtap_catalog"),
+                                     (raas_portal, "fetch_raas_catalog")]:
                     stack.enter_context(patch.object(module, name, return_value=[]))
                 app = self.app().run()
                 next(b for b in app.button if b.key == "force_catalog_check").click().run()
@@ -417,14 +418,14 @@ class PortalTests(unittest.TestCase):
         path = Path(__file__).parent / "data" / "catalog.json"
         original = path.read_bytes()
         try:
-            with patch.object(apac_portal, "fetch_apac_catalog", return_value=[]), patch.object(ciha_portal, "fetch_ciha02_catalog", return_value=[]), patch.object(ciha_portal, "fetch_ciha02_installer_catalog", return_value=[]), patch.object(bpa_portal, "fetch_bpa_catalog", return_value=[]), patch.object(sia_portal, "fetch_sia_catalog", return_value=[]), patch.object(sia_portal, "fetch_bdsia_catalog", return_value=[]), patch.object(fpo_portal, "fetch_fpo_installer_catalog", return_value=[]), patch.object(fpo_portal, "fetch_fpo_update_catalog", return_value=[]), patch.object(sihd_portal, "fetch_sihd2_catalog", return_value=[]), patch.object(cnes_portal, "fetch_cnes_complete_catalog", return_value=[]), patch.object(cnes_portal, "fetch_cnes_app_catalog", return_value=[]), patch.object(sigtap_portal, "fetch_sigtap_catalog", return_value=[]):
+            with patch.object(apac_portal, "fetch_apac_catalog", return_value=[]), patch.object(ciha_portal, "fetch_ciha02_catalog", return_value=[]), patch.object(ciha_portal, "fetch_ciha02_installer_catalog", return_value=[]), patch.object(bpa_portal, "fetch_bpa_catalog", return_value=[]), patch.object(sia_portal, "fetch_sia_catalog", return_value=[]), patch.object(sia_portal, "fetch_bdsia_catalog", return_value=[]), patch.object(fpo_portal, "fetch_fpo_installer_catalog", return_value=[]), patch.object(fpo_portal, "fetch_fpo_update_catalog", return_value=[]), patch.object(sihd_portal, "fetch_sihd2_catalog", return_value=[]), patch.object(cnes_portal, "fetch_cnes_complete_catalog", return_value=[]), patch.object(cnes_portal, "fetch_cnes_app_catalog", return_value=[]), patch.object(sigtap_portal, "fetch_sigtap_catalog", return_value=[]), patch.object(raas_portal, "fetch_raas_catalog", return_value=[]):
                 app = self.app().run()
                 next(b for b in app.button if b.key == "force_catalog_check").click().run()
             self.assertFalse(app.exception)
             saved = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(saved["updated_at"], json.loads(original)["updated_at"])
             self.assertEqual(saved["last_check"]["succeeded"], 0)
-            self.assertTrue(any("0 de 12" in warning.value for warning in app.warning))
+            self.assertTrue(any("0 de 13" in warning.value for warning in app.warning))
         finally:
             path.write_bytes(original)
 
@@ -444,7 +445,7 @@ class PortalTests(unittest.TestCase):
             (fpo_portal, "fetch_fpo_installer_catalog"), (fpo_portal, "fetch_fpo_update_catalog"),
             (sihd_portal, "fetch_sihd2_catalog"), (cnes_portal, "fetch_cnes_complete_catalog"),
             (cnes_portal, "fetch_cnes_app_catalog"), (sia_portal, "fetch_bdsia_catalog"),
-            (sigtap_portal, "fetch_sigtap_catalog"),
+            (sigtap_portal, "fetch_sigtap_catalog"), (raas_portal, "fetch_raas_catalog"),
         ]
         with ExitStack() as stack:
             stack.enter_context(patch("catalogs.state.atomic_write"))

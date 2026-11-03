@@ -24,7 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
+from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_portal, raas_portal, sia_portal, sigtap_portal, sihd_portal  # noqa: E402
 from catalogs.state import atomic_write, normalize_catalog  # noqa: E402
 from catalogs.mirrors import probe_mirror  # noqa: E402
 from catalogs.updates import make_update_event, merge_updates  # noqa: E402
@@ -99,6 +99,13 @@ SINGLE_VERSION_SYSTEMS = {
         "fetch": cnes_portal.fetch_cnes_complete_catalog,
         "download": cnes_portal.download_app_release,
         "tag": "cnes-complete-latest",
+    },
+    "raas": {
+        "label": "RAAS (instalador)",
+        "official_page": raas_portal.INDEX_URL,
+        "fetch": raas_portal.fetch_raas_catalog,
+        "download": raas_portal.download_release,
+        "tag": "raas-latest",
     },
 }
 
