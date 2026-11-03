@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-03T03:06:38+00:00",
+  "updated_at": "2026-11-03T11:25:06+00:00",
   "systems": {
     "apac": {
       "label": "APAC Magnético",
@@ -10,8 +10,8 @@
         "version": "0403",
         "release_date": "2026-10-21"
       },
-      "catalog_checked_at": "2026-11-03T03:06:26+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:26+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:01+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:01+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -28,7 +28,7 @@
         "sha256": "fd3f42fc4df1b524a8200c4e33d9bc048e0383d30c79220c229b30bf90287edf",
         "verified_at": "2026-11-03T03:07:27+00:00"
       },
-      "checked_at": "2026-11-03T03:07:26+00:00",
+      "checked_at": "2026-11-03T11:25:01+00:00",
       "last_success_at": "2026-11-03T03:07:26+00:00",
       "official_reachable": true
     },
@@ -40,8 +40,8 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
         "version": "2034"
       },
-      "catalog_checked_at": "2026-11-03T03:06:26+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:26+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:01+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:01+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -58,7 +58,7 @@
         "verified_at": "2026-11-03T03:07:27+00:00",
         "sha256": "8d762dd16670530ee31cb28a5cdb35a14a66f828eee874da33305f97dc8ec2be"
       },
-      "checked_at": "2026-11-03T03:07:26+00:00",
+      "checked_at": "2026-11-03T11:25:01+00:00",
       "last_success_at": "2026-11-03T03:07:26+00:00",
       "official_reachable": true
     },
@@ -70,8 +70,8 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
         "version": "2000"
       },
-      "catalog_checked_at": "2026-11-03T03:06:26+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:26+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:01+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:01+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -88,7 +88,7 @@
         "verified_at": "2026-11-03T03:07:27+00:00",
         "sha256": "6b738c05d560d7e55cbd46c047c022a62465b817f4ca9408bea94f4f4b81d32b"
       },
-      "checked_at": "2026-11-03T03:07:26+00:00",
+      "checked_at": "2026-11-03T11:25:01+00:00",
       "last_success_at": "2026-11-03T03:07:26+00:00",
       "official_reachable": true
     },
@@ -101,8 +101,8 @@
         "version": "0500",
         "release_date": "2026-07-09"
       },
-      "catalog_checked_at": "2026-11-03T03:06:26+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:26+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:01+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:01+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -120,7 +120,7 @@
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-11-03T03:07:26+00:00",
+      "checked_at": "2026-11-03T11:25:01+00:00",
       "last_success_at": "2026-11-03T03:07:26+00:00",
       "official_reachable": true
     },
@@ -133,8 +133,8 @@
         "version": "0608",
         "release_date": "2026-10-29"
       },
-      "catalog_checked_at": "2026-11-03T03:06:29+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:29+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:03+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:03+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -151,7 +151,7 @@
         "sha256": "25077caf24fc814de3bc311f083983d5b78c6543f66e53ced1d7c9661df17856",
         "verified_at": "2026-11-03T03:07:27+00:00"
       },
-      "checked_at": "2026-11-03T03:07:27+00:00",
+      "checked_at": "2026-11-03T11:25:03+00:00",
       "last_success_at": "2026-11-03T03:07:27+00:00",
       "official_reachable": true
     },
@@ -164,8 +164,8 @@
         "version": "0100",
         "release_date": "2008-06-10"
       },
-      "catalog_checked_at": "2026-11-03T03:06:29+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:29+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:03+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:03+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -182,7 +182,7 @@
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
         "verified_at": "2026-11-03T03:07:27+00:00"
       },
-      "checked_at": "2026-11-03T03:07:27+00:00",
+      "checked_at": "2026-11-03T11:25:03+00:00",
       "last_success_at": "2026-11-03T03:07:27+00:00",
       "official_reachable": true
     },
@@ -195,8 +195,8 @@
         "version": "0307",
         "release_date": "2026-10-29"
       },
-      "catalog_checked_at": "2026-11-03T03:06:31+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:31+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:04+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:04+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -213,7 +213,7 @@
         "sha256": "014860e3265799b037c3e4c59342dba59eb182c0854ae4ff4ab0e8d2e6ce4565",
         "verified_at": "2026-11-03T03:07:27+00:00"
       },
-      "checked_at": "2026-11-03T03:07:27+00:00",
+      "checked_at": "2026-11-03T11:25:04+00:00",
       "last_success_at": "2026-11-03T03:07:27+00:00",
       "official_reachable": true
     },
@@ -240,8 +240,8 @@
           "sihd2_2272.exe"
         ]
       },
-      "catalog_checked_at": "2026-11-03T03:06:32+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:32+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:04+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:04+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -258,7 +258,7 @@
         "sha256": "0fadb2083c2bff6995c067ce8cce35ddf55c92f6bbcb5cc4be6fc95e91787f4f",
         "verified_at": "2026-11-03T03:07:27+00:00"
       },
-      "checked_at": "2026-11-03T03:07:27+00:00",
+      "checked_at": "2026-11-03T11:25:04+00:00",
       "last_success_at": "2026-11-03T03:07:27+00:00",
       "official_reachable": true
     },
@@ -270,8 +270,8 @@
         "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=SCNES4860-ATUALIZACAO.ZIP",
         "version": "4860"
       },
-      "catalog_checked_at": "2026-11-03T03:06:33+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:33+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:04+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:04+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -288,7 +288,7 @@
         "sha256": "26eff76f967742b3e6244c8d11eda5fd141e76fc1059c6f3abb6defc396221b5",
         "verified_at": "2026-11-03T03:07:28+00:00"
       },
-      "checked_at": "2026-11-03T03:07:27+00:00",
+      "checked_at": "2026-11-03T11:25:04+00:00",
       "last_success_at": "2026-11-03T03:07:27+00:00",
       "official_reachable": true
     },
@@ -301,8 +301,8 @@
         "version": "4860"
       },
       "catalog_checked_at": "2026-11-03T03:06:35+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:35+00:00",
-      "catalog_check_error": null,
+      "catalog_attempt_at": "2026-11-03T11:25:05+00:00",
+      "catalog_check_error": "OSError",
       "pending_download": true,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
@@ -318,10 +318,11 @@
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
         "verified_at": "2026-10-19T16:40:30+00:00"
       },
-      "checked_at": "2026-11-03T03:07:27+00:00",
+      "checked_at": "2026-11-03T11:25:05+00:00",
       "last_success_at": "2026-10-19T16:40:29+00:00",
-      "official_reachable": true,
-      "download_error": "TimeoutError"
+      "official_reachable": false,
+      "download_error": "TimeoutError",
+      "error": "OSError"
     },
     "bdsia": {
       "label": "Tabela mensal do SIA (BDSIA)",
@@ -341,8 +342,8 @@
           "verified_at": "2026-10-27T19:02:04+00:00"
         }
       },
-      "catalog_checked_at": "2026-11-03T03:06:36+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:36+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:05+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:05+00:00",
       "catalog_check_error": null,
       "available_releases": [
         {
@@ -7070,8 +7071,8 @@
           "release_date": "2026-10-27"
         }
       },
-      "checked_at": "2026-11-03T03:07:27+00:00",
-      "last_success_at": "2026-11-03T03:07:27+00:00",
+      "checked_at": "2026-11-03T11:25:05+00:00",
+      "last_success_at": "2026-11-03T11:25:05+00:00",
       "official_reachable": true,
       "pending_competences": [],
       "download_failures": {
@@ -7099,10 +7100,10 @@
       "label": "SIGTAP · Tabela Unificada",
       "official_page": "http://sigtap.datasus.gov.br/tabela-unificada/app/download.jsp",
       "latest": {
-        "name": "TabelaUnificada_202610_v2610261600.zip",
-        "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202610_v2610261600.zip",
+        "name": "TabelaUnificada_202610_v2610271043.zip",
+        "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202610_v2610271043.zip",
         "competence": "202610",
-        "revision": "2610261600",
+        "revision": "2610271043",
         "mirror": {
           "tag": "sigtap-202610",
           "asset_name": "TabelaUnificada_202610_v2610141831.zip",
@@ -7111,18 +7112,18 @@
           "sha256": "0ef20224558fe1566db31ca9e0c5002a72c7fa941b06a7e48e6dd2b79962c064",
           "verified_at": "2026-10-15T08:38:27+00:00"
         },
-        "size": 2163617,
+        "size": 2163764,
         "catalog_source": "community"
       },
-      "catalog_checked_at": "2026-11-03T03:06:38+00:00",
-      "catalog_attempt_at": "2026-11-03T03:06:38+00:00",
+      "catalog_checked_at": "2026-11-03T11:25:06+00:00",
+      "catalog_attempt_at": "2026-11-03T11:25:06+00:00",
       "catalog_check_error": null,
       "available_releases": [
         {
-          "name": "TabelaUnificada_202610_v2610261600.zip",
-          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202610_v2610261600.zip",
+          "name": "TabelaUnificada_202610_v2610271043.zip",
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202610_v2610271043.zip",
           "competence": "202610",
-          "revision": "2610261600",
+          "revision": "2610271043",
           "mirror": {
             "tag": "sigtap-202610",
             "asset_name": "TabelaUnificada_202610_v2610141831.zip",
@@ -7131,12 +7132,12 @@
             "sha256": "0ef20224558fe1566db31ca9e0c5002a72c7fa941b06a7e48e6dd2b79962c064",
             "verified_at": "2026-10-15T08:38:27+00:00"
           },
-          "size": 2163617,
+          "size": 2163764,
           "catalog_source": "community"
         },
         {
           "name": "TabelaUnificada_202609_v2610261311.zip",
-          "size": 2156082,
+          "size": 2156312,
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202609_v2610261311.zip",
           "mirror": {
             "tag": "sigtap-202609",
@@ -7152,7 +7153,7 @@
         },
         {
           "name": "TabelaUnificada_202608_v2610231712.zip",
-          "size": 2153883,
+          "size": 2154517,
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202608_v2610231712.zip",
           "mirror": {
             "tag": "sigtap-202608",
@@ -7168,7 +7169,7 @@
         },
         {
           "name": "TabelaUnificada_202607_v2610231237.zip",
-          "size": 2144592,
+          "size": 2146009,
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202607_v2610231237.zip",
           "mirror": {
             "tag": "sigtap-202607",
@@ -7184,7 +7185,7 @@
         },
         {
           "name": "TabelaUnificada_202606_v2610231231.zip",
-          "size": 2141359,
+          "size": 2142895,
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202606_v2610231231.zip",
           "mirror": {
             "tag": "sigtap-202606",
@@ -12763,15 +12764,10 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-11-03T03:07:27+00:00",
-      "last_success_at": "2026-11-03T03:07:27+00:00",
+      "checked_at": "2026-11-03T11:25:06+00:00",
+      "last_success_at": "2026-11-03T11:25:06+00:00",
       "official_reachable": false,
-      "pending_competences": [
-        "200908",
-        "200907",
-        "200906",
-        "200905"
-      ],
+      "pending_competences": [],
       "download_failures": {
         "201106": {
           "name": "TabelaUnificada_201106_v1106071108.zip",
@@ -14537,6 +14533,15 @@
   },
   "updates": [
     {
+      "id": "sigtap:202610:TabelaUnificada_202610_v2610271043.zip",
+      "system_key": "sigtap",
+      "system": "SIGTAP · Tabela Unificada",
+      "name": "TabelaUnificada_202610_v2610271043.zip",
+      "found_at": "2026-11-03T11:25:06+00:00",
+      "competence": "202610",
+      "catalog_source": "community"
+    },
+    {
       "id": "fpo_update:FPOMAG_Atualiza_0307.exe:FPOMAG_Atualiza_0307.exe",
       "system_key": "fpo_update",
       "system": "FPO Magnético (atualização)",
@@ -14678,11 +14683,13 @@
     }
   ],
   "last_check": {
-    "started_at": "2026-11-03T03:06:26+00:00",
-    "completed_at": "2026-11-03T03:06:46+00:00",
+    "started_at": "2026-11-03T11:25:01+00:00",
+    "completed_at": "2026-11-03T11:25:53+00:00",
     "source": "automatic",
     "total": 12,
-    "succeeded": 12,
-    "failed_systems": []
+    "succeeded": 11,
+    "failed_systems": [
+      "cnes_complete"
+    ]
   }
 }
