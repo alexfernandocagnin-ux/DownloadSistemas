@@ -45,9 +45,12 @@ def publish(local, repository):
             print("Catálogo publicado sem alterar os arquivos de código.")
             return
         except subprocess.CalledProcessError as exc:
-            if "409" not in (exc.stderr or "") or attempt == 4:
+            # 409 é corrida com outro commit; 5xx e falhas de rede da API também passam
+            # sozinhos. Em qualquer caso, relê a revisão atual e tenta de novo.
+            print(f"Tentativa {attempt + 1} de publicar falhou: {(exc.stderr or '').strip()}", file=sys.stderr)
+            if attempt == 4:
                 raise
-            time.sleep(1 + attempt)
+            time.sleep(5 * (attempt + 1))
 
 
 if __name__ == "__main__":
