@@ -5,6 +5,7 @@ import io
 import zipfile
 import json
 import os
+os.environ["SITE_AUTO_CHECK"] = "0"  # Testes do app não consultam as fontes em segundo plano.
 import importlib.util
 from ftplib import error_perm
 import tempfile
@@ -425,7 +426,7 @@ class PortalTests(unittest.TestCase):
             saved = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(saved["updated_at"], json.loads(original)["updated_at"])
             self.assertEqual(saved["last_check"]["succeeded"], 0)
-            self.assertTrue(any("0 de 13" in warning.value for warning in app.warning))
+            self.assertTrue(any("0 de 13" in item.value for item in [*app.warning, *app.markdown]))
         finally:
             path.write_bytes(original)
 

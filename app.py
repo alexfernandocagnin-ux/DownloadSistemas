@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import base64
+import os
 from pathlib import Path
 from html import escape
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -21,6 +22,7 @@ from catalogs import apac_portal, bpa_portal, ciha_portal, cnes_portal, fpo_port
 from catalogs.updates import make_update_event, merge_updates, recent_updates
 from catalogs.state import CATALOG_LOCK, atomic_write, normalize_catalog, merge_catalogs
 from catalogs.snapshot import read_published_catalog, catalog_revision, verification_notice
+from catalogs.auto_check import BackgroundCheck, is_stale
 from catalogs.manuals import load_manuals, SYSTEMS as MANUAL_SYSTEMS, download_manual, filter_manuals
 
 CATALOG_PATH = Path(__file__).parent / "data" / "catalog.json"
@@ -118,14 +120,17 @@ def cached_published_catalog():
 
 
 def load_snapshot() -> dict[str, object]:
-    published = cached_published_catalog()
+    return merged_snapshot(cached_published_catalog(), st.warning)
+
+
+def merged_snapshot(published, warn=lambda message: None) -> dict[str, object]:
     with CATALOG_LOCK:
         try:
             data = json.loads(CATALOG_PATH.read_text(encoding="utf-8")) if CATALOG_PATH.is_file() else {"systems": {}}
         except (OSError, ValueError):
             data = {"systems": {}}
             if not published:
-                st.warning("O catálogo salvo não pôde ser lido. Consulte as fontes oficiais abaixo.")
+                warn("O catálogo salvo não pôde ser lido. Consulte as fontes oficiais abaixo.")
         snapshot = data if isinstance(data, dict) and isinstance(data.get("systems", {}), dict) else {"systems": {}}
         if published:
             # Preserve newer local discoveries while importing the automation's
@@ -263,21 +268,21 @@ def find_live_updates(snapshot_systems, catalogs, found_at):
     return events
 
 
-def force_check_all_systems(snapshot_systems):
+def check_all_systems(load, source="manual", on_progress=None):
+    """Consulta todas as fontes e salva o catálogo local. Não usa a tela, para poder rodar em segundo plano."""
     total = len(SYSTEM_META)
-    progress = st.progress(0, text=f"Consultando 0 de {total} sistemas…")
-    status = st.empty()
     catalogs = {}
     with ThreadPoolExecutor(max_workers=min(6, total)) as executor:
         tasks = {executor.submit(fetch_official_catalog, key): key for key in SYSTEM_META}
         for completed, future in enumerate(as_completed(tasks), start=1):
             key, releases, error = future.result()
             catalogs[key] = (releases, error)
-            progress.progress(completed / total, text=f"Consultando {completed} de {total} sistemas…")
-            status.caption(f"Conferido: {SYSTEM_META[key]['label']}")
+            if on_progress:
+                on_progress(completed, total, key)
     checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    saved = True
     with CATALOG_LOCK:
-        snapshot = load_snapshot()
+        snapshot = load()
         saved_systems = snapshot.setdefault("systems", {})
         catalogs = {key: (normalize_catalog(saved_systems.get(key, {}), releases, key in COMPETENCE_SYSTEMS), error)
                     if releases else (releases, error) for key, (releases, error) in catalogs.items()}
@@ -298,14 +303,29 @@ def force_check_all_systems(snapshot_systems):
                 info["available_releases"] = releases
         snapshot["updates"] = merge_updates(snapshot.get("updates", []), events)
         failed_sources = [key for key, (releases, error) in catalogs.items() if not releases]
-        snapshot["last_check"] = {"completed_at": checked_at, "source": "manual", "total": total,
+        snapshot["last_check"] = {"completed_at": checked_at, "source": source, "total": total,
                                   "succeeded": total - len(failed_sources), "failed_systems": failed_sources}
         if any(releases for releases, _ in catalogs.values()):
             snapshot["updated_at"] = checked_at
         try:
             atomic_write(CATALOG_PATH, snapshot)
         except OSError:
-            st.warning("A consulta foi concluída, mas não foi possível salvar o catálogo neste servidor.")
+            saved = False
+    return catalogs, events, checked_at, saved
+
+
+def force_check_all_systems():
+    total = len(SYSTEM_META)
+    progress = st.progress(0, text=f"Consultando 0 de {total} sistemas…")
+    status = st.empty()
+
+    def show_progress(completed, total, key):
+        progress.progress(completed / total, text=f"Consultando {completed} de {total} sistemas…")
+        status.caption(f"Conferido: {SYSTEM_META[key]['label']}")
+
+    catalogs, events, checked_at, saved = check_all_systems(load_snapshot, on_progress=show_progress)
+    if not saved:
+        st.warning("A consulta foi concluída, mas não foi possível salvar o catálogo neste servidor.")
     st.session_state["forced_live_catalogs"] = catalogs
     st.session_state["forced_live_checked_at"] = checked_at
     st.session_state["forced_live_updates"] = events
@@ -767,22 +787,58 @@ def render_masthead(snapshot):
             st.markdown('<div class="ds-update-list">' + update_items(updates) + '</div>', unsafe_allow_html=True)
 
 
+@st.cache_resource
+def background_check():
+    # Um único controle para todos os visitantes deste servidor.
+    return BackgroundCheck()
+
+
+def start_background_check_if_stale(snapshot):
+    if os.environ.get("SITE_AUTO_CHECK") == "0" or not is_stale(snapshot):
+        return False
+    # Fora da página não há cache do Streamlit nem avisos na tela: lê o catálogo publicado direto.
+    return background_check().try_start(
+        lambda: check_all_systems(lambda: merged_snapshot(read_published_catalog()), source="site"))
+
+
+def request_force_check():
+    st.session_state["force_check_requested"] = True
+
+
+def render_stale_notice(notice, snapshot):
+    if is_stale(snapshot):
+        title = "As versões podem estar desatualizadas"
+        if background_check().running:
+            action = "O site já está conferindo as fontes oficiais sozinho e esta página se atualiza em instantes. Se tiver pressa, clique em Atualizar agora."
+        else:
+            action = "Clique em Atualizar agora para conferir as fontes oficiais."
+    else:
+        title, action = "Verificação incompleta", "Se precisar, clique em Atualizar agora para consultar as fontes de novo."
+    with st.container(key="focus_stale_notice"):
+        text, button = st.columns([5, 1.3], gap="medium", vertical_alignment="center")
+        text.markdown(f'<div class="ds-stale-notice">{ui_icon("info")}<div><strong>{escape(title)}</strong>'
+                      f'<p>{escape(notice)} {escape(action)}</p></div></div>', unsafe_allow_html=True)
+        button.button("Atualizar agora", icon=":material/sync:", key="stale_check_now", width="stretch",
+                      on_click=request_force_check)
+
+
 def render_force_check(snapshot):
     checked_at = st.session_state.get("forced_live_checked_at")
     if checked_at:
         st.caption(f"Última verificação manual, sem cache: {readable_date(checked_at)}")
     with st.container(key="focus_force_check"):
         if st.button("Verificar todos os sistemas", icon=":material/sync:", key="force_catalog_check",
-                     type="primary", width="stretch", help="Consulta agora todos os catálogos. A atualização automática a cada duas horas continua ativa."):
-            force_check_all_systems(snapshot.get("systems", {}))
+                     type="primary", width="stretch", help="Consulta agora todos os catálogos. A atualização automática a cada duas horas continua ativa.")                 or st.session_state.pop("force_check_requested", False):
+            force_check_all_systems()
             st.rerun()
 
 
 @st.fragment(run_every="60s")
 def refresh_catalog_when_changed(rendered_version, rendered_notice, rendered_updates):
     # Recarrega a página quando o catálogo, o aviso de consulta ou a janela de novidades muda.
-    # A consulta às fontes continua sendo executada pela automação, não por visitante.
+    # Uma aba aberta também dispara a consulta em segundo plano quando o agendamento atrasa.
     current = load_snapshot()
+    start_background_check_if_stale(current)
     current_updates = tuple(event["id"] for event in visible_updates(current))
     if (catalog_revision(current) != rendered_version or verification_notice(current) != rendered_notice
             or current_updates != rendered_updates):
@@ -790,6 +846,7 @@ def refresh_catalog_when_changed(rendered_version, rendered_notice, rendered_upd
 
 
 snapshot = load_snapshot()
+start_background_check_if_stale(snapshot)
 forced_at = st.session_state.get("forced_live_checked_at")
 automatic_check = snapshot.get("last_check") or {}
 if forced_at and automatic_check.get("source") == "automatic" and str(automatic_check.get("completed_at", "")) > forced_at:
@@ -801,7 +858,7 @@ systems = snapshot.get("systems", {}) if isinstance(snapshot.get("systems"), dic
 render_masthead(snapshot)
 notice = verification_notice(snapshot)
 if notice:
-    st.warning(notice)
+    render_stale_notice(notice, snapshot)
 
 render_force_check(snapshot)
 programs_tab, tables_tab, manuals_tab = st.tabs(["Programas e instaladores", "Tabelas e bases", "Manuais"])

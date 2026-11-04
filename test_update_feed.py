@@ -1,4 +1,6 @@
 """Regression checks for the seven-day announcements and their expandable list."""
+import os
+os.environ["SITE_AUTO_CHECK"] = "0"  # Testes do app não consultam as fontes em segundo plano.
 import json
 import unittest
 from datetime import datetime, timedelta, timezone
