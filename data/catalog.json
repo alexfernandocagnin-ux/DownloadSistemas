@@ -26,10 +26,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/apac-latest/APACMAG_0403.exe",
         "size": 2113348,
         "sha256": "fd3f42fc4df1b524a8200c4e33d9bc048e0383d30c79220c229b30bf90287edf",
-        "verified_at": "2026-11-06T15:54:24+00:00"
+        "verified_at": "2026-11-06T21:28:58+00:00"
       },
-      "checked_at": "2026-11-06T21:27:54+00:00",
-      "last_success_at": "2026-11-06T15:54:23+00:00",
+      "checked_at": "2026-11-06T21:28:57+00:00",
+      "last_success_at": "2026-11-06T21:28:57+00:00",
       "official_reachable": true
     },
     "ciha02": {
@@ -56,10 +56,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-latest/CIHA02_VER2035.exe",
         "size": 3329146,
         "sha256": "a11b1c608f1e7dfa82c0fe1713901f719fc0750d77349d1b37d9e5dfcac13678",
-        "verified_at": "2026-11-06T15:54:24+00:00"
+        "verified_at": "2026-11-06T21:28:58+00:00"
       },
-      "checked_at": "2026-11-06T21:27:54+00:00",
-      "last_success_at": "2026-11-06T15:54:23+00:00",
+      "checked_at": "2026-11-06T21:28:57+00:00",
+      "last_success_at": "2026-11-06T21:28:57+00:00",
       "official_reachable": true
     },
     "ciha02_installer": {
@@ -85,11 +85,11 @@
         "asset_name": "CIHA02_SETUP_20.00.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-installer-latest/CIHA02_SETUP_20.00.exe",
         "size": 16393417,
-        "verified_at": "2026-11-06T15:54:24+00:00",
+        "verified_at": "2026-11-06T21:28:58+00:00",
         "sha256": "6b738c05d560d7e55cbd46c047c022a62465b817f4ca9408bea94f4f4b81d32b"
       },
-      "checked_at": "2026-11-06T21:27:54+00:00",
-      "last_success_at": "2026-11-06T15:54:23+00:00",
+      "checked_at": "2026-11-06T21:28:57+00:00",
+      "last_success_at": "2026-11-06T21:28:57+00:00",
       "official_reachable": true
     },
     "bpa": {
@@ -116,12 +116,12 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
         "size": 7785806,
-        "verified_at": "2026-11-06T15:54:24+00:00",
+        "verified_at": "2026-11-06T21:28:58+00:00",
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-11-06T21:27:54+00:00",
-      "last_success_at": "2026-11-06T15:54:23+00:00",
+      "checked_at": "2026-11-06T21:28:57+00:00",
+      "last_success_at": "2026-11-06T21:28:57+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -149,10 +149,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0608.exe",
         "size": 7590602,
         "sha256": "25077caf24fc814de3bc311f083983d5b78c6543f66e53ced1d7c9661df17856",
-        "verified_at": "2026-11-06T15:54:24+00:00"
+        "verified_at": "2026-11-06T21:28:58+00:00"
       },
-      "checked_at": "2026-11-06T21:27:56+00:00",
-      "last_success_at": "2026-11-06T15:54:24+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
+      "last_success_at": "2026-11-06T21:28:58+00:00",
       "official_reachable": true
     },
     "fpo_installer": {
@@ -180,10 +180,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-installer-latest/FPOMAG_Instalador_0100.exe",
         "size": 6347935,
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
-        "verified_at": "2026-11-06T15:54:24+00:00"
+        "verified_at": "2026-11-06T21:28:58+00:00"
       },
-      "checked_at": "2026-11-06T21:27:56+00:00",
-      "last_success_at": "2026-11-06T15:54:24+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
+      "last_success_at": "2026-11-06T21:28:58+00:00",
       "official_reachable": true
     },
     "fpo_update": {
@@ -211,10 +211,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-update-latest/FPOMAG_Atualiza_0307.exe",
         "size": 3643059,
         "sha256": "014860e3265799b037c3e4c59342dba59eb182c0854ae4ff4ab0e8d2e6ce4565",
-        "verified_at": "2026-11-06T15:54:24+00:00"
+        "verified_at": "2026-11-06T21:28:58+00:00"
       },
-      "checked_at": "2026-11-06T21:27:57+00:00",
-      "last_success_at": "2026-11-06T15:54:24+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
+      "last_success_at": "2026-11-06T21:28:58+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -256,10 +256,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sihd2-latest/SIHD2_2350.exe",
         "size": 61725687,
         "sha256": "0fadb2083c2bff6995c067ce8cce35ddf55c92f6bbcb5cc4be6fc95e91787f4f",
-        "verified_at": "2026-11-06T15:54:24+00:00"
+        "verified_at": "2026-11-06T21:28:58+00:00"
       },
-      "checked_at": "2026-11-06T21:27:57+00:00",
-      "last_success_at": "2026-11-06T15:54:24+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
+      "last_success_at": "2026-11-06T21:28:58+00:00",
       "official_reachable": true
     },
     "cnes_app": {
@@ -286,10 +286,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-app-latest/SCNES4860-ATUALIZACAO.ZIP",
         "size": 265801288,
         "sha256": "26eff76f967742b3e6244c8d11eda5fd141e76fc1059c6f3abb6defc396221b5",
-        "verified_at": "2026-11-06T15:54:25+00:00"
+        "verified_at": "2026-11-06T21:28:58+00:00"
       },
-      "checked_at": "2026-11-06T21:27:57+00:00",
-      "last_success_at": "2026-11-06T15:54:24+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
+      "last_success_at": "2026-11-06T21:28:58+00:00",
       "official_reachable": true
     },
     "cnes_complete": {
@@ -318,7 +318,7 @@
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
         "verified_at": "2026-10-19T16:40:30+00:00"
       },
-      "checked_at": "2026-11-06T21:27:59+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
       "last_success_at": "2026-10-19T16:40:29+00:00",
       "official_reachable": true,
       "download_error": "TimeoutError"
@@ -3752,67 +3752,64 @@
           "release_date": "2026-06-16"
         },
         "202606": {
-          "name": "BDSIA202606b.exe",
+          "name": "BDSIA202606c.exe",
           "size": null,
-          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202606b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202606c.exe",
           "mirror": {
             "tag": "bdsia-202606",
-            "asset_name": "BDSIA202606b.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202606/BDSIA202606b.exe",
-            "size": 9548777,
-            "verified_at": "2026-09-29T22:11:58+00:00",
-            "sha256": "50c50c8d414b1a9dc5ea4d48b1d29a4987282208b5a3db230915d57b7729992b",
-            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
+            "asset_name": "BDSIA202606c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202606/BDSIA202606c.exe",
+            "size": 9495558,
+            "sha256": "e4fac606f31c0ee5e48b3e102f3ece403cf34aa977937fe51fd3d8594037d0b8",
+            "verified_at": "2026-11-06T21:29:57+00:00"
           },
           "catalog_source": null,
-          "release_date": "2026-07-08"
+          "release_date": "2026-11-06"
         },
         "202607": {
-          "name": "BDSIA202607b.exe",
+          "name": "BDSIA202607c.exe",
           "size": null,
-          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202607b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202607c.exe",
           "mirror": {
             "tag": "bdsia-202607",
-            "asset_name": "BDSIA202607b.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202607/BDSIA202607b.exe",
-            "size": 9755342,
-            "verified_at": "2026-09-29T22:11:58+00:00",
-            "sha256": "1494ef5d1d51ce7bf8f78de83f210d1528855e23f532c58e5ac870625576bb64",
-            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
+            "asset_name": "BDSIA202607c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202607/BDSIA202607c.exe",
+            "size": 9853362,
+            "sha256": "775321f4c15a2421b1010717c2e4c69634555d78dff72f5948c1f501d4bd5173",
+            "verified_at": "2026-11-06T21:29:43+00:00"
           },
           "catalog_source": null,
-          "release_date": "2026-08-13"
+          "release_date": "2026-11-06"
         },
         "202608": {
-          "name": "BDSIA202608b.exe",
+          "name": "BDSIA202608c.exe",
           "size": null,
-          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202608b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202608c.exe",
           "mirror": {
             "tag": "bdsia-202608",
-            "asset_name": "BDSIA202608b.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202608/BDSIA202608b.exe",
-            "size": 9683025,
-            "verified_at": "2026-09-29T22:11:58+00:00",
-            "sha256": "93508db7a088f4ec400ded712aed3b44dcffe5919bc50e1f2d18c9b8c5e4cd4e",
-            "integrity_verified_at": "2026-09-29T13:30:13+00:00"
+            "asset_name": "BDSIA202608c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202608/BDSIA202608c.exe",
+            "size": 9796568,
+            "sha256": "3b95c44e1bfbd29fe615cb9e95c3156ba0cdde1ec5c0ab7142a707122f55c672",
+            "verified_at": "2026-11-06T21:29:28+00:00"
           },
           "catalog_source": null,
-          "release_date": "2026-09-24"
+          "release_date": "2026-11-06"
         },
         "202609": {
-          "name": "BDSIA202609b.exe",
+          "name": "BDSIA202609c.exe",
           "size": null,
-          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202609b.exe",
+          "url": "ftp://arpoador.datasus.gov.br/siasus/sia/BDSIA202609c.exe",
           "mirror": {
             "tag": "bdsia-202609",
-            "asset_name": "BDSIA202609b.exe",
-            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609b.exe",
-            "size": 9961869,
-            "sha256": "2ee83a95d15ce723ecb869d5779fcc6cae5ef9af7dec26ecaba4c128bc077be8",
-            "verified_at": "2026-10-27T13:40:01+00:00"
+            "asset_name": "BDSIA202609c.exe",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202609/BDSIA202609c.exe",
+            "size": 10133462,
+            "sha256": "8930516606e7ca5187dda93f0c52f7cd8422e24a76da15f2384e181e911824cf",
+            "verified_at": "2026-11-06T21:29:14+00:00"
           },
           "catalog_source": null,
-          "release_date": "2026-10-21"
+          "release_date": "2026-11-06"
         },
         "202603": {
           "name": "BDSIA202603d.exe",
@@ -7064,14 +7061,14 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202610/BDSIA202610a.exe",
             "size": 10053024,
             "sha256": "fb5e8cd40893c2fd1630afc627eeb3a90c212859eb9552dba4f89cfe10dfe0d2",
-            "verified_at": "2026-11-06T15:54:25+00:00"
+            "verified_at": "2026-11-06T21:28:59+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-10-27"
         }
       },
-      "checked_at": "2026-11-06T21:27:59+00:00",
-      "last_success_at": "2026-11-06T21:27:59+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
+      "last_success_at": "2026-11-06T21:28:58+00:00",
       "official_reachable": true,
       "pending_competences": [],
       "download_failures": {
@@ -12784,14 +12781,14 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202611/TabelaUnificada_202611_v2611051737.zip",
             "size": 2173129,
             "sha256": "06c074c360b0d3cdb814f19a3cdb169d9456946ba691a117982fb495505dad45",
-            "verified_at": "2026-11-06T15:54:25+00:00"
+            "verified_at": "2026-11-06T21:28:59+00:00"
           },
           "catalog_source": null,
           "release_date": null
         }
       },
-      "checked_at": "2026-11-06T21:28:00+00:00",
-      "last_success_at": "2026-11-06T21:28:00+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
+      "last_success_at": "2026-11-06T21:28:58+00:00",
       "official_reachable": true,
       "pending_competences": [],
       "download_failures": {
@@ -14581,10 +14578,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/raas-latest/RAAS_0235.exe",
         "size": 1628469,
         "sha256": "d5629af115a620ad2ef247cf16c51bd6de0a9902ad4eb4e4dede3ba7e437cb46",
-        "verified_at": "2026-11-06T15:54:25+00:00"
+        "verified_at": "2026-11-06T21:28:59+00:00"
       },
-      "checked_at": "2026-11-06T21:27:59+00:00",
-      "last_success_at": "2026-11-06T15:54:24+00:00",
+      "checked_at": "2026-11-06T21:28:58+00:00",
+      "last_success_at": "2026-11-06T21:28:58+00:00",
       "official_reachable": true
     }
   },
