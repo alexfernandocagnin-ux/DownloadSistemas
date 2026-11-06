@@ -26,10 +26,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/apac-latest/APACMAG_0403.exe",
         "size": 2113348,
         "sha256": "fd3f42fc4df1b524a8200c4e33d9bc048e0383d30c79220c229b30bf90287edf",
-        "verified_at": "2026-11-05T20:16:27+00:00"
+        "verified_at": "2026-11-06T01:07:57+00:00"
       },
-      "checked_at": "2026-11-06T01:06:58+00:00",
-      "last_success_at": "2026-11-05T20:16:26+00:00",
+      "checked_at": "2026-11-06T01:07:56+00:00",
+      "last_success_at": "2026-11-06T01:07:56+00:00",
       "official_reachable": true
     },
     "ciha02": {
@@ -43,25 +43,24 @@
       "catalog_checked_at": "2026-11-06T01:06:58+00:00",
       "catalog_attempt_at": "2026-11-06T01:06:58+00:00",
       "catalog_check_error": null,
-      "pending_download": true,
+      "pending_download": false,
       "current": {
-        "name": "CIHA02_VER2034.exe",
+        "name": "CIHA02_VER2035.exe",
         "size": null,
-        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2034.exe",
+        "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2035.exe",
         "release_date": null
       },
       "mirror": {
         "tag": "ciha02-latest",
-        "asset_name": "CIHA02_VER2034.exe",
-        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-latest/CIHA02_VER2034.exe",
-        "size": 3330491,
-        "verified_at": "2026-11-05T12:15:17+00:00",
-        "sha256": "8d762dd16670530ee31cb28a5cdb35a14a66f828eee874da33305f97dc8ec2be"
+        "asset_name": "CIHA02_VER2035.exe",
+        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-latest/CIHA02_VER2035.exe",
+        "size": 3329146,
+        "sha256": "a11b1c608f1e7dfa82c0fe1713901f719fc0750d77349d1b37d9e5dfcac13678",
+        "verified_at": "2026-11-06T01:08:03+00:00"
       },
-      "checked_at": "2026-11-06T01:06:58+00:00",
-      "last_success_at": "2026-11-05T12:15:16+00:00",
-      "official_reachable": true,
-      "download_error": "OSError"
+      "checked_at": "2026-11-06T01:07:56+00:00",
+      "last_success_at": "2026-11-06T01:07:56+00:00",
+      "official_reachable": true
     },
     "ciha02_installer": {
       "label": "CIHA02 · instalação inicial",
@@ -86,11 +85,11 @@
         "asset_name": "CIHA02_SETUP_20.00.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/ciha02-installer-latest/CIHA02_SETUP_20.00.exe",
         "size": 16393417,
-        "verified_at": "2026-11-05T20:16:27+00:00",
+        "verified_at": "2026-11-06T01:07:57+00:00",
         "sha256": "6b738c05d560d7e55cbd46c047c022a62465b817f4ca9408bea94f4f4b81d32b"
       },
-      "checked_at": "2026-11-06T01:06:58+00:00",
-      "last_success_at": "2026-11-05T20:16:26+00:00",
+      "checked_at": "2026-11-06T01:07:56+00:00",
+      "last_success_at": "2026-11-06T01:07:56+00:00",
       "official_reachable": true
     },
     "bpa": {
@@ -117,12 +116,12 @@
         "asset_name": "BPAMAG0500.exe",
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bpa-latest/BPAMAG0500.exe",
         "size": 7785806,
-        "verified_at": "2026-11-05T20:16:27+00:00",
+        "verified_at": "2026-11-06T01:07:57+00:00",
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-11-06T01:06:58+00:00",
-      "last_success_at": "2026-11-05T20:16:26+00:00",
+      "checked_at": "2026-11-06T01:07:56+00:00",
+      "last_success_at": "2026-11-06T01:07:56+00:00",
       "official_reachable": true
     },
     "sia": {
@@ -150,10 +149,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sia-latest/SIA0608.exe",
         "size": 7590602,
         "sha256": "25077caf24fc814de3bc311f083983d5b78c6543f66e53ced1d7c9661df17856",
-        "verified_at": "2026-11-05T20:16:27+00:00"
+        "verified_at": "2026-11-06T01:07:57+00:00"
       },
-      "checked_at": "2026-11-06T01:06:59+00:00",
-      "last_success_at": "2026-11-05T20:16:27+00:00",
+      "checked_at": "2026-11-06T01:07:57+00:00",
+      "last_success_at": "2026-11-06T01:07:57+00:00",
       "official_reachable": true
     },
     "fpo_installer": {
@@ -181,10 +180,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-installer-latest/FPOMAG_Instalador_0100.exe",
         "size": 6347935,
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
-        "verified_at": "2026-11-05T20:16:27+00:00"
+        "verified_at": "2026-11-06T01:07:57+00:00"
       },
-      "checked_at": "2026-11-06T01:06:59+00:00",
-      "last_success_at": "2026-11-05T20:16:27+00:00",
+      "checked_at": "2026-11-06T01:07:57+00:00",
+      "last_success_at": "2026-11-06T01:07:57+00:00",
       "official_reachable": true
     },
     "fpo_update": {
@@ -212,10 +211,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/fpo-update-latest/FPOMAG_Atualiza_0307.exe",
         "size": 3643059,
         "sha256": "014860e3265799b037c3e4c59342dba59eb182c0854ae4ff4ab0e8d2e6ce4565",
-        "verified_at": "2026-11-05T20:16:27+00:00"
+        "verified_at": "2026-11-06T01:07:57+00:00"
       },
-      "checked_at": "2026-11-06T01:07:00+00:00",
-      "last_success_at": "2026-11-05T20:16:27+00:00",
+      "checked_at": "2026-11-06T01:07:57+00:00",
+      "last_success_at": "2026-11-06T01:07:57+00:00",
       "official_reachable": true
     },
     "sihd2": {
@@ -257,10 +256,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sihd2-latest/SIHD2_2350.exe",
         "size": 61725687,
         "sha256": "0fadb2083c2bff6995c067ce8cce35ddf55c92f6bbcb5cc4be6fc95e91787f4f",
-        "verified_at": "2026-11-05T20:16:28+00:00"
+        "verified_at": "2026-11-06T01:07:57+00:00"
       },
-      "checked_at": "2026-11-06T01:07:01+00:00",
-      "last_success_at": "2026-11-05T20:16:27+00:00",
+      "checked_at": "2026-11-06T01:07:57+00:00",
+      "last_success_at": "2026-11-06T01:07:57+00:00",
       "official_reachable": true
     },
     "cnes_app": {
@@ -287,10 +286,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/cnes-app-latest/SCNES4860-ATUALIZACAO.ZIP",
         "size": 265801288,
         "sha256": "26eff76f967742b3e6244c8d11eda5fd141e76fc1059c6f3abb6defc396221b5",
-        "verified_at": "2026-11-05T20:16:28+00:00"
+        "verified_at": "2026-11-06T01:07:57+00:00"
       },
-      "checked_at": "2026-11-06T01:07:01+00:00",
-      "last_success_at": "2026-11-05T20:16:27+00:00",
+      "checked_at": "2026-11-06T01:07:57+00:00",
+      "last_success_at": "2026-11-06T01:07:57+00:00",
       "official_reachable": true
     },
     "cnes_complete": {
@@ -319,10 +318,10 @@
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
         "verified_at": "2026-10-19T16:40:30+00:00"
       },
-      "checked_at": "2026-11-06T01:07:02+00:00",
+      "checked_at": "2026-11-06T01:07:57+00:00",
       "last_success_at": "2026-10-19T16:40:29+00:00",
       "official_reachable": true,
-      "download_error": "URLError"
+      "download_error": "TimeoutError"
     },
     "bdsia": {
       "label": "Tabela mensal do SIA (BDSIA)",
@@ -7065,34 +7064,38 @@
             "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/bdsia-202610/BDSIA202610a.exe",
             "size": 10053024,
             "sha256": "fb5e8cd40893c2fd1630afc627eeb3a90c212859eb9552dba4f89cfe10dfe0d2",
-            "verified_at": "2026-11-05T20:16:28+00:00"
+            "verified_at": "2026-11-06T01:07:58+00:00"
           },
           "catalog_source": null,
           "release_date": "2026-10-27"
         }
       },
-      "checked_at": "2026-11-06T01:07:03+00:00",
-      "last_success_at": "2026-11-06T01:07:03+00:00",
+      "checked_at": "2026-11-06T01:07:57+00:00",
+      "last_success_at": "2026-11-06T01:07:57+00:00",
       "official_reachable": true,
-      "pending_competences": [],
+      "pending_competences": [
+        "200803",
+        "200802",
+        "200801"
+      ],
       "download_failures": {
         "200803": {
           "name": "BDSIA200803b.EXE",
           "error": "OSError",
-          "attempted_at": "2026-11-04T23:38:21+00:00",
-          "retry_after": "2026-11-05T23:38:21+00:00"
+          "attempted_at": "2026-11-06T01:08:04+00:00",
+          "retry_after": "2026-11-07T01:08:04+00:00"
         },
         "200802": {
           "name": "BDSIA200802e.EXE",
           "error": "OSError",
-          "attempted_at": "2026-11-04T23:38:29+00:00",
-          "retry_after": "2026-11-05T23:38:29+00:00"
+          "attempted_at": "2026-11-06T01:08:10+00:00",
+          "retry_after": "2026-11-07T01:08:10+00:00"
         },
         "200801": {
           "name": "BDSIA200801g.EXE",
           "error": "OSError",
-          "attempted_at": "2026-11-04T23:38:37+00:00",
-          "retry_after": "2026-11-05T23:38:37+00:00"
+          "attempted_at": "2026-11-06T01:08:15+00:00",
+          "retry_after": "2026-11-07T01:08:15+00:00"
         }
       }
     },
@@ -7103,7 +7106,15 @@
         "name": "TabelaUnificada_202611_v2611051737.zip",
         "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202611_v2611051737.zip",
         "competence": "202611",
-        "revision": "2611051737"
+        "revision": "2611051737",
+        "mirror": {
+          "tag": "sigtap-202611",
+          "asset_name": "TabelaUnificada_202611_v2611051737.zip",
+          "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202611/TabelaUnificada_202611_v2611051737.zip",
+          "size": 2173129,
+          "sha256": "06c074c360b0d3cdb814f19a3cdb169d9456946ba691a117982fb495505dad45",
+          "verified_at": "2026-11-06T01:08:05+00:00"
+        }
       },
       "catalog_checked_at": "2026-11-06T01:07:04+00:00",
       "catalog_attempt_at": "2026-11-06T01:07:04+00:00",
@@ -7113,13 +7124,20 @@
           "name": "TabelaUnificada_202611_v2611051737.zip",
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202611_v2611051737.zip",
           "competence": "202611",
-          "revision": "2611051737"
+          "revision": "2611051737",
+          "mirror": {
+            "tag": "sigtap-202611",
+            "asset_name": "TabelaUnificada_202611_v2611051737.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202611/TabelaUnificada_202611_v2611051737.zip",
+            "size": 2173129,
+            "sha256": "06c074c360b0d3cdb814f19a3cdb169d9456946ba691a117982fb495505dad45",
+            "verified_at": "2026-11-06T01:08:05+00:00"
+          }
         },
         {
           "name": "TabelaUnificada_202610_v2610271043.zip",
+          "size": 2163764,
           "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202610_v2610271043.zip",
-          "competence": "202610",
-          "revision": "2610271043",
           "mirror": {
             "tag": "sigtap-202610",
             "asset_name": "TabelaUnificada_202610_v2610141831.zip",
@@ -7128,8 +7146,9 @@
             "sha256": "0ef20224558fe1566db31ca9e0c5002a72c7fa941b06a7e48e6dd2b79962c064",
             "verified_at": "2026-10-15T08:38:27+00:00"
           },
-          "size": 2163764,
-          "catalog_source": "community"
+          "catalog_source": "community",
+          "competence": "202610",
+          "revision": "2610271043"
         },
         {
           "name": "TabelaUnificada_202609_v2610261311.zip",
@@ -12758,102 +12777,133 @@
           },
           "catalog_source": "community",
           "release_date": null
+        },
+        "202611": {
+          "name": "TabelaUnificada_202611_v2611051737.zip",
+          "size": null,
+          "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202611_v2611051737.zip",
+          "mirror": {
+            "tag": "sigtap-202611",
+            "asset_name": "TabelaUnificada_202611_v2611051737.zip",
+            "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/sigtap-202611/TabelaUnificada_202611_v2611051737.zip",
+            "size": 2173129,
+            "sha256": "06c074c360b0d3cdb814f19a3cdb169d9456946ba691a117982fb495505dad45",
+            "verified_at": "2026-11-06T01:08:05+00:00"
+          },
+          "catalog_source": null,
+          "release_date": null
         }
       },
-      "checked_at": "2026-11-06T01:07:04+00:00",
-      "last_success_at": "2026-11-06T01:07:04+00:00",
+      "checked_at": "2026-11-06T01:07:58+00:00",
+      "last_success_at": "2026-11-06T01:07:58+00:00",
       "official_reachable": true,
-      "pending_competences": [],
+      "pending_competences": [
+        "201106",
+        "201011",
+        "201010",
+        "201009",
+        "201008",
+        "201007",
+        "201006",
+        "201005",
+        "201004",
+        "201003",
+        "201002",
+        "201001",
+        "200912",
+        "200911",
+        "200910"
+      ],
       "download_failures": {
         "201106": {
           "name": "TabelaUnificada_201106_v1106071108.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:14+00:00",
-          "retry_after": "2026-11-05T23:38:14+00:00"
+          "attempted_at": "2026-11-06T01:08:08+00:00",
+          "retry_after": "2026-11-07T01:08:08+00:00"
         },
         "201011": {
           "name": "TabelaUnificada_201011_v1012021720.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:18+00:00",
-          "retry_after": "2026-11-05T23:38:18+00:00"
+          "attempted_at": "2026-11-06T01:08:12+00:00",
+          "retry_after": "2026-11-07T01:08:12+00:00"
         },
         "201010": {
           "name": "TabelaUnificada_201010_v1010261701.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:23+00:00",
-          "retry_after": "2026-11-05T23:38:23+00:00"
+          "attempted_at": "2026-11-06T01:08:15+00:00",
+          "retry_after": "2026-11-07T01:08:15+00:00"
         },
         "201009": {
           "name": "TabelaUnificada_201009_v1010261656.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:29+00:00",
-          "retry_after": "2026-11-05T23:38:29+00:00"
+          "attempted_at": "2026-11-06T01:08:18+00:00",
+          "retry_after": "2026-11-07T01:08:18+00:00"
         },
         "201008": {
           "name": "TabelaUnificada_201008_v1008191716.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:34+00:00",
-          "retry_after": "2026-11-05T23:38:34+00:00"
+          "attempted_at": "2026-11-06T01:08:21+00:00",
+          "retry_after": "2026-11-07T01:08:21+00:00"
         },
         "201007": {
           "name": "TabelaUnificada_201007_v1007191802.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:39+00:00",
-          "retry_after": "2026-11-05T23:38:39+00:00"
+          "attempted_at": "2026-11-06T01:08:25+00:00",
+          "retry_after": "2026-11-07T01:08:25+00:00"
         },
         "201006": {
           "name": "TabelaUnificada_201006_v1006151030.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:44+00:00",
-          "retry_after": "2026-11-05T23:38:44+00:00"
+          "attempted_at": "2026-11-06T01:08:28+00:00",
+          "retry_after": "2026-11-07T01:08:28+00:00"
         },
         "201005": {
           "name": "TabelaUnificada_201005_v1004301524.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:48+00:00",
-          "retry_after": "2026-11-05T23:38:48+00:00"
+          "attempted_at": "2026-11-06T01:08:31+00:00",
+          "retry_after": "2026-11-07T01:08:31+00:00"
         },
         "201004": {
           "name": "TabelaUnificada_201004_v1004091047.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:38:56+00:00",
-          "retry_after": "2026-11-05T23:38:56+00:00"
+          "attempted_at": "2026-11-06T01:08:35+00:00",
+          "retry_after": "2026-11-07T01:08:35+00:00"
         },
         "201003": {
           "name": "TabelaUnificada_201003_v1003301549.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:39:07+00:00",
-          "retry_after": "2026-11-05T23:39:07+00:00"
+          "attempted_at": "2026-11-06T01:08:38+00:00",
+          "retry_after": "2026-11-07T01:08:38+00:00"
         },
         "201002": {
           "name": "TabelaUnificada_201002_v1003021002.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:39:11+00:00",
-          "retry_after": "2026-11-05T23:39:11+00:00"
+          "attempted_at": "2026-11-06T01:08:41+00:00",
+          "retry_after": "2026-11-07T01:08:41+00:00"
         },
         "201001": {
           "name": "TabelaUnificada_201001_v1002101002.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:39:23+00:00",
-          "retry_after": "2026-11-05T23:39:23+00:00"
+          "attempted_at": "2026-11-06T01:08:45+00:00",
+          "retry_after": "2026-11-07T01:08:45+00:00"
         },
         "200912": {
           "name": "TabelaUnificada_200912_v1001071408.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:39:28+00:00",
-          "retry_after": "2026-11-05T23:39:28+00:00"
+          "attempted_at": "2026-11-06T01:08:49+00:00",
+          "retry_after": "2026-11-07T01:08:49+00:00"
         },
         "200911": {
           "name": "TabelaUnificada_200911_v0912161011.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:39:32+00:00",
-          "retry_after": "2026-11-05T23:39:32+00:00"
+          "attempted_at": "2026-11-06T01:08:52+00:00",
+          "retry_after": "2026-11-07T01:08:52+00:00"
         },
         "200910": {
           "name": "TabelaUnificada_200910_v0911101613.zip",
           "error": "HTTPError",
-          "attempted_at": "2026-11-04T23:39:39+00:00",
-          "retry_after": "2026-11-05T23:39:39+00:00"
+          "attempted_at": "2026-11-06T01:08:56+00:00",
+          "retry_after": "2026-11-07T01:08:56+00:00"
         },
         "200909": {
           "name": "TabelaUnificada_200909_v0910021614.zip",
@@ -14551,10 +14601,10 @@
         "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/raas-latest/RAAS_0235.exe",
         "size": 1628469,
         "sha256": "d5629af115a620ad2ef247cf16c51bd6de0a9902ad4eb4e4dede3ba7e437cb46",
-        "verified_at": "2026-11-05T20:16:28+00:00"
+        "verified_at": "2026-11-06T01:07:58+00:00"
       },
-      "checked_at": "2026-11-06T01:07:03+00:00",
-      "last_success_at": "2026-11-05T20:16:28+00:00",
+      "checked_at": "2026-11-06T01:07:57+00:00",
+      "last_success_at": "2026-11-06T01:07:57+00:00",
       "official_reachable": true
     }
   },
