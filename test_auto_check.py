@@ -81,12 +81,12 @@ class StaleNoticeTests(unittest.TestCase):
                     (fpo_portal, "fetch_fpo_installer_catalog"), (fpo_portal, "fetch_fpo_update_catalog"),
                     (sihd_portal, "fetch_sihd2_catalog"), (cnes_portal, "fetch_cnes_complete_catalog"),
                     (cnes_portal, "fetch_cnes_app_catalog"), (sigtap_portal, "fetch_sigtap_catalog"),
-                    (raas_portal, "fetch_raas_catalog")]
+                    (raas_portal, "fetch_raas_installer_catalog"), (raas_portal, "fetch_raas_update_catalog")]
         path = Path(__file__).parent / "data" / "catalog.json"
         original = path.read_bytes()
         late = json.loads(original)
         late["last_check"] = {"completed_at": "2026-01-01T00:00:00+00:00", "source": "automatic",
-                              "succeeded": 13, "total": 13, "failed_systems": []}
+                              "succeeded": 14, "total": 14, "failed_systems": []}
         late["updated_at"] = "2026-01-01T00:00:00+00:00"
         try:
             path.write_text(json.dumps(late), encoding="utf-8")

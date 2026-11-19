@@ -14582,37 +14582,6 @@
       "last_success_at": "2026-10-06T16:18:48+00:00",
       "official_reachable": true,
       "pending_competences": []
-    },
-    "raas": {
-      "label": "RAAS (instalador)",
-      "official_page": "https://sia.datasus.gov.br/versao/listar_ftp_raas.php",
-      "latest": {
-        "name": "RAAS_0235.exe",
-        "url": "ftp://arpoador.datasus.gov.br/siasus/raas/RAAS_0235.exe",
-        "version": "0235",
-        "release_date": "2026-05-08"
-      },
-      "catalog_checked_at": "2026-11-19T11:31:04+00:00",
-      "catalog_attempt_at": "2026-11-19T11:31:04+00:00",
-      "catalog_check_error": null,
-      "pending_download": false,
-      "current": {
-        "name": "RAAS_0235.exe",
-        "size": null,
-        "url": "ftp://arpoador.datasus.gov.br/siasus/raas/RAAS_0235.exe",
-        "release_date": "2026-05-08"
-      },
-      "mirror": {
-        "tag": "raas-latest",
-        "asset_name": "RAAS_0235.exe",
-        "asset_url": "https://github.com/alexfernandocagnin-ux/DownloadSistemas/releases/download/raas-latest/RAAS_0235.exe",
-        "size": 1628469,
-        "sha256": "d5629af115a620ad2ef247cf16c51bd6de0a9902ad4eb4e4dede3ba7e437cb46",
-        "verified_at": "2026-11-19T11:32:30+00:00"
-      },
-      "checked_at": "2026-11-19T11:32:30+00:00",
-      "last_success_at": "2026-11-19T11:32:30+00:00",
-      "official_reachable": true
     }
   },
   "updates": [

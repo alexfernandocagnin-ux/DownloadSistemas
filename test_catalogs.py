@@ -19,16 +19,19 @@ class AddedSystemsTests(unittest.TestCase):
         self.assertEqual([r["name"] for r in releases], ["APACMAG_0402.exe", "APACMAG_0401.exe"])
         self.assertEqual(releases[0]["release_date"], "2026-09-24")
 
-    def test_raas_keeps_only_current_installer_without_trailing_space(self):
-        # A listagem oficial termina cada link com espaço e mistura versões "Mob" abandonadas.
-        names = ["RAAS_0234.exe", "RAAS_0235.exe", "RAASAD-Mob_Install.exe", "RAS_Mob_DESK_V1.2.0.exe", "lerNotas.txt"]
+    def test_raas_separates_installer_and_update_and_drops_legacy_files(self):
+        # A listagem oficial termina cada link com espaço e mistura o RAAS antigo e versões "Mob" abandonadas.
+        names = ["RAAS_0235.exe", "RAAS3_SETUP_0300.exe", "RAAS3_ATUALIZA_0302.exe", "RAAS3_ATUALIZA_0303.exe",
+                 "RAASAD-Mob_Install.exe", "RAS_Mob_DESK_V1.2.0.exe", "raas_leiame.txt"]
         entries = [{"name": name, "url": f"ftp://arpoador.datasus.gov.br/siasus/raas/{name} ",
-                    "release_date": "2026-05-08"} for name in names]
+                    "release_date": "2026-11-11"} for name in names]
         with patch.object(raas_portal, "fetch_index_entries", return_value=entries):
-            releases = raas_portal.fetch_raas_catalog()
-        self.assertEqual([r["name"] for r in releases], ["RAAS_0235.exe", "RAAS_0234.exe"])
-        self.assertEqual(releases[0]["url"], "ftp://arpoador.datasus.gov.br/siasus/raas/RAAS_0235.exe")
-        self.assertEqual(releases[0]["version"], "0235")
+            installers = raas_portal.fetch_raas_installer_catalog()
+            updates = raas_portal.fetch_raas_update_catalog()
+        self.assertEqual([r["name"] for r in installers], ["RAAS3_SETUP_0300.exe"])
+        self.assertEqual([r["name"] for r in updates], ["RAAS3_ATUALIZA_0303.exe", "RAAS3_ATUALIZA_0302.exe"])
+        self.assertEqual(updates[0]["url"], "ftp://arpoador.datasus.gov.br/siasus/raas/RAAS3_ATUALIZA_0303.exe")
+        self.assertEqual(updates[0]["version"], "0303")
 
     def test_ciha_separates_module_update_and_initial_installation(self):
         names = ["CIHA01_VER2033.exe", "CIHA01_SETUP_20.00.exe", "CIHA02_VER2034.exe"]

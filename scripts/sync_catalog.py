@@ -100,12 +100,19 @@ SINGLE_VERSION_SYSTEMS = {
         "download": cnes_portal.download_app_release,
         "tag": "cnes-complete-latest",
     },
-    "raas": {
-        "label": "RAAS (instalador)",
+    "raas_installer": {
+        "label": "RAAS (instalação inicial)",
         "official_page": raas_portal.INDEX_URL,
-        "fetch": raas_portal.fetch_raas_catalog,
+        "fetch": raas_portal.fetch_raas_installer_catalog,
         "download": raas_portal.download_release,
-        "tag": "raas-latest",
+        "tag": "raas-installer-latest",
+    },
+    "raas_update": {
+        "label": "RAAS (atualização)",
+        "official_page": raas_portal.INDEX_URL,
+        "fetch": raas_portal.fetch_raas_update_catalog,
+        "download": raas_portal.download_release,
+        "tag": "raas-update-latest",
     },
 }
 

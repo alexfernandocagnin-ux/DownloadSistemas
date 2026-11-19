@@ -1,7 +1,9 @@
-"""Instalador do RAAS na listagem oficial do SIA.
+"""Instalação inicial e atualização do RAAS na listagem oficial do SIA.
 
-A mesma pasta guarda versões "Mob"/"AD" de 2012–2013, abandonadas; só o
-instalador RAAS_<versão>.exe entra no catálogo.
+Desde o RAAS 3 o DATASUS publica um instalador (RAAS3_SETUP_<versão>.exe) e
+uma atualização a aplicar sobre ele (RAAS3_ATUALIZA_<versão>.exe). A mesma
+pasta guarda o antigo RAAS_<versão>.exe e versões "Mob"/"AD" de 2012–2013,
+que ficam fora do catálogo.
 """
 
 import re
@@ -15,7 +17,8 @@ from catalogs._common import (
 INDEX_URL = "https://sia.datasus.gov.br/versao/listar_ftp_raas.php"
 FTP_HOSTS = frozenset({"arpoador.datasus.gov.br", "ftp.datasus.gov.br"})
 FTP_DIRECTORY = "/siasus/raas"
-FILE_PATTERN = re.compile(r"RAAS_(\d{4})\.exe", re.IGNORECASE)
+INSTALLER_PATTERN = re.compile(r"RAAS(\d+)_SETUP_(\d{4})\.exe", re.IGNORECASE)
+UPDATE_PATTERN = re.compile(r"RAAS(\d+)_ATUALIZA_(\d{4})\.exe", re.IGNORECASE)
 
 
 def safe_url(url, name):
@@ -23,7 +26,7 @@ def safe_url(url, name):
                              ftp_hosts=FTP_HOSTS, ftp_path_prefix=FTP_DIRECTORY + "/")
 
 
-def _matching_releases(entries):
+def _matching_releases(entries, pattern):
     releases = []
     for entry in entries:
         try:
@@ -32,16 +35,16 @@ def _matching_releases(entries):
             name = unquote(urlsplit(url).path.rsplit("/", 1)[-1])
         except ValueError:
             continue
-        match = FILE_PATTERN.fullmatch(name)
+        match = pattern.fullmatch(name)
         if match and safe_url(url, name):
-            releases.append({"name": name, "url": url, "size": entry.get("size"),
-                             "version": match.group(1), "release_date": entry.get("release_date")})
+            releases.append({"name": name, "url": url, "size": entry.get("size"), "major": int(match.group(1)),
+                             "version": match.group(2), "release_date": entry.get("release_date")})
     return releases
 
 
-def fetch_raas_catalog():
+def _fetch_catalog(pattern, kind):
     try:
-        releases = _matching_releases(fetch_index_entries(INDEX_URL))
+        releases = _matching_releases(fetch_index_entries(INDEX_URL), pattern)
     except (OSError, ValueError):
         releases = []
     if not releases:
@@ -53,14 +56,22 @@ def fetch_raas_catalog():
             except OSError as exc:
                 last_error = exc
                 continue
-            releases = _matching_releases(entries)
+            releases = _matching_releases(entries, pattern)
             if releases:
                 break
         if not releases and last_error is not None:
-            raise OSError("Não foi possível obter instaladores oficiais do RAAS pelos servidores FTP.") from last_error
+            raise OSError(f"Não foi possível obter {kind} oficial do RAAS pelos servidores FTP.") from last_error
     if not releases:
-        raise ValueError("Nenhum instalador oficial do RAAS foi encontrado.")
-    return sorted(releases, key=lambda item: item["version"], reverse=True)
+        raise ValueError(f"Nenhum(a) {kind} oficial do RAAS foi encontrado(a).")
+    return sorted(releases, key=lambda item: (item["major"], item["version"]), reverse=True)
+
+
+def fetch_raas_installer_catalog():
+    return _fetch_catalog(INSTALLER_PATTERN, "instalador")
+
+
+def fetch_raas_update_catalog():
+    return _fetch_catalog(UPDATE_PATTERN, "atualização")
 
 
 def download_release(release):

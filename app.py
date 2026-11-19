@@ -92,9 +92,14 @@ SYSTEM_META: dict[str, dict[str, object]] = {
         "download_with_source": sigtap_portal.download_release_with_source,
         "official_page": sigtap_portal.DOWNLOAD_PAGE,
     },
-    "raas": {
-        "label": "RAAS (instalador)", "icon": "🧠",
-        "fetch": raas_portal.fetch_raas_catalog, "download": raas_portal.download_release,
+    "raas_installer": {
+        "label": "RAAS · instalação inicial", "icon": "🧠",
+        "fetch": raas_portal.fetch_raas_installer_catalog, "download": raas_portal.download_release,
+        "official_page": raas_portal.INDEX_URL,
+    },
+    "raas_update": {
+        "label": "RAAS · atualização atual", "icon": "🔄",
+        "fetch": raas_portal.fetch_raas_update_catalog, "download": raas_portal.download_release,
         "official_page": raas_portal.INDEX_URL,
     },
 }
@@ -367,7 +372,8 @@ def render_download_button(system_key, name, url, mirror, manual=None):
     if cached and cached.get("identity") != identity:
         st.session_state.pop(state_key, None)
         cached = None
-    action = "manual" if manual else {"fpo_update": "atualização FPO", "fpo_installer": "instalador base FPO"}.get(system_key.removesuffix("_backup"), "arquivo")
+    action = "manual" if manual else {"fpo_update": "atualização FPO", "fpo_installer": "instalador base FPO",
+                                         "raas_update": "atualização RAAS", "raas_installer": "instalador RAAS"}.get(system_key.removesuffix("_backup"), "arquivo")
     if not cached and st.button(f"Preparar {action} para baixar", key=f"prep_{system_key}_{name}", width="stretch", type="primary"):
         loading = st.empty()
         render_loading_card(loading, "Iniciando a verificação do arquivo.")
@@ -425,6 +431,8 @@ PACKAGE_COPY = {
     "cnes_app": ("Atualização", "Para quem já possui o SCNES instalado."),
     "fpo_installer": ("Instalação inicial", "Instale a base do FPO e depois aplique a atualização atual."),
     "fpo_update": ("Atualização", "Para o FPO Magnético já instalado."),
+    "raas_installer": ("Instalação inicial", "Instale o RAAS 3 e depois aplique a atualização atual."),
+    "raas_update": ("Atualização", "Para o RAAS 3 já instalado."),
     "ciha02_installer": ("Instalação inicial", "Inclui banco de dados vazio. Preserve a base de uma instalação existente."),
     "ciha02": ("Atualização", "Para quem já possui o CIHA02 instalado."),
 }
@@ -607,8 +615,9 @@ PROGRAM_GROUPS = {
     "cnes": {"label": "CNES / SCNES", "icon": "hospital", "tone": "blue", "packages": ("cnes_complete", "cnes_app"),
              "description": "Cadastro Nacional de Estabelecimentos de Saúde. Aplicativo para cadastramento e manutenção das informações dos estabelecimentos.",
              "note": "Escolha instalação completa para começar ou atualização para o sistema já instalado. O Firebird é necessário para o funcionamento do SCNES."},
-    "raas": {"label": "RAAS", "icon": "file", "tone": "purple", "packages": ("raas",),
-             "description": "Registro das Ações Ambulatoriais de Saúde, usado na atenção psicossocial e na atenção domiciliar. Instalador disponível na listagem oficial do SIA."},
+    "raas": {"label": "RAAS", "icon": "file", "tone": "purple", "packages": ("raas_installer", "raas_update"),
+             "description": "Registro das Ações Ambulatoriais de Saúde, usado na atenção psicossocial e na atenção domiciliar. Escolha a instalação inicial ou a atualização para o sistema em uso.",
+             "note": "Na primeira instalação, instale o RAAS 3 e depois aplique a atualização mais recente."},
 }
 TABLE_GROUPS = {
     "bdsia": {"label": "SIA · Tabela mensal", "icon": "database", "tone": "blue",
