@@ -682,7 +682,7 @@ def render_programs(snapshot_systems):
                **PROGRAM_GROUPS}
     navigation, details = st.columns([1, 2.8], gap="medium")
     with navigation:
-        selected = render_system_picker("program", choices, snapshot_systems, "cnes")
+        selected = render_system_picker("program", choices, snapshot_systems, "")
     with details, st.container(key="focus_detail_programs"):
         for index, system_key in enumerate((selected,) if selected else PROGRAM_GROUPS):
             if index:

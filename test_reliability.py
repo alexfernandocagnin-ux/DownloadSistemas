@@ -285,6 +285,15 @@ class PortalTests(unittest.TestCase):
         app.session_state["program_system"] = program
         return app
 
+    def test_home_starts_on_all_programs_including_both_raas_files(self):
+        from streamlit.testing.v1 import AppTest
+        app = AppTest.from_file(str(Path(__file__).parent / "app.py"), default_timeout=20).run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.session_state["program_system"], "")
+        keys = [str(button.key) for button in app.button]
+        self.assertTrue(any(key.startswith("prep_raas_installer_") for key in keys))
+        self.assertTrue(any(key.startswith("prep_raas_update_") for key in keys))
+
     def test_home_opens_without_any_official_request(self):
         with patch("catalogs.bpa_portal.fetch_bpa_catalog", side_effect=AssertionError("official request")):
             app = self.app(program="cnes").run()
