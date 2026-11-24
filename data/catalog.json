@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-24T10:23:38+00:00",
+  "updated_at": "2026-11-24T20:52:30+00:00",
   "systems": {
     "apac": {
       "label": "APAC Magnético",
@@ -10,8 +10,8 @@
         "version": "0404",
         "release_date": "2026-11-23"
       },
-      "catalog_checked_at": "2026-11-24T10:23:33+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:33+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:20+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:20+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -28,7 +28,7 @@
         "sha256": "969d61da94e534b28d37904aad73c7fda52472e900848c9595c222be2fe576b6",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:36+00:00",
+      "checked_at": "2026-11-24T20:52:20+00:00",
       "last_success_at": "2026-11-24T10:24:36+00:00",
       "official_reachable": true
     },
@@ -40,8 +40,8 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_VER2036.exe",
         "version": "2036"
       },
-      "catalog_checked_at": "2026-11-24T10:23:33+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:33+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:20+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:20+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -58,7 +58,7 @@
         "sha256": "9eaed8859e9f3565d077b3af5e82362231f6b40adf9fd6468787a474abd47435",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:36+00:00",
+      "checked_at": "2026-11-24T20:52:20+00:00",
       "last_success_at": "2026-11-24T10:24:36+00:00",
       "official_reachable": true
     },
@@ -70,8 +70,8 @@
         "url": "ftp://ftp2.datasus.gov.br/public/sistemas/dsweb/SIHD/CIHA/Programas/CIHA02_SETUP_20.00.exe",
         "version": "2000"
       },
-      "catalog_checked_at": "2026-11-24T10:23:33+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:33+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:20+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:20+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -88,7 +88,7 @@
         "verified_at": "2026-11-24T10:24:37+00:00",
         "sha256": "6b738c05d560d7e55cbd46c047c022a62465b817f4ca9408bea94f4f4b81d32b"
       },
-      "checked_at": "2026-11-24T10:24:36+00:00",
+      "checked_at": "2026-11-24T20:52:20+00:00",
       "last_success_at": "2026-11-24T10:24:36+00:00",
       "official_reachable": true
     },
@@ -101,8 +101,8 @@
         "version": "0500",
         "release_date": "2026-07-09"
       },
-      "catalog_checked_at": "2026-11-24T10:23:33+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:33+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:20+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:20+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -120,7 +120,7 @@
         "sha256": "a8e8abc9ebc47e3deaf651a88286283361381ed013ff08c5d74290d846ab2d2c",
         "integrity_verified_at": "2026-09-29T13:30:13+00:00"
       },
-      "checked_at": "2026-11-24T10:24:36+00:00",
+      "checked_at": "2026-11-24T20:52:20+00:00",
       "last_success_at": "2026-11-24T10:24:36+00:00",
       "official_reachable": true
     },
@@ -133,8 +133,8 @@
         "version": "0609",
         "release_date": "2026-11-21"
       },
-      "catalog_checked_at": "2026-11-24T10:23:34+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:34+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:21+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:21+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -151,7 +151,7 @@
         "sha256": "94f87faf26dfb59aee5a075895084e4ffd270d5fc7196e8ce054eb403ce1d462",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:21+00:00",
       "last_success_at": "2026-11-24T10:24:37+00:00",
       "official_reachable": true
     },
@@ -164,8 +164,8 @@
         "version": "0100",
         "release_date": "2008-06-10"
       },
-      "catalog_checked_at": "2026-11-24T10:23:34+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:34+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:22+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:22+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -182,7 +182,7 @@
         "sha256": "3ffe27832736bbc3363e16315d045921e4a85b3775d44eb1e6ed4f63b5fef156",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:22+00:00",
       "last_success_at": "2026-11-24T10:24:37+00:00",
       "official_reachable": true
     },
@@ -195,8 +195,8 @@
         "version": "0308",
         "release_date": "2026-11-21"
       },
-      "catalog_checked_at": "2026-11-24T10:23:35+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:35+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:22+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:22+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -213,7 +213,7 @@
         "sha256": "9726a588abf33997ec9a6df562e162f8c179f8b888849a90a53a7b59896612c6",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:22+00:00",
       "last_success_at": "2026-11-24T10:24:37+00:00",
       "official_reachable": true
     },
@@ -240,8 +240,8 @@
           "sihd2_2272.exe"
         ]
       },
-      "catalog_checked_at": "2026-11-24T10:23:35+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:35+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:22+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:22+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -258,7 +258,7 @@
         "sha256": "b47c6d2788eb38bbdb3dfe36a49809f5c2909f3ec7cd83272ac6957c85d7efd5",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:22+00:00",
       "last_success_at": "2026-11-24T10:24:37+00:00",
       "official_reachable": true
     },
@@ -271,8 +271,8 @@
         "version": "4860"
       },
       "catalog_checked_at": "2026-11-24T10:23:35+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:35+00:00",
-      "catalog_check_error": null,
+      "catalog_attempt_at": "2026-11-24T20:52:23+00:00",
+      "catalog_check_error": "OSError",
       "pending_download": false,
       "current": {
         "name": "SCNES4860-ATUALIZACAO.ZIP",
@@ -288,9 +288,10 @@
         "sha256": "26eff76f967742b3e6244c8d11eda5fd141e76fc1059c6f3abb6defc396221b5",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:23+00:00",
       "last_success_at": "2026-11-24T10:24:37+00:00",
-      "official_reachable": true
+      "official_reachable": false,
+      "error": "OSError"
     },
     "cnes_complete": {
       "label": "CNES · SCNES completo",
@@ -301,8 +302,8 @@
         "version": "4860"
       },
       "catalog_checked_at": "2026-11-24T10:23:36+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:36+00:00",
-      "catalog_check_error": null,
+      "catalog_attempt_at": "2026-11-24T20:52:23+00:00",
+      "catalog_check_error": "OSError",
       "pending_download": true,
       "current": {
         "name": "SCNES4850-COMPLETA.ZIP",
@@ -318,10 +319,11 @@
         "sha256": "53755a7b8433aa2b620fc1444b732da520ca93bbf4b5c37f4ede778e098e9a74",
         "verified_at": "2026-10-19T16:40:30+00:00"
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:23+00:00",
       "last_success_at": "2026-10-19T16:40:29+00:00",
-      "official_reachable": true,
-      "download_error": "TimeoutError"
+      "official_reachable": false,
+      "download_error": "TimeoutError",
+      "error": "OSError"
     },
     "bdsia": {
       "label": "Tabela mensal do SIA (BDSIA)",
@@ -341,8 +343,8 @@
           "verified_at": "2026-11-12T01:30:46+00:00"
         }
       },
-      "catalog_checked_at": "2026-11-24T10:23:37+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:37+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:27+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:27+00:00",
       "catalog_check_error": null,
       "available_releases": [
         {
@@ -7097,8 +7099,8 @@
           "release_date": "2026-11-12"
         }
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
-      "last_success_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:27+00:00",
+      "last_success_at": "2026-11-24T20:52:27+00:00",
       "official_reachable": true,
       "pending_competences": [],
       "download_failures": {
@@ -7141,8 +7143,8 @@
         "size": 2173129,
         "catalog_source": "community"
       },
-      "catalog_checked_at": "2026-11-24T10:23:38+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:38+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:30+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:30+00:00",
       "catalog_check_error": null,
       "available_releases": [
         {
@@ -12821,8 +12823,8 @@
           "release_date": null
         }
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
-      "last_success_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:30+00:00",
+      "last_success_at": "2026-11-24T20:52:30+00:00",
       "official_reachable": false,
       "pending_competences": [],
       "download_failures": {
@@ -14597,8 +14599,8 @@
         "version": "0300",
         "release_date": "2026-11-05"
       },
-      "catalog_checked_at": "2026-11-24T10:23:37+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:37+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:24+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:24+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -14615,7 +14617,7 @@
         "sha256": "21bfb3a29e42205fd92a955efc51802095c1282544a111eb0523dd116416e2b1",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:24+00:00",
       "last_success_at": "2026-11-24T10:24:37+00:00",
       "official_reachable": true
     },
@@ -14629,8 +14631,8 @@
         "version": "0303",
         "release_date": "2026-11-11"
       },
-      "catalog_checked_at": "2026-11-24T10:23:37+00:00",
-      "catalog_attempt_at": "2026-11-24T10:23:37+00:00",
+      "catalog_checked_at": "2026-11-24T20:52:25+00:00",
+      "catalog_attempt_at": "2026-11-24T20:52:25+00:00",
       "catalog_check_error": null,
       "pending_download": false,
       "current": {
@@ -14647,7 +14649,7 @@
         "sha256": "f294962d57c6412c9a62de336555f83f6a407865c0f90492652e8c27efa961c9",
         "verified_at": "2026-11-24T10:24:37+00:00"
       },
-      "checked_at": "2026-11-24T10:24:37+00:00",
+      "checked_at": "2026-11-24T20:52:25+00:00",
       "last_success_at": "2026-11-24T10:24:37+00:00",
       "official_reachable": true
     }
@@ -14862,11 +14864,14 @@
     }
   ],
   "last_check": {
-    "started_at": "2026-11-24T10:23:33+00:00",
-    "completed_at": "2026-11-24T10:23:47+00:00",
+    "started_at": "2026-11-24T20:52:20+00:00",
+    "completed_at": "2026-11-24T20:53:12+00:00",
     "source": "automatic",
     "total": 14,
-    "succeeded": 14,
-    "failed_systems": []
+    "succeeded": 12,
+    "failed_systems": [
+      "cnes_app",
+      "cnes_complete"
+    ]
   }
 }
